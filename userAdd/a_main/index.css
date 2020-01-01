@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*PC 영역*/
+@media (min-width: 769px) {
+	.gpe_allcon_wrap0{width:100%;}
+}
+
+/*모바일 영역*/
+@media all and (max-width:860px){
+	.gpe_contents{padding:0px;}
+}
+
+@media all and (max-width:768px){
+	.gpe_contents{padding:0px;}
+}
+
+.placeholder {
+	width: 100%;
+	height: auto;
+}
+
+
+.text-center {text-align: center;}

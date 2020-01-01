@@ -1,0 +1,402 @@
+
+.sub_page_area {
+    width: 100%;
+}
+
+.sub_page_area .top_navi {
+    color: #555;
+    font-size: 11px;
+    text-align: right;
+    font-family: "verdana";
+    padding: 20px 0px;
+}
+
+
+.sub_page_area .sub_top_menu {
+    height: 40px;
+    margin-bottom: 50px;
+}
+.sub_page_area .sub_top_menu ul li {
+    float: left;
+    margin-right: 10px;
+}
+
+.sub_page_area .sub_top_menu ul li a {
+    width: 148px;
+    height: 38px;
+    font-size: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    display: block;
+    line-height: 38px;
+    color: #777;
+    font-family: "Open Sans","Nanum Gothic",sans-serif;
+    font-weight: 500;
+    text-align: center;
+}
+.sub_page_area .sub_top_menu ul li a.on {
+    border: 1px solid #d2d2d2;
+    background-color: #fff;
+    color: #222;
+    border-top: 1px solid #222;
+}
+.shopcontent img, fieldset {
+    border: none;
+    vertical-align: top;
+	max-width:648px;
+	width:100%;
+}
+
+.ulcenter {text-align: center;}
+
+.ulcenter ul li img{
+    width: 54px;
+    height: 54px;
+}
+
+.ulcenter li {
+	display:inline-block;zoom:1;*display:inline;
+	text-align:center;
+    font-size: 14px;
+	line-height: 33px;
+}
+
+.circle_top_icon {
+    margin-top: 50px;
+    margin-bottom: 70px;
+    clear: both;
+    height: 35px;
+}
+
+.circle_top_icon ul li img{
+    float: left;
+    width: 54px;
+    height: 54px;
+    margin-right: 50px;
+}
+
+
+.circle_tab {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    clear: both;
+    height: 35px;
+}
+.circle_tab ul li {
+	display:inline-block;zoom:1;*display:inline;
+    width: 130px;
+    height: 35px;
+    margin-right: 8px;
+}
+
+.circle_tab_last {    
+    width: 140px !important;   
+}
+
+.circle_tab ul li div {
+    display: block;
+    width: 140px;
+    height: 35px;
+    background-color: #808080;
+    color: #fff;
+    border-radius: 17px;
+    line-height: 33px;
+    font-size: 20px;
+    text-align: center;
+    /*cursor: pointer;*/
+}
+
+.circle_tab ul li div.on {
+    background-color: #222;
+    color: #fff;
+}
+a:hover {
+    text-decoration: none;
+}
+a {
+    selector-dummy: expression(this.hideFocus=true);
+    text-decoration: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+a {
+    blr: expression(this.onFocus=this.blur());
+}
+
+.g_title_area {
+    clear: both;
+    padding: 10px 5px 50px 5px;
+}
+.g_title01 {
+    font-size: 30px;
+    color: #222;
+    text-align: left;
+    height: 28px;
+    padding-left: 10px;
+    line-height: 28px;
+    font-family: "Noto Sans KR";
+    background: url(http://skinnz.godohosting.com/surfenjoy/icon/guide_title_bg.gif) no-repeat;
+    background-position: 0px 2px;
+    float: left;
+}
+.g_title02 {
+    font-size: 18px;
+    color: #777;
+    line-height: 38px;
+    height: 28px;
+    padding-left: 20px;
+    font-family: "Nanum Gothic";
+    float: left;
+	letter-spacing: -0.5px;
+}
+
+.buffet_area ul li {
+    width: 49%;
+    float: left;
+    text-align: left;
+    margin-left: 27px;
+    padding-bottom: 30px;
+}
+
+.buffet_area ul li:last-child {
+    margin-left: 4px;
+}
+
+.buffet_area ul li {
+    margin-left: 0px;
+}
+
+
+.hotel_area .hotel_ban figure {
+    overflow: hidden;
+    margin: 0 auto;
+}
+/*捞固瘤犬措*/
+.hotel_area .hotel_ban figure img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+	max-width:648px;
+	width:100%;
+}
+
+.hotel_area div:hover figure img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+/*捞固瘤犬措*/
+
+
+.buffet_area .thumb figure {
+    width: 320px;
+    height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+/*捞固瘤犬措*/
+.buffet_area .hover01 figure img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.buffet_area li:hover figure img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.buffet_area .hover01 figure img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+
+.buffet_text01 {
+    color: #000;
+    font-size: 20px;
+    padding-bottom: 6px;
+    padding-top: 35px;
+	
+}
+
+.buffet_text01_01 {
+    color: #000;
+    font-size: 18px;
+    padding-bottom: 8px;
+}
+
+.buffet_text02 {
+    color: #777;
+    font-size: 15px;
+    line-height: 19px;
+	letter-spacing: -1px;
+	padding-bottom:10px;
+}
+.buffet_sub_text {
+    border-top: 1px dashed #ececec;
+    padding-top: 18px;
+    margin-top: 18px;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.buffet_text03 {
+    font-size: 16px;
+    color: #222;
+    padding-bottom: 5px;
+	letter-spacing: -1.2px;
+}
+.buffet_text04 {
+    font-size: 15px;
+    color: #777;
+    line-height: 22px;
+}
+.border_space1 {
+    width: 648px;
+    clear: both;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 0px;
+}
+/*祈狼矫汲*/
+.insur_area {
+    clear: both;
+    margin-top: 15px;
+	 padding: 10px 5px 20px 5px;
+}
+.insur_area ul li {
+    float: left;
+    text-align: left;
+    margin-left: 27px;
+    padding-bottom: 14px;
+}
+.insur_area ul li:first-child {
+    margin-left: 0px;
+}
+
+.insur_area .thumb figure {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.insur_area .hover01 figure img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.insur_title01 {
+    padding: 0px 5px 0px 5px;
+    text-align: left;
+    font-size: 18px;
+    color: #222;
+    clear: both;
+}
+.insur_title02 {
+    padding: 0px 5px 0px 5px;
+    text-align: left;
+    font-size: 14px;
+    color: #777;
+    clear: both;
+}
+
+
+/*祈狼矫汲*/
+.insur_area2 {
+    clear: both;
+}
+
+.insur_area2_ban {
+    float: left;
+}
+
+.hotel_area {
+    clear: both;
+}
+.hotel_ban {
+      
+    padding-right: 0px;
+}
+.hotel_text_area {   
+    padding: 20px 5px 0px 5px;
+    text-align: left;
+}
+.hotel_text01 {
+    color: #000;
+    font-size: 20px;
+    font-family: "Noto Sans KR";
+    font-weight: 300;
+    line-height: 28px;
+    padding-bottom: 15px;
+}
+.hotel_text02 {
+    color: #555;
+    font-size: 14px;
+    font-family: "Noto Sans KR";
+    font-weight: 300;
+    padding-bottom: 21px;
+}
+.hotel_text03 {
+    color: #777;
+    font-size: 14px;
+    line-height: 28px;
+}
+.hotel_text_border {
+    border-top: 1px dashed #fff;
+    padding-top: 20px;
+    margin-top: 20px;
+    width: 550px;
+    clear: both;
+    float: left;
+}
+hr.layout {
+    display: none;
+}
+.insur_area2_txt {
+    float: left;
+    padding: 10px 5px 20px 5px;
+}
+
+.insur_area2 .insur_text04 {
+    font-size: 15px;
+    color: #222;
+	padding-top: 20px;
+    padding-bottom: 5px;
+}
+.insur_area2 .insur_text05 {
+    font-size: 14px;
+    color: #777;
+    line-height: 26px;
+}
+.insur_area2 .insur_text_border2 {
+    border-top: 1px dashed #dedede;
+    padding-top: 20px;
+    margin-top: 20px;
+    clear: both;
+    float: left;
+    text-align: left;
+}
+
+
+/*모바일 영역*/
+@media all and (max-width:768px){
+	.g_title01 {
+		font-size: 23px;
+	}
+	.g_title02 {
+		font-size: 15px;
+		padding-left: 10px;
+	}
+
+}
+
+/*PC 영역*/
+@media (min-width: 769px) {
+	.padding_left {padding-left:1px;}
+	.padding_right {padding-right:1px;}
+}

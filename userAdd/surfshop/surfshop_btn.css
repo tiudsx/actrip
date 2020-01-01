@@ -1,0 +1,104 @@
+.fixed_wrap2{width:100%;padding-left:5px;height:40px;}
+.fixed_wrap3{width:100%;padding-top:5px;height:40px;}
+.cnb3 li{list-style:none;float:left;font-size:12px;padding-right:5px;}
+.cnb3{margin:0 0 0 -2px;padding:0;}
+.cnb3 a{display:block;overflow:hidden;padding:5px 16px;margin:2px;border:1px solid #DDD;border-radius:3px;white-space:nowrap;text-overflow:ellipsis;text-decoration:none !important;text-align:center;color:#666}
+.cnb3 .on>a,.cnb3 a:hover,.cnb3 a:focus{border-color:#999;background:#DDD;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+.cnb3 .on>a{font-weight:700}
+.cnb3 .on2>a{border-color:#999;background:#97c91d;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+.cnb3 .on3>a{border-color:#999;background:#BBB;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+
+.btnColor a{height:25px;padding-top:14px;}
+
+.popover-container-pc {
+    z-index: 1;
+    position: relative;
+}
+
+button {
+    outline: none;
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.filter__option {
+    margin-right: 2px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.filter-icon__arrow_bottom {
+    width: 17px;
+    height: 8px;
+    background: url(http://skinnz.godohosting.com/surfenjoy/icon/filter-icon__arrow_bottom.svg) 50%;
+}
+
+.filter-icon {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+    vertical-align: middle;
+}
+
+.popover-container-pc .popover-content.animate-bounce-down {
+    animation-name: fadeIn;
+    animation-iteration-count: 1;
+    animation-duration: .6s;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+	padding-top:5px;
+}
+
+.popover-filter__option .layer-default {
+    box-sizing: border-box;
+    box-shadow: 0 3px 7px rgba(0,0,0,.2);
+    border-top: 2px solid #ff2d60;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.popover-filter__option .radio-list input, .eventview {
+    display: none;
+}
+
+.popover-filter__option .radio-list label {
+    padding: 4px 0 3px;
+}
+
+.inner label{font-size: 14px;}
+.popover-container-pc .popover-content {
+    position: absolute;
+}
+.popover-filter__option {
+	top: 25px;
+    left: 8px;
+    width: 120px;
+}
+
+.input-radio {height:25px;}
+
+.input-radio.input-radio_active label {
+    color: #ff2d60;
+}
+
+label, button, a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.fa{right:6px;margin-top:-6px;padding-left:10px;color:#808080;cursor:pointer;}
+
+.fa-chevron-up:before {
+    content: "\f077";
+}
+
+
+.fa-chevron-down:before {
+    content: "\f078";
+}

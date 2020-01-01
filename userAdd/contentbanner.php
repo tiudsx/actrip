@@ -1,0 +1,1 @@
+<!--a href="/surfres?seq=64" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/content/res_event.jpg" class="placeholder2" /></a-->

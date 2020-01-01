@@ -1,0 +1,98 @@
+{@
+	$lang_type = Context::getLangType();
+	$ssl_actions = Context::getSSLActions();
+	$css_files=Context::getCssFile();
+	$js_files=Context::getJsFile();
+}
+<!DOCTYPE html>
+<html lang="{str_replace('jp','ja',$lang_type)}" class="xe-mobilelayout">
+<head>
+<meta name="naver-site-verification" content="28d65eb0b6e22ed8595b256f8510cd30d3fa8317"/>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+/*  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3238471795614775",
+    enable_page_level_ads: true
+  });
+  */
+</script>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+
+<meta name="title" content="서핑 서퍼 캠핑장 죽도캠핑장 동해 남해 서해 제주도 양양 부산 송정 죽도 기사문 서핑버스">
+<meta name="keywords" content="양양 서핑,양양서핑,서핑,서퍼,캠핑,캠핑장,죽도캠핑장,동해,남해,서해,제주도,양양,죽도,부산,송정,기사문,남애,서핑대회,서퍼스,파도,바다,서프엔조이,서핑강습,서핑배우기,서핑초보,서핑버스">
+<meta name="description" content="서퍼를 위한 서핑 커뮤니티 서프엔조이 입니다. 양양서핑, 서핑버스, 서핑배우기, 서핑초보, 서핑강습, 서핑예약, 캠핑장, 죽도캠핑장,서핑동호회">
+
+<meta property="og:image" content="http://skinnz.godohosting.com/surfenjoy/logo/titlelogo.png">
+<meta property="og:description" content="서프엔조이 - 대한민국 서핑샵 예약" />
+
+<!--// TITLE -->
+<title>서프엔조이</title>
+<!--title>{$lang->msg_titlesite}</title-->
+<!--title>{Context::getBrowserTitle()}</title-->
+<!-- CSS -->
+<block loop="$css_files=>$key,$css_file">
+<block cond="$css_file['targetie']"><!--[if {$css_file['targetie']}]><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--></block></block>
+<link rel="stylesheet" href="{$css_file['file']}" media="{$css_file['media']}"|cond="$css_file['media'] != 'all'" />
+<block cond="$css_file['targetie']"><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--</block><![endif]--></block>
+</block>
+<!-- JS -->
+<block loop="$js_files=>$key,$js_file">
+<block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--></block></block>
+<script src="{$js_file['file']}"></script>
+<block cond="$js_file['targetie']"><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--</block><![endif]--></block>
+</block>
+
+<!--// RSS -->
+<!--@if($rss_url)-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{$rss_url}" />
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{$atom_url}" />
+<!--@end-->
+<!--@if($general_rss_url)-->
+<link rel="alternate" type="application/rss+xml" title="Site RSS" href="{$general_rss_url}" />
+<link rel="alternate" type="application/atom+xml" title="Site Atom" href="{$general_atom_url}" />
+<!--@end-->
+
+<!--// ICON-->
+<link cond="$favicon_url" rel="shortcut icon" href="{$favicon_url}" />
+<link cond="$mobicon_url" rel="apple-touch-icon" href="{$mobicon_url}" />
+{Context::getHtmlHeader()}
+<script>
+//<![CDATA[
+var current_url = "{$current_url}";
+var request_uri = "{$request_uri}";
+<block cond="$vid">var xeVid = "{$vid}";</block>
+var current_mid = "{$mid}";
+var waiting_message = "{$lang->msg_call_server}";
+var ssl_actions = new Array(<!--@if(count($ssl_actions))-->"{implode('","',array_keys($ssl_actions))}"<!--@end-->);
+var default_url = "{Context::getDefaultUrl()}";
+<block cond="Context::get('_http_port')">var http_port = {Context::get("_http_port")};</block>
+<block cond="Context::get('_https_port')">var https_port = {Context::get("_https_port")};</block>
+<block cond="Context::get('_use_ssl') && Context::get('_use_ssl') == 'always'">var enforce_ssl = true;</block>
+//]]>
+</script>
+</head>
+<body{Context::getBodyClass()}>
+{Context::getBodyHeader()}
+{$content}
+{Context::getHtmlFooter()}
+
+<!--// ETC -->
+{@ $js_body_files = Context::getJsFile('body') }
+<!--@foreach($js_body_files as $key => $js_file)-->
+	<!--@if($js_file['targetie'])--><!--[if {$js_file['targetie']}]><!--@end-->
+	<script src="{$js_file['file']}"></script>
+	<!--@if($js_file['targetie'])--><![endif]--><!--@end-->
+<!--@end-->
+
+ 
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script> 
+<script type="text/javascript"> 
+	if(!wcs_add) var wcs_add = {}; 
+	wcs_add["wa"] = "9353be5d457330"; 
+	wcs_do(); 
+</script> 
+
+</body>
+</html>

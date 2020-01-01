@@ -1,0 +1,132 @@
+{@
+	$db_info   = Context::getDBInfo();
+	$lang_type = Context::getLangType();
+	$ssl_actions = Context::getSSLActions();
+	$css_files=Context::getCssFile();
+	$js_files=Context::getJsFile();
+}
+<!DOCTYPE html>
+<html lang="{str_replace('jp','ja',$lang_type)}">
+<head>
+<meta name="naver-site-verification" content="28d65eb0b6e22ed8595b256f8510cd30d3fa8317"/>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+/*  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3238471795614775",
+    enable_page_level_ads: true
+  });
+  */
+</script>
+
+
+<?
+$titleLogo = "http://skinnz.godohosting.com/surfenjoy/logo/titlelogo.png";
+$titleName = "서프엔조이";
+$titleDes = "서프엔조이 - 대한민국 서핑샵 예약";
+
+if($_SERVER['HTTP_HOST'] == "surfenjoy.com" || $_SERVER['HTTP_HOST'] == "www.surfenjoy.com"){
+
+	if($_SERVER["REQUEST_URI"] == "/yangfe"){
+		Header("Location:http://xn--pk3bl7fv7at7ea456rt7a12g.kr/yangfe");
+	}
+}else{
+	$titleLogo = "http://skinnz.godohosting.com/surfenjoy/yangfe/2019yangfe4.jpg";
+	$titleDes = "2019 양양서핑 페스티벌";
+	$titleName = "2019 양양서핑 페스티벌";
+
+	if($_SERVER["REQUEST_URI"] != "/yangfe"){
+		Header("Location:/yangfe");
+	}
+}
+?>
+
+<!-- META -->
+<meta charset="utf-8">
+<meta name="Generator" content="XpressEngine">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="title" content="서핑 서핑강습 서퍼 동해 양양셔틀버스 죽도캠핑장 남해 서해 제주도 양양 부산 송정 죽도 기사문 서프엔조이 서핑버스">
+<meta name="keywords" content="양양 서핑,양양서핑,서핑,서퍼,캠핑,캠핑장,죽도캠핑장,동해,남해,서해,제주도,양양,죽도,부산,송정,기사문,남애,서핑대회,서퍼스,파도,바다,서프엔조이,서핑강습,서핑배우기,서핑초보,서핑버스">
+<meta name="description" content="서퍼를 위한 서핑 커뮤니티 서프엔조이 입니다. 양양서핑, 서핑버스, 서핑배우기, 서핑초보, 서핑강습, 서핑예약, 캠핑장, 죽도캠핑장,서핑동호회">
+
+<meta property="og:image" content="<?=$titleLogo?>">
+<meta property="og:description" content="<?=$titleDes?>" />
+
+<block loop="Context::getMetaTag() => $no, $val">
+<meta http-equiv="{$val['name']}"|cond="$val['is_http_equiv']" name="{$val['name']}"|cond="!$val['is_http_equiv']" content="{$val['content']}">
+</block>
+<!-- TITLE -->
+
+<title><?=$titleName?></title>
+<!--title>{$lang->msg_titlesite}</title-->
+<!--title>{Context::getBrowserTitle()}</title-->
+<!-- CSS -->
+<block loop="$css_files=>$key,$css_file">
+<block cond="$css_file['targetie']"><!--[if {$css_file['targetie']}]><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--></block></block>
+<link rel="stylesheet" href="{$css_file['file']}" media="{$css_file['media']}"|cond="$css_file['media'] != 'all'" />
+<block cond="$css_file['targetie']"><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--</block><![endif]--></block>
+</block>
+<!-- JS -->
+<block loop="$js_files=>$key,$js_file">
+<block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--></block></block>
+<script src="{$js_file['file']}"></script>
+<block cond="$js_file['targetie']"><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--</block><![endif]--></block>
+</block>
+
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{$rss_url}" cond="$rss_url" />
+<link rel="alternate" type="application/rss+xml" title="Site RSS" href="{$general_rss_url}" cond="$general_rss_url" />
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{$atom_url}" cond="$rss_url" />
+<link rel="alternate" type="application/atom+xml" title="Site Atom" href="{$general_atom_url}" cond="$general_rss_url" />
+<!-- ICON -->
+<link cond="$favicon_url" rel="shortcut icon" href="{$favicon_url}" />
+<link cond="$mobicon_url" rel="apple-touch-icon" href="{$mobicon_url}" />
+{Context::getHtmlHeader()}
+<script>
+//<![CDATA[
+var current_url = "{$current_url}";
+var request_uri = "{$request_uri}";
+<block cond="$vid">var xeVid = "{$vid}";</block>
+var current_mid = "{$mid}";
+var waiting_message = "{$lang->msg_call_server}";
+var ssl_actions = new Array(<block cond="count($ssl_actions)">"{implode('","',array_keys($ssl_actions))}"</block>);
+var default_url = "{Context::getDefaultUrl()}";
+<block cond="Context::get('_http_port')">var http_port = {Context::get("_http_port")};</block>
+<block cond="Context::get('_https_port')">var https_port = {Context::get("_https_port")};</block>
+<block cond="Context::get('_use_ssl') && Context::get('_use_ssl') == 'always'">var enforce_ssl = true;</block>
+xe.current_lang = "{$lang_type}";
+xe.cmd_find = "{$lang->cmd_find}";
+xe.cmd_cancel = "{$lang->cmd_cancel}";
+xe.cmd_confirm = "{$lang->cmd_confirm}";
+xe.msg_no_root = "{$lang->msg_no_root}";
+xe.msg_no_shortcut = "{$lang->msg_no_shortcut}";
+xe.msg_select_menu = "{$lang->msg_select_menu}";
+
+//]]>
+</script>
+</head>
+{@$isAdminKind = false}
+<!--@if(stripos(Context::get('act'),'admin') || Context::get('module') == 'admin')-->
+{@$isAdminKind = true}
+<!--@end-->
+<body{Context::getBodyClass()}>
+{Context::getBodyHeader()}
+{$content}
+{Context::getHtmlFooter()}
+<!-- ETC -->
+<div class="wfsr"></div>
+{@ $js_body_files = Context::getJsFile('body') }
+<block loop="$js_body_files => $key, $js_file">
+<block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]></block><script src="{$js_file['file']}"></script><block cond="$js_file['targetie']"><![endif]--></block>
+</block>
+
+ 
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script> 
+<script type="text/javascript"> 
+	if(!wcs_add) var wcs_add = {}; 
+	wcs_add["wa"] = "9353be5d457330"; 
+	wcs_do(); 
+</script> 
+
+</body>
+</html>

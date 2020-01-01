@@ -1,0 +1,55 @@
+<style type="text/css">
+.gpe_contents_title{
+	<!--@if($layout_info->display_conten_sidecon_subTitle == 'no' && $layout_info->display_conten_sidecon_Location == 'no')-->height:5px;<!--@end-->
+	}
+</style>
+
+<div class="gpe_contents">
+	<!--div id="gpe_googleadtop" class="gpe_googleadtop" style="text-align:center;">
+		<ins class="adsbygoogle"
+			 style="display:inline-block;width:350px;height:60px"
+			 data-ad-client="ca-pub-3238471795614775"
+			 data-ad-slot="6799092044"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div-->
+<!--@if($layout_info->display_conten == 's_dan2')-->
+	<div class="gpe_contents_title">
+	<!--서브타이틀-->
+	<div class="gpe_subtit_area" cond="!$layout_info->display_conten_sidecon_subTitle == 'no'">
+		{$module_info->browser_title}
+	</div>
+	<!--//서브타이틀-->
+	<!--로케이션-->
+		<div class="gpe_location_area" cond="!$layout_info->display_conten_sidecon_Location == 'no'">
+			<ul>
+				<li class="L_home"><a href="{$layout_info->logo_url}"></a></li>
+				<!--@foreach($top_menu->list as $key => $val)-->
+					<!--@if($val['selected'])-->
+					{@ $first_menu = $val }
+					<li class="L_list"><a href="{$val['href']}">{$val['link']}</a></li>
+					<!--@end-->
+						<!--@foreach($val['list'] as $skey => $sval)-->
+							<!--@if($sval['selected'])-->
+								<li class="L_list"><a href="{$sval['href']}">{$sval['link']}</a></li>
+							<!--@end-->
+							<!--@foreach($sval['list'] as $sskey => $ssval)-->
+								<!--@if($ssval['selected'])-->
+									<li class="L_list"><a href="{$ssval['href']}">{$ssval['link']}</a></li>
+								<!--@end-->
+							<!--@endforeach-->
+						<!--@endforeach-->
+				<!--@endforeach-->
+			</ul>
+		</div>
+	<!--//로케이션-->
+	</div>
+<!--@end-->
+
+<!--XE컨텐츠-->
+	<div class="gpe_contents_xecon">
+		{$content}
+	</div>
+<!--//XE컨텐츠-->
+</div>
