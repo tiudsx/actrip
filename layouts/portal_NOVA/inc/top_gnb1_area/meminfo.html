@@ -43,9 +43,13 @@
 		</li>
 		<!--@else-->
 		<li class="profile">
-			<a onclick="jQuery('.memProfile').fadeToggle();" style="cursor:pointer;"><!--@if($lang_type=='ko')--><b>회원정보</b>
+			<!--@if($logged_info->is_admin == 'Y')-->
+			<a onclick="jQuery('.memProfile').fadeToggle();" style="cursor:pointer;"><b>회원정보</b></a>
+			<!--@else-->
+			<a href="{getUrl('act','dispMemberInfo')}" style="cursor:pointer;"><b>회원정보</b></a>
+			<!--@end-->
 			
-			<!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.05em;"><b>INFO</b></span><!--@end--></a>
+			
 			<!--회원정보 레이어-->
 			<div class="memProfile">
 				<div style="position:relative;"><span class="triang_border" style="top:-16px; right:13px;"></span><span class="triang 	<!--@if($layout_info->display_topmenu_type == '2')-->top2t<!--@end-->" style="top:-15px; right:13px;"></span></div><!--삼각형-->
@@ -68,13 +72,13 @@
 		</li>
 		<!--@end-->
 		<li style="padding-left:12px;margin-top:-5px;">
-			<a href="https://www.instagram.com/surfenjoy.sc" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/icon/top_sns01.png?v=1"></a>
+			<a href="https://www.instagram.com/surfenjoy.sc" target="_blank"><img src="http://surfenjoy.cdn3.cafe24.com/icon/top_sns01.png?v=1"></a>
 		</li>
 		<li style="padding-left:4px;margin-top:-5px;">
-			<a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/icon/top_sns02.png?v=1"></a>
+			<a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="http://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="width: 32px; height: 29px;"></a>
 		</li>
 		<li style="padding-left:4px;margin-top:-5px;">
-			<a href="https://blog.naver.com/surfenjoy" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/icon/top_sns03.png?v=1"></a>
+			<a href="https://blog.naver.com/surfenjoy" target="_blank"><img src="http://surfenjoy.cdn3.cafe24.com/icon/top_sns03.png?v=1"></a>
 		</li>
 <!--//회원가입-->	
 	</ul>

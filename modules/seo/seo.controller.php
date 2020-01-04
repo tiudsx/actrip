@@ -184,8 +184,8 @@ class seoController extends seo
 		$this->addMeta('og:url', $piece->url);
 		$this->addMeta('og:site_name', $config->site_name);
 		//$this->addMeta('og:title', $piece->title);
-		//$this->addMeta('og:title', "서프엔조이 : 서핑의 첫걸음 ");
-		$this->addMeta('og:title', "2019 양양서핑 페스티벌");
+		$this->addMeta('og:title', "액트립 - 대한민국 액티비티 No.1 ");
+		//$this->addMeta('og:title', "2019 양양서핑 페스티벌");
 		$this->addMeta('og:description', $piece->description);
 		if($is_article) {
 			if(Context::getLangType() !== $oDocument->getLangCode()) {
