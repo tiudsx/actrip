@@ -85,13 +85,13 @@ $i++;
     <aside class="left_article" style="padding-bottom:0px;">
 		<div class="event1">
 			<div class="adtitle">
-				<span><img src="http://skinnz.godohosting.com/surfenjoy/icon/cate_01.jpg"></span>
+				<span><img src="https://surfenjoy.cdn3.cafe24.com/icon/cate_01.jpg"></span>
 			</div>
 
 			<li class="list_2 adcno2" style="display:;">
 				<a href="/surfbus">
 					<p class="pic">
-						<img class="lazy align" src="http://skinnz.godohosting.com/surfenjoy/shop/02_600x300.jpg" style="display: block;">
+						<img class="lazy align" src="https://surfenjoy.cdn3.cafe24.com/shop/02_600x300.jpg" style="display: block;">
 					</p>
 					<div class="stage gra_black_vertical">
 						<div class="evt_info"><span>[서프엔조이] 양양해변으로 편하게 가즈아~</span></div>
@@ -126,7 +126,7 @@ $i++;
 			<li class="list_2 adcno2" style="display:;">
 				<a href="/surfBBQ">
 					<p class="pic">
-						<img class="lazy align" src="http://skinnz.godohosting.com/surfenjoy/shop/01_600x300.jpg" style="display: block;">
+						<img class="lazy align" src="https://surfenjoy.cdn3.cafe24.com/shop/01_600x300.jpg" style="display: block;">
 					</p>
 					<div class="stage gra_black_vertical">
 						<div class="evt_info"><span>[서프엔조이] 죽도해변에서 즐기는 BBQ</span></div>

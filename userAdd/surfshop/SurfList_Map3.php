@@ -1,7 +1,7 @@
 <style>
 html, body, iframe, h1, h2, h3, h4, h5, h6, a, img, dl, dt, dd, fieldset, form, input, label, table, caption, tbody, tfoot, thead, tr, th, td, embed, hgroup{margin:0; padding:0; font-size:12px;}
 
-.overlaybox {position:relative;height:270px;background:url('http://skinnz.godohosting.com/surfenjoy/shop/box_movie.png') no-repeat;padding:0px 10px 0px 10px;left:15px;}
+.overlaybox {position:relative;height:270px;background:url('https://surfenjoy.cdn3.cafe24.com/shop/box_movie.png') no-repeat;padding:0px 10px 0px 10px;left:15px;}
 .overlaybox div, ul {overflow:hidden;margin:0;padding:0;}
 .overlaybox li {list-style: none;}
 .overlaybox .boxtitle {color:#fff;font-size:16px;font-weight:bold;margin-bottom:8px;padding-top:3px;}
@@ -23,7 +23,7 @@ $result_setlist = mysqli_query($conn, $select_query);
 
 $mapNum = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
-	$arrMapList[$mapNum] = $row['user_name'].'|'.$row['lng'].'|'.$row['lat'].'|'.$mapNum.'|http://skinnz.godohosting.com/surfenjoy/bus/bus1.jpg|'.$row['insdate'];
+	$arrMapList[$mapNum] = $row['user_name'].'|'.$row['lng'].'|'.$row['lat'].'|'.$mapNum.'|https://surfenjoy.cdn3.cafe24.com/bus/bus1.jpg|'.$row['insdate'];
 	$mapNum++;
 
 }
@@ -104,7 +104,7 @@ for (var key in MARKER_SPRITE_POSITION) {
         position: position,
         title: key,
 		icon: {
-			url: 'http://skinnz.godohosting.com/surfenjoy/bus/sp_pins_spot_v3.png', //50, 68 크기의 원본 이미지
+			url: 'https://surfenjoy.cdn3.cafe24.com/bus/sp_pins_spot_v3.png', //50, 68 크기의 원본 이미지
             size: new naver.maps.Size(24, 37),
             anchor: new naver.maps.Point(12, 37),
             origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
@@ -116,7 +116,7 @@ for (var key in MARKER_SPRITE_POSITION) {
         zIndex: 100
     });
 
-	var busImg = "http://skinnz.godohosting.com/surfenjoy/bus/bus1.jpg";
+	var busImg = "https://surfenjoy.cdn3.cafe24.com/bus/bus1.jpg";
 	var shopbox2 = '<div class="overlaybox">' +
 		'    <div class="boxtitle">[서울-양양] '+ key +'</div>' +
 		'    <div class="first" style="background: url(' + MARKER_SPRITE_POSITION[key][7] + ') no-repeat;background-size: 100%">' +

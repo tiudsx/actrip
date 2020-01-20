@@ -316,4 +316,4 @@
 
 			</div>
 <iframe scrolling="no" frameborder="0" id="ifrmBusMap" name="ifrmBusMap" style="width:100%;height:400px;display:none;" src="BusRes_SubTab3_Map.php"></iframe>
-<span><img style="max-width:100%;display:none;padding-top:3px;" id="mapimg" alt="" src="http://skinnz.godohosting.com/surfenjoy/busimg/Y1_1.JPG"></span>
+<span><img style="max-width:100%;display:none;padding-top:3px;" id="mapimg" alt="" src="https://surfenjoy.cdn3.cafe24.com/busimg/Y1_1.JPG"></span>

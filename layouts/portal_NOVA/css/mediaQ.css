@@ -11,7 +11,7 @@
 
 @media (min-width: 769px) {
 	#sidebarTmp {	left: 1034px;	display: block;text-align:left;}
-	.menu {display:none;}
+	.menu, .topheader, .layG_munu_MobileBtn_b {display:none;}
 	.well {
 	  min-height: 20px;
 	  padding: 10px 6px 6px 6px;
@@ -41,7 +41,7 @@
 	.gnb1_area_top2typeBG, .con_left_line, .con_right_line, .gpe_side_contents_L, .gpe_side_contents_R, .gpe_pm_conban, .gpe_pm_conban_num1, .gpe_pm_conban_code,
 	.openmenu_wrap00, #top_proban_wrap00, .top_proban_wrap0, #gpe_divpop2{display:none;} /*#gpe_divpop1, */
 	.gnb1_area_wrap00{padding:0 20px 0 10px;;}
-	.gnb1_area_wrap0{height:50px; width:100% !important;}
+	.gnb1_area_wrap0{height:52px; width:100% !important;}
 	.gpe_allcon_wrap0, .gpe_contents_box{width:100% !important; padding:0 !important;}
 	.gpe_allcon_wrap0{margin-top:0;}
 	.gpe_contents{padding:10px 5px 0 5px;}
@@ -55,13 +55,19 @@
 /*넓이 768px이하[~아이패드+유사device]*/
 @media all and (max-width:768px){
 	/*.notice_MQarea{display:block;}*/
-	.menu {position:fixed;left:3px;bottom:0px;width: 95%;text-align: center;}
+	.menu {position:fixed;left:-2px;bottom:-3px;width: 100%;text-align: center;}
+	.topheader {
+		height: 51px;
+		background-color: white;
+		position:fixed;left:-1px;width: 100%;text-align: center;
+		border-bottom: 1px solid #f1f1f1;
+	}
 	.wellBtn {
 	  min-height: 20px;
-	  padding: 10px 6px 6px 6px;
+	  padding: 10px 6px 2px 6px;
 	  margin-bottom: 2px;
 	  background-color: white;
-	  border: 1px solid #e3e3e3;
+	  /*border: 1px solid #e3e3e3;*/
 	  border-radius: 4px;
 	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 			  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
@@ -82,7 +88,7 @@
 	.resbottom {background: #FFFFFF;border-radius: 3rem;box-shadow: 0 0.2rem 0.6rem 0 rgba(0,0,0,0.2);display: inline-block;margin: 0 auto 0.5rem auto;max-width: 70%;overflow: hidden;padding: 0 0.2rem;text-align: center;}
 
 	.resoff {display:none;}
-	.reson, .resoff {background: #FFFFFF;border: none;padding: 6px 10px 10px 10px;position: relative;}
+	.reson, .resoff {background: #FFFFFF;border: none;padding: 6px 20px 10px 20px;position: relative;}
 	.reson > span, .resoff > span {color: #247B9F;font-size: 1.0rem;font-weight: bold;vertical-align: middle;}
 	}
 

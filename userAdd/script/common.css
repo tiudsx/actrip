@@ -2,7 +2,7 @@
 html{height:100%}
 body{height:100%;background:#FFFFFF;overflow-x:hidden;-webkit-text-size-adjust:none}
 
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,textarea,p,blockquote,th,td,legend,button{margin:0;padding:0;color:#333;font-family:'Malgun Gothic','Droid Sans','Apple-Gothic','애플고딕','Tahoma',dotum,'돋움',gulim,'굴림',sans-serif;font-size:11px;line-height: 1.25em;-webkit-text-size-adjust:none;}/*사파리 회전시 폰트 크기 고정하기*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,textarea,p,blockquote,th,td,legend,button{margin:0;padding:0;color:#333;font-family:'Malgun Gothic','Droid Sans','Apple-Gothic','애플고딕','Tahoma',dotum,'돋움',gulim,'굴림',sans-serif;font-size:12px;line-height: 1.25em;-webkit-text-size-adjust:none;}/*사파리 회전시 폰트 크기 고정하기*/
 form,fieldset,img{border:0}
 table{border-spacing:0;border-collapse:collapse}
 hr,legend,caption{display:none}
@@ -16,7 +16,7 @@ i, em, address {font-style: normal; }
 .bd_tl h1,.bd_tl h2{margin:0;padding:0 20px;font-size:16px;line-height:22px}
 .bd_tl a{float:left;text-decoration:none;color:#555}
 .bd_tl i{display:block;position:absolute;top:0;left:0;width:12px;height:22px;border-radius:2px}
-.bd_tl h2{margin-top:2px;font-size:11px;line-height:11px;color:#888}
+.bd_tl h2{margin-top:2px;font-size:12px;line-height:11px;color:#888}
 .bd_tl h2 i{height:12px;filter:alpha(opacity=70);opacity:.7}
 
 .bg_color {
@@ -29,7 +29,7 @@ i, em, address {font-style: normal; }
 
 .bd_btn,.bd textarea,.bd .itx,.bd select,.btn_img{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;transition:border .4s,background .4s;*zoom:1;}
 .bd_btn,.btn_img{display:inline-block;position:relative;height:28px;margin:0;padding:4px 20px;background:#F3F3F3 url(../img/ie/btn.png) repeat-x;background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FFF),to(#F3F3F3));background:linear-gradient(to bottom,#FFF 0%,#F3F3F3 100%);border:1px solid;border-color:#CCC #C6C6C6 #C3C3C3 #CCC;border-radius:3px;white-space:nowrap;cursor:pointer;text-decoration:none !important;text-align:center;text-shadow:0 0px 0 #FFF;box-shadow:inset 0 0 1px 1px #FFF,0 1px 1px rgba(0,0,0,.1);*display:inline;*zoom:1}
-.btn_img{padding:4px 14px 4px 10px;font-size:11px;line-height:1.6;border-color:#CCC;background:#FCFCFC;letter-spacing:-1px;box-shadow:none}
+.btn_img{padding:4px 14px 4px 10px;font-size:12px;line-height:1.6;border-color:#CCC;background:#FCFCFC;letter-spacing:-1px;box-shadow:none}
 .btn_img.no{padding:4px 18px}
 .bd_btn.blue{font-weight:700;color:#FFF;text-shadow:0 0px 0 #000;border-color:#669 !important;box-shadow:0 1px 1px rgba(0,0,0,.1);background:#55B url(../img/ie/btn_blue.gif) repeat-x;background:-webkit-gradient(linear,0% 0%,0% 100%,from(#77C),to(#55B));background:linear-gradient(to bottom,#77C 0%,#55B 100%)}
 .bd_btn:hover,.bd_btn:focus,.btn_img:hover,.btn_img:focus{border-color:#AAA;box-shadow:0 1px 4px rgba(0,0,0,.2)}
@@ -49,9 +49,9 @@ i, em, address {font-style: normal; }
 
 /* Extra Var */
 .et_vars th,.et_vars td{padding:8px 12px;border:1px solid #DDD;text-align:left;word-break:break-all;word-wrap:break-word;}
-.et_vars th{border-right:1px solid #DDD;white-space:nowrap;font-size:11px;font-family: gulim,Tahoma,Arial,Sans-serif;background-color:#f3f3f3;}
+.et_vars th{border-right:1px solid #DDD;white-space:nowrap;font-size:12px;font-family: gulim,Tahoma,Arial,Sans-serif;background-color:#f3f3f3;}
 .et_vars tr.bg1{background:#F6F6F6}
-.et_vars td{font-size:11px;font-family: gulim,Tahoma,Arial,Sans-serif;line-height:1.5;}
+.et_vars td{font-size:12px;font-family: gulim,Tahoma,Arial,Sans-serif;line-height:1.5;}
 .rd_hd .et_vars{position:relative;margin-top:-1px;border-width:1px 0}
 
 /* Extra Form */
@@ -61,10 +61,10 @@ i, em, address {font-style: normal; }
 .exForm .bd_btn{vertical-align:top}
 .exForm .tel{width:40px}
 .exForm .date{width:120px}
-.exForm p{margin:2px 0 0 0;font-size:11px}
+.exForm p{margin:2px 0 0 0;font-size:12px}
 .exForm ul{margin:0;padding:0}
 .exForm li{display:inline;list-style:none}
-.exForm input[type=radio],.exForm input[type=checkbox]{margin:0 2px 1px 0;vertical-align:middle;font-size:11px;}
+.exForm input[type=radio],.exForm input[type=checkbox]{margin:0 2px 1px 0;vertical-align:middle;font-size:12px;}
 .exForm li label{margin:0 15px 0 0;vertical-align:middle;}
 
 .gg_first {

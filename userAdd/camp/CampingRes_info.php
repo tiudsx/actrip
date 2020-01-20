@@ -29,7 +29,7 @@ $viewtype = $_REQUEST["viewtype"];
 
 //pc 접속
 $arrCss = array(
-	"bgUrl"=> "background:url(http://skinnz.godohosting.com/surfenjoy/camp/campfull3.jpg);width:649px;height:1043px;border:1px solid #DDD;position:relative;"
+	"bgUrl"=> "background:url(https://surfenjoy.cdn3.cafe24.com/camp/campfull3.jpg);width:649px;height:1043px;border:1px solid #DDD;position:relative;"
 	,"tbCss"=> "position:absolute;top:35px;left:245px;"
 	,"gCamp1"=> "0"
 	,"gCamp2"=> "15"
@@ -41,7 +41,7 @@ $arrCss = array(
 //mobile 접속
 if($viewtype == 1){
 	$arrCss = array(
-		"bgUrl"=> "background-image:url(http://skinnz.godohosting.com/surfenjoy/camp/campfullM.jpg);background-repeat:no-repeat;background-position:center;width:320px;height:1075px;border:1px solid #DDD;position:relative;margin:auto;"
+		"bgUrl"=> "background-image:url(https://surfenjoy.cdn3.cafe24.com/camp/campfullM.jpg);background-repeat:no-repeat;background-position:center;width:320px;height:1075px;border:1px solid #DDD;position:relative;margin:auto;"
 		,"tbCss"=> "position:absolute;top:30px;left:88px;"
 		,"gCamp1"=> "0"
 		,"gCamp2"=> "16"
@@ -114,12 +114,12 @@ if($viewtype == 1){
 			<tr height="40px">
 				<td style="padding:0px;width:105px;border:0px solid #330000;">
 				
-					<span id="seatC<?=$num1?>" class=""><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnPrice('C', this);" value="C<?=$num1?>" /><img src="http://skinnz.godohosting.com/surfenjoy/camp/t_01.jpg" height="27px">&nbsp;</label></span>
+					<span id="seatC<?=$num1?>" class=""><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnPrice('C', this);" value="C<?=$num1?>" /><img src="https://surfenjoy.cdn3.cafe24.com/camp/t_01.jpg" height="27px">&nbsp;</label></span>
 				
 				</td>
 				<td style="padding:0px;border:0px;">
 
-					<span id="seat<?=$gubun.$num2?>" class=""><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnPrice('<?=$gubun?>', this);" value="<?=$gubun.$num2?>" <?if($num2 == 205 || $num2 == 204) echo "disabled='disabled'";?> /><img src="http://skinnz.godohosting.com/surfenjoy/camp/<?=$imgName?>.jpg" height="27px">&nbsp;</label></span>
+					<span id="seat<?=$gubun.$num2?>" class=""><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnPrice('<?=$gubun?>', this);" value="<?=$gubun.$num2?>" <?if($num2 == 205 || $num2 == 204) echo "disabled='disabled'";?> /><img src="https://surfenjoy.cdn3.cafe24.com/camp/<?=$imgName?>.jpg" height="27px">&nbsp;</label></span>
 
 				</td>
 			</tr>

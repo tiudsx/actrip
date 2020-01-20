@@ -432,7 +432,7 @@ function fnBusSaveDang() {
 
 <div class="container" id="contenttop">
   <section>
-    <aside class="left_article"><img src="http://skinnz.godohosting.com/surfenjoy/bus/Dangbus.jpg" alt="" width="400" height="200" class="placeholder"/> </aside>
+    <aside class="left_article"><img src="https://surfenjoy.cdn3.cafe24.com/bus/Dangbus.jpg" alt="" width="400" height="200" class="placeholder"/> </aside>
     <article class="right_article">
 		<div style="padding-left:10px;">
 		<?include 'Dang_BusRes_SubDate.php';?>
@@ -462,24 +462,24 @@ function fnBusSaveDang() {
 			<?=fnInfoMemo(3, ''); //양양셔틀버스 이용안내?>
 		</div>
         <div id="tab1" class="tab_content" style="line-height:0;">
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus01.jpg" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus02.jpg" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus03.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnTabMove(1);" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus04.jpg?v=2" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus05.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnTabMove(1);"  />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus06.jpg?v=2" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus07.jpg" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus08.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus01.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus02.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus03.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnTabMove(1);" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus04.jpg?v=2" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus05.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnTabMove(1);"  />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus06.jpg?v=2" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus08.jpg" class="placeholder2" />
 
 			<?=fnInfoMemo(3, ''); //양양셔틀버스 이용안내?>
         </div>
         <!-- #tab1 -->
         <div id="tab2" class="tab_content" style="line-height:0;">
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq01.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq02.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq03.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq04.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq05.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq01.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq02.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq03.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq04.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq05.jpg" class="placeholder2" />
 		</div>
         <!-- #tab2 -->
         <div id="tab4" class="tab_content">

@@ -33,12 +33,12 @@ $admin_userid = "";
 $admin_email = "";
 $admin_tel = "010-2331-7590"; //카카오톡 번호
 $admin_phone = "010-2331-7590"; //대표 연락처
-$shop_listimg = "http://skinnz.godohosting.com/surfenjoy/shop/surfshop_longbeach_200x188.jpg";
-$shop_mainimg = "http://skinnz.godohosting.com/surfenjoy/shop/surfshop_longbeach_500x500.jpg";
+$shop_listimg = "https://surfenjoy.cdn3.cafe24.com/shop/surfshop_longbeach_200x188.jpg";
+$shop_mainimg = "https://surfenjoy.cdn3.cafe24.com/shop/surfshop_longbeach_500x500.jpg";
 $shop_info = "★ 대한민국 서핑샵 ".$shopname."!!@\r\n★ 우수한 실력과 친절함을 겸비한 강사진~@\r\n★ 조용한 서핑을 원할때는 이곳!!";
 $shop_tag = "#서핑강습 #게스트하우스 #렌탈 #매우친절";
 $shop_price = "강습|입문강습|0|70000@\r\n렌탈|서핑보드|0|20000";
-$shop_content = "";//<img src='http://skinnz.godohosting.com/surfenjoy/surfshop/res_longbeach_01.jpg' class='placeholder2' />
+$shop_content = "";//<img src='https://surfenjoy.cdn3.cafe24.com/surfshop/res_longbeach_01.jpg' class='placeholder2' />
 $shop_useinfo = 1;
 $shop_agreement = 1;
 $opt_bus = "N";

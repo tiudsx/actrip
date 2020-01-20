@@ -27,7 +27,7 @@ if($count == 0){
     <aside class="left_article3">
 
 		<div class="adtitle" style="display:<?=$adDisplay?>;">
-			<span><img src="http://skinnz.godohosting.com/surfenjoy/icon/cate_02.jpg"></span>
+			<span><img src="https://surfenjoy.cdn3.cafe24.com/icon/cate_02.jpg"></span>
 		</div>
 
 		<div class="around-content content" style="display:<?=$adDisplay?>;margin-bottom:20px;">
@@ -53,7 +53,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 				<li class="recommend-item " tabindex="-1">
 					<div class="item-inner">
 						<div class="image-box">
-							<a href="/zsurfres?seq=<?=$row["intseq"]?>"><img src="<?=$row['shop_listimg']?>" onerror="this.src='http://skinnz.godohosting.com/surfenjoy/shop/none_200x188.jpg'"></a>
+							<a href="/zsurfres?seq=<?=$row["intseq"]?>"><img src="<?=$row['shop_listimg']?>" onerror="this.src='https://surfenjoy.cdn3.cafe24.com/shop/none_200x188.jpg'"></a>
 							<div class="badge-rap">
 								<div class="icon-topinner">
 									<span class="badge-myroom">&nbsp;추천&nbsp;</span><!--span class="badge-coupon">10% 할인</span-->
@@ -151,7 +151,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		</div>
 
 		<div class="adtitle" style="display:<?=$adDisplay?>;">
-			<span><img src="http://skinnz.godohosting.com/surfenjoy/icon/cate_03.jpg"></span>
+			<span><img src="https://surfenjoy.cdn3.cafe24.com/icon/cate_03.jpg"></span>
 		</div>
 
 		<div class="around-content content">
@@ -170,7 +170,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 				<li class="recommend-item " tabindex="-1">
 					<div class="item-inner">
 						<div class="image-box">
-							<a href="/zsurfres?seq=<?=$row["intseq"]?>"><img src="<?=$row['shop_listimg']?>" onerror="this.src='http://skinnz.godohosting.com/surfenjoy/shop/none_200x188.jpg'"></a>
+							<a href="/zsurfres?seq=<?=$row["intseq"]?>"><img src="<?=$row['shop_listimg']?>" onerror="this.src='https://surfenjoy.cdn3.cafe24.com/shop/none_200x188.jpg'"></a>
 							<div class="txt-distance" onclick="fnMapShopView(this, '<?=$row["shopname"]?>');" style="padding-top:5px;">
 								<i class="icon-staylist icon-staylist-distance"></i>
 								<em>서핑샵 위치</em>

@@ -95,7 +95,7 @@ if($busGubun == "Y"){
 		</span>
 	</div>
 
-	<div style="background:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_0.jpg);background-repeat:no-repeat;background-position:center;width:325px;height:1000px;border:0px solid #DDD;position:relative;text-align:center;margin:auto;">
+	<div style="background:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_0.jpg);background-repeat:no-repeat;background-position:center;width:325px;height:1000px;border:0px solid #DDD;position:relative;text-align:center;margin:auto;">
 	<div style="padding-bottom:155px;"></div>
 	<table class="" style="width:308px;margin-left:9px;">
 		<colgroup>
@@ -118,21 +118,21 @@ if($busGubun == "Y"){
 		if($i == 10 && $busseatnum == 45){
 	?>
 			<tr height="68">
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num1?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num1?>" style="vertical-align:-3px;" /><?=$num1?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num2?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num2?>" style="vertical-align:-3px;" /><?=$num2?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num3?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num3?>" style="vertical-align:-3px;" /><?=$num3?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num4?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num4?>" style="vertical-align:-3px;" /><?=$num4?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num5?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num5?>" style="vertical-align:-3px;" /><?=$num5?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num1?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num1?>" style="vertical-align:-3px;" /><?=$num1?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num2?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num2?>" style="vertical-align:-3px;" /><?=$num2?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num3?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num3?>" style="vertical-align:-3px;" /><?=$num3?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num4?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num4?>" style="vertical-align:-3px;" /><?=$num4?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num5?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num5?>" style="vertical-align:-3px;" /><?=$num5?></label></span></span></td>
 			</tr>
 	<?
 		}else{
 	?>
 			<tr height="68">
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num1?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num1?>" style="vertical-align:-3px;" /><?=$num1?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num2?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num2?>" style="vertical-align:-3px;" /><?=$num2?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num1?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num1?>" style="vertical-align:-3px;" /><?=$num1?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num2?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num2?>" style="vertical-align:-3px;" /><?=$num2?></label></span></span></td>
 				<td>&nbsp;</td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num3?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num3?>" style="vertical-align:-3px;" /><?=$num3?></label></span></span></td>
-				<td style="background-image:url(http://skinnz.godohosting.com/surfenjoy/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num4?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num4?>" style="vertical-align:-3px;" /><?=$num4?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num3?>"><span><label><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num3?>" style="vertical-align:-3px;" /><?=$num3?></label></span></span></td>
+				<td style="background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png);background-repeat:no-repeat;background-position:center;padding:2px;" valign="top"><br><span id="seat<?=$num4?>"><span><label style=""><input type="checkbox" id="chkSeat" name="chkSeat[]" onclick="fnSeatSelected(this);" value="<?=$num4?>" style="vertical-align:-3px;" /><?=$num4?></label></span></span></td>
 			</tr>
 	<?
 		}
@@ -203,7 +203,7 @@ $result_setlistPoint = mysqli_query($conn, $select_queryPoint);
 		for (var i = 0; i < arrySeat.length; i++) {
 			if (arrySeat[i] == null) {
 			} else {
-				jQuery("#seat" + i).parent().css("background-image", 'url("http://skinnz.godohosting.com/surfenjoy/bus/bus_2.jpg")');
+				jQuery("#seat" + i).parent().css("background-image", 'url("https://surfenjoy.cdn3.cafe24.com/bus/bus_2.jpg")');
 				jQuery("#seat" + i + " label").css("color", "#808080");
 				jQuery("#seat" + i + " input").remove();
 			}

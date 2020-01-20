@@ -14,10 +14,10 @@
 			</span>
 
 			<div class="restab1">
-				<div id="busTitle0" style="display:none;"><img src="http://skinnz.godohosting.com/surfenjoy/bus/bustitle0.jpg"></div>
+				<div id="busTitle0" style="display:none;"><img src="https://surfenjoy.cdn3.cafe24.com/bus/bustitle0.jpg"></div>
 				<div id="selBusY"></div>
 				
-				<div id="busTitle1" style="display:none;"><img src="http://skinnz.godohosting.com/surfenjoy/bus/bustitle1.jpg"></div>
+				<div id="busTitle1" style="display:none;"><img src="https://surfenjoy.cdn3.cafe24.com/bus/bustitle1.jpg"></div>
 				<div id="selBusS"></div>
 			</div>
 			<div class="restab2">

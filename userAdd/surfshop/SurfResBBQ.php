@@ -139,8 +139,8 @@ while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
         <!-- #tab1 -->
         <div id="tab1" class="tab_content" style="line-height:0;">
 			<?include __DIR__.'/../contentbanner.php';?>
-			<img src="http://surfenjoy.cdn3.cafe24.com/bbq/res_bbq01.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq05.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/bbq/res_bbq01.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq05.jpg" class="placeholder2" />
 
 			<!--div class="gg_first" style="padding-left:5px;font-size:17px;"><?=$rowMain["shopname"]?> <span style="font-size:12px;">(강원 양양군 현남면 시변리 죽도해변)</span></div>
 
@@ -152,7 +152,7 @@ while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
 			<div style="padding-bottom:15px;padding-left:5px;font-size:12px;line-height: 25px;">
 				<strong>문의전화 : 010-3308-6080</strong><br>
 				<strong>입금계좌 : 신한은행 / 389-02-188735 / 이승철</strong><br>
-				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/button/KakaoTalk_link.png" class="placeholder3"/></a>
+				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/button/KakaoTalk_link.png" class="placeholder3"/></a>
 			</div>
 		</div>
         <div id="tab2" class="tab_content">

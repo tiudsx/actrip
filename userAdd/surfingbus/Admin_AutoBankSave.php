@@ -118,7 +118,7 @@ if($param == "smsdel"){
 				$pointMsg = '\n  ▶ 탑승시간/위치 안내\n'.$busStopInfo.'\n';
 
 				$campStayName = "busConfirm1";
-				$kakaoMsg1 = '안녕하세요! 서프엔조이입니다.\n예약하신 양양셔틀버스 예약확정 안내입니다.\n\n서프엔조이 양양셔틀버스 예약정보\n  ▶ 예약번호 : '.$ResNumber.'\n  ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$pointMsg.$bbqMsg.'---------------------------------\n  ▶ 안내사항\n   - 이용일, 탑승시간, 탑승위치 꼭 부탁드립니다. \n   - 자세한 정류장 위치는 http://surfenjoy.com/surfbus 에서 확인하세요.\n\n  ▶ 문의\n    - 010.3308.6080\n    - http://pf.kakao.com/_HxmtMxl';
+				$kakaoMsg1 = '안녕하세요! 서프엔조이입니다.\n예약하신 양양셔틀버스 예약확정 안내입니다.\n\n서프엔조이 양양셔틀버스 예약정보\n  ▶ 예약번호 : '.$ResNumber.'\n  ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$pointMsg.$bbqMsg.'---------------------------------\n  ▶ 안내사항\n   - 이용일, 탑승시간, 탑승위치 꼭 부탁드립니다. \n   - 자세한 정류장 위치는 https://actrip.co.kr/surfbus 에서 확인하세요.\n\n  ▶ 문의\n    - 010.3308.6080\n    - http://pf.kakao.com/_HxmtMxl';
 
 				sendKakao($campStayName, "surfenjoy_res", $kakaoMsg1, $userPhone, $ResNumber, "surfbus", "link2", "link3");
 

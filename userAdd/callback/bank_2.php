@@ -97,10 +97,10 @@ if(!$result_set){
 
 	if($banknum == "389-02-188735" && $bankname == "신한"){ //셔틀, 바베큐 계좌 : 서프엔조이
 		$resgubun = "surfbus";
-		//ex : http://surfenjoy.com/userAdd/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 35100@이승철&keyword=신한@입금
+		//ex : https://actrip.co.kr/userAdd/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 35100@이승철&keyword=신한@입금
 	}else if($banknum == "351-****-8484-73" && $bankname == "농협"){ //야영장 : 이준영
 		$resgubun = "camp";
-		//ex : http://surfenjoy.com/userAdd/callback/bank.php?content=[Web발신]@농협 입금130,000원@04/09 14:20 351-****-8484-73 김보미 잔액1,124,000&keyword=농협@입금
+		//ex : https://actrip.co.kr/userAdd/callback/bank.php?content=[Web발신]@농협 입금130,000원@04/09 14:20 351-****-8484-73 김보미 잔액1,124,000&keyword=농협@입금
 	}else{
 		$resgubun = "surfshop";
 	}
@@ -203,7 +203,7 @@ if(!$result_set){
 				$pointMsg = '\n  ▶ 탑승시간/위치 안내\n'.$busStopInfo.'\n';
 
 				$campStayName = "busConfirm1";
-				$kakaoMsg1 = '안녕하세요! 서프엔조이입니다.\n예약하신 양양셔틀버스 예약확정 안내입니다.\n\n서프엔조이 양양셔틀버스 예약정보\n  ▶ 예약번호 : '.$ResNumber.'\n  ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$pointMsg.$bbqMsg.'---------------------------------\n  ▶ 안내사항\n   - 이용일, 탑승시간, 탑승위치 꼭 부탁드립니다. \n   - 자세한 정류장 위치는 http://surfenjoy.com/surfbus 에서 확인하세요.\n\n  ▶ 문의\n    - 010.3308.6080\n    - http://pf.kakao.com/_HxmtMxl';
+				$kakaoMsg1 = '안녕하세요! 서프엔조이입니다.\n예약하신 양양셔틀버스 예약확정 안내입니다.\n\n서프엔조이 양양셔틀버스 예약정보\n  ▶ 예약번호 : '.$ResNumber.'\n  ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$pointMsg.$bbqMsg.'---------------------------------\n  ▶ 안내사항\n   - 이용일, 탑승시간, 탑승위치 꼭 부탁드립니다. \n   - 자세한 정류장 위치는 https://actrip.co.kr/surfbus 에서 확인하세요.\n\n  ▶ 문의\n    - 010.3308.6080\n    - http://pf.kakao.com/_HxmtMxl';
 
 				sendKakao($campStayName, "surfenjoy_busres1", $kakaoMsg1, $userPhone, $ResNumber, "surfbus", "link2", "link3");
 

@@ -241,7 +241,7 @@ if($count > 0){
 
 		$kakaoMsg = '안녕하세요! ['.$userName.']님\n2019 양양서핑 페스티벌 예약안내입니다.\n\n2019 양양서핑 페스티벌 자동취소\n  ▶ 예약자: '.$userName.'\n---------------------------------\n▶ 안내사항\n    - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n▶ 문의\n    - 02.512.9879';
 
-		$btnList = '"button1":{"type":"WL","name":"페스티벌 안내","url_mobile":"http://surfenjoy.com/yangfe"},"button2":{"type":"WL","name":"셔틀버스 안내","url_mobile":"http://surfenjoy.com/surfbus"},"button3":{"type":"WL","name":"서핑강습 안내","url_mobile":"http://surfenjoy.com/surfeast"},';
+		$btnList = '"button1":{"type":"WL","name":"페스티벌 안내","url_mobile":"https://actrip.co.kr/yangfe"},"button2":{"type":"WL","name":"셔틀버스 안내","url_mobile":"https://actrip.co.kr/surfbus"},"button3":{"type":"WL","name":"서핑강습 안내","url_mobile":"https://actrip.co.kr/surfeast"},';
 
 		$arryKakao = '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
 

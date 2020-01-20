@@ -5,15 +5,15 @@
 				<li><a href="/guide01.html">GUIDE01</a></li>
 				<li><a href="/guide02.htm">GUIDE02</a></li>
 			</ul></div-->
-		<div><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/guide_top_ban01.jpg"/></div>
+		<div><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/guide_top_ban01.jpg"/></div>
 
 		<!-- 타원형 메뉴 01 -->
 		<div style="width:100%;">
 			<ul class="ulcenter">
-				<li style="padding:20px 20px 10px 5px;width: 54px;height 54px;"><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/바베큐.jpg" /><br>바베큐</li>
-				<li style="padding:20px 10px 10px 10px;width: 54px;height 54px;"><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/샤워.jpg"/><br>샤워</li>
-				<li style="padding:20px 10px 10px 10px;width: 54px;height 54px;"><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/게스트하우스.jpg"/><br>숙소</li>
-				<li style="padding:20px 5px 10px 10px;width: 54px;height 54px;"><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/주차.jpg"/><br>주차</li>
+				<li style="padding:20px 20px 10px 5px;width: 54px;height 54px;"><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/바베큐.jpg" /><br>바베큐</li>
+				<li style="padding:20px 10px 10px 10px;width: 54px;height 54px;"><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/샤워.jpg"/><br>샤워</li>
+				<li style="padding:20px 10px 10px 10px;width: 54px;height 54px;"><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/게스트하우스.jpg"/><br>숙소</li>
+				<li style="padding:20px 5px 10px 10px;width: 54px;height 54px;"><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/주차.jpg"/><br>주차</li>
 			</ul>
 		</div>
 
@@ -25,7 +25,7 @@
 
 		<!-- 서프샵 메인 내용 시작 -->
 		<div class="hotel_area">
-			<div class="hotel_ban"><figure><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/hotel_ban01.jpg"/><figure></div>
+			<div class="hotel_ban"><figure><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/hotel_ban01.jpg"/><figure></div>
 			<div class="hotel_text_area">
 				<div class="hotel_text01">양양에서 가장 오래된 서핑샵</div>
 				<div class="hotel_text02">품격과 신뢰를 바탕으로 한 최고의 서비스를 제공</div>
@@ -69,7 +69,7 @@
 		<div>
 			<div class="left_article">
 				<div class="padding_right">
-					<img src="http://skinnz.godohosting.com/surfenjoy/surfer911/buffet_ban01.jpg" alt=""/>
+					<img src="https://surfenjoy.cdn3.cafe24.com/surfer911/buffet_ban01.jpg" alt=""/>
 					<div class="buffet_text">
 						<div class="buffet_text01">입문 강습</div>
 						<div class="buffet_text01_01">1인 : 80,000원</br><font color="#ffffff">0</font></div>
@@ -83,7 +83,7 @@
 			</div>
 			<div class="right_article">
 				<div class="padding_left">
-					<img src="http://skinnz.godohosting.com/surfenjoy/surfer911/buffet_ban02.jpg" alt=""/>
+					<img src="https://surfenjoy.cdn3.cafe24.com/surfer911/buffet_ban02.jpg" alt=""/>
 					<div class="buffet_text">
 						<div class="buffet_text01">레벨업 강습</br></div>
 						<div class="buffet_text01_01">1인 : 140,000원 2인 : 120,000원 </br>3인 : 100,000원</div>
@@ -119,7 +119,7 @@
 		<div class="insur_area">
 			<ul>
 				<li style="padding:0px;">
-					<div class="thumb hover01"><figure><img src="http://skinnz.godohosting.com/surfenjoy/surfer911/insur_ban03.jpg" alt=""/></figure></div>
+					<div class="thumb hover01"><figure><img src="https://surfenjoy.cdn3.cafe24.com/surfer911/insur_ban03.jpg" alt=""/></figure></div>
 					<div class="buffet_text">
 						<div class="buffet_text01"><?=$rowMain["shopname"]?> 위치 및 입금계좌</div>
 						<div class="buffet_text02">입금계좌 : <?=$rowMain["shopbank"]?></div>

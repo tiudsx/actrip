@@ -29,10 +29,10 @@ $j(document).ready(function(){
 	<!-- #container -->
     <div class="tab_container">
         <div id="tab1" class="tab_content">
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus03.jpg" class="placeholder2" style="cursor:pointer;padding-top:10px;" onclick="fnResView(true, '#tabmove', 30);" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus04.jpg" class="placeholder2" />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus05.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnResView(true, '#tabmove', 30);"  />
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus06.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus03.jpg" class="placeholder2" style="cursor:pointer;padding-top:10px;" onclick="fnResView(true, '#tabmove', 30);" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus04.jpg" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus05.jpg" class="placeholder2" style="cursor:pointer;" onclick="fnResView(true, '#tabmove', 30);"  />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus06.jpg" class="placeholder2" />
 
 			<span id="tabmove">&nbsp;</span>
 			<?include 'BusRes_SubTab3.php';?>

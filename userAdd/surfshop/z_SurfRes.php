@@ -129,7 +129,7 @@ var main = new Object();
 
 <div class="container" id="contenttop">
   <section>
-    <aside class="left_article"><img src="<?=$rowMain["shop_mainimg"]?>" onerror="this.src='http://skinnz.godohosting.com/surfenjoy/shop/none_500x500.jpg'" alt="" width="400" height="200" class="placeholder"/> </aside>
+    <aside class="left_article"><img src="<?=$rowMain["shop_mainimg"]?>" onerror="this.src='https://surfenjoy.cdn3.cafe24.com/shop/none_500x500.jpg'" alt="" width="400" height="200" class="placeholder"/> </aside>
     <article class="right_article">
 		<div style="padding-left:10px;">
 		
@@ -587,11 +587,11 @@ var main = new Object();
         </div>
         <!-- #tab2 -->
         <div id="tab2" class="tab_content" style="line-height:0;">
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq01.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq02.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq03.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq04.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/content/res_bbq05.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq01.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq02.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq03.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq04.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/content/res_bbq05.jpg" class="placeholder2" />
 
 			<?include 'SurfRes_Customer.php';?>
 		</div>

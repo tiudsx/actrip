@@ -94,7 +94,7 @@ for (var key in MARKER_SPRITE_POSITION) {
         position: position,
         title: key,
         icon: {
-            url: 'http://skinnz.godohosting.com/surfenjoy/bus/sp_pins_spot_v3.png',
+            url: 'https://surfenjoy.cdn3.cafe24.com/bus/sp_pins_spot_v3.png',
             size: new naver.maps.Size(24, 37),
             anchor: new naver.maps.Point(12, 37),
             origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
@@ -238,7 +238,7 @@ function onMouseOver(e) {
         seq2 = marker.get('seq2');
 
     marker.setIcon({
-        url: 'http://skinnz.godohosting.com/surfenjoy/bus/sp_pins_spot_v3_over.png',
+        url: 'https://surfenjoy.cdn3.cafe24.com/bus/sp_pins_spot_v3_over.png',
         size: new naver.maps.Size(24, 37),
         anchor: new naver.maps.Point(12, 37),
         origin: new naver.maps.Point(seq, seq2)
@@ -250,7 +250,7 @@ function onMouseOut(e) {
         seq2 = marker.get('seq2');
 
     marker.setIcon({
-        url: 'http://skinnz.godohosting.com/surfenjoy/bus/sp_pins_spot_v3.png',
+        url: 'https://surfenjoy.cdn3.cafe24.com/bus/sp_pins_spot_v3.png',
         size: new naver.maps.Size(24, 37),
         anchor: new naver.maps.Point(12, 37),
         origin: new naver.maps.Point(seq, seq2)

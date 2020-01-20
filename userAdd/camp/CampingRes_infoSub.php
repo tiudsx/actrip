@@ -95,7 +95,7 @@
 <?
 	while ($row = mysqli_fetch_assoc($result_setlist)){
 		echo 'jQuery("#seat'.$row['sLocation'].' input").attr("disabled", true);';
-		echo 'jQuery("#seat'.$row['sLocation'].' img").attr("src", "http://skinnz.godohosting.com/surfenjoy/camp/t_02.jpg");';
+		echo 'jQuery("#seat'.$row['sLocation'].' img").attr("src", "https://surfenjoy.cdn3.cafe24.com/camp/t_02.jpg");';
 	}
 ?>
     });

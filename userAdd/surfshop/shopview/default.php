@@ -43,7 +43,7 @@
 		<h1 style="font-size: 30px;padding-bottom:10px;" class="inner"><span><b>SURF SHOP 상세설명</b></span></h1>
 
 
-		<img src="http://skinnz.godohosting.com/surfenjoy/surf/1.jpg" class="placeholder3 inner">
+		<img src="https://surfenjoy.cdn3.cafe24.com/surf/1.jpg" class="placeholder3 inner">
 
 		<h1 style="font-size: 25px;padding-top:10px;" class="inner"><span><b>What is Surfing?</b></span></h1>
 		<span style="padding-bottom:10px;">
@@ -52,7 +52,7 @@
 			그러나 이 스포츠에 대한 이해와 지식이 필요하기에 꼭 서핑강습을 참가해야합니다<br><br>
 		</span>
 
-		<img src="http://skinnz.godohosting.com/surfenjoy/surf/2.jpg" class="placeholder3 inner">
+		<img src="https://surfenjoy.cdn3.cafe24.com/surf/2.jpg" class="placeholder3 inner">
 
 		<h1 style="font-size: 25px;padding-top:10px;" class="inner"><span><b>SURF &nbsp;LESSON &nbsp;+ &nbsp;RENTAL</b></span></h1>
 		<span style="padding-bottom:10px;">

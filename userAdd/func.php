@@ -62,40 +62,40 @@ function sendKakao($gubun, $tempName, $kakaoMsg, $userPhone, $ResNumber, $link1,
 	$arryKakao = '';
 	
 	if($tempName == "surfenjoy_res1"){
-		$btnList = '"button1":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+		$btnList = '"button1":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 	}else if($tempName == "surfenjoy_res2"){
-		$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"http://surfenjoy.com/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"http://surfenjoy.com/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"정류장안내","url_mobile":"http://surfenjoy.com/buspoint"},"button4":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+		$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"https://actrip.co.kr/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"정류장안내","url_mobile":"https://actrip.co.kr/buspoint"},"button4":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 	}else if($tempName == "surfenjoy_shop1"){
-		$btnList = '"button1":{"type":"WL","name":"취소확인","url_mobile":"http://surfenjoy.com/surfadminkakao?MainNumber='.$ResNumber.'"},';
+		$btnList = '"button1":{"type":"WL","name":"취소확인","url_mobile":"https://actrip.co.kr/surfadminkakao?MainNumber='.$ResNumber.'"},';
 	}else if($tempName == "surfenjoy_shop2"){
-		$btnList = '"button1":{"type":"WL","name":"승인처리","url_mobile":"http://surfenjoy.com/surfadminkakao?MainNumber='.$ResNumber.'"},';
+		$btnList = '"button1":{"type":"WL","name":"승인처리","url_mobile":"https://actrip.co.kr/surfadminkakao?MainNumber='.$ResNumber.'"},';
 	}else if($tempName == "surfenjoy_shop3"){
-		$btnList = '"button1":{"type":"WL","name":"확정 확인","url_mobile":"http://surfenjoy.com/surfadminkakao?MainNumber='.$ResNumber.'"},';
+		$btnList = '"button1":{"type":"WL","name":"확정 확인","url_mobile":"https://actrip.co.kr/surfadminkakao?MainNumber='.$ResNumber.'"},';
 	}else if($tempName == "surfenjoy_shop"){
-		$btnList = '"button1":{"type":"WL","name":"예약목록","url_mobile":"http://surfenjoy.com/camplist"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"http://surfenjoy.com/'.$link1.'?MainNumber='.$ResNumber.'"},';
+		$btnList = '"button1":{"type":"WL","name":"예약목록","url_mobile":"https://actrip.co.kr/camplist"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"https://actrip.co.kr/'.$link1.'?MainNumber='.$ResNumber.'"},';
 	}else if($tempName == "surfenjoy_busres1"){
-		$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"http://surfenjoy.com/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"http://surfenjoy.com/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"정류장안내","url_mobile":"http://surfenjoy.com/buspoint"},"button4":{"type":"WL","name":"서핑버스 위치보기","url_mobile":"http://surfenjoy.com/busgps"},"button5":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+		$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"https://actrip.co.kr/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"정류장안내","url_mobile":"https://actrip.co.kr/buspoint"},"button4":{"type":"WL","name":"서핑버스 위치보기","url_mobile":"https://actrip.co.kr/busgps"},"button5":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 	}else{
 		if($gubun == "busStay1_sol"){
 			$orderUrl = "solguestorder";
 		}else{
 			$orderUrl = "ordersearch";
 		}
-			$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"http://surfenjoy.com/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"http://surfenjoy.com/'.$orderUrl.'?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+			$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"https://actrip.co.kr/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$orderUrl.'?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 	}
 
 	$arryKakao .= '['.$arryKakao.'{"message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
 
 /*
 	if($gubun == "surfshop1" || $gubun == "surfshop3"){
-		$arryKakao .= '['.$arryKakao.'{"userId":"surfenjoy","message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'","button1":{"type":"WL","name":"예약목록","url_mobile":"http://surfenjoy.com/surfshopadmin"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"http://surfenjoy.com/surfadminkakao?MainNumber='.$ResNumber.'"},"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
+		$arryKakao .= '['.$arryKakao.'{"userId":"surfenjoy","message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'","button1":{"type":"WL","name":"예약목록","url_mobile":"https://actrip.co.kr/surfshopadmin"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"https://actrip.co.kr/surfadminkakao?MainNumber='.$ResNumber.'"},"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
 	}else if($gubun == "campshop1" || $gubun == "campshop2" || $gubun == "campshop3"){
-		$arryKakao .= '['.$arryKakao.'{"userId":"surfenjoy","message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'","button1":{"type":"WL","name":"예약목록","url_mobile":"http://surfenjoy.com/camplist"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"http://surfenjoy.com/'.$link1.'?MainNumber='.$ResNumber.'"},"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
+		$arryKakao .= '['.$arryKakao.'{"userId":"surfenjoy","message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'","button1":{"type":"WL","name":"예약목록","url_mobile":"https://actrip.co.kr/camplist"},"button2":{"type":"WL","name":"예약건 승인","url_mobile":"https://actrip.co.kr/'.$link1.'?MainNumber='.$ResNumber.'"},"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
 	}else{
 		if($tempName == "surfenjoy_res1"){
-			$btnList = '"button1":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+			$btnList = '"button1":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 		}else{
-			$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"http://surfenjoy.com/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"http://surfenjoy.com/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"자주묻는질문","url_mobile":"http://surfenjoy.com/surfFAQ"},';
+			$btnList = '"button1":{"type":"WL","name":"이용안내","url_mobile":"https://actrip.co.kr/'.$link1.'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/ordersearch?resNumber='.$ResNumber.'"},"button3":{"type":"WL","name":"자주묻는질문","url_mobile":"https://actrip.co.kr/surfFAQ"},';
 		}
 
 		$arryKakao .= '['.$arryKakao.'{"userId":"surfenjoy","message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
@@ -185,7 +185,7 @@ function sendMailContentSurf($arrMail){
     <tbody>
         <tr>
             <td height='58' valign='bottom' style='padding-bottom: 2px;'>
-                <a href='http://surfenjoy.com/' target='_blank'><img alt='' src='http://skinnz.godohosting.com/surfenjoy/logo/surfenjoylogo.png' border='0'></a>
+                <a href='https://actrip.co.kr/' target='_blank'><img alt='' src='https://surfenjoy.cdn3.cafe24.com/logo/actrip.png' border='0'></a>
             </td>
         </tr>
 		<tr>
@@ -220,7 +220,7 @@ function sendMailContentSurf($arrMail){
                             <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
-                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
+                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
                             </td>
                         </tr>
                         <tr>
@@ -363,7 +363,7 @@ $contents .= "<tr>
 }
 
 $contents .= "<tr>
-            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
+            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
                 <img src='http://www.smartix.co.kr/joinmail_img/03.png' border='0'></a>
             </td>
         </tr>
@@ -391,7 +391,7 @@ function sendMailContent($arrMail){
     <tbody>
         <tr>
             <td height='58' valign='bottom' style='padding-bottom: 2px;'>
-                <a href='http://surfenjoy.com/' target='_blank'><img alt='' src='http://skinnz.godohosting.com/surfenjoy/logo/surfenjoylogo.png' border='0'></a>
+                <a href='https://actrip.co.kr/' target='_blank'><img alt='' src='https://surfenjoy.cdn3.cafe24.com/logo/actrip.png' border='0'></a>
             </td>
         </tr>
 		<tr>
@@ -426,7 +426,7 @@ function sendMailContent($arrMail){
                             <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
-                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
+                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
                             </td>
                         </tr>
                         <tr>
@@ -523,7 +523,7 @@ function sendMailContent($arrMail){
             </td>
         </tr>
         <tr>
-            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
+            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
                 <img src='http://www.smartix.co.kr/joinmail_img/03.png' border='0'></a>
             </td>
         </tr>
@@ -551,7 +551,7 @@ function sendMailContentBus($arrMail){
     <tbody>
         <tr>
             <td height='58' valign='bottom' style='padding-bottom: 2px;'>
-                <a href='http://surfenjoy.com/' target='_blank'><img alt='' src='http://skinnz.godohosting.com/surfenjoy/logo/surfenjoylogo.png' border='0'></a>
+                <a href='https://actrip.co.kr/' target='_blank'><img alt='' src='https://surfenjoy.cdn3.cafe24.com/logo/actrip.png' border='0'></a>
             </td>
         </tr>
 		<tr>
@@ -586,7 +586,7 @@ function sendMailContentBus($arrMail){
                             <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
-                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
+                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
                             </td>
                         </tr>
                         <tr>
@@ -700,7 +700,7 @@ $contents .= "<tr>
 }
 
 $contents .= "<tr>
-            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='http://surfenjoy.com/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
+            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
                 <img src='http://www.smartix.co.kr/joinmail_img/03.png' border='0'></a>
             </td>
         </tr>
@@ -844,7 +844,7 @@ function fnInfoMemo($gubun, $display){
 			<div style="padding-bottom:15px;padding-left:5px;font-size:12px;line-height: 25px;">
 				<strong>문의전화 : '.sendTel('이준영').'</strong><br>
 				<strong>입금계좌 : 농협 / 351-1079-6271-13 / 전동한</strong><br>
-				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank" style="padding-top:5px;"><img src="http://skinnz.godohosting.com/surfenjoy/button/KakaoTalk_link.png" class="placeholder3"/></a>
+				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank" style="padding-top:5px;"><img src="https://surfenjoy.cdn3.cafe24.com/button/KakaoTalk_link.png" class="placeholder3"/></a>
 			</div>
 						</td>
 					</tr>
@@ -925,7 +925,7 @@ function fnInfoMemo($gubun, $display){
 			<div style="padding-bottom:15px;padding-left:5px;font-size:12px;line-height: 25px;">
 				<strong>문의전화 : 010-3308-6080</strong><br>
 				<strong>입금계좌 : 신한은행 / 389-02-188735 / 이승철</strong><br>
-				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/button/KakaoTalk_link.png" class="placeholder3"/></a>
+				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/button/KakaoTalk_link.png" class="placeholder3"/></a>
 			</div>';
 	}else if($gubun == 2){
 		$rtn = '

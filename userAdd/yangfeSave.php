@@ -161,7 +161,7 @@ if($param == "yangfeI"){
 
 		$kakaoMsg = '안녕하세요! ['.$userName.']님\n2019 양양서핑 페스티벌 예약안내입니다.\n\n2019 양양서핑 페스티벌 입금대기\n  ▶ 예약자: '.$userName.'\n  ▶ 신청구분: '.$userGubun2.'\n  ▶ 종목: '.$userGubun.'\n  ▶ 소속: '.$userClub.'\n'.$carMsg.$etcMsg.'---------------------------------\n▶ 안내사항\n    - 입금자명과 예약자명이 동일해야합니다.\n    - 입금자명 이외에 다른내용을 적으시면 안됩니다.\n    - 1시간 이내 미입금시 자동취소됩니다.\n\n▶입금계좌\n    - 참가/참관비용 : 4만원\n    - KEB하나은행 109-910025-52604 중앙일보(주).\n\n▶ 문의\n    - 02.512.9879';
 
-		$btnList = '"button1":{"type":"WL","name":"페스티벌 안내","url_mobile":"http://surfenjoy.com/yangfe"},"button2":{"type":"WL","name":"셔틀버스 안내","url_mobile":"http://surfenjoy.com/surfbus"},"button3":{"type":"WL","name":"서핑강습 안내","url_mobile":"http://surfenjoy.com/surfeast"},';
+		$btnList = '"button1":{"type":"WL","name":"페스티벌 안내","url_mobile":"https://actrip.co.kr/yangfe"},"button2":{"type":"WL","name":"셔틀버스 안내","url_mobile":"https://actrip.co.kr/surfbus"},"button3":{"type":"WL","name":"서핑강습 안내","url_mobile":"https://actrip.co.kr/surfeast"},';
 
 		$arryKakao = '['.$arryKakao.'{"message_type":"at","phn":"82'.substr(str_replace('-', '',$userPhone), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"'.str_replace('-', '',$userPhone).'","smsLmsTit":"'.$smsTitle.'","smsOnly":"N"}]';
 

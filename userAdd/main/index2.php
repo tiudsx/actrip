@@ -21,36 +21,36 @@ $(document).ready(function(){
 
 <!--div class="mainbxslider"> 
     <div class="bxslider"> 
-		<div><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_20181022.jpg" class="mainbanner1"></div>
-		<div><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_20181029.jpg" class="mainbanner1"></div> 
+		<div><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_20181022.jpg" class="mainbanner1"></div>
+		<div><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_20181029.jpg" class="mainbanner1"></div> 
     </div> 
 </div--> 
 
 <div class="mainbxslider"> 
     <div class="bxslider"> 
-		<div style="background:url(http://skinnz.godohosting.com/surfenjoy/banner/main_20181022.jpg) 50% 0 no-repeat;cursor:pointer;" class="mainbanner1" onclick="location.href='/surfbus'"></div>
-		<div style="background:url(http://skinnz.godohosting.com/surfenjoy/banner/main_20181029.jpg) 50% 0 no-repeat;display:none;cursor:pointer;" class="mainbanner1"  onclick="location.href='/campres'"></div> 
+		<div style="background:url(https://surfenjoy.cdn3.cafe24.com/banner/main_20181022.jpg) 50% 0 no-repeat;cursor:pointer;" class="mainbanner1" onclick="location.href='/surfbus'"></div>
+		<div style="background:url(https://surfenjoy.cdn3.cafe24.com/banner/main_20181029.jpg) 50% 0 no-repeat;display:none;cursor:pointer;" class="mainbanner1"  onclick="location.href='/campres'"></div> 
     </div> 
 </div> 
 
 <div class="mainbannerimg1"> 
     <div class="bxslider"> 
-		<div><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_20181022_m.jpg" class="" onclick="location.href='/surfbus'"/></div>
-		<div><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_20181029_m.jpg" class="" onclick="location.href='/campres'"/></div>
+		<div><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_20181022_m.jpg" class="" onclick="location.href='/surfbus'"/></div>
+		<div><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_20181029_m.jpg" class="" onclick="location.href='/campres'"/></div>
     </div> 
 </div>
 
 <!--div style="width:100%;">
 	<div class="mainarea1" style="text-align:center;">
 		<ul class="cTab">
-			<li><a href="/surfevent"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main01.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main01_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main01.png'"></a></li>
-			<li><a href="/surfbus"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main02.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main02_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main02.png'"></a></li>
-			<li><a href="/surfBBQ"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main07.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07.png'"></a></li>
-			<li><a href="/campres"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main03.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main03_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main03.png'"></a></li>
-			<li><a href="#"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main06.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main06_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main06.png'"></a></li>
-			<li><img src="http://skinnz.godohosting.com/surfenjoy/icon/main04.png" ></li>
-			<!--li><a href="/stayeast"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main04.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main04_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main04.png'"></a></li>
-			<li><a href="#"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main05.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main05_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main05.png'"></a></li-->
+			<li><a href="/surfevent"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main01.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main01_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main01.png'"></a></li>
+			<li><a href="/surfbus"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main02.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main02_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main02.png'"></a></li>
+			<li><a href="/surfBBQ"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main07.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07.png'"></a></li>
+			<li><a href="/campres"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main03.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main03_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main03.png'"></a></li>
+			<li><a href="#"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main06.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main06_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main06.png'"></a></li>
+			<li><img src="https://surfenjoy.cdn3.cafe24.com/icon/main04.png" ></li>
+			<!--li><a href="/stayeast"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main04.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main04_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main04.png'"></a></li>
+			<li><a href="#"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main05.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main05_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main05.png'"></a></li-->
 		<!--/ul>
 	</div>
 </div-->
@@ -136,23 +136,23 @@ $(document).ready(function(){
 </style>
 <div class="row">
     <div class="columns">
-      <p class="thumbnail_align"><a href="/surfevent"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main01.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main01_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main01.png'" class="thumbnail"></a></p>
+      <p class="thumbnail_align"><a href="/surfevent"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main01.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main01_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main01.png'" class="thumbnail"></a></p>
     </div>
     <div class="columns">
-      <p class="thumbnail_align"><a href="/surfbus"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main02.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main02_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main02.png'" class="thumbnail"></a></p>
+      <p class="thumbnail_align"><a href="/surfbus"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main02.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main02_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main02.png'" class="thumbnail"></a></p>
     </div>
     <div class="columns">
-      <p class="thumbnail_align"><a href="/surfBBQ"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main07.png" class="thumbnail" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07.png'"></a></p>
-	  <!--onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main07.png'" -->
+      <p class="thumbnail_align"><a href="/surfBBQ"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main07.png" class="thumbnail" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07.png'"></a></p>
+	  <!--onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main07.png'" -->
     </div>
     <div class="columns">
-      <p class="thumbnail_align"><a href="/campres"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main03.png" onmouseover="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main03_on.png'" onmouseout="this.src='http://skinnz.godohosting.com/surfenjoy/icon/main03.png'" class="thumbnail"></a></p>
+      <p class="thumbnail_align"><a href="/campres"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main03.png" onmouseover="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main03_on.png'" onmouseout="this.src='https://surfenjoy.cdn3.cafe24.com/icon/main03.png'" class="thumbnail"></a></p>
     </div>
     <div class="columns">
-      <p class="thumbnail_align"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main06.png" class="thumbnail" style="opacity:0.5"></p>
+      <p class="thumbnail_align"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main06.png" class="thumbnail" style="opacity:0.5"></p>
     </div>
     <div class="columns">
-      <p class="thumbnail_align"><img src="http://skinnz.godohosting.com/surfenjoy/icon/main04.png" class="thumbnail"></p>
+      <p class="thumbnail_align"><img src="https://surfenjoy.cdn3.cafe24.com/icon/main04.png" class="thumbnail"></p>
     </div>
   </div>
 
@@ -175,13 +175,13 @@ $(document).ready(function(){
 			<table class="mainbanner1" style="width:100%;margin-bottom:5px;border-spacing:0;border-collapse:collapse;" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
-						<td rowspan="2"><a href="/surfbus"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_1.jpg" class="placeholder2"></a></td>
-						<td><a href="/surfevent"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_2.jpg" class="placeholder2"></a></td>
-						<td><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_3.jpg" class="placeholder2"></td>
+						<td rowspan="2"><a href="/surfbus"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_1.jpg" class="placeholder2"></a></td>
+						<td><a href="/surfevent"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_2.jpg" class="placeholder2"></a></td>
+						<td><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_3.jpg" class="placeholder2"></td>
 					</tr>
 					<tr>
-						<td><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_4.jpg" class="placeholder2"></td>
-						<td><a href="https://www.instagram.com/surfenjoy.sc/" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_5.jpg" class="placeholder2"></a></td>
+						<td><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_4.jpg" class="placeholder2"></td>
+						<td><a href="https://www.instagram.com/surfenjoy.sc/" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_5.jpg" class="placeholder2"></a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -189,15 +189,15 @@ $(document).ready(function(){
 			<table class="mainbannerimg1" style="width:100%;margin-bottom:5px;border-spacing:0;table-layout:fixed;" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
-						<td colspan="2"><a href="/surfbus"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_1.jpg" class="placeholder2"></a></td>
+						<td colspan="2"><a href="/surfbus"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_1.jpg" class="placeholder2"></a></td>
 					</tr>
 					<tr>
-						<td><a href="/surfevent"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_2.jpg" class="placeholder2"></a></td>
-						<td><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_3.jpg" class="placeholder2"></td>
+						<td><a href="/surfevent"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_2.jpg" class="placeholder2"></a></td>
+						<td><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_3.jpg" class="placeholder2"></td>
 					</tr>
 					<tr>
-						<td><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_4.jpg" class="placeholder2"></td>
-						<td><a href="https://www.instagram.com/surfenjoy.sc/" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/banner/main_5.jpg" class="placeholder2"></a></td>
+						<td><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_4.jpg" class="placeholder2"></td>
+						<td><a href="https://www.instagram.com/surfenjoy.sc/" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/banner/main_5.jpg" class="placeholder2"></a></td>
 					</tr>
 				</tbody>
 			</table>

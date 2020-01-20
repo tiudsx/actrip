@@ -409,7 +409,7 @@ function fnBusPoint(gubun, num, obj, pointname){
 function fnBusMap2(gubun, num, busnum, pointname){
 	$j("#mapimg").css("display", "block");
 	$j("#ifrmBusMap").css("display", "block");
-	$j("#mapimg").attr("src", "http://skinnz.godohosting.com/surfenjoy/busimg/" + (gubun + busnum).replace('S2', 'S1') + "_" + num + ".JPG?v=6");
+	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + (gubun + busnum).replace('S2', 'S1') + "_" + num + ".JPG?v=6");
 
 	var obj = $j("#ifrmBusMap").get(0);
 	var objDoc = obj.contentWindow || obj.contentDocument;
@@ -421,7 +421,7 @@ function fnBusMap2(gubun, num, busnum, pointname){
 function fnBusMap(gubun, num, busnum, pointname){
 	$j("#mapimg").css("display", "block");
 	$j("#ifrmBusMap").css("display", "block");
-	$j("#mapimg").attr("src", "http://skinnz.godohosting.com/surfenjoy/busimg/" + gubun + busnum + "_" + num + ".JPG?v=7");
+	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + gubun + busnum + "_" + num + ".JPG?v=7");
 
 	var obj = $j("#ifrmBusMap").get(0);
 	var objDoc = obj.contentWindow || obj.contentDocument;

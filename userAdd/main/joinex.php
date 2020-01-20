@@ -294,7 +294,7 @@
 
 <p class="s_con3" style="padding:0px;border:0px;font-size:15px;vertical-align:baseline;letter-spacing:-.5px;color:rgb(118,118,118);line-height:30px;">&nbsp;</p>
 
-<p class="s_con3" style="padding:0px;border:0px;font-size:15px;vertical-align:baseline;letter-spacing:-.5px;color:rgb(118,118,118);line-height:30px;">본 개인정보 처리방침은 당사의 사이트 중 &lsquo;서프엔조이(http://surfenjoy.com/)&rsquo; &nbsp;및 제반서비스 (모바일 웹/모바일 서비스에 포함)에 적용되며, 그 외 다른 사이트는 별개의 개인정보 처리방침이 적용될 수 있습니다.</p>
+<p class="s_con3" style="padding:0px;border:0px;font-size:15px;vertical-align:baseline;letter-spacing:-.5px;color:rgb(118,118,118);line-height:30px;">본 개인정보 처리방침은 당사의 사이트 중 &lsquo;서프엔조이(https://actrip.co.kr/)&rsquo; &nbsp;및 제반서비스 (모바일 웹/모바일 서비스에 포함)에 적용되며, 그 외 다른 사이트는 별개의 개인정보 처리방침이 적용될 수 있습니다.</p>
 
 <p class="s_con3" style="padding:0px;border:0px;font-size:15px;vertical-align:baseline;letter-spacing:-.5px;color:rgb(118,118,118);line-height:30px;"><br style="margin:0px;padding:0px;letter-spacing:-.26px;color:rgb(102,102,102);font-size:13px;" />
 &nbsp;</p>

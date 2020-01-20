@@ -19,7 +19,7 @@ $j(document).ready(function(){
 
 <div class="container" id="contenttop">
   <section>
-    <aside class="left_article"><img src="http://skinnz.godohosting.com/surfenjoy/bus/busmain.jpg" alt="" width="400" height="200" class="placeholder"/> </aside>
+    <aside class="left_article"><img src="https://surfenjoy.cdn3.cafe24.com/bus/busmain.jpg" alt="" width="400" height="200" class="placeholder"/> </aside>
     <article class="right_article">
 		<div style="padding-left:10px;">
 		<?include 'BusRes_SubDate.php';?>
@@ -44,7 +44,7 @@ $j(document).ready(function(){
 	<!-- #container -->
     <div class="tab_container">
         <div id="tab1" class="tab_content" style="line-height:0;">
-            <img src="http://skinnz.godohosting.com/surfenjoy/content/res_bus01.png" class="placeholder2" />
+            <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus01.png" class="placeholder2" />
         </div>
 		<div id="tab5" class="tab_content">
    			<div class="bd_tl inner" style="width:100%;">
@@ -54,11 +54,11 @@ $j(document).ready(function(){
         </div>
         <!-- #tab1 -->
         <div id="tab2" class="tab_content" style="line-height:0;">
-			<img src="http://skinnz.godohosting.com/surfenjoy/sol/sol3_11.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/sol/sol3_12.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/sol/sol3_14.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/sol/sol3_15.jpg" class="placeholder2" />
-			<img src="http://skinnz.godohosting.com/surfenjoy/sol/sol3_16.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/sol/sol3_11.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/sol/sol3_12.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/sol/sol3_14.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/sol/sol3_15.jpg" class="placeholder2" />
+			<img src="https://surfenjoy.cdn3.cafe24.com/sol/sol3_16.jpg" class="placeholder2" />
 		</div>
         <!-- #tab2 -->
         <div id="tab3" class="tab_content">

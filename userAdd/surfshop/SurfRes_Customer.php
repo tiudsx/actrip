@@ -2,7 +2,7 @@
 			<div style="padding-bottom:15px;padding-left:5px;font-size:12px;line-height: 25px;">
 				<strong>문의전화 : 010-3308-6080</strong><br>
 				<!--strong>입금계좌 : 신한은행 / 389-02-188735 / 이승철</strong><br-->
-				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="http://skinnz.godohosting.com/surfenjoy/button/KakaoTalk_link.png" class="placeholder3"/></a>
+				<a href="http://pf.kakao.com/_HxmtMxl" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/button/KakaoTalk_link.png" class="placeholder3"/></a>
 			</div>
 
 			<!--div class="insur_area2">
