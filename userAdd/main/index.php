@@ -3,8 +3,8 @@
 <script src="jquery.bxslider.min.js"></script> 
 
 <script> 
-$(document).ready(function(){ 
-	var main = $('.bxslider').bxSlider({ 
+$j(document).ready(function(){ 
+	var main = $j('.bxslider').bxSlider({ 
 		mode: 'fade', 
 		auto: true,	//자동으로 슬라이드 
 		controls : true,	//좌우 화살표	

@@ -107,8 +107,6 @@ if($pcmobile){
 $folderUrl = "/userAdd/camp";
 ?>
 <script>
-	var $j = jQuery.noConflict();
-
 	var folderRoot = "/userAdd/camp";
 </script>
 <link rel="stylesheet" type="text/css" href="/userAdd/script/common.css?v=1" />

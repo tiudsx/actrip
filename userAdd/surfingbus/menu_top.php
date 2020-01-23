@@ -19,8 +19,6 @@ if($pcmobile){
 $folderUrl = "/userAdd/surfingbus";
 ?>
 <script>
-	var $j = jQuery.noConflict();
-
 	var folderBus = "surfingbus";
 	var folderBusRoot = "/userAdd/surfingbus";
 </script>

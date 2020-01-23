@@ -7,8 +7,6 @@ include __DIR__.'/../func.php';
 $folderUrl = "/userAdd/surfshop";
 ?>
 <script>
-	var $j = jQuery.noConflict();
-
 	var folderBus = "surfshop";
 	var folderBusRoot = "/userAdd/surfshop";
 </script>

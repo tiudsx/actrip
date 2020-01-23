@@ -18,8 +18,6 @@ if($pcmobile){
 $folderUrl = "/userAdd/order";
 ?>
 <script>
-	var $j = jQuery.noConflict();
-
 	var folderRoot = "/userAdd/order";
 </script>
 <link rel="stylesheet" type="text/css" href="/userAdd/script/common.css?v=1" />

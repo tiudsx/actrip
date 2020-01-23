@@ -188,7 +188,7 @@
 		.allmenu_list .allmenu_left_margin{float:left; width:22px; height:2px;}/*좌측마진값*/
 		/*└(1,2차그룹 묶음)*/
 		.allmenu_list ul.allmenu_ul{overflow:hidden;}
-		.allmenu_list li.section_group{float:left; padding-right:49px;}}/*사이간격*/
+		.allmenu_list li.section_group{float:left; padding-right:49px;}/*사이간격*/
 		.allmenu_list li.section_group:first-child{padding-left:0;}
 		/*└(1차)*/
 		.allmenu_list a.section_1dep{display:block; color:#fff; padding-bottom:4px; font-size:13px; font-weight:700;}

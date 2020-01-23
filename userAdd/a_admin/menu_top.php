@@ -7,8 +7,6 @@ $folderUrlName = "a_admin";
 $folderUrl = "/userAdd/a_admin";
 ?>
 <script>
-	var $j = jQuery.noConflict();
-
 	var folderBus = "<?=folderUrlName?>";
 	var folderBusRoot = "<?=$folderUrl?>";
 </script>

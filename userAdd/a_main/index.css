@@ -1,23 +1,91 @@
 @charset "UTF-8";
 
-/*PC 영역*/
-@media (min-width: 769px) {
-	.gpe_allcon_wrap0{width:100%;}
-}
-
-/*모바일 영역*/
-@media all and (max-width:860px){
-	.gpe_contents{padding:0px;}
-}
-
-@media all and (max-width:768px){
-	.gpe_contents{padding:0px;}
-}
-
 .placeholder {
 	width: 100%;
 	height: auto;
 }
-
-
 .text-center {text-align: center;}
+.titlebanner {
+	position: relative;
+	width: 100%;
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+}
+
+ul{padding-inline-start:0px;padding:0px;}
+
+.inner, .ulcenter, .ulbanner {text-align: center;}
+.centered {position: relative; display: inline-block; text-align:left;}
+.ulcenter li, .ulbanner li {display:inline-block;zoom:1;*display:inline;}
+
+.mainbannerimg1 {
+	display: grid;
+	grid-template-rows: auto;
+	justify-content: center;
+	grid-template-columns: 2fr 1fr 1fr;
+	max-width: 1196px;
+	width: 100%;
+	margin: 0 auto;
+}
+.item:nth-of-type(1) {
+	grid-row: span 2;
+}
+.item:nth-of-type(3) {
+	grid-column: 3;
+}
+.mainbannerimg1 img {
+	display: block;
+	width: 100%;
+}
+
+/*PC 영역*/
+@media (min-width: 769px) {
+	.gpe_allcon_wrap0{width:100%;}
+	.titlebanner {
+		height:320px;
+		background-image:url(https://surfenjoy.cdn3.cafe24.com/banner/main_20181022.jpg);
+	}
+}
+
+/*모바일 영역*/
+@media all and (max-width:768px){
+	.gpe_contents{padding:0px;}
+
+	.titlebanner {
+		height:160px !important;
+		background-image:url(https://surfenjoy.cdn3.cafe24.com/banner/main_20181022_m.jpg);
+	}
+
+	.mainbannerimg1 {
+		grid-template-columns: 1fr 1fr;
+		width: 100%;
+	}
+	.item:nth-of-type(1) {
+		grid-column: span 2;
+	}
+	.item:nth-of-type(3) {
+		grid-column: 2;
+	}
+
+	.ulcenter img {
+		width: 80%;
+		margin-left: auto;
+	}
+
+	.ulcenter li {padding:5px;}
+}
+
+/*PC 영역*/
+@media (min-width: 1001px) {
+	.ulcenter li {padding:10px 30px 10px 30px;}
+	.ulbanner table{width:100%;}
+}
+@media (min-width: 876px) and (max-width: 1000px) {
+	.ulcenter li {padding:10px 20px 10px 20px;}
+	.ulbanner table{width:100%;}
+}
+@media (min-width: 768px) and (max-width: 875px) {
+	.ulcenter li {padding:10px 10px 10px 10px;}
+	.ulbanner table{width:100%;}
+}
