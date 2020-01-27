@@ -83,7 +83,7 @@
 	.layG_munu_MobileBtn i{font-size:28px; color:#5fcfb9;}
 	/*[하단_모바일버튼]	*/
 	.layG_munu_MobileBtn_b{
-	position:fixed; right:-5px; bottom:80px; width:45px; height:34px; line-height:17px; text-align:center; padding-right:2px; cursor:pointer; display:initial; z-index:3;
+	position:fixed; /*right:-5px;*/ bottom:80px; width:45px; height:34px; line-height:17px; text-align:center; padding-right:2px; cursor:pointer; display:initial; z-index:3;
 	}
 	.layG_munu_MobileBtn_b i{font-size:24px; color:#fff;}
 
@@ -107,7 +107,7 @@
 
 /*로고+로그인+메뉴+검색(gnb1)*/
 	.gnb1_area_wrap00{position:relative; background-color:#f92f24; z-index:2;}/*wrap0*/
-	.gnb1_area_wrap0{position:relative; margin:0 auto; width:1024px; height:94px; z-index:2;}/*wrap0*/
+	.gnb1_area_wrap0{position:relative; margin:0 auto; height:52px; width:100% !important;}/*wrap0*/
 		.gnb1_area_wrap0 ul{list-style:none; margin:0; padding:0;}
 		.gnb1_area_wrap0 p{margin:0; padding:0;}
 		.gnb1_area_wrap0 a{text-decoration:none; font-size:12px;}
@@ -374,7 +374,7 @@
 
 /*풋터*/
 	/*유틸메뉴*/
-	.footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; z-index:1;}/*wrap00*/
+	.footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; }/*wrap00*/
 	.footer_Util_wrap0{position:relative; margin:0 auto; width:1024px; padding:18px 0 18px 0;}/*wrap0*/
 	.footer_Util_wrap0 ul{list-style:none; margin:0; padding:0;}
 	.footer_Util_wrap0 a{text-decoration:none;}
