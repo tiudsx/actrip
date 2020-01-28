@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /*기본설정*/
-html, body, iframe, h1, h2, h3, h4, h5, h6, a, img, dl, dt, dd, fieldset, form, input, label, table, caption, tbody, tfoot, thead, tr, th, td, embed, hgroup{margin:0; padding:0;}
+html, body, iframe, h1, h2, h3, h4, h5, h6, a, img, dl, dt, dd, fieldset, form, input, label, table, caption, tbody, tfoot, thead, tr, th, td, embed, hgroup{margin:0; padding:0;line-height: 1.25em;}
 img{border:0;} 
 table{border-collapse:separate; border-spacing:1;}
 :focus{outline:0;}
@@ -34,10 +34,10 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
 .pd_top_80{padding-top:50px;}
 
 .wrap .top_bn_zone{height:50px; background:#777; display:;}
-.wrap .top_fix_zone{height:50px;}
+.wrap .top_fix_zone{height:50px;z-index: 1;}
 .wrap .top_con_zone{max-width: 800px;
     margin-left: auto;
-    margin-right: auto;height:1500px; background:#ededed; color:#888; text-align:center; font-size:70px;}
+    margin-right: auto;height:1500px; color:#888; text-align:center; }
 .topheader {
     height: 49px;
     background-color: white;
