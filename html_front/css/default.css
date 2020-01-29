@@ -1,0 +1,152 @@
+@charset "utf-8";
+
+/*기본설정*/
+html, body, iframe, h1, h2, h3, h4, h5, h6, a, img, dl, dt, dd, fieldset, form, input, label, table, caption, tbody, tfoot, thead, tr, th, td, embed, hgroup{margin:0; padding:0;line-height: 1.25em;}
+img{border:0;} 
+table{border-collapse:separate; border-spacing:1;}
+:focus{outline:0;}
+/*공통padding버그*/
+.gpe_contents_box, .gpe_search .inputText, .gpe_search .gpe_search_key, .gpe_munu li.subnav_d02 a, .gpe_munu li.subnav_d03 a, li.gpe_myMenu_relative>ul>li>a{
+-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;
+}
+
+/* Hyper Link */
+a, a:link, a:visited, a:active, a:hover{text-decoration:none}
+
+html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크롤 show/hide*/
+
+.container {
+	background-color: #FFFFFF;
+	max-width: 768px;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom-width: 0px;
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+.wrap{width:100%; text-align:center; font-size:20px; font-weight:700;}
+    
+.top_bar_fix{position:fixed; top:0; left:0; width:100%;}
+.pd_top_80{padding-top:50px;}
+
+.wrap .top_bn_zone{height:50px; background:#777;}
+.wrap .top_fix_zone{height:50px;z-index: 1;}
+.wrap .top_area_zone{max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;color:#888; text-align:center;}
+.wrap .top_area_zone section {width:100%;text-align:left;}
+
+.wrap .top_con_zone{max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;min-height:300px; color:#888; text-align:center;padding:6px;}
+.wrap .top_con_zone section {width:100%;text-align:left;padding-bottom: 10px;}
+.topheader {
+    height: 49px;
+    background-color: white;
+    border-bottom: 1px solid #f1f1f1;
+}
+.gpe_logo{
+    padding-top: 10px;
+}
+    
+/*풋터*/
+	/*유틸메뉴*/
+	.footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; margin-top: 10px;}
+	.footer_Util_wrap0{position:relative; margin:0 auto; width:100% !important; padding:18px 0 18px 0;}/*wrap0*/
+	.footer_Util_wrap0 ul{list-style:none; margin:0; padding:0;}
+	/*└[유틸메뉴]*/
+	.gpe_utilMenu{position:relative; text-align:center;}
+	.gpe_utilMenu>ul li{display:inline; padding:0 7px 0 8px; }
+	.gpe_utilMenu>ul li:first-child{border-left:0;}
+	.gpe_utilMenu>ul li a{color:#525252; font-size:11px;}
+	.gpe_utilMenu>ul li a:hover{text-decoration:underline;}
+	/*└[카피라이터]*/
+	.gpe_copytxt{position:relative; text-align:center; padding:16px 0 0 0;}
+    .gpe_copytxt p{margin:0; padding:0; line-height:15px; font-size:12px; color:#868585;}
+
+
+/*상단*/
+.topheader {position:fixed;width: 100%;}
+
+.fixedwidth{max-width: 768px;margin-left: auto;margin-right: auto;}
+.gpe_logo{text-align: left;}
+
+.layG_kakao {position:fixed;width: 100%;bottom:100px; z-index:1;}
+.kakaobtn{text-align: right;}
+
+.con_footer {position:fixed;width: 100%;bottom:0px;background-color: white;z-index:1;}
+.resbottom {padding-top: 10px;text-align: center;height: 30px;background-color: white;border-top:0px solid #f1f1f1;}
+
+.area_slidemenu{background-color: white;display: none;max-width:800px;height: 400px;margin-top: 0px;position: absolute;z-index: 2;}
+.areaname {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 2;
+    color: #2e2e2e;
+}
+.areadown {
+    cursor: pointer;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 1;
+    background: url(http://yaimg.yanolja.com/joy/sunny/static/images/ic-dropdown-down-24.svg) no-repeat;
+}
+
+.closebtn {
+    text-align: right;
+}
+.closebtn img {
+    cursor: pointer;
+}
+
+.notice{color:#2e2e2e;
+    line-height: 0.7rem;}
+.notice ul{padding-inline-start:3px;}
+.notice .noticeline:before {
+    content: "";
+    background: #f2f2f2;
+    height: 1px;
+    display: block;
+    position: relative;
+    top: 0.5rem;
+}
+
+.notice .noticeline:after {
+    content: "";
+    background: #f2f2f2;
+    height: 1px;
+    display: block;
+    position: relative;
+    bottom: 0.5rem;
+}
+
+
+.noticetxt {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.noticesub {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.litxt {
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-top: .8rem;
+    color: #616161;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.litxt:before {
+    font-size: 0.5rem;
+    content: "\2022";
+    padding: 0 .4rem;
+}
