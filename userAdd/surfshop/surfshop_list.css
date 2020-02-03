@@ -73,7 +73,7 @@ a {
 }
 
 /*모바일 영역*/
-@media all and (max-width:768px){
+@media all and (max-width:800px){
 	.recommends-list .recommend-item .info-box .title-rap .title-text{font-size:15px;}
 	.title-text span{height:15px;}
 	.recommends-list li:nth-child(1) { padding: 0px 0px 5px 0px;}
