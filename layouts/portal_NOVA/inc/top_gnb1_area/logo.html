@@ -1,17 +1,10 @@
 <style type="text/css">
 	.gpe_logo{
-		padding-top: 10px;
-		width: 100%;
-		text-align: center;
-		z-index: 1;
+	<!--@if($layout_info->logo_padding_top)-->padding-top:{$layout_info->logo_padding_top}px;<!--@end-->
+	<!--@if($layout_info->logo_padding_left)-->padding-left:{$layout_info->logo_padding_left}px;<!--@end-->
 	}
 </style>
 
-<div class="topheader" style="display: block;">
-	<div class="gpe_logo">
-		<a href="https://actrip.co.kr"><img src="https://actrip.co.kr/files/attach/images/138/1f86816c684b095b4ff6a170de1f34ae.png" alt="로고"></a>
-	</div>
-
-	<div class="layG_munu_MobileBtn layG_iecss3">	
-		<i class="fa fa-bars" onclick="jQuery('.layG_mobileM_G_bg').on('touchmove', false); jQuery('.layG_mobileM_G_bg, .layG_mobileM_G').fadeToggle(); jQuery('html').addClass('sb-scroll-lock');"></i></div>
+<div class="gpe_logo">
+	<a href="https://actrip.co.kr"><img src="https://actrip.co.kr/files/attach/images/138/1f86816c684b095b4ff6a170de1f34ae.png" alt="로고"></a>
 </div>

@@ -32,7 +32,6 @@
             <!--//로그인-->
             <!--회원가입-->
             <li>
-                <!--@if($logged_info->is_admin == 'AY')-->
                 <a <!--@if(!$is_logged)-->href="{getUrl('act','dispMemberSignUpForm')}"<!--@else-->onclick="jQuery('.Mem_popup').fadeToggle(); jQuery('.Lang_popup').hide();" style="cursor:pointer;"<!--@end--> class="Mem">
 					<i class="fa fa-check-square-o"></i>
 					<!--@if($lang_type=='ko')-->
@@ -40,17 +39,7 @@
 					<!--@elseif($lang_type=='en')-->
 						<!--@if(!$is_logged)-->JOIN<!--@else-->INFO<!--@end-->
 					<!--@end-->
-                </a>
-                 <!--@else-->
-                <a <!--@if(!$is_logged)-->href="{getUrl('act','dispMemberSignUpForm')}"<!--@else-->href="{getUrl('act','dispMemberInfo')}" style="cursor:pointer;"<!--@end--> class="Mem">
-					<i class="fa fa-check-square-o"></i>
-					<!--@if($lang_type=='ko')-->
-						<!--@if(!$is_logged)-->회원가입<!--@else-->회원정보<!--@end-->
-					<!--@elseif($lang_type=='en')-->
-						<!--@if(!$is_logged)-->JOIN<!--@else-->INFO<!--@end-->
-					<!--@end-->
-                </a>
-                 <!--@end-->
+				</a>
                 <ul class="Mem_popup" style="right:0;">
                     <li style="float:none; width:0; border-right:0;"><span class="triang" style="top:-10px; right:48%; border-width:6px; border-color:transparent transparent #656565 transparent;"></span></li>
                     <!--@foreach($logged_info->menu_list as $key => $val)-->
