@@ -33,7 +33,7 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
 .pd_top_80{padding-top:50px;}
 
 .wrap .top_bn_zone{height:50px; background:#777;}
-.wrap .top_fix_zone{height:50px;z-index: 1;}
+.wrap .top_fix_zone{height:35px;z-index: 1;}
 .wrap .top_area_zone{max-width: 768px;
     margin-left: auto;
     margin-right: auto;color:#888; text-align:center;}
@@ -44,12 +44,12 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
     margin-right: auto;min-height:300px; color:#888; text-align:center;padding:6px;}
 .wrap .top_con_zone section {width:100%;text-align:left;padding-bottom: 10px;}
 .topheader {
-    height: 49px;
+    height: 34px;
     background-color: white;
     border-bottom: 1px solid #f1f1f1;
 }
 .gpe_logo{
-    padding-top: 10px;
+    padding-top: 7px;
 }
     
 /*풋터*/
@@ -104,49 +104,13 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
     cursor: pointer;
 }
 
-.notice{color:#2e2e2e;
-    line-height: 0.7rem;}
-.notice ul{padding-inline-start:3px;}
-.notice .noticeline:before {
-    content: "";
-    background: #f2f2f2;
-    height: 1px;
-    display: block;
-    position: relative;
-    top: 0.5rem;
+.placeholder {
+	width: 100%;
+	height: auto;
 }
 
-.notice .noticeline:after {
-    content: "";
-    background: #f2f2f2;
-    height: 1px;
-    display: block;
-    position: relative;
-    bottom: 0.5rem;
-}
-
-
-.noticetxt {
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.noticesub {
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.litxt {
-    font-weight: 500;
-    font-size: 0.8rem;
-    margin-top: .8rem;
-    color: #616161;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-}
-.litxt:before {
-    font-size: 0.5rem;
-    content: "\2022";
-    padding: 0 .4rem;
+.sildeing{position:absolute;bottom:80px;display: none;}
+.sildeing table {
+    border-spacing: 0;
+    border-collapse: collapse;
 }
