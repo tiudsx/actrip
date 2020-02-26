@@ -19,8 +19,14 @@
 	<input type="hidden" name="act" value="procSocialxeInputAddInfo" />
 	<input type="hidden" name="xe_validator_id" value="modules/socialxe/input_add_info/1" />
 	<div class="agreement" cond="in_array('agreement',$config->sns_input_add_info)">
+		<div style="height:30px;">이용약관 동의</div>
 		<div class="text">
-			{$member_config->agreement}
+			<!--{$member_config->agreement}-->
+			<iframe frameborder="0" height="100%" src="/userAdd/a_main/join_1.php" width="100%"></iframe>
+		</div>
+		<div style="height:30px;padding-top: 10px;">개인정보 취급 방침</div>
+		<div class="text" >
+			<iframe frameborder="0" height="100%" src="/userAdd/a_main/join_2.php" width="100%"></iframe>
 		</div>
 		<div class="confirm">
 			<label for="accept_agree">
