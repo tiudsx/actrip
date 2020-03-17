@@ -60,6 +60,29 @@ function checkVisible(elm, eval) {
     if (eval == "above") return ((y < (viewportHeight + scrolltop)));
 }
 
+function fnResViewBus(bool, objid, topCnt, obj) {
+    $j(".vip-tabnavi li").removeClass("on");
+    $j(obj).addClass("on");
+
+    if(bool){
+        $j("#view_tab1").css("display", "block");
+        $j("#view_tab2").css("display", "none");
+        $j("#view_tab3").css("display", "none");
+    }else{
+        $j("#view_tab1").css("display", "none");
+
+        if(objid == "#view_tab2"){
+            $j("#view_tab2").css("display", "block");
+            $j("#view_tab3").css("display", "none");
+        }else{
+            $j("#view_tab2").css("display", "none");
+            $j("#view_tab3").css("display", "block");
+        }
+    }
+
+    fnMapView(objid, topCnt);
+}
+
 function fnResView(bool, objid, topCnt, obj) {
     $j(".vip-tabnavi li").removeClass("on");
     $j(obj).addClass("on");
