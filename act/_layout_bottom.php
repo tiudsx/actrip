@@ -1,16 +1,21 @@
+<div class="layG_kakao">
+    <div class="fixedwidth kakaobtn" style="padding-right:15px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="width: 38px;height: 38px;"></a>
+    </div>
+</div>
+
 <div class="footer_Util_wrap00">
 	<div class="footer_Util_wrap0">
 		<!--유틸메뉴-->
 		<div class="gpe_utilMenu">
 			<ul>
 				<li>
-					<a href="https://actrip.co.kr/surfenjoyservice">서비스이용약관</a>
+					<a href="/service">서비스이용약관</a>
 				</li>
 				<li>
-					<a href="https://actrip.co.kr/surfenjoyprivacy">개인정보취급방침</a>
+					<a href="/privacy">개인정보취급방침</a>
 				</li>
 				<li>
-					<a href="https://actrip.co.kr/surfenjoyyouth">청소년보호정책</a>
+					<a href="/youth">청소년보호정책</a>
 				</li>
 			</ul>
 		</div>
@@ -32,8 +37,8 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="js/gnbscript.js"></script>
+<script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act/js/gnbscript.js"></script>
 
 <!-- Swiper JS -->
-<script src="js/swiper.min.js"></script>
+<script src="/act/js/swiper.min.js"></script>

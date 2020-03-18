@@ -132,7 +132,7 @@ body{width: 100%; height: 100%; background-color: #f8f8f8;}
     margin: 0 auto 1.2rem;
     max-height: 20.5rem;
     position: relative;}
-#staticBnr .visual{background: url(../images/visual.jpg) 50% 50% no-repeat; background-size: auto 20.5rem; display: block; height: 20.5rem; text-indent: -9999px;}
+#staticBnr .visual{background: url(/act/images/visual.jpg) 50% 50% no-repeat; background-size: auto 20.5rem; display: block; height: 20.5rem; text-indent: -9999px;}
 
 @media screen and (min-width: 640px){
     #hashtag .tagBox>a{width: 30%; margin: 1%;}

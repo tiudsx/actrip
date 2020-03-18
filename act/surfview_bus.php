@@ -35,7 +35,7 @@
         </section>
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 셔틀버스</h1>
+                <h1>액트립 양양 서핑버스</h1>
                 <a class="reviewlink">
                     <span class="reviewcnt">구매 <b>4,662</b>개</span>
                 </a>
@@ -381,10 +381,6 @@
     </div>
 </div>
 
-<div class="layG_kakao">
-    <div class="fixedwidth kakaobtn" style="padding-right:15px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="width: 38px;height: 38px;"></a>
-    </div>
-</div>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
         <button class="reson" id="slide1"><span>예약하기</span></button>

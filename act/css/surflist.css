@@ -3,7 +3,7 @@
 /*common*/
 body{background-color: #f8f8f8;}
 p{margin: 0; padding: 0;}
-.wrap a{display: block;}
+#wrap a{display: block;}
 
 /*layout*/
 #listWrap{background-color: #f8f8f8;}

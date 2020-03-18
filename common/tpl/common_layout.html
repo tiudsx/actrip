@@ -24,9 +24,11 @@ if($_SERVER['HTTP_HOST'] == "xn--pk3bl7fv7at7ea456rt7a12g.kr"){
 		Header("Location:/yangfe");
 	}
 }else{
-    if(!($_SERVER['HTTP_HOST'] == "actrip.co.kr" || $_SERVER['HTTP_HOST'] == "www.actrip.co.kr")){
-        Header("Location:http://actrip.co.kr".$_SERVER['REQUEST_URI']);
-    }
+    if(!($_SERVER['HTTP_HOST'] == "actrip.co.kr" || $_SERVER['HTTP_HOST'] == "www.actrip.co.kr" || $_SERVER['HTTP_HOST'] == "admin.actrip.co.kr")){
+        Header("Location:https://actrip.co.kr".$_SERVER['REQUEST_URI']);
+    }else{
+		
+	}
 }
 ?>
 

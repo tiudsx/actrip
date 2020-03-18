@@ -1,6 +1,6 @@
-<script src="js/surf.js"></script>
-<script src="js/select.js"></script>
-<link rel="stylesheet" href="css/surflist.css">
+<script src="/act/js/surf.js"></script>
+<script src="/act/js/select.js"></script>
+<link rel="stylesheet" href="/act/css/surflist.css">
 
 <section id="listMenu">
     <h2 class="hidden">액트립 서핑샵 카테고리</h2>
