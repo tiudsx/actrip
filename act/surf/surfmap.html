@@ -12,15 +12,15 @@
     .overlaybox li {position:relative;margin-bottom:2px;background:#2b2d36;padding:5px 10px;color:#aaabaf;line-height: 1;}
     .overlaybox li span {display:inline-block;}
     .overlaybox li .title {font-size:13px;}
-    </style>
+</style>
     
-    <div class="bd" style="padding:0px;" id="s1">
-        <span id="mapnum"></span>
-        <div id="map" style="width:100%;height:100%;">&nbsp;</div>
-    </div>
+<div class="bd" style="padding:0px;" id="s1">
+    <span id="mapnum"></span>
+    <div id="map" style="width:100%;height:100%;">&nbsp;</div>
+</div>
     
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zhh3svia3i&submodules=geocoder"></script>
-    <script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zhh3svia3i&submodules=geocoder"></script>
+<script>
     MARKER_SPRITE_POSITION = parent.MARKER_SPRITE_POSITION2;
     var mapOptions = {
         zoomControl: true,
@@ -29,7 +29,7 @@
             position: naver.maps.Position.RIGHT_CENTER
         },
         center: new naver.maps.LatLng(parent.sLng, parent.sLat),
-        zoom: 17
+        zoom: 18
     };
     
     var mapShopView = 0;
@@ -79,10 +79,10 @@
         '    </div>' +
         '    <ul>' +
         '        <li class="up">' +
-        '            <span class="title">' + MARKER_SPRITE_POSITION[key][4] + '</span>' +
+        '            <span class="title">' + MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "") + '</span>' +
         '        </li>' +
         '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;">' +
-        '            <span class="title">주소안내</span>' +
+        '            <span class="title">상세보기</span>' +
         '        </li>' +
         '    </ul>' +
         '</div>';
@@ -258,14 +258,15 @@
     
     function mapMove(vlu){
         var position = new naver.maps.LatLng(parseFloat(MARKER_SPRITE_POSITION[vlu][2]),MARKER_SPRITE_POSITION[vlu][3]);
-        //map.panTo(position);
+
+        if(parent.mapView == 0){
+            map.panTo(position);
+        }
     
         var num = MARKER_SPRITE_POSITION[vlu][6];
         var marker = markers[num],
             infoWindow = infoWindows[num];
             infoWindow.open(map, marker);
-    
-    
     
         var mobile = fnMobileType();
         var mapAppHtml = "";
@@ -286,4 +287,4 @@
     }
     //searchAddressToCoordinate("제주특별자치도 서귀포시 색달동 3039");
     //naver.maps.onJSContentLoaded = initGeocoder;
-    </script>
+</script>

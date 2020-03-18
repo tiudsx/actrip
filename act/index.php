@@ -1,6 +1,52 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+	/*팝업1*/
+	#gpe_divpop1{position:absolute; z-index:49;}
+	#gpe_divpop1 .pop_area_out{border:1px solid #b6b6b6;}
+	#gpe_divpop1 .pop_area_in{border:2px solid #f6f6f6;}
+	#gpe_divpop1 .pop_middle{border:1px solid #fff; background-color:#fff;}
+	#gpe_divpop1 .pop_middle img{vertical-align:bottom;}
+	#gpe_divpop1 .pop_bott{background-color:#f6f6f6; height:28px;}
+	#gpe_divpop1 .pop_bott .pop_bott_1day{float:left; padding:8px 0 0 0;}
+	#gpe_divpop1 .pop_bott .pop_bott_1day_txt{float:left; letter-spacing:-0.08em; color:#4e4f55; margin-top:8px; margin-left:3px;}
+	#gpe_divpop1 .pop_bott .pop_bott_close a{float:right; display:block; width:34px; height:13px; background:url(/layouts/portal_NOVA/imgs/default/default_02.png) no-repeat -267px -19px; margin:8px 0 0 0;}
+</style>
 
 <div id="wrap">
+
+<!--visible / hidden-->
+<div id="gpe_divpop1" style="top: 70px;padding:0 10px 0 10px; visibility: hidden;">
+<form name="gpe_form1"><input type="hidden" name="error_return_url" value="/index"><input type="hidden" name="act" value=""><input type="hidden" name="mid" value="index"><input type="hidden" name="vid" value=""> 
+	<div class="pop_area_out">
+		<div class="pop_area_in">
+			<div class="pop_middle">
+				<a href="http://surfenjoy.com/surfres?seq=64"><img src="http://skinnz.godohosting.com/surfenjoy/shop/surfenjoy_new_4.jpg?v=4" alt="당찬패키지" class="placeholder"></a>
+			</div>
+			<div class="pop_bott">
+				<div class="pop_bott_1day"><input name="event1" type="checkbox" value="checkbox2"></div>
+				<div class="pop_bott_1day_txt">오늘 이 창 안뛰우기</div>
+				<div class="pop_bott_close"><a href="javascript:gpe_closeWin1();"></a></div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+
+<script> 
+	var eventCookie=gpe_getCookie1("act_pop1");
+	if ( eventCookie != "no1" ){  
+		document.all['gpe_divpop1'].style.visibility = "visible";
+	} else if(eventCookie == "no1") {
+		document.getElementById('gpe_divpop1').style.display='none'; 
+	}
+	function gpe_closeWin1() { 
+	if ( document.gpe_form1.event1.checked ){ 
+		gpe_setCookie1( "act_pop1", "no1" , 1 ); 
+	}
+	document.getElementById('gpe_divpop1').style.display='none';
+	}
+</script>
+
 <? include '_layout_top.php'; ?>
 
 	<div class="top_area_zone">

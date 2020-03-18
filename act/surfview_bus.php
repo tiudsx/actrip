@@ -263,37 +263,37 @@
                                 </tr>
                                 <tr>
                                     <th>당산역</th>
-                                    <td>당산역 13출구 앞<br><font color="red">05시 40분</font></td>
+                                    <td>당산역 13출구 앞<br><font color="red">06시 40분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 2, '당산역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>합정역</th>
-                                    <td>합정역 3번출구 앞<br><font color="red">05시 45분</font></td>
+                                    <td>합정역 3번출구 앞<br><font color="red">06시 45분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 2, '합정역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>신촌역</th>
-                                    <td>신촌역 5번출구 앞<br><font color="red">05시 55분</font></td>
+                                    <td>신촌역 5번출구 앞<br><font color="red">06시 55분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 3, 2, '신촌역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>충정로역</th>
-                                    <td>충정로역 4번출구 앞<br><font color="red">06시 05분</font></td>
+                                    <td>충정로역 4번출구 앞<br><font color="red">07시 05분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 4, 2, '충정로역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>종로3가역</th>
-                                    <td>종로3가역 12번출구 새마을금고 앞<br><font color="red">06시 20분</font></td>
+                                    <td>종로3가역 12번출구 새마을금고 앞<br><font color="red">07시 20분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 5, 2, '종로3가역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>왕십리역</th>
-                                    <td>왕십리역 11번출구 우리은행 앞<br><font color="red">06시 40분</font></td>
+                                    <td>왕십리역 11번출구 우리은행 앞<br><font color="red">07시 40분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 6, 2, '왕십리역', this);"></td>
                                 </tr>
                                 <tr>
                                     <th>건대입구역</th>
-                                    <td>건대입구역 롯데백화점 스타시티점 입구<br><font color="red">07시 00분</font></td>
+                                    <td>건대입구역 롯데백화점 스타시티점 입구<br><font color="red">08시 00분</font></td>
                                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 7, 2, '건대입구역', this);"></td>
                                 </tr>
                             </tbody>
@@ -371,7 +371,7 @@
 
                     <img style="max-width:100%;display:none;padding-bottom:10px;" id="mapimg" src="https://surfenjoy.cdn3.cafe24.com/busimg/Y1_1.JPG">
 
-                    <iframe scrolling="no" frameborder="0" id="ifrmBusMap" name="ifrmBusMap" style="width:100%;height:400px;display:none;" src="surf/surfbusmap.php"></iframe>
+                    <iframe scrolling="no" frameborder="0" id="ifrmBusMap" name="ifrmBusMap" style="width:100%;height:450px;display:none;" src="surf/surfbusmap.html"></iframe>
                 </div>
             </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">

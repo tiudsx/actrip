@@ -82,7 +82,7 @@
                     <img src="https://surfenjoy.cdn3.cafe24.com/surfshop/res_mangosurf_01.jpg?v=10" class="placeholder">
                 </div>
                 <div id="shopmap">
-                    <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:390px;" src="surf/surfmap.html"></iframe>
+                    <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:490px;" src="surf/surfmap.html"></iframe>
 
                     <div style="padding:10px 0 5px 0;font-size:12px;">
                         <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="images/kakaochat.jpg" class="placeholder"></a>
