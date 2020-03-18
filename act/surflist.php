@@ -18,7 +18,7 @@
             }, {
                 duration: 500,
                 complete: function() {
-                    $j("#slide1 span").html("지도로 보기");
+                    $j("#slide1").css("background-image", "url(https://surfenjoy.cdn3.cafe24.com/button/btnMap.jpg)");
                 }
             });
             type = "";
@@ -28,7 +28,7 @@
             }, {
                 duration: 500,
                 complete: function() {
-                    $j("#slide1 span").html("지도 닫기");
+                    $j("#slide1").css("background-image", "url(https://surfenjoy.cdn3.cafe24.com/button/btnMapx.jpg)");
                     $j(".resbottom").css("height", "100%");
 
                     if(pointname != ""){
@@ -76,13 +76,13 @@
                             </li>
                             <li class="price">
                                 <span class="lecture">
-                                    <p><span>강습</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
+                                    <p><span>입문강습</span></p>
+                                    <p>180,000원</p>
+                                    <p>170,000원</p>
                                 </span> <span class="rental">
-                                    <p><span>렌탈</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
+                                    <p><span>장비렌탈</span></p>
+                                    <p>180,000원</p>
+                                    <p>170,000원</p>
                                 </span>
                             </li>
                             <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
@@ -107,11 +107,11 @@
                             </li>
                             <li class="price">
                                 <span class="lecture">
-                                    <p><span>강습</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
+                                    <p><span>체험강습</span></p>
+                                    <p>180,000원</p>
+                                    <p>170,000원</p>
                                 </span> <span class="rental">
-                                    <p><span>렌탈</span></p>
+                                    <p><span>장비렌탈</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span>
@@ -146,11 +146,11 @@
                             </li>
                             <li class="price">
                                 <span class="lecture">
-                                    <p><span>강습</span></p>
+                                    <p><span>체험강습</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span> <span class="rental">
-                                    <p><span>렌탈</span></p>
+                                    <p><span>장비렌탈</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span>
@@ -177,11 +177,11 @@
                             </li>
                             <li class="price">
                                 <span class="lecture">
-                                    <p><span>강습</span></p>
+                                    <p><span>체험강습</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span> <span class="rental">
-                                    <p><span>렌탈</span></p>
+                                    <p><span>장비렌탈</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span>
@@ -209,11 +209,11 @@
                             </li>
                             <li class="price">
                                 <span class="lecture">
-                                    <p><span>강습</span></p>
+                                    <p><span>체험강습</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span> <span class="rental">
-                                    <p><span>렌탈</span></p>
+                                    <p><span>장비렌탈</span></p>
                                     <p>80,000원</p>
                                     <p>70,000원</p>
                                 </span>
@@ -229,8 +229,8 @@
 </div>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <button class="reson" id="slide1"><span>지도로 보기</span></button>
-        <div id="sildeing" style="display:block;height:100%;padding-top:10px;">
+        <button class="reson" id="slide1" style="background-image: url(https://surfenjoy.cdn3.cafe24.com/button/btnMap.jpg); width:117px; height:35px; border:none; text-indent:-9999px;"><span>지도로 보기</span></button>
+        <div id="sildeing" style="display:block;height:100%;padding-top:5px;">
             <iframe scrolling="no" frameborder="0" class="ifrmMap" id="ifrmMap" name="ifrmMap" style="width:100%;height:100%;" src="/act/surf/surfmap.html"></iframe>
         </div>
     </div>

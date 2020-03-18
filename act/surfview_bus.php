@@ -383,7 +383,7 @@
 
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <button class="reson" id="slide1"><span>예약하기</span></button>
+        <button class="reson" id="slide1" style="background-image: url(https://surfenjoy.cdn3.cafe24.com/button/btnReserve.jpg); width:117px; height:35px; border:none; text-indent:-9999px;"><span>예약하기</span></button>
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">
     </div>

@@ -90,6 +90,8 @@ line-height: 25px;}
 .listItem .price .rental p:nth-child(1){width: 40%;height: 28px; text-align: left; text-indent: 10px; font-size: 1em;}
 .listItem .price .rental p:nth-child(2){font-size: .85em; text-decoration:line-through; color:#a1a1a1}
 
+.listItem .price .lecture p>span, .listItem .price .rental p>span{padding: 2px 7px;}
+
 /*event*/
 .listItem .event{width: 95%; margin-left: 2.5%; height: auto; float: left; background-color: #f0f8ff; text-align: center; font-weight: 400; line-height: 2.5em; margin-top: 5px; color:#606060}
 .listItem .event span{background-color: #8ac9ff; font-size: .75em;border-radius: 15px; padding: 2px 6px; margin-right: 7px; color:#fff}
@@ -106,10 +108,10 @@ line-height: 25px;}
 .listItem .contents h3{font-size: 1.7em;}
 .listItem .contents span:nth-child(3){margin: 4px 0 12px 0;}
 .listItem .contents p{font-size: 1.1em; line-height: 1.8em;}
-.listItem .price{width: 50%; font-size: 1.1em;}
-.listItem .price p{width: 70px; float: left; height: 28px; line-height: 28px; text-align: left;}
-.listItem .price .lecture p:nth-child(1){width: 50px; height: 28px; text-indent: 0px; font-size: .9em}
-.listItem .price .rental p:nth-child(1){width: 50px; height: 28px; text-indent: 0px;  font-size: .9em}
+.listItem .price{width: 60%; font-size: 1.1em;}
+.listItem .price p{width: 80px; float: left; height: 28px; line-height: 28px; text-align: left;}
+.listItem .price .lecture p:nth-child(1){width: 80px; height: 28px; text-indent: 0px; font-size: .9em}
+.listItem .price .rental p:nth-child(1){width: 80px; height: 28px; text-indent: 0px;  font-size: .9em}
 .listItem .price .lecture p:nth-child(2){font-size: .9em; text-decoration:line-through; color:#a1a1a1}
 .listItem .price .rental p:nth-child(2){font-size: .9em; text-decoration:line-through; color:#a1a1a1}
 }
