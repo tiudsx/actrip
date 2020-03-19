@@ -18,7 +18,9 @@
             }, {
                 duration: 500,
                 complete: function() {
-                    $j("#slide1").css("background-image", "url(https://surfenjoy.cdn3.cafe24.com/button/btnMap.jpg)");
+                    $j("#slide1").prop("src", "https://surfenjoy.cdn3.cafe24.com/button/btnMap.png");
+                    $j(".con_footer").css("background-color", "");
+                    $j(".resbottom").css("background-color", "");
                 }
             });
             type = "";
@@ -28,8 +30,10 @@
             }, {
                 duration: 500,
                 complete: function() {
-                    $j("#slide1").css("background-image", "url(https://surfenjoy.cdn3.cafe24.com/button/btnMapx.jpg)");
+                    $j("#slide1").prop("src", "https://surfenjoy.cdn3.cafe24.com/button/btnMapx.png");
                     $j(".resbottom").css("height", "100%");
+                    $j(".con_footer").css("background-color", "white");
+                    $j(".resbottom").css("background-color", "white");
 
                     if(pointname != ""){
                         var obj = $j("#ifrmMap").get(0);
@@ -229,7 +233,7 @@
 </div>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <button class="reson" id="slide1" style="background-image: url(https://surfenjoy.cdn3.cafe24.com/button/btnMap.jpg); width:117px; height:35px; border:none; text-indent:-9999px;"><span>지도로 보기</span></button>
+        <img src="https://surfenjoy.cdn3.cafe24.com/button/btnMap.png" id="slide1">
         <div id="sildeing" style="display:block;height:100%;padding-top:5px;">
             <iframe scrolling="no" frameborder="0" class="ifrmMap" id="ifrmMap" name="ifrmMap" style="width:100%;height:100%;" src="/act/surf/surfmap.html"></iframe>
         </div>
