@@ -43,8 +43,8 @@ jQuery(function () {
 	});
 
 	jQuery('input[cal=sbusdate]').datepicker({
-		minDate : new Date('2019-06-01'),
-		maxDate : new Date('2019-10-13'),
+		minDate : new Date('2020-03-01'),
+		maxDate : new Date('2020-10-13'),
 		onClose: function (selectedDate) {
 			if(selectedDate != ""){
 				fnBusSearchDate('s');
@@ -92,8 +92,8 @@ jQuery(function () {
 	
 
 	jQuery('input[cal=ebusdate]').datepicker({
-		minDate : new Date('2019-06-01'),
-		maxDate : new Date('2019-10-13'),
+		minDate : new Date('2020-03-01'),
+		maxDate : new Date('2020-10-13'),
 		onClose: function (selectedDate) {
 			if(selectedDate != ""){
 			fnBusSearchDate('e');

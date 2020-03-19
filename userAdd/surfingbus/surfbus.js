@@ -110,8 +110,8 @@ Date.prototype.yyyymmdd = function() {
 	return  yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
 }
 
-var bus1_s1 = (new Date('2019-05-03')).yyyymmdd(); // 1호차 운행 시작일
-var bus1_e1 = (new Date('2019-06-17')).yyyymmdd(); // 1호차 운행 종료일
+var bus1_s1 = (new Date('2020-03-03')).yyyymmdd(); // 1호차 운행 시작일
+var bus1_e1 = (new Date('2020-06-17')).yyyymmdd(); // 1호차 운행 종료일
 
 var bus1_s2 = (new Date('2019-08-30')).yyyymmdd(); // 1호차 운행 시작일
 var bus1_e2 = (new Date('2019-09-30')).yyyymmdd(); // 1호차 운행 종료일
