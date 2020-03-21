@@ -112,7 +112,7 @@ body{width: 100%; height: 100%; background-color: #f8f8f8;}
     left: 1rem;
     position: absolute;
     top: 1rem;
-    z-index: 20;}
+    z-index: 1;}
 #hashtag .tagBox>a>img{
     min-height: 9rem;
     width: 100%;

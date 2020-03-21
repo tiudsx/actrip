@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="/act/css/main.css">
 <style>
 	/*팝업1*/
 	#gpe_divpop1{position:absolute; z-index:49;}
