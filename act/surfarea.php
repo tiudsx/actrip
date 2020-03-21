@@ -4,10 +4,10 @@
     });
 
 </script>
-<link rel="stylesheet" type="text/css" href="/act/css/surfshop.css">
 
 <div id="wrap">
 <? include '_layout_top.php'; ?>
+<link rel="stylesheet" type="text/css" href="/act/css/surfshop.css">
 
     <div class="top_area_zone">
         <section id="shopCat">
