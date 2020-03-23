@@ -4,8 +4,6 @@
     <link rel="stylesheet" href="css/surfview.css">
 
     <div class="top_area_zone">
-        <? include '_layout_category.php'; ?>
-
         <section id="viewSlide">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
@@ -73,8 +71,12 @@
                             <li class="litxt">탑승시간 5분전에 예약하신 정류장으로 도착해주세요.</li>
                             <li class="litxt">교통상황으로 인해 셔틀버스가 지연 도착할 수 있으니 양해부탁드립니다.</li>
                             <li class="litxt">사전 신청하지 않는 정류장은 정차 및 하차하지 않습니다.</li>
-                            <li class="litxt">기상악화로 인하여 서핑강습이 취소되어도 셔틀버스는 정상운행되며, 기존 환불정책으로 적용됩니다.<br>
-                                단, 액트립에서 서핑강습이 사전예약 확정 된 경우 별도 환불정책으로 적용됩니다.</li>
+                            <li class="litxt">
+                                <span>    
+                                기상악화로 인하여 서핑강습이 취소되어도 셔틀버스는 정상운행되며, 기존 환불정책으로 적용됩니다.<br>
+                                <span style="color:red;">단, 액트립에서 서핑강습이 사전예약 확정 된 경우 별도 환불정책으로 적용됩니다.</span>
+                                </span>
+                            </li>
                         </ul>
                     </article>
                 </div>
@@ -93,7 +95,7 @@
                         <p class="noticesub">취소 안내</p>
                         <ul>
                             <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
-                            <li class="litxt">최소인원(25명) 모집이 안될 경우 운행이 취소될 수 있습니다. 운행 취소시 전액 환불됩니다.</li>
+                            <li class="litxt">최소인원(25명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
                             <li class="litxt">천재지변으로 인하여 셔틀버스 운행이 취소될 경우 전액환불됩니다.</li>
                         </ul>
                     </article>

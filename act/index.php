@@ -60,7 +60,7 @@
 					</li>
 					<li><a href="/surfbus"><img src="images/icon/ibus.png" alt="">
 						</a></li>
-					<li><a href="#"><img src="images/icon/ibbq.png" alt="">
+					<li><a href="/bbq"><img src="images/icon/ibbq.png" alt="">
 						</a></li>
 					<li><a href="#"><img src="images/icon/itent.png" alt="">
 						</a></li>
