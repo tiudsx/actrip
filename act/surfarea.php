@@ -26,6 +26,24 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $precode = $row["area"];
 }
 $areahtml .= "</ul>";
+
+//서핑샵 정보 가져오기
+$select_query = "SELECT a.*, b.ad_title1 FROM AT_PROD_MAIN a INNER JOIN AT_PROD_AD b
+                    ON a.seq = b.seq
+                        AND b.adtype = 'surfcate'
+                        AND b.use_yn = 'Y'
+                    WHERE a.code = 'surf'
+                        AND a.use_yn = 'Y'
+                        AND a.view_yn = 'Y'
+                    ORDER BY rand()";
+$result_shopadlist = mysqli_query($conn, $select_query);
+$shopadcount = mysqli_num_rows($result_shopadlist);
+
+$select_query = "SELECT * FROM AT_PROD_AD 
+                    WHERE adtype = 'surfbeach'
+                        AND use_yn = 'Y'
+                    ORDER BY rand()";
+$result_shopadbeach = mysqli_query($conn, $select_query);
 ?>
 
 <!-- area menu script -->
@@ -58,54 +76,30 @@ $areahtml .= "</ul>";
             <h2><i class="far fa-thumbs-up"></i> 인기서핑샵</h2>
             <div class="popShopSldr">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
-                    <div class="swiper-slide"><a href="#">
-                            <img src="images/sample.png" alt="">
-                            <p>양양 죽도</p>
-                            <p>이본느비서프</p>
-                            <p>10,000원</p>
-                        </a></div>
+                <?while ($row = mysqli_fetch_assoc($result_shopadlist)){
+                    $shop_img = explode('|', $row["shop_img"]);
 
+                    $shop_price = explode('@', $row["sub_info"]);
+                    $arrlecture = explode('|', $shop_price[0]);
+                ?>
+                    <div class="swiper-slide">
+                        <a href="/surfview?seq=<?=$row["seq"]?>">
+                            <img src="<?=$shop_img[0]?>" alt="">
+                            <p><?=$row["ad_title1"]?></p>
+                            <p><?=$row["shopname"]?></p>
+                            <p><?=number_format($arrlecture[2])?>원</p>
+                        </a>
+                    </div>
+                <?}?>
                 </div>
             </div>
         </section>
         <section id="popBeach">
             <h2>추천해변</h2>
             <ul>
-                <li><a href="#"><span>#</span>죽도해변</a></li>
-                <li><a href="#"><span>#</span>인구해변</a></li>
-                <li><a href="#"><span>#</span>기사문해변</a></li>
-                <li><a href="#"><span>#</span>주문진해변</a></li>
-                <li><a href="#"><span>#</span>남애해변</a></li>
+            <?while ($row = mysqli_fetch_assoc($result_shopadbeach)){?>
+                <li><a href="/surflist?code=<?=$row["category"]?>"><span>#</span><?=$row["ad_title1"]?></a></li>
+            <?}?>
             </ul>
         </section>
 
@@ -124,7 +118,7 @@ $areahtml .= "</ul>";
             clickable: true,
         },
         autoplay: {
-            delay: 2500,
+            delay: 1500,
             disableOnInteraction: false,
         }
     });

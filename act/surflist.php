@@ -17,14 +17,26 @@ $reqCode = ($_REQUEST["code"] == "") ? "jukdo" : $_REQUEST["code"];
     });    
 </script>
 
+<div id="wrap">
+<? include '_layout_top.php'; ?>
+
+    <div class="top_area_zone">
+        <div id="listWrap">
+            
+            <? include '_layout_category.php'; ?>
+
+
 <?
 //서핑샵 정보 가져오기
-$select_query = "SELECT * FROM AT_PROD_MAIN 
-                    WHERE code = 'surf'
-                        AND category = '$reqCode'
-                        AND use_yn = 'Y' 
-                        AND view_yn = 'Y'
-                    ORDER BY rand()";
+$select_query = "SELECT a.* FROM AT_PROD_MAIN a INNER JOIN AT_PROD_AD b
+                    ON a.seq = b.seq
+                        AND b.adtype IN ('surfarea', 'surfpoint')
+                        AND b.category IN ('$areacodesel', '$reqCode')
+                        AND b.use_yn = 'Y'
+                    WHERE a.code = 'surf'
+                        AND a.use_yn = 'Y'
+                        AND a.view_yn = 'Y'
+                    ORDER BY b.ordernum";
 $result_shopadlist = mysqli_query($conn, $select_query);
 $shopadcount = mysqli_num_rows($result_shopadlist);
 
@@ -37,13 +49,7 @@ $select_query = "SELECT * FROM AT_PROD_MAIN
 $result_shoplist = mysqli_query($conn, $select_query);
 $shopcount = mysqli_num_rows($result_shoplist);
 ?>
-<div id="wrap">
-<? include '_layout_top.php'; ?>
 
-    <div class="top_area_zone">
-        <div id="listWrap">
-            
-            <? include '_layout_category.php'; ?>
             <?if($shopadcount > 0){?>
             <section id="popShop">
                 <h2><img src="images/icon/moon.svg" alt=""> 인기 서핑샵 추천</h2>
