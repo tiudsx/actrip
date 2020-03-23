@@ -1,3 +1,5 @@
+<? include 'db.php'; ?>
+
 <link rel="stylesheet" type="text/css" href="/act/css/main.css">
 <style>
 	/*팝업1*/

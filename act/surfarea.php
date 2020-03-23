@@ -1,8 +1,37 @@
+<? include 'db.php'; ?>
+
+<?
+//정렬순서
+$select_query = "SELECT a.code as area, a.codename as areaname, b.code, b.codename, b.lat, b.lng
+    FROM AT_CODE a INNER JOIN AT_CODE b
+        ON a.uppercode = 'surf'
+            AND a.code = b.uppercode
+            AND a.use_yn = 'Y'
+            AND b.use_yn = 'Y'
+        ORDER BY a.ordernum, b.ordernum";
+
+$result_setlist = mysqli_query($conn, $select_query);
+$count = mysqli_num_rows($result_setlist);
+
+$precode = "";
+$areahtml = "";
+while ($row = mysqli_fetch_assoc($result_setlist)){
+    if($precode != $row["area"]){
+        if($precode != "") $areahtml .= "</ul>";
+
+        $areahtml .= "<ul><li class='regionTit'><a href='/surflist?code=".$row["code"]."'>".$row["areaname"]."</a></li>";
+    }
+
+    $areahtml .= "<li><a href='/surflist?code=".$row["code"]."'>".$row["codename"]."</a></li>";
+    $precode = $row["area"];
+}
+$areahtml .= "</ul>";
+?>
+
 <!-- area menu script -->
 <script type="text/javascript">
     $j(document).ready(function() {
     });
-
 </script>
 
 <div id="wrap">
@@ -16,28 +45,13 @@
                 <p>지역·해변별 서핑샵 찾기 <i class="fas fa-caret-down"></i></p>
             </div>
             <div class="shopCatList">
-                <ul>
-                    <li class="regionTit"><a href="/surflist">양양</a></li>
-                    <li><a href="/surflist">죽도</a></li>
-                    <li><a href="/surflist">동산항</a></li>
-                    <li><a href="/surflist">기사문</a></li>
-                    <li><a href="/surflist">인구</a></li>
-                    <li><a href="/surflist">남애</a></li>
-                </ul>
-                <ul>
-                    <li class="regionTit"><a href="#">강릉</a></li>
-                    <li><a href="#">주문진</a></li>
-                </ul>
-                <ul>
-                    <li class="regionTit"><a href="#">동해</a></li>
-                    <li><a href="#">대진</a></li>
-                </ul>
-                <ul class="regionReady">
+                <?=$areahtml?>
+                <!--ul class="regionReady">
                     <li><a href="#">준비중..</a></li>
                     <li>
                         <p>더 다양한 샵에서 만나요!</p>
                     </li>
-                </ul>
+                </ul-->
             </div>
         </section>
         <section id="popShop">

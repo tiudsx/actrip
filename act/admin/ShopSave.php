@@ -20,25 +20,24 @@ code
 $code = "surf";
 $shopcharge = "10";
 $account_yn = "Y";
-$category = "jukdo";
-$categoryname = "죽도";
-$shopname = "모쿠서프";
-$tel_kakao = "010-3395-5184";
-$tel_admin = "010-3395-5184";
-$shopaddr = "강원 양양군 현남면 인구중앙길 89";
-$shoplat = "37.9731043";
-$shoplng = "128.7591667";
+$category = "jajak";
+$categoryname = "자작도";
+$shopname = "솔서프";
+$tel_kakao = "070-7345-8088";
+$tel_admin = "070-7345-8088";
+$shopaddr = "강원 고성군 죽왕면 자작도선사길 86";
+$shoplat = "37.5782053";
+$shoplng = "129.1155484";
 $img_ver = 0;
-$sub_title = "★ 죽도해변하면 모쿠서프!!@
-★ 우수한 실력과 친절함을 겸비한 강사진~@
-★ 강습후 따뜻한 커피 한잔해요";
-$sub_tag = "#서핑강습 #게스트하우스 #렌탈 #매우친절";
-$sub_info = "입문강습|90000|80000@장비렌탈|300000|25000";
+$sub_title = "★ 고성 자작도해변에서 고고비치서프와 함께!!@
+★ 퀄리티 높은 강습과 강사가 있는 곳!!";
+$sub_tag = "10월 12일, 13일 양양 서핑 페스티벌";
+$sub_info = "입문강습|0|50000@숙박|게스트하우스|0|20000";
 $imgurl = "https://surfenjoy.cdn3.cafe24.com/surfshop/";
-$shop_img = $imgurl."surfshop_mango_200x188.jpg|".$imgurl."surfshop_mango_500x500.jpg|";
+$shop_img = $imgurl."surfshop_sol_200x188.jpg|".$imgurl."surfshop_sol_500x500.jpg|";
 //상세설명 구분 : file / html
 $content_type = "html";
-$content = "<img src=\'https://surfenjoy.cdn3.cafe24.com/surfshop/res_mokusurf_01.jpg\' class=\'placeholder\' />";
+$content = "<img src=\'https://surfenjoy.cdn3.cafe24.com/surfshop/res_solguest_01.jpg\' class=\'placeholder\' />";
 $lesson_yn = "Y";
 $rent_yn = "Y";
 $bbq_yn = "Y";
@@ -49,9 +48,9 @@ $link_yn = "N";
 $sell_cnt = 275;
 
 /* 입점샵 은행 계좌 정보 */
-$full_bankname = "신한은행"; //은행
+$full_bankname = "농협"; //은행
 $full_banknum = "368-02-0429-94"; //계좌번호
-$full_bankuser = "박준영"; //예금주
+$full_bankuser = "이준영"; //예금주
 
 //주문연동 계좌 정보
 $bankname = ""; //은행

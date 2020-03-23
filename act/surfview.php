@@ -1,3 +1,27 @@
+<? include 'db.php'; ?>
+
+<?
+$reqSeq = $_REQUEST["seq"];
+
+if($reqSeq == ""){
+    echo '<script>alert("잘못된 접속 경로입니다.");location.href="/surf";</script>';
+	exit;
+}
+$select_query = "SELECT * FROM AT_PROD_MAIN 
+                    WHERE seq = $reqSeq 
+                        AND use_yn = 'Y'";
+$result = mysqli_query($conn, $select_query);
+$rowMain = mysqli_fetch_array($result);
+$count = mysqli_num_rows($result);
+
+if($count == 0){
+    echo '<script>alert("예약이 불가능한 상품입니다.");location.href="surfevent";</script>';
+    exit;
+}
+
+$reqCode = $rowMain["category"];
+?>
+
 <div id="wrap">
     <? include '_layout_top.php'; ?>
 
@@ -35,11 +59,11 @@
         </section>
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>망고서프</h1>
+                <h1><?=$rowMain["shopname"]?></h1>
                 <a class="reviewlink">
-                    <span class="reviewcnt">구매 <b>4,662</b>개</span>
+                    <span class="reviewcnt">구매 <b><?=number_format($rowMain["sell_cnt"])?></b>개</span>
                 </a>
-                <div class="shopsubtitle">입문강습 2시간 : 이론, 해변실습, 해양실습</div>
+                <div class="shopsubtitle"><?=$rowMain["shop_resinfo"]?></div>
             </div>
         </section>
 
@@ -79,7 +103,13 @@
                     </article>
                 </div>
                 <div class="contentimg">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/surfshop/res_mangosurf_01.jpg?v=10" class="placeholder">
+                    <?
+                    if($rowMain["content_type"] == "html"){
+                        echo $rowMain["content"];
+                    }else{
+                        include 'surfview/'.$rowMain["content"];
+                    }
+                    ?>
                 </div>
                 <div id="shopmap">
                     <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:490px;" src="surf/surfmap.html"></iframe>
@@ -95,7 +125,7 @@
                         <ul>
                             <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
                             <li class="litxt">우천시 정상적으로 서핑강습이 진행됩니다.</li>
-                            <li class="litxt">천재지변으로 인하여 예약이 취소될 경우 전액환불해드립니다.</li>
+                            <li class="litxt">기상악화 및 천재지변으로 인하여 예약이 취소될 경우 전액환불해드립니다.</li>
                         </ul>
                     </article>
                     <article>

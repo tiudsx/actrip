@@ -1,3 +1,9 @@
+<? include 'db.php'; ?>
+
+<?
+$reqCode = ($_REQUEST["code"] == "") ? "jukdo" : $_REQUEST["code"];
+?>
+
 <!-- area menu script -->
 <script type="text/javascript">
     var type = "";
@@ -8,35 +14,29 @@
         $j("#slide1").click(function() {
             fnMapView('');
         });
-    });
-
-    function fnMapView(pointname){
-        if (btnheight == "") btnheight = $j(".con_footer").height();
-        if (type == "down") {
-            $j(".con_footer").css("height", btnheight + "px");
-            $j("#slide1").prop("src", "https://surfenjoy.cdn3.cafe24.com/button/btnMap.png");
-            $j(".con_footer").css("background-color", "");
-            $j(".resbottom").css("background-color", "");
-
-            type = "";
-        } else {
-            $j(".con_footer").css("height", "100%");
-            $j("#slide1").prop("src", "https://surfenjoy.cdn3.cafe24.com/button/btnMapx.png");
-            $j(".resbottom").css("height", "100%");
-            $j(".con_footer").css("background-color", "white");
-            $j(".resbottom").css("background-color", "white");
-            if(pointname != ""){
-                var obj = $j("#ifrmMap").get(0);
-                var objDoc = obj.contentWindow || obj.contentDocument;
-                objDoc.mapMove(pointname);
-            }
-            
-            type = "down";
-        }
-    }
-    
+    });    
 </script>
 
+<?
+//서핑샵 정보 가져오기
+$select_query = "SELECT * FROM AT_PROD_MAIN 
+                    WHERE code = 'surf'
+                        AND category = '$reqCode'
+                        AND use_yn = 'Y' 
+                        AND view_yn = 'Y'
+                    ORDER BY rand()";
+$result_shopadlist = mysqli_query($conn, $select_query);
+$shopadcount = mysqli_num_rows($result_shopadlist);
+
+$select_query = "SELECT * FROM AT_PROD_MAIN 
+                    WHERE code = 'surf'
+                        AND category = '$reqCode'
+                        AND use_yn = 'Y'
+                        AND view_yn = 'Y'
+                    ORDER BY rand()";
+$result_shoplist = mysqli_query($conn, $select_query);
+$shopcount = mysqli_num_rows($result_shoplist);
+?>
 <div id="wrap">
 <? include '_layout_top.php'; ?>
 
@@ -44,45 +44,18 @@
         <div id="listWrap">
             
             <? include '_layout_category.php'; ?>
-
+            <?if($shopadcount > 0){?>
             <section id="popShop">
                 <h2><img src="images/icon/moon.svg" alt=""> 인기 서핑샵 추천</h2>
                 <ul class="listShop">
                     <li class="listShopbox">
-                        <ul class="listItem shop01">
-                            <li class="thumbnail">
-                                <a href="/surfview"><img src="images/ocean.jpg" alt=""></a>
-                                <span>
-                                    <img src="images/icon/parking.svg" alt="">
-                                    <img src="images/icon/wifi.svg" alt="">
-                                    <img src="images/icon/house.svg" alt="">
-                                    <img src="images/icon/pet.svg" alt="">
-                                    <img src="images/icon/toilet.svg" alt="">
-                                </span></li>
-                            <li class="contents">
 
-                                <h3><a href="/surfview">이본느비 서프 <i class="fas fa-angle-right"></i></a></h3>
-                                <span><a href="javascript:fnMapView('모쿠서프');"><img src="images/icon/map.svg" alt="">위치</a></span>
-                                <span>구매 1,040개</span>
-                                <p>✓ 죽도해변만의 고퀄리티 입문강습</p>
-                                <p>✓ 편안한 게스트하우스</p>
-                            </li>
-                            <li class="price">
-                                <span class="lecture">
-                                    <p><span>입문강습</span></p>
-                                    <p>180,000원</p>
-                                    <p>170,000원</p>
-                                </span> <span class="rental">
-                                    <p><span>장비렌탈</span></p>
-                                    <p>180,000원</p>
-                                    <p>170,000원</p>
-                                </span>
-                            </li>
-                            <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
-                        </ul>
-                        <ul class="listItem shop02">
+                    <?while ($row = mysqli_fetch_assoc($result_shopadlist)){
+                        $shop_img = explode('|', $row["shop_img"]);
+                        ?>
+                        <ul class="listItem">
                             <li class="thumbnail">
-                                <a href="#"><img src="images/joasurf.jpg" alt=""></a>
+                                <a href="/surfview?seq=<?=$row["seq"]?>"><img src="<?=$shop_img[0]?>" alt=""></a>
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
@@ -92,67 +65,60 @@
                                 </span>
                             </li>
                             <li class="contents">
-                                <h3><a href="">이본느비 서프 <i class="fas fa-angle-right"></i></a></h3>
-                                <span><a href=""><img src="images/icon/map.svg" alt="">죽도</a></span>
-                                <span>구매 1,040개</span>
-                                <p>✓ 죽도해변만의 고퀄리티 입문강습</p>
-                                <p>✓ 편안한 게스트하우스</p>
-                            </li>
-                            <li class="price">
-                                <span class="lecture">
-                                    <p><span>체험강습</span></p>
-                                    <p>180,000원</p>
-                                    <p>170,000원</p>
-                                </span> <span class="rental">
-                                    <p><span>장비렌탈</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span>
+                                <h3><a href="/surfview?seq=<?=$row["seq"]?>"><?=$row["shopname"]?> <i class="fas fa-angle-right"></i></a></h3>
+                                <span><a href="javascript:fnMapView('<?=$row["shopname"]?>');"><img src="images/icon/map.svg" alt="">위치</a></span>
+                                <span>구매 <?=number_format($row["sell_cnt"])?>개</span>
+                                
+                                <?
+								$shop_info = explode('@', $row["sub_title"]);
+								foreach($shop_info as $value){
+									echo '<p>✓ '.$value.'</p>';
+                                }
+                                ?>
 
                             </li>
-                            <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
+                            <li class="price">
+                                <?
+                                $shop_price = explode('@', $row["sub_info"]);
+                                $arrlecture = explode('|', $shop_price[0]);
+                                $arrrental = explode('|', $shop_price[1]);
+                                ?>
+                                <span class="lecture">
+                                    <p><span><?=$arrlecture[0]?></span></p>
+                                    <p>
+                                    <?if($arrlecture[1] != 0) echo number_format($arrlecture[1]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrlecture[2])?>원</p>
+                                </span>
+                                <span class="rental">
+                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p>
+                                    <?if($arrrental[1] != 0) echo number_format($arrrental[1]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrrental[2])?>원</p>
+                                </span>
+                                
+                            </li>
+                            <?if($row["sub_tag"] != ""){?>
+                            <li class="event"><span>이벤트</span><?=$row["sub_tag"]?></li>
+                            <?}?>
                         </ul>
+                    <?}?>
+                    
                     </li>
                 </ul>
             </section>
+            <?}?>
             <section id="allShop">
                 <h2>#서핑샵 찾아보기</h2>
                 <ul class="listShop">
                     <li class="listShopbox">
-                        <ul class="listItem shop01">
+                    <?while ($row = mysqli_fetch_assoc($result_shoplist)){
+                        $shop_img = explode('|', $row["shop_img"]);
+                        ?>
+                        <ul class="listItem">
                             <li class="thumbnail">
-                                <a href="#"><img src="images/ocean.jpg" alt=""></a>
-                                <span>
-                                    <img src="images/icon/parking.svg" alt="">
-                                    <img src="images/icon/wifi.svg" alt="">
-                                    <img src="images/icon/house.svg" alt="">
-                                    <img src="images/icon/pet.svg" alt="">
-                                    <img src="images/icon/toilet.svg" alt="">
-                                </span></li>
-                            <li class="contents">
-
-                                <h3><a href="">이본느비 서프 <i class="fas fa-angle-right"></i></a></h3>
-                                <span><a href=""><img src="images/icon/map.svg" alt="">죽도</a></span>
-                                <span>구매 1,040개</span>
-                                <p>✓ 죽도해변만의 고퀄리티 입문강습</p>
-                                <p>✓ 편안한 게스트하우스</p>
-                            </li>
-                            <li class="price">
-                                <span class="lecture">
-                                    <p><span>체험강습</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span> <span class="rental">
-                                    <p><span>장비렌탈</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span>
-                            </li>
-                            <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
-                        </ul>
-                        <ul class="listItem shop02">
-                            <li class="thumbnail">
-                                <a href="#"><img src="images/joasurf.jpg" alt=""></a>
+                                <a href="/surfview?seq=<?=$row["seq"]?>"><img src="<?=$shop_img[0]?>" alt=""></a>
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
@@ -162,58 +128,45 @@
                                 </span>
                             </li>
                             <li class="contents">
-                                <h3><a href="">이본느비 서프 <i class="fas fa-angle-right"></i></a></h3>
-                                <span><a href=""><img src="images/icon/map.svg" alt="">죽도</a></span>
-                                <span>구매 1,040개</span>
-                                <p>✓ 죽도해변만의 고퀄리티 입문강습</p>
-                                <p>✓ 편안한 게스트하우스</p>
-                            </li>
-                            <li class="price">
-                                <span class="lecture">
-                                    <p><span>체험강습</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span> <span class="rental">
-                                    <p><span>장비렌탈</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span>
+                                <h3><a href="/surfview?seq=<?=$row["seq"]?>"><?=$row["shopname"]?> <i class="fas fa-angle-right"></i></a></h3>
+                                <span><a href="javascript:fnMapView('<?=$row["shopname"]?>');"><img src="images/icon/map.svg" alt="">위치</a></span>
+                                <span>구매 <?=number_format($row["sell_cnt"])?>개</span>
+                                
+                                <?
+								$shop_info = explode('@', $row["sub_title"]);
+								foreach($shop_info as $value){
+									echo '<p>✓ '.$value.'</p>';
+                                }
+                                ?>
 
                             </li>
-                            <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
-                        </ul>
-                        <ul class="listItem shop03">
-                            <li class="thumbnail">
-                                <a href="#"><img src="images/joasurf.jpg" alt=""></a>
-                                <span>
-                                    <img src="images/icon/parking.svg" alt="">
-                                    <img src="images/icon/wifi.svg" alt="">
-                                    <img src="images/icon/house.svg" alt="">
-                                    <img src="images/icon/pet.svg" alt="">
-                                    <img src="images/icon/toilet.svg" alt="">
-                                </span>
-                            </li>
-                            <li class="contents">
-                                <h3><a href="">이본느비 서프 <i class="fas fa-angle-right"></i></a></h3>
-                                <span><a href=""><img src="images/icon/map.svg" alt="">죽도</a></span>
-                                <span>구매 1,040개</span>
-                                <p>✓ 죽도해변만의 고퀄리티 입문강습</p>
-                                <p>✓ 편안한 게스트하우스</p>
-                            </li>
                             <li class="price">
+                                <?
+                                $shop_price = explode('@', $row["sub_info"]);
+                                $arrlecture = explode('|', $shop_price[0]);
+                                $arrrental = explode('|', $shop_price[1]);
+                                ?>
                                 <span class="lecture">
-                                    <p><span>체험강습</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
-                                </span> <span class="rental">
-                                    <p><span>장비렌탈</span></p>
-                                    <p>80,000원</p>
-                                    <p>70,000원</p>
+                                    <p><span><?=$arrlecture[0]?></span></p>
+                                    <p>
+                                    <?if($arrlecture[1] != 0) echo number_format($arrlecture[1]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrlecture[2])?>원</p>
                                 </span>
-
+                                <span class="rental">
+                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p>
+                                    <?if($arrrental[1] != 0) echo number_format($arrrental[1]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrrental[2])?>원</p>
+                                </span>
+                                
                             </li>
-                            <li class="event"><span>이벤트</span>10월 12일, 13일 양양 서핑 페스티벌</li>
+                            <?if($row["sub_tag"] != ""){?>
+                            <li class="event"><span>이벤트</span><?=$row["sub_tag"]?></li>
+                            <?}?>
                         </ul>
+                    <?}?>
                     </li>
                 </ul>
             </section>
