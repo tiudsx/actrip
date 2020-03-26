@@ -28,7 +28,7 @@
 							<li><a href="/surf"><img src="/act/images/icon/isurf.png" alt=""></a></li>
 							<li><a href="/surfbus"><img src="/act/images/icon/ibus.png" alt=""></a></li>
 							<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
-							<li><a href="#"><img src="/act/images/icon/itent.png" alt=""></a></li>
+							<li><a href="/camp"><img src="/act/images/icon/itent.png" alt=""></a></li>
 							<li><a href="#"><img src="/act/images/icon/ibed.png" alt=""></a></li>
 							<li><a href="#"><img src="/act/images/icon/ifood.png" alt=""></a></li>
 						</ul>

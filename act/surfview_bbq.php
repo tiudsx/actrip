@@ -1,43 +1,18 @@
+<? include 'db.php'; ?>
+
 <div id="wrap">
     <? include '_layout_top.php'; ?>
 
     <link rel="stylesheet" href="css/surfview.css">
 
     <div class="top_area_zone">
-        <section id="viewSlide">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/resize/place/v4/2017/08/24/06/640/599df9c8524630.94491845.jpg);">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3efb2b4b6.48098605.jpg);">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3f0f19e82.75213230.jpg);">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3f234b378.27602610.jpg);">
-                        </div>
-                    </div>
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>죽도해변 루프탑 바베큐파티</h1>
+                <h1>죽도리비치 바베큐파티</h1>
                 <a class="reviewlink">
                     <span class="reviewcnt">구매 <b>4,662</b>개</span>
                 </a>
-                <div class="shopsubtitle">오션뷰 루프탑 바베큐파티와 함께 버스킹공연이 함께해요</div>
+                <div class="shopsubtitle">죽도해변 바베큐파티와 신나는 버스킹공연이 함께해요</div>
             </div>
         </section>
 
@@ -46,17 +21,17 @@
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li class="on">
-                            <li onclick="fnResViewBus(false, '#view_tab2', 70, this);"><a>정류장안내</a></li>
-                            <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li>
-                            <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>예약하기</a></li>
+                            <li class="on"><a onclick="fnResView(true, '#content_tab1', 69, this);">상세설명</a></li>
+                            <li onclick="fnResView(true, '#shopmap', 500, this);"><a>위치안내</a></li>
+                            <li onclick="fnResView(true, '#cancelinfo', 69, this);"><a>취소/환불</a></li>
+                            <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div id="view_tab1">
                 <div class="noticeline" id="content_tab1">
-                    <p class="noticetxt">예약안내</p>
+                    <!-- <p class="noticetxt">예약안내</p> -->
                     <article>
                         <p class="noticesub">예약안내</p>
                         <ul>
@@ -71,7 +46,7 @@
                             <li class="litxt">맥주나 음료는 제공되지 않으나 가지고 오셔서 드셔도 됩니다.</li>
                             <li class="litxt">메뉴는 인원에 따라 변경될 수 있습니다.</li>
                             <li class="litxt">미성년자 이용불가 / 신분증 확인!!</li>
-                            <li class="litxt">루프탑 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
+                            <li class="litxt">죽도리비치 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
                         </ul>
                     </article>
                 </div>

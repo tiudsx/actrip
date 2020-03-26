@@ -1,0 +1,31 @@
+.bd, .bd input, .bd textarea, .bd select, .bd button, .bd table {
+    padding: 0px;
+}
+
+.bd table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.et_vars{width:100%;margin-bottom:8px;}
+
+.et_vars th, .et_vars td {
+    padding: 6px;
+    border: 1px solid #DDD;
+    word-break: break-all;
+    word-wrap: break-word;
+    line-height: 1.2rem;
+}
+.et_vars th{
+    background-color: #efefef;
+}
+.et_vars td {
+    background: #FFF;
+}
+.bd_btn:hover, .bd_btn:focus {
+    border-color: #AAA;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.bd .bd_btn{line-height:1.5;padding: 0 10px 10px 10px;}
+
+.bd_btn{height:28px;margin:0;background:linear-gradient(to bottom,#FFF 0%,#F3F3F3 100%);border:1px solid;border-color:#CCC #C6C6C6 #C3C3C3 #CCC;border-radius:3px;white-space:nowrap;cursor:pointer;text-decoration:none !important;text-align:center;text-shadow:0 0px 0 #FFF;box-shadow:inset 0 0 1px 1px #FFF,0 1px 1px rgba(0,0,0,.1);}

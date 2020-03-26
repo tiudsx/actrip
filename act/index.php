@@ -62,7 +62,7 @@
 						</a></li>
 					<li><a href="/bbq"><img src="images/icon/ibbq.png" alt="">
 						</a></li>
-					<li><a href="#"><img src="images/icon/itent.png" alt="">
+					<li><a href="/camp"><img src="images/icon/itent.png" alt="">
 						</a></li>
 					<li><a href="#"><img src="images/icon/ibed.png" alt="">
 						</a></li>

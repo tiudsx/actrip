@@ -82,7 +82,7 @@ $reqCode = $rowMain["category"];
             </div>
             <div id="view_tab1">
                 <div class="noticeline" id="content_tab1">
-                    <p class="noticetxt">예약안내</p>
+                    <!-- <p class="noticetxt">예약안내</p> -->
                     <article>
                         <p class="noticesub">예약 및 방문 안내</p>
                         <ul>
