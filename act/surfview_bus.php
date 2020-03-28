@@ -1,3 +1,38 @@
+<? include 'db.php'; ?>
+
+<?
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
+if($param == "surfbus"){ //양양 셔틀버스
+    $bustitle = "액트립 양양 서핑버스";
+    $bussubinfo = "서울 - 양양 셔틀버스 운행 : 5월 ~ 9월, 지정좌석제";
+    $pointurl = "surf/surfview_bus_tab3.html";
+    $busgubun = "Y";
+    $sbusDate = "2020-05-01";
+}else{ //동해 셔틀버스
+    $bustitle = "액트립 동해 서핑버스";
+    $bussubinfo = "서울 - 동해 셔틀버스 운행 : 6월 ~ 8월, 지정좌석제";
+    $pointurl = "surf/surfview_bus_tab3_2.html";
+    $busgubun = "E";
+    $sbusDate = "2020-06-01";
+}
+
+$select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = 7 AND use_yn = 'Y'";
+$result = mysqli_query($conn, $select_query);
+$rowMain = mysqli_fetch_array($result);
+?>
 <div id="wrap">
     <? include '_layout_top.php'; ?>
 
@@ -8,11 +43,11 @@
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 양양 서핑버스</h1>
+                <h1><?=$bustitle?></h1>
                 <a class="reviewlink">
-                    <span class="reviewcnt">구매 <b>4,662</b>개</span>
+                    <span class="reviewcnt">구매 <b><?=number_format($rowMain["sell_cnt"])?></b>개</span>
                 </a>
-                <div class="shopsubtitle">서울 - 양양 셔틀버스 운행 : 5월 ~ 9월, 지정좌석제</div>
+                <div class="shopsubtitle"><?=$bussubinfo?></div>
             </div>
         </section>
 
@@ -56,6 +91,7 @@
                     </article>
                 </div>
                 <div class="contentimg">
+                <?if($param == "surfbus"){?>
                     <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus01.jpg" class="placeholder">
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus03.jpg" class="placeholder" style="cursor:pointer;">
                     <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus04.jpg" class="placeholder">
@@ -63,6 +99,14 @@
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus06.jpg" class="placeholder" />
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder" />
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus08.jpg" class="placeholder" />
+                <?}else{?>
+
+                <?}?>
+                </div>
+                <div id="shopmap">
+                    <div style="padding:10px 0 5px 0;font-size:12px;">
+                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="images/kakaochat.jpg" class="placeholder"></a>
+                    </div>
                 </div>
                 <div class="noticeline2" id="cancelinfo">
                     <p class="noticetxt">취소/환불 안내</p>
@@ -84,46 +128,109 @@
             </div>
             <div id="view_tab2" style="display: none;min-height: 800px;">
             
-                <? include 'surf/surfview_bus_tab3.html'; ?>
+                <? include $pointurl; ?>
 
             </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">            
-                <div class="busOption01">
-                    <ul class="destination">
+                <div class="busOption01" style="padding-bottom: 0px;">
+                    <ul class="destination" style="margin-bottom: 0px;">
                         <li><img src="images/viewicon/route.svg" alt="">행선지</li>
-                        <li class="toYang">양양행<i class="fas fa-chevron-right"></i></li>
-                        <li class="toSeoul">서울행<i class="fas fa-chevron-right"></i></li>
+                    <?if($param == "surfbus"){?>
+                        <li class="toYang on" onclick="fnBusGubun('Y', this);">양양행<i class="fas fa-chevron-right"></i></li>
+                        <li class="toYang" onclick="fnBusGubun('S', this);">서울행<i class="fas fa-chevron-right"></i></li>
+                    <?}else{?>
+                        <li class="toYang on" onclick="fnBusGubun('E', this);">동해행<i class="fas fa-chevron-right"></i></li>
+                        <li class="toYang" onclick="fnBusGubun('A', this);">서울행<i class="fas fa-chevron-right"></i></li>
+                    <?}?>
                     </ul>
+                </div>
+                <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
                     <ul class="busDate">
                         <li><img src="images/viewicon/calendar.svg" alt="">이용일</li>
-                        <li class="calendar">
-                            <input type="text" id="SurfBusY" name="SurfBusY" readonly="readonly" cal="busdate" gubun="y">
-                            <input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" cal="busdate" gubun="s">
-                        </li>
+                        <li class="calendar"><input type="text" id="SurfBus" name="SurfBus" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>" ></li>
                     </ul>
-                    <ul class="busLine">
+                    <ul class="busStop" id="busnotdate">
+                        <li>서핑버스 이용날짜를 선택하세요.</li>
+                    </ul>
+                    <ul class="busLine" style="display: none;">
                         <li><img src="images/viewicon/bus.svg" alt="">노선</li>
-                        <li>사당선 1호</li>
-                        <li>종로선 2호</li>
-                        <li>사당선 3호</li>
-                        <li>사당선 3호</li>
-                        <li>사당선 3호</li>
                     </ul>
-                    <ul class="busStop">
-                        <li>여의도 &gt; 신도림 &gt; 구로디지털단지 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역</li>
-                        <li style="display: none;">여의도 &gt; 신도림 &gt; 구로디지털단지 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역</li>
-                        <li style="display: none;">여의도 &gt; 신도림 &gt; 구로디지털단지 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역</li>
+                    <ul class="busStop" id="buspointlist" style="display: none;">
+                        <li id="buspointtext"></li>
                     </ul>
                 </div>
                 <div class="busOption02">
-                    <ul class="busSeat">버스 좌석 선택자리</ul>
-                    <ul class="selectStop">
-                        <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
-                        <li>버스 정류장 선택자리</li>
-                        <li><img src="images/button/btn062.png" alt="서울행 서핑버스"></li>
-                        <li>버스 정류장 선택자리</li>
+                    <ul class="busSeat">
+                        <div class="busSeatTable">
+                            <div style="padding-bottom:155px;"></div>
+                            <table style="width:312px;margin-left:7px;" id="tbSeat">
+                                <colgroup>
+                                    <col style="width:60px;height:68px;">
+                                    <col style="width:60px;height:68px;">
+                                    <col style="width:60px;height:68px;">
+                                    <col style="width:60px;height:68px;">
+                                    <col style="width:60px;height:68px;">
+                                </colgroup>
+                                <tbody>
+
+                                <?
+                                $chkSeat = "";
+                                for($i=0; $i<=10; $i++){
+                                    $num1 = ($i * 4) + 1;
+                                    $num2 = ($i * 4) + 2;
+                                    $num3 = ($i * 4) + 3;
+                                    $num4 = ($i * 4) + 4;
+                                    $num5 = ($i * 4) + 5;
+
+                                    if($i == 10){
+                                ?>
+                                    <tr height="68" id="busSeatLast">
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num5?>"><br><?=$num5?></td>
+                                    </tr>
+                                <?
+                                    }else{
+                                ?>
+                                    <tr height="68">
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
+                                        <td>&nbsp;</td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
+                                    </tr>
+                                <?
+                                    }
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </ul>
-                    </div>
+                    <ul class="selectStop" style="padding:0 4px;">
+                        <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li>
+                            <div id="selBusY" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                        <li><img src="images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li>
+                            <div id="selBusS" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                        <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li>
+                            <div id="selBusE" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                        <li><img src="images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li>
+                            <div id="selBusA" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -143,28 +250,20 @@
 <script src="js/surfview_bus.js"></script>
 <script src="js/surfview.js"></script>
 <script src="js/jquery-ui.js"></script>
+<script src="js/surfview_busday.js"></script>
 <script>
-    var sbusDate = {
-        "y0328":{type:0},
-        "y0404":{type:0},
-        "y0405":{type:0},
-        "y0411":{type:0},
-        "y0601":{type:0},
-        "s0329":{type:0},
-        "s0402":{type:0},
-        "s0405":{type:0},
-        "s0411":{type:0},
-        "s0606":{type:0}
-    };
-
-    var mapView = 1;
-    var sLng = "37.9726807";
-    var sLat = "128.7593755";
-    var MARKER_SPRITE_X_OFFSET = 29,
-        MARKER_SPRITE_Y_OFFSET = 50,
-        MARKER_SPRITE_POSITION2 = {
-            '당찬패키지 #END'		: [0, MARKER_SPRITE_Y_OFFSET*3, sLng, sLat, '죽도해변', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, 'https://surfenjoy.cdn3.cafe24.com/shop/surfenjoy_new_1.jpg?v=3', '죽도']
-        };
+    var busDateinit = "<?=$sbusDate?>";
+    var busData = {};
+    
+    var objParam = {
+        "code":"busday",
+        "bus":"<?=$busgubun?>"
+    }
+    $j.getJSON("/act/surf/surfbus_day.php", objParam,
+        function (data, textStatus, jqXHR) {
+            busData = data;
+        }
+    );
 
     function fnBusPoint(obj) {
         $j("input[btnpoint='point']").css("background", "").css("color", "");

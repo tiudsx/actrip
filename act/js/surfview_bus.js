@@ -51,17 +51,99 @@ var rtnBusDate = function(day, getDay, json, bus){
     return result;
 }
 
+
+var selDate;
+var busNum;
+var busNumName;;
+var busType;
+//노선 클릭시 정류장 및 좌석 바인딩
+function fnPointList(busnum, busseat, obj){
+	$j(".busLine li").removeClass("on");
+	$j(obj).addClass("on");
+	
+	$j("#buspointlist").css("display", "block");
+	$j("#buspointtext").html(busPointList[busnum].li);
+
+	var busSeatLast = "";
+	if(busseat == 44){
+		busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
+						'<td>&nbsp;</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="45"><br>45</td>';
+	}else{
+		busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="45"><br>45</td>';
+	}
+
+	$j("#busSeatLast").html(busSeatLast);
+	
+	selDate = $j("#SurfBus").val();
+	busNum = busnum;
+	busType = busnum.substring(0, 1);
+	busNumName = $j(obj).text();
+	var seatjson = [];
+	var objParam = {
+		"code":"busseat",
+		"busDate":selDate,
+		"busNum":busnum
+    }
+    $j.getJSON("/act/surf/surfbus_day.php", objParam,
+        function (data, textStatus, jqXHR) {
+            seatjson = data;
+        }
+	);
+	
+	$j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
+	seatjson.forEach(function (el) {
+		if(el.seatYN == "Y"){
+			$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
+		}
+	});
+
+	if($j("#tb" + selDate + '_' + busnum).length > 0){
+		var forObj = $j("#tb" + selDate + '_' + busnum + ' [id=hidbusSeat' + busType + ']');
+		for (var i = 0; i < forObj.length; i++) {
+			$j("#tbSeat .busSeatList[busSeat=" + forObj.eq(i).val() + "]").removeClass("busSeatListY").addClass("busSeatListC");
+		}
+	}
+}
+
+//달력 날짜 선택시 노선 바인딩
+function fnBusSearchDate(selectedDate, gubun){
+	$j("#buspointlist").css("display", "none");
+	$j("#busnotdate").css("display", "none");
+	
+	$j(".busLine li").remove();
+	$j(".busLine").css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">노선</li>');
+
+	$j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
+
+	var arrData = busData[gubun + selectedDate.substring(5).replace('-', '')];
+	arrData.forEach(function(el){
+		$j(".busLine").append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" style="cursor:pointer;">' + el.busname + '</li>');
+	});
+
+	$j(".busLine li").eq(1).click();
+}
+
 jQuery(function () {
 	jQuery('input[cal=busdate]').datepicker({
-		minDate : new Date('2020-03-01'),
+		minDate : new Date(busDateinit),
 		maxDate : new Date('2020-09-30'),
-		onClose: function (selectedDate) {
-			if(selectedDate != ""){
-				//fnBusSearchDate('s');
-			}
+		// onClose: function (selectedDate) {
+		// 	if(selectedDate != ""){
+		// 		fnBusSearchDate(selectedDate, $j(this).attr("gubun"));
+		// 	}
+		// },
+		onSelect : function (selectedDate) {
+			fnBusSearchDate(selectedDate, $j(this).attr("gubun"));
 		},
 		beforeShowDay: function(date) {
-            return rtnBusDate(date, date.getDay(), sbusDate, $j(this).attr("gubun"));
+            return rtnBusDate(date, date.getDay(), busData, $j(this).attr("gubun"));
 		}
     });
     
@@ -176,3 +258,180 @@ jQuery(function ($) {
 	};
     $.datepicker.setDefaults($.datepicker.regional['ko']);
 });
+
+//행선지 클릭시 이용일 영역 활성화
+function fnBusGubun(gubun, obj){
+	$j(".destination li").removeClass("on");
+	$j(obj).addClass("on");
+	$j("#SurfBus").val("").attr("gubun", gubun.substring(0, 1));
+
+	//$j('#layerbus1').unblock(); 
+
+	if($j("#busnotdate").css("display") == "none"){
+		$j("#busnotdate").css("display", "block");
+		$j(".busLine").css("display", "none");
+		$j("#buspointlist").css("display", "none");
+	}
+}
+
+//버스 좌석 선택시 컨트롤
+function fnSeatSelected(obj) {
+	if($j(obj).hasClass("busSeatListN")) return;
+
+	var objVlu = $j(obj).attr("busSeat");
+	if($j(obj).hasClass("busSeatListC")){
+		$j(obj).addClass("busSeatListY").removeClass("busSeatListC");   
+
+		if ($j("#" + selDate + '_' + busNum + ' tr').length == 2) {
+			$j("#tb" + selDate + '_' + busNum).remove();
+		} else {
+			$j("#" + selDate + '_' + busNum + '_' + objVlu).remove();
+		}       
+	}else{
+		$j(obj).addClass("busSeatListC").removeClass("busSeatListY");
+
+		var sPoint = "";
+		var ePoint = "";
+		var arrObjs = eval("busPoint.sPoint" + busNum);
+		var arrObje = eval("busPoint.ePoint" + busType);
+		arrObjs.forEach(function(el){
+			sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+		});
+		arrObje.forEach(function (el) {
+			ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+		});
+
+		var tbCnt = $j("#tb" + selDate + '_' + busNum).length;
+		var insHtml = "";
+		var bindObj = "#" + selDate + '_' + busNum;
+		if (tbCnt == 0) {
+			insHtml = '		<table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:5px;" id="tb' + selDate + '_' + busNum + '">' +
+						'			<colgroup>' +
+						'				<col style="width:45px;">' +
+						'				<col style="width:auto;">' +
+						'				<col style="width:38px;">' +
+						'			</colgroup>' +
+						'			<tbody id="' + selDate + '_' + busNum + '">' +
+						'				<tr>' +
+						'					<th colspan="3">[' + selDate + '] ' + busNumName +
+						'					</th>' +
+						'				</tr>';
+			bindObj = "#selBus" + busType;
+		}
+
+		
+
+		insHtml += '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '">' +
+					'					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
+					'					<td style="line-height:2;">' +
+					'						<select id="startLocation' + busType + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this.value, \'' + busNum + '\');">' +
+					'							' + sPoint +
+					'						</select> →' +
+					'						<select id="endLocation' + busType + '" name="endLocation' + busType + '[]" class="select">' +
+					'							' + ePoint +
+					'						</select><br>' +
+					'						<span id="stopLocation"></span>' +
+					'						<input type="hidden" id="hidbusSeat' + busType + '" name="hidbusSeat' + busType + '[]" value="' + objVlu + '" />' +
+					'						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
+					'						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + busNum + '" />' +
+					'					</td>' +
+					'					<td style="text-align:center;" onclick="fnSeatDel(this, ' + objVlu + ');"><img src="act/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
+					'				</tr>';
+
+		$j(bindObj).append(insHtml);            
+	}
+	
+	// fnPriceSum('', 1);
+}
+
+//서핑버스 좌석선택 삭제
+function fnSeatDel(obj, num){
+	var arrId = $j(obj).parents('tbody').attr('id').split('_');
+	if(selDate == arrId[0] && busNum == arrId[1]){
+		$j("#tbSeat .busSeatList[busSeat=" + num + "]").removeClass("busSeatListC").addClass("busSeatListY");
+	}
+
+	if($j(obj).parents('tbody').find('tr').length == 2){
+		$j(obj).parents('table').remove();
+	}else{
+		$j(obj).parents('tr').remove();
+	}
+
+	// fnPriceSum('', 1);
+}
+
+function fnPriceSum(obj, num){
+	if(num == 1){
+		var cnt = $j("input[id=hidbusSeatY]").length + $j("input[id=hidbusSeatS]").length;
+		//$j("#totalPrice").html(commify(cnt * 20000) + "원");
+
+		var arrYDis = new Array();
+		var arrYDisCnt = new Array();
+		var arrSDis = new Array();
+		var arrSDisCnt = new Array();
+
+		var x = 0;
+		for(var i=0;i<$j("input[id=hidbusDateY]").length;i++){
+			if(arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] == null){
+				arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] = 1;
+
+				arrYDisCnt[x] = $j("input[id=hidbusDateY]").eq(i).val();
+				x++;			
+			}else{
+				arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] += 1;
+			}
+		}
+		
+		x = 0;
+		for(var i=0;i<$j("input[id=hidbusDateS]").length;i++){
+			if(arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] == null){
+				arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] = 1;
+
+				arrSDisCnt[x] = $j("input[id=hidbusDateS]").eq(i).val();
+				x++;			
+			}else{
+				arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] += 1;
+			}
+		}
+
+		var disCnt = 0;
+		var totalDisCnt = 0;
+		for(var i=0;i<arrYDisCnt.length;i++){
+			//alert('양양행:' + arrYDis[arrYDisCnt[i]]);
+
+			var DateY = new Date(arrYDisCnt[i]);
+
+			var thisCnt = arrYDis[arrYDisCnt[i]];
+			var nextCnt1 = ((arrSDis[arrYDisCnt[i]] == null) ? 0 : arrSDis[arrYDisCnt[i]]);
+			var nextCnt2 = ((arrSDis[plusDate(arrYDisCnt[i], 1)] == null) ? 0 : arrSDis[plusDate(arrYDisCnt[i], 1)]);
+			var nextCnt = nextCnt1 + nextCnt2;
+
+			if(thisCnt >= nextCnt){
+				disCnt = thisCnt - (thisCnt - nextCnt);
+			}else{
+				disCnt = nextCnt - (nextCnt - thisCnt);
+				if(nextCnt1 > 0){
+					arrSDis[arrYDisCnt[i]] -= 1;
+				}else{
+					arrSDis[plusDate(arrYDisCnt[i], 1)] -= 1;
+				}
+			}
+
+			totalDisCnt += disCnt;
+			//alert(arrYDisCnt[i] + ' / ' + plusDate(arrYDisCnt[i], 1) + " / " + thisCnt + " / " + nextCnt + " / " + disCnt);
+		}
+
+		var strDis = "";
+		if(totalDisCnt > 0){
+			//임시제거
+			//strDis = " (할인:" + commify(totalDisCnt * 5000) + "원)";
+		}
+		$j("#totalPrice").html(commify((cnt * 20000) - (totalDisCnt * 5000)) + "원" + strDis);
+		$j("#lastbusPrice").html((cnt * 20000) - (totalDisCnt * 5000));
+	}else{
+		$j("#totalPrice2").html(commify(obj.value * 25000) + "원");
+		$j("#lastbbqPrice").html(obj.value * 25000);
+	}
+
+	$j("#lastPrice").html(commify(Number($j("#lastbusPrice").html()) + Number($j("#lastbbqPrice").html(), 10)) + "원");
+}

@@ -1,3 +1,7 @@
+$j.ajaxSetup({
+	async: false
+});
+
 /* Hamburger Menu */
 $j(".menu").click(function() {
 	$j(".menu").toggleClass("active");
