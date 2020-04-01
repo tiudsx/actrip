@@ -63,7 +63,7 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
 .layG_kakao {position:fixed;width: 100%;bottom:100px; z-index:1;}
 .kakaobtn{text-align: right;}
 
-.con_footer {position:fixed;width: 100%;bottom:0px;/*background-color: white;*/z-index:100;}
+.con_footer {position:fixed;width: 100%;bottom:0px;/*background-color: white;*/z-index:100;cursor: pointer;}
 .resbottom {padding-top: 7px;text-align: center;height: 40px;/*background-color: white;*/border-top:0px solid #f1f1f1;}
 
 .placeholder {

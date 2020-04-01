@@ -58,6 +58,8 @@ var busNumName;;
 var busType;
 //노선 클릭시 정류장 및 좌석 바인딩
 function fnPointList(busnum, busseat, obj){
+	$j('.busSeat').unblock(); 
+
 	$j(".busLine li").removeClass("on");
 	$j(obj).addClass("on");
 	
@@ -261,11 +263,13 @@ jQuery(function ($) {
 
 //행선지 클릭시 이용일 영역 활성화
 function fnBusGubun(gubun, obj){
+	$j('.busSeat').block({ message: null }); 
+
 	$j(".destination li").removeClass("on");
 	$j(obj).addClass("on");
 	$j("#SurfBus").val("").attr("gubun", gubun.substring(0, 1));
 
-	//$j('#layerbus1').unblock(); 
+	$j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
 
 	if($j("#busnotdate").css("display") == "none"){
 		$j("#busnotdate").css("display", "block");
@@ -434,4 +438,50 @@ function fnPriceSum(obj, num){
 	}
 
 	$j("#lastPrice").html(commify(Number($j("#lastbusPrice").html()) + Number($j("#lastbbqPrice").html(), 10)) + "원");
+}
+
+
+
+function fnBusPoint(obj) {
+	$j("input[btnpoint='point']").css("background", "").css("color", "");
+	$j(obj).css("background", "#1973e1").css("color", "#fff");
+
+	$j("table[view='tbBus1']").css("display", "none");
+	$j("table[view='tbBus2']").css("display", "none");
+	$j("table[view='tbBus3']").css("display", "none");
+	
+	if($j(obj).val() == "사당선"){
+		$j("table[view='tbBus1']").css("display", "");
+
+		fnBusMap('Y', 2, 1, '신도림', ".mapviewid:eq(0)", "false");
+	}else if ($j(obj).val() == "왕십리선") {
+		$j("table[view='tbBus2']").css("display", "");
+		fnBusMap('Y', 1, 2, '당산역', ".mapviewid:eq(6)", "false");
+	}else{
+		$j("table[view='tbBus3']").css("display", "");
+		fnBusMap('S', 1, 1, '주문진해변', ".mapviewid:eq(12)", "false");
+	}
+}
+
+function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
+	$j("#mapimg").css("display", "block");
+	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + gubun + busnum + "_" + num + ".JPG");
+   
+	$j(".mapviewid").css("background", "").css("color", "");
+	$j(obj).css("background", "#1973e1").css("color", "#fff");
+	
+	$j("#ifrmBusMap").css("display", "block");
+	var obj = $j("#ifrmBusMap").get(0);
+	var objDoc = obj.contentWindow || obj.contentDocument;
+	objDoc.mapMove(pointname);
+
+	if(bool != "false"){
+		fnMapView('#mapimg', 40);
+	}
+}
+
+function maxLengthCheck(object) {
+	if (object.value.length > object.maxLength) {
+		object.value = object.value.slice(0, object.maxLength);
+	}
 }

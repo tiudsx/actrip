@@ -29,8 +29,8 @@
 							<li><a href="/surfbus"><img src="/act/images/icon/ibus.png" alt=""></a></li>
 							<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
 							<li><a href="/camp"><img src="/act/images/icon/itent.png" alt=""></a></li>
-							<li><a href="#"><img src="/act/images/icon/ibed.png" alt=""></a></li>
-							<li><a href="#"><img src="/act/images/icon/ifood.png" alt=""></a></li>
+							<li><a href="/staylist"><img src="/act/images/icon/ibed.png" alt=""></a></li>
+							<li><a href="/eatlist"><img src="/act/images/icon/ifood.png" alt=""></a></li>
 						</ul>
 						<ul class="menu03">
 							<li><a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="/act/images/icon/cscenter.svg" alt="">고객센터</a></li>

@@ -1,27 +1,3 @@
-.bd, .bd input, .bd textarea, .bd select, .bd button, .bd table {
-    padding: 0px;
-}
-
-.bd table {
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-
-.et_vars{width:100%;margin-bottom:8px;}
-
-.et_vars th, .et_vars td {
-    padding: 6px;
-    border: 1px solid #DDD;
-    word-break: break-all;
-    word-wrap: break-word;
-    line-height: 1.2rem;
-}
-.et_vars th{
-    background-color: #efefef;
-}
-.et_vars td {
-    background: #FFF;
-}
 .bd_btn:hover, .bd_btn:focus {
     border-color: #AAA;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -35,5 +11,3 @@
 .busSeatListY{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png); color: black; cursor: pointer;}
 .busSeatListC{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_2.jpg); color: black; cursor: pointer;}
 .busSeatListN{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.jpg); color: #959595;}
-
-.bd select, .itx{display:inline-block;margin:0;padding:4px 6px;background:#FAFAFA;border-radius:3px;border:1px solid;border-color:#BBB #DDD #DDD #BBB;*display:inline;*zoom:1;}

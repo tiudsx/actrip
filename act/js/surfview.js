@@ -6,7 +6,13 @@ $j(document).ready(function() {
         $j("#view_tab1").css("display", "none");
         $j("#view_tab3").css("display", "block");
 
+        if($j("#view_tab2").length > 0){
+            $j("#view_tab2").css("display", "none");
+        }
+
         fnMapView("#view_tab3", 90);
+        
+        $j(".con_footer").css("display", "none");
     });
 
     var swiper = new Swiper('.swiper-container', {
@@ -64,6 +70,7 @@ function fnResViewBus(bool, objid, topCnt, obj) {
     $j(".vip-tabnavi li").removeClass("on");
     $j(obj).addClass("on");
 
+    $j(".con_footer").css("display", "block");
     if(bool){
         $j("#view_tab1").css("display", "block");
         $j("#view_tab2").css("display", "none");
@@ -77,6 +84,10 @@ function fnResViewBus(bool, objid, topCnt, obj) {
         }else{
             $j("#view_tab2").css("display", "none");
             $j("#view_tab3").css("display", "block");
+
+            if(objid == "#view_tab3"){
+                $j(".con_footer").css("display", "none");
+            }
         }
     }
 
@@ -87,12 +98,17 @@ function fnResView(bool, objid, topCnt, obj) {
     $j(".vip-tabnavi li").removeClass("on");
     $j(obj).addClass("on");
 
+    $j(".con_footer").css("display", "block");
     if (bool) {
         $j("#view_tab1").css("display", "block");
         $j("#view_tab3").css("display", "none");
     } else {
         $j("#view_tab1").css("display", "none");
         $j("#view_tab3").css("display", "block");
+
+        if(objid == "#view_tab3"){
+            $j(".con_footer").css("display", "none");
+        }
     }
 
     fnMapView(objid, topCnt);
@@ -103,4 +119,13 @@ function fnMapView(objid, topCnt) {
     $j('html, body').animate({
         scrollTop: divLoc.top - topCnt
     }, "slow");
+}
+
+//달력 월 이동
+function fnCalMove(selDate, seq) {
+    var nowDate = new Date();
+	$j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=" + selDate + "&seq=" + seq + "&t=" + nowDate.getTime());
+
+    $j("#initText").css("display", "");
+    $j("#lessonarea").css("display", "none");
 }

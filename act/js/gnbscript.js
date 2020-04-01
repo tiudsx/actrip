@@ -14,7 +14,12 @@ $j(".menu").click(function() {
 	}else{
 		$j('body').unblock(); 
 		$j(".layG_kakao").css("display", "");
-		$j(".con_footer").css("display", "");
+
+		if($j("#view_tab3").css("display") == "block"){
+			$j(".con_footer").css("display", "none");
+		}else{
+			$j(".con_footer").css("display", "block");			
+		}
 	}
 });
 /* End */

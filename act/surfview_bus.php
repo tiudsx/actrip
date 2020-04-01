@@ -73,6 +73,12 @@ $rowMain = mysqli_fetch_array($result);
                             <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li>
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
                             <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li>
+                            <li class="litxt">
+                                <span>    
+                                액트립 서핑버스 이용금액은 부가세 별도금액입니다.<br>
+                                <span>현금영수증 신청은 이용일 이후 [예약조회] 메뉴에서 신청가능합니다.</span>
+                                </span>
+                            </li>
                         </ul>
                     </article>
                     <article>
@@ -210,6 +216,7 @@ $rowMain = mysqli_fetch_array($result);
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
+                    <?if($param == "surfbus"){?>
                         <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
                         <li>
                             <div id="selBusY" class="bd" style="padding-top:2px;">
@@ -220,6 +227,7 @@ $rowMain = mysqli_fetch_array($result);
                             <div id="selBusS" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
+                    <?}else{?>
                         <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
                         <li>
                             <div id="selBusE" class="bd" style="padding-top:2px;">
@@ -230,7 +238,66 @@ $rowMain = mysqli_fetch_array($result);
                             <div id="selBusA" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
+                    <?}?>
                     </ul>
+                </div>
+
+                <div class="bd" style="padding:0 4px;">
+                    <p class="restitle">예약자 정보</p>
+                    <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
+                        <tbody>
+                            <tr>
+                                <th><em>*</em> 이름</th>
+                                <td><input type="text" id="userName" name="userName" value="<?=$user_name?>" class="itx" maxlength="15"></td>
+                            </tr>
+                            <tr style="display:none;">
+                                <th><em>*</em> 아이디</th>
+                                <td><input type="text" id="userId" name="userId" value="<?=$user_id?>" class="itx" maxlength="30" readonly></td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 연락처</th>
+                                <td>
+                                    <input type="number" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="number" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="number" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"> 이메일</th>
+                                <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
+                            </tr>
+                            <tr>
+                                <th>특이사항</th>
+                                <td>
+                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>총 결제금액</th>
+                                <td><span id="lastPrice">0원</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="restitle">약관 동의</p>
+                    <table class="et_vars exForm bd_tb exForm" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
+                    <div>
+                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
+                    </div>
                 </div>
             </div>
         </section>
@@ -252,6 +319,7 @@ $rowMain = mysqli_fetch_array($result);
 <script src="js/jquery-ui.js"></script>
 <script src="js/surfview_busday.js"></script>
 <script>
+    $j('.busSeat').block({ message: null }); 
     var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     
@@ -264,42 +332,4 @@ $rowMain = mysqli_fetch_array($result);
             busData = data;
         }
     );
-
-    function fnBusPoint(obj) {
-        $j("input[btnpoint='point']").css("background", "").css("color", "");
-        $j(obj).css("background", "#1973e1").css("color", "#fff");
-
-        $j("table[view='tbBus1']").css("display", "none");
-        $j("table[view='tbBus2']").css("display", "none");
-        $j("table[view='tbBus3']").css("display", "none");
-        
-        if($j(obj).val() == "사당선"){
-            $j("table[view='tbBus1']").css("display", "");
-
-            fnBusMap('Y', 1, 1, '여의도', ".mapviewid:eq(0)", "false");
-        }else if ($j(obj).val() == "왕십리선") {
-            $j("table[view='tbBus2']").css("display", "");
-            fnBusMap('Y', 1, 2, '당산역', ".mapviewid:eq(7)", "false");
-        }else{
-            $j("table[view='tbBus3']").css("display", "");
-            fnBusMap('S', 1, 1, '주문진해변', ".mapviewid:eq(14)", "false");
-        }
-    }
-
-    function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
-        $j("#mapimg").css("display", "block");
-        $j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + gubun + busnum + "_" + num + ".JPG");
-       
-        $j(".mapviewid").css("background", "").css("color", "");
-        $j(obj).css("background", "#1973e1").css("color", "#fff");
-        
-        $j("#ifrmBusMap").css("display", "block");
-        var obj = $j("#ifrmBusMap").get(0);
-        var objDoc = obj.contentWindow || obj.contentDocument;
-        objDoc.mapMove(pointname);
-
-        if(bool != "false"){
-            fnMapView('#mapimg', 40);
-        }
-    }
 </script>

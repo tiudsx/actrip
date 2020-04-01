@@ -37,7 +37,13 @@
                         <ul>
                             <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li>
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
-                            <li class="litxt">예약하신 이용일, 바베큐파티장소를 꼭 확인해주세요.</li>
+                            <li class="litxt">예약하신 이용일, 바베큐파티 장소를 꼭 확인해주세요.</li>
+                            <li class="litxt">
+                                <span>    
+                                액트립 바베큐파티 이용금액은 부가세 별도금액입니다.<br>
+                                <span>현금영수증 신청은 이용일 이후 [예약조회] 메뉴에서 신청가능합니다.</span>
+                                </span>
+                            </li>
                         </ul>
                     </article>
                     <article>
@@ -79,7 +85,47 @@
                 </div>
             </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">
-                test
+                <div class="bd" style="padding:0 4px;">
+                    <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
+                        <tbody>
+                            <tr>
+                                <th><em>*</em> 이름</th>
+                                <td><input type="text" id="userName" name="userName" value="<?=$user_name?>" class="itx" maxlength="15"></td>
+                            </tr>
+                            <tr style="display:none;">
+                                <th><em>*</em> 아이디</th>
+                                <td><input type="text" id="userId" name="userId" value="<?=$user_id?>" class="itx" maxlength="30" readonly></td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 연락처</th>
+                                <td>
+                                    <input type="number" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="number" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="number" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"> 이메일</th>
+                                <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
+                            </tr>
+                            <tr>
+                                <th>특이사항</th>
+                                <td>
+                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>총 결제금액</th>
+                                <td><span id="lastPrice">0원</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
+                    <div>
+                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
+                    </div>
+                </div>
             </div>
         </section>
     </div>

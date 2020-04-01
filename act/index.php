@@ -64,9 +64,9 @@
 						</a></li>
 					<li><a href="/camp"><img src="images/icon/itent.png" alt="">
 						</a></li>
-					<li><a href="#"><img src="images/icon/ibed.png" alt="">
+					<li><a href="/staylist"><img src="images/icon/ibed.png" alt="">
 						</a></li>
-					<li><a href="#"><img src="images/icon/ifood.png" alt="">
+					<li><a href="/eatlist"><img src="images/icon/ifood.png" alt="">
 						</a></li>
 				</ul>
 			</nav>
@@ -91,8 +91,6 @@
 						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
 						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
 						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
 					</div>
 					<div class="tag">
 						<a href="#">#해시태그</a>
@@ -107,14 +105,14 @@
 			<section id="popular">
 				<header class="popTitle">
 					<h2>인기 액티비티</h2>
-					<a href="#">레저/액티비티</a>
+					<!-- <a href="#">레저/액티비티</a> -->
 				</header>
 				<div class="actTab">
 					<ul class="tabs">
-						<li rel="tab1" class="active">tab1</li>
-						<li rel="tab2">tab2</li>
-						<li rel="tab3">tab3</li>
-						<li rel="tab4">tab4</li>
+						<li rel="tab1" class="active">추천</li>
+						<li rel="tab2">양양</li>
+						<li rel="tab3">고성</li>
+						<li rel="tab4">동해</li>
 					</ul>
 					<div class="tabContainer">
 						<div id="tab1" class="tabContent">
@@ -247,12 +245,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="viewTheme">
-					<span>다른 테마 보기</span>
-				</div>
 			</section>
 
-			<a href="">더보기</a>
 		</div>
 	</div>
 </div>
