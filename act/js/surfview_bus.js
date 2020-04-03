@@ -485,3 +485,61 @@ function maxLengthCheck(object) {
 		object.value = object.value.slice(0, object.maxLength);
 	}
 }
+
+function fnBusSave() {
+    var chkVluY = $j("input[id=hidbusSeatY]").map(function () { return $j(this).val(); }).get();
+    var chkVluS = $j("input[id=hidbusSeatS]").map(function () { return $j(this).val(); }).get();
+
+    var chksLocationY = $j("select[id=startLocationY]").map(function () { return $j(this).val(); }).get();
+    var chkeLocationY = $j("select[id=endLocationY]").map(function () { return $j(this).val(); }).get();
+    var chksLocationS = $j("select[id=startLocationS]").map(function () { return $j(this).val(); }).get();
+    var chkeLocationS = $j("select[id=endLocationS]").map(function () { return $j(this).val(); }).get();
+
+	if(chkVluY == "" && chkVluS == ""){
+		alert("양양행 또는 서울행 좌석을 선택해 주세요.");
+
+		fnMapView("#view_tab3", 90);
+		return;
+	}
+
+	if(chksLocationY.indexOf('N') != -1 || chkeLocationY.indexOf('N') != -1){
+		alert('양양행 정류장을 선택해주세요.');
+		return;
+	}
+	if(chksLocationS.indexOf('N') != -1 || chkeLocationS.indexOf('N') != -1){
+		alert('서울행 정류장을 선택해주세요.');
+		return;
+	}
+
+    if ($j("#userName").val() == "") {
+        alert("이름을 입력하세요.");
+        return;
+    }
+
+    if ($j("#userPhone1").val() == "" || $j("#userPhone2").val() == "" || $j("#userPhone3").val() == "") {
+        alert("연락처를 입력하세요.");
+        return;
+    }
+
+    if (!jQuery("#chk8").is(':checked')) {
+        alert("이용안내 및 취소/환불 규정에 대한 동의를 해주세요.");
+        return;
+    }
+
+    if (!jQuery("#chk9").is(':checked')) {
+        alert("개인정보 취급방침에 동의를 해주세요.");
+        return;
+    }
+
+    if (!confirm("서울-양양 셔틀버스를 예약하시겠습니까?")) {
+        return;
+	}
+	
+
+    $j("#frmRes").attr("action", "/act/surf/surfbus_save.php").submit();
+}
+
+function fnCouponCheck(obj){
+	var cp = fnCoupon();
+	alert(cp);
+}

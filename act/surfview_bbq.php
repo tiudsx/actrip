@@ -85,7 +85,14 @@
                 </div>
             </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">
+                <div id="tour_calendar" style="display: block;padding:10px 4px;">
+                </div>
+
+                <div id="initText" class="write_table" style="text-align: center;font-size:14px;padding-top:20px;padding-bottom:20px;display:;">
+                    <b>예약날짜를 선택하세요.</b>
+                </div>
                 <div class="bd" style="padding:0 4px;">
+                    <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
                         <tbody>
                             <tr>
@@ -120,6 +127,21 @@
                             </tr>
                         </tbody>
                     </table>
+                    <p class="restitle">약관 동의</p>
+                    <table class="et_vars exForm bd_tb exForm" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
                     <div>
@@ -143,6 +165,8 @@
 
 <script src="js/surfview.js"></script>
 <script>
+$j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=46");
+
 var mapView = 1;
 var sLng = "37.9726807";
 var sLat = "128.7593755";

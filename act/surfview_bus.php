@@ -32,6 +32,9 @@ if($param == "surfbus"){ //양양 셔틀버스
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = 7 AND use_yn = 'Y'";
 $result = mysqli_query($conn, $select_query);
 $rowMain = mysqli_fetch_array($result);
+
+//연락처 모바일 여부
+if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
 ?>
 <div id="wrap">
     <? include '_layout_top.php'; ?>
@@ -137,7 +140,13 @@ $rowMain = mysqli_fetch_array($result);
                 <? include $pointurl; ?>
 
             </div>
-            <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">            
+            <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">
+            <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
+                <span style="display:none;">
+                    <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
+                    <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
+                </span>
+                
                 <div class="busOption01" style="padding-bottom: 0px;">
                     <ul class="destination" style="margin-bottom: 0px;">
                         <li><img src="images/viewicon/route.svg" alt="">행선지</li>
@@ -248,28 +257,31 @@ $rowMain = mysqli_fetch_array($result);
                         <tbody>
                             <tr>
                                 <th><em>*</em> 이름</th>
-                                <td><input type="text" id="userName" name="userName" value="<?=$user_name?>" class="itx" maxlength="15"></td>
-                            </tr>
-                            <tr style="display:none;">
-                                <th><em>*</em> 아이디</th>
-                                <td><input type="text" id="userId" name="userId" value="<?=$user_id?>" class="itx" maxlength="30" readonly></td>
+                                <td><input type="text" id="userName" name="userName" value="이승철" class="itx" maxlength="15"></td>
                             </tr>
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
-                                    <input type="number" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="010" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="4437" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="0009" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"> 이메일</th>
-                                <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
+                                <td><input type="text" id="usermail" name="usermail" value="lud1@naver.com" class="itx"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"> 쿠폰코드</th>
+                                <td>
+                                    <input type="text" id="coupon" name="coupon" value="" class="itx" maxlength="10">
+                                    <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
+                                </td>
                             </tr>
                             <tr>
                                 <th>특이사항</th>
                                 <td>
-                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
+                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;">test</textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -283,12 +295,12 @@ $rowMain = mysqli_fetch_array($result);
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                    <input type="checkbox" id="chk8" name="chk8" checked="checked"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                    <input type="checkbox" id="chk9" name="chk9" checked="checked"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
                                 </td>
                             </tr>
                         </tbody>
@@ -299,11 +311,12 @@ $rowMain = mysqli_fetch_array($result);
                         <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
                     </div>
                 </div>
+            </form>
             </div>
         </section>
     </div>
 </div>
-
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
         <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1">

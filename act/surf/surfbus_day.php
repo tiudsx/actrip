@@ -31,12 +31,12 @@ if($reqCode == "busday"){
         $groupData[] = array("seatnum" => "$i", "seatYN" => "Y");
     }
 
-    $select_query = 'SELECT * FROM `SURF_BUS_SUB` where busDate = "'.$_REQUEST["busDate"].'" AND DelUse = "N" AND ResConfirm IN (0, 1) AND busNum = "'.$_REQUEST["busNum"].'"';
+    $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3) AND res_bus = "'.$_REQUEST["busNum"].'"';
     $result_setlist = mysqli_query($conn, $select_query);
     while ($row = mysqli_fetch_assoc($result_setlist)){
         //echo 'arrySeat['.$row['busSeat'].'] = "ok";';
         
-        $groupData[$row['busSeat']] = array("seatnum" => $row['busSeat'], "seatYN" => "N");
+        $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
     }
 }
 

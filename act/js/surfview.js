@@ -55,6 +55,9 @@ $j(document).ready(function() {
 });
 
 var isVisible = false;
+function fnCoupon(){
+    return 20000;
+}
 
 function checkVisible(elm, eval) {
     eval = eval || "object visible";

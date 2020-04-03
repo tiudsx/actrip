@@ -15,7 +15,7 @@ $rowMain = mysqli_fetch_array($result);
 $count = mysqli_num_rows($result);
 
 if($count == 0){
-    echo '<script>alert("예약이 불가능한 상품입니다.");location.href="surfevent";</script>';
+    echo '<script>alert("예약이 불가능한 상품입니다.");location.href="/surf";</script>';
     exit;
 }
 
@@ -562,6 +562,7 @@ $reqCode = $rowMain["category"];
                 </div>
 
                 <div class="bd" style="padding:0 4px;">
+                    <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
                         <tbody>
                             <tr>
@@ -593,6 +594,21 @@ $reqCode = $rowMain["category"];
                             <tr>
                                 <th>총 결제금액</th>
                                 <td><span id="lastPrice">0원</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="restitle">약관 동의</p>
+                    <table class="et_vars exForm bd_tb exForm" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;display: inline;">[내용확인]</a> (필수동의)
+                                </td>
                             </tr>
                         </tbody>
                     </table>
