@@ -70,3 +70,12 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
 	width: 100%;
 	height: auto;
 }
+
+.resper th {color:#d5d5d5;}
+.resper td {color:#d5d5d5;}
+
+.rescss th {color:#808080;}
+.rescss td {color:#808080;}
+
+.rescolor1 {color:#ff6a00;}
+.rescolor2 {color:blue;}

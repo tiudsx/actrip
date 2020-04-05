@@ -10,14 +10,19 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$arrSeatInfo = array();
 
 	$bankUserName = $row['user_name'];
+	$res_confirm = $row['res_confirm'];
 
 	$chkView = 0;
 	$datDate = $row['res_date'];
-	if($datDate >= $now && $row['res_confirm'] == 3){
-        $cancelDate = date("Y-m-d", strtotime($datDate." -1 day"));
-        if($row['timeM'] <= 120 || $cancelDate > $now){
-            $chkView = 1;
-        }
+	if($datDate >= $now){
+		if($res_confirm == 0 || $res_confirm == 2 || $res_confirm == 6){
+			$chkView = 1;
+		} else if($res_confirm == 3){
+			$cancelDate = date("Y-m-d", strtotime($datDate." -1 day"));
+			if($row['timeM'] <= 120 || $cancelDate > $now){
+				$chkView = 1;
+			}
+		}
 	}
 /*
 예약상태
@@ -32,33 +37,33 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 */
     $ResColor = "";
     $ResCss = "";
-	if($row['res_confirm'] == 0){
+
+	if($res_confirm == 0){
 		$ResConfirm = "미입금";
-		$couponPrice += $row['res_price_coupon'];
 		$totalPrice += $row['res_price'];
 		$shopbankview++;
-	}else if($row['res_confirm'] == 1 || $row['res_confirm'] == 2 || $row['res_confirm'] == 6){
+	}else if($res_confirm == 1){
+		$ResConfirm = "확인중";
+		$ResColor = "rescolor2";
+		$totalPrice += $row['res_price'];
+	}else if($res_confirm == 2 || $res_confirm == 6){
 		$ResConfirm = "입금완료";
 		$ResColor = "rescolor2";
-		$couponPrice += $row['res_price_coupon'];
 		$totalPrice += $row['res_price'];
-	}else if($row['res_confirm'] == 3){
+	}else if($res_confirm == 3){
 		$ResConfirm = "확정";
-		$ResColor = "rescolor1";
-		$couponPrice += $row['res_price_coupon'];
 		$totalPrice += $row['res_price'];
-	}else if($row['ResConfirm'] == 4){
+	}else if($res_confirm == 4){
 		$ResConfirm = "환불요청";
-		$couponPrice += $row['res_price_coupon'];
+		$ResColor = "rescolor1";
         $totalPrice += $row['res_price'];
         
         $RtnTotalPrice += $row['rtn_totalprice']; //환불금액 표시
-	}else if($row['ResConfirm'] == 5){
+	}else if($res_confirm == 5){
 		$ResConfirm = "환불완료";
 		$ResCss = "rescss";
-		$couponPrice += $row['res_price_coupon'];
 		$totalPrice += $row['res_price'];
-	}else if($row['res_confirm'] == 7){
+	}else if($res_confirm == 7){
 		$ResConfirm = "취소";
 		$ResCss = "rescss";
 	}
@@ -69,12 +74,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	}
 
 	//============= 환불금액 구역 =============
-	$RtnBank = '';
-	if($row['res_confirm'] == 4 || $row['res_confirm'] == 5){
-		$RtnBank = '<tr class="'.$ResCss.'" name="btnTrPoint">
-						<td style="text-align:center;" colspan="2">'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).'</td>
-						<td style="text-align:center;" colspan="2"> 환불액 : '.number_format($row['rtn_totalprice']).'원</td>
-                    </tr>';
+	if($row['code'] == "bus"){
+		$RtnBank = str_replace("|", " / ", fnBusPoint($row['res_spointname'], $row['res_bus']));
+	}else{
+		$RtnBank = '';
+	}
+	if($res_confirm == 4 || $res_confirm == 5){
+		$RtnBank = '<b>환불금액 : '.number_format($row['rtn_totalprice']).'원</b> ('.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).')';
 	}
 
 	//============= 예약항목 구역 =============
@@ -102,26 +108,43 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	if($i == 1){
 ?>
     <table class="et_vars exForm bd_tb">
+		<colgroup>
+			<col width="20%" />
+			<col width="auto;" />
+		</colgroup>
         <tbody>
 			<tr>
                 <th>예약번호</th>
-                <td width="100%"><strong><?=$row['res_num']?></strong><span style="display:none;"> (<?=$row['insdate']?>)</span></td>
+                <td><strong><?=$row['res_num']?></strong><span style="display:none;"> (<?=$row['insdate']?>)</span></td>
             </tr>
 			<tr>
                 <th>예약자</th>
                 <td><?=$row['user_name']?><span style="display:;">  (<?=$row['user_tel']?>)</span></td>
             </tr>
             <tr>
-                <th colspan="2">[<?=$row['shopname']?> / <?=$row['code']?>] 예약정보</th>
+                <th colspan="2">[<?=$row['shopname']?>] 예약정보</th>
             </tr>
 			<tr>
 				<td colspan="2">
-
+	<?if($row['code'] == "bus"){?>
+    <table class="et_vars exForm bd_tb" style="width:100%">
+        <tbody>
+			<colgroup>
+				<col style="width:80px;">
+				<col style="width:auto;">
+				<col style="width:70px;">
+			</colgroup>
+			<tr>
+                <th style="text-align:center;">이용일</th>
+                <th style="text-align:center;">예약항목</th>
+                <th style="text-align:center;">상태</th>
+			</tr>
+	<?}else if($row['code'] == "surf"){?>
     <table class="et_vars exForm bd_tb" style="width:100%">
         <tbody>
 			<colgroup>
 				<col style="width:100px;">
-				<col style="width:*;">
+				<col style="width:auto;">
 				<col style="width:55px;">
 				<col style="width:70px;">
 			</colgroup>
@@ -131,12 +154,32 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th style="text-align:center;">인원</th>
                 <th style="text-align:center;">상태</th>
 			</tr>
+	<?}?>
 <?	}?>
+	<?if($row['code'] == "bus"){?>
+			<tr class="<?=$ResCss?>">
+                <td style="text-align:center;" rowspan="2">
+					<label>
+				<?if($chkView == 1){?>
+					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" style="vertical-align:-3px;" onclick="fnCancelSum(this, '<?=$row['code']?>', '<?=$row['res_num']?>');" />
+				<?}else{?>
+					<input type="checkbox" disabled="disabled" />
+				<?}?>
+					<br><?=$row['res_date']?>
+					</label>
+				</td>
+                <td><b><?=fnBusNum($row['res_bus'])?> <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
+                <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
+			</tr>
+			<tr class="<?=$ResCss?>">
+				<td colspan="2"><?=$RtnBank?></td>
+			</tr>
+	<?}else if($row['code'] == "surf"){?>
 			<tr class="<?=$ResCss?>">
                 <td style="text-align:center;">
 					<label>
 				<?if($chkView == 1){?>
-					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" style="vertical-align:-3px;" onclick="fnCancelSum(this, 'surf', '<?=$row['res_num']?>');" />
+					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" style="vertical-align:-3px;" onclick="fnCancelSum(this, '<?=$row['code']?>', '<?=$row['res_num']?>');" />
 				<?}else{?>
 					<input type="checkbox" disabled="disabled" />
 				<?}?>
@@ -148,25 +191,46 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
 			</tr>
 			<?=$RtnBank?>
+	<?}?>
 <?
 	if($i == $count){?>
+		</tbody>
+	</table>
 		<?
 		if($RtnTotalPrice > 0){
 		?>
+    <table class="et_vars exForm bd_tb" style="width:100%">
+        <tbody>
+			<colgroup>
+				<col style="width:100px;">
+				<col style="width:auto;">
+			</colgroup>
 			<tr>
-                <th style="text-align:center;">환불금액</th>
+                <th style="text-align:center;">총 환불금액</th>
                 <td style="text-align:left;padding-left:10px;" colspan="3"><b><?=number_format($RtnTotalPrice).'원'?></b></td>
             </tr>
-		<?
-		}
-		?>
 		</tbody>
 	</table>
+		<?
+		}
+
+		if($row['res_price_coupon'] > 0){
+			$res_price_coupon = $row['res_price_coupon'];
+	
+			if($res_price_coupon <= 100){ //퍼센트 할인
+				$res_totalprice = $totalPrice * (1 - ($res_price_coupon / 100));
+			}else{ //금액할인
+				$res_totalprice = $totalPrice - $res_price_coupon;
+			}
+		}else{
+			$res_totalprice = $totalPrice;
+		}
+		?>
 				</td>
 			</tr>
 			<tr>
                 <th scope="row">결제금액</th>
-                <td><b><?=number_format($totalPrice)?> 원</b></td>
+                <td><b style="font-weight:700;color:red;"><?=number_format($res_totalprice)?>원</b> (<?=number_format($totalPrice)?>원 - 할인쿠폰:<?=number_format($totalPrice - $res_totalprice)?>원)</td>
             </tr>
 			<?if($shopbankview > 0){?>
 			<tr>
@@ -174,7 +238,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td><?=$row['pay_info']?></td>
             </tr>
 			<?}?>
-			<?if(!($row['Etc'] == "")){?>
+			<?if(!($row['etc'] == "")){?>
             <tr>
                 <th scope="row">특이사항</th>
                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$row['etc']?></textarea></td>

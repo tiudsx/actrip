@@ -55,8 +55,31 @@ $j(document).ready(function() {
 });
 
 var isVisible = false;
-function fnCoupon(){
-    return 20000;
+function fnCoupon(type, gubun, coupon){
+    if(coupon == ""){
+        alert("쿠폰코드를 입력하세요.")
+        return 0;
+    }
+
+    var params = "type=" + type + "&gubun=" + gubun + "&coupon=" + coupon;
+    var rtn = $j.ajax({
+        type: "POST",
+        url: "/act/coupon/coupon_load.php",
+        data: params,
+        success: function (data) {
+            return data;
+        }
+    }).responseText;
+
+    if (rtn == "yes") {
+        alert("이미 사용 된 쿠폰입니다.");
+        return 0;
+    }else if (rtn == "no") {
+        alert("사용가능한 쿠폰이 없습니다.");
+        return 0;
+    }else{
+        return rtn;
+    }
 }
 
 function checkVisible(elm, eval) {

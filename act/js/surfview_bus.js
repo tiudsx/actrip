@@ -345,7 +345,7 @@ function fnSeatSelected(obj) {
 		$j(bindObj).append(insHtml);            
 	}
 	
-	// fnPriceSum('', 1);
+	fnPriceSum('', 1);
 }
 
 //서핑버스 좌석선택 삭제
@@ -361,83 +361,27 @@ function fnSeatDel(obj, num){
 		$j(obj).parents('tr').remove();
 	}
 
-	// fnPriceSum('', 1);
+	fnPriceSum('', 1);
 }
 
 function fnPriceSum(obj, num){
-	if(num == 1){
-		var cnt = $j("input[id=hidbusSeatY]").length + $j("input[id=hidbusSeatS]").length;
-		//$j("#totalPrice").html(commify(cnt * 20000) + "원");
+	var cnt = $j("input[id=hidbusSeatY]").length + $j("input[id=hidbusSeatS]").length;
 
-		var arrYDis = new Array();
-		var arrYDisCnt = new Array();
-		var arrSDis = new Array();
-		var arrSDisCnt = new Array();
-
-		var x = 0;
-		for(var i=0;i<$j("input[id=hidbusDateY]").length;i++){
-			if(arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] == null){
-				arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] = 1;
-
-				arrYDisCnt[x] = $j("input[id=hidbusDateY]").eq(i).val();
-				x++;			
-			}else{
-				arrYDis[$j("input[id=hidbusDateY]").eq(i).val()] += 1;
-			}
-		}
-		
-		x = 0;
-		for(var i=0;i<$j("input[id=hidbusDateS]").length;i++){
-			if(arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] == null){
-				arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] = 1;
-
-				arrSDisCnt[x] = $j("input[id=hidbusDateS]").eq(i).val();
-				x++;			
-			}else{
-				arrSDis[$j("input[id=hidbusDateS]").eq(i).val()] += 1;
-			}
-		}
-
-		var disCnt = 0;
-		var totalDisCnt = 0;
-		for(var i=0;i<arrYDisCnt.length;i++){
-			//alert('양양행:' + arrYDis[arrYDisCnt[i]]);
-
-			var DateY = new Date(arrYDisCnt[i]);
-
-			var thisCnt = arrYDis[arrYDisCnt[i]];
-			var nextCnt1 = ((arrSDis[arrYDisCnt[i]] == null) ? 0 : arrSDis[arrYDisCnt[i]]);
-			var nextCnt2 = ((arrSDis[plusDate(arrYDisCnt[i], 1)] == null) ? 0 : arrSDis[plusDate(arrYDisCnt[i], 1)]);
-			var nextCnt = nextCnt1 + nextCnt2;
-
-			if(thisCnt >= nextCnt){
-				disCnt = thisCnt - (thisCnt - nextCnt);
-			}else{
-				disCnt = nextCnt - (nextCnt - thisCnt);
-				if(nextCnt1 > 0){
-					arrSDis[arrYDisCnt[i]] -= 1;
-				}else{
-					arrSDis[plusDate(arrYDisCnt[i], 1)] -= 1;
-				}
-			}
-
-			totalDisCnt += disCnt;
-			//alert(arrYDisCnt[i] + ' / ' + plusDate(arrYDisCnt[i], 1) + " / " + thisCnt + " / " + nextCnt + " / " + disCnt);
-		}
-
-		var strDis = "";
-		if(totalDisCnt > 0){
-			//임시제거
-			//strDis = " (할인:" + commify(totalDisCnt * 5000) + "원)";
-		}
-		$j("#totalPrice").html(commify((cnt * 20000) - (totalDisCnt * 5000)) + "원" + strDis);
-		$j("#lastbusPrice").html((cnt * 20000) - (totalDisCnt * 5000));
+	if(cnt == 0) return;
+	$j("#lastcouponprice").html("");
+	if($j("#couponcode").val() == "" || $j("#couponprice").val() == 0){
+		$j("#lastPrice").html(commify(cnt * 20000) + "원");
 	}else{
-		$j("#totalPrice2").html(commify(obj.value * 25000) + "원");
-		$j("#lastbbqPrice").html(obj.value * 25000);
+		var cp = $j("#couponprice").val();
+		if(cp <= 100){ //퍼센트 할인			
+			cp = (1 - (cp / 100));
+			$j("#lastPrice").html(commify((cnt * 20000) * cp) + "원");
+			$j("#lastcouponprice").html(" (" + commify(cnt * 20000) + "원 - 할인쿠폰:" + commify((cnt * 20000) - ((cnt * 20000) * cp)) + "원)");
+		}else{ //금액할인
+			$j("#lastPrice").html(commify((cnt * 20000) - cp) + "원");
+			$j("#lastcouponprice").html(" (" + commify(cnt * 20000) + "원 - 할인쿠폰:" + commify(cp) + "원)");
+		}
 	}
-
-	$j("#lastPrice").html(commify(Number($j("#lastbusPrice").html()) + Number($j("#lastbbqPrice").html(), 10)) + "원");
 }
 
 
@@ -540,6 +484,24 @@ function fnBusSave() {
 }
 
 function fnCouponCheck(obj){
-	var cp = fnCoupon();
-	alert(cp);
+	var cp = fnCoupon("BUS", "load", $j("#coupon").val());
+	if(cp > 0){
+		$j("#coupondis").css("display", "");
+		$j("#couponcode").val($j("#coupon").val())
+		$j("#couponprice").val(cp);
+
+		if(cp <= 100){ //퍼센트 할인
+			$j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 "+ cp + "% 할인");
+		}else{ //금액할인
+			$j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 "+ commify(cp) + "원 할인");
+		}
+	}else{
+		$j("#coupondis").css("display", "none");
+		$j("#coupondis").html("");
+		$j("#couponcode").val("")
+		$j("#couponprice").val(0);
+	}
+	$j("#coupon").val("");
+
+	fnPriceSum('', 1);
 }

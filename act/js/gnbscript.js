@@ -55,3 +55,25 @@ function gpe_setCookie1( name, value, expiredays ) {
 	todayDate.setDate( todayDate.getDate() + expiredays ); 
 	document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
 }
+
+// 천단위마다 쉼표 넣기
+function commify(n) {
+    var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+    n += '';                          // 숫자를 문자열로 변환
+
+    while (reg.test(n)) {
+        n = n.replace(reg, '$1' + ',' + '$2');
+    }
+
+    return n;
+}
+
+function fnRtnText(data, type){
+	if(data == "0"){
+		alert("정상적으로 처리되었습니다.");
+		return true;
+	}else{
+		alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
+		return false;
+	}
+ }

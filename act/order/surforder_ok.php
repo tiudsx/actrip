@@ -1,5 +1,6 @@
 <?php 
 include __DIR__.'/../db.php';
+include __DIR__.'/../surf/surffunc.php';
 
 
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
@@ -21,12 +22,12 @@ if($count == 0){
 	echo "<script>fnOrderDisplay(1);</script>";
 }
 
-echo '<form name="frmCancel" id="frmCancel">';
+echo '<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="off">';
 
 include_once("surforder_info.php");
 
 echo '
-	<div class="write_table" style="padding-top:5px;display:;">
+	<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
 	※ 이용 1일전에는 취소/환불이 안됩니다.
 	</div>
 
@@ -45,12 +46,12 @@ echo '
 			</tr>
 		</tbody>
 	</table>
-	<div class="write_table" style="padding-top:5px;display:;">
+	<div class="write_table" style="padding-top:5px;padding-bottom:15px;">
 	※ 취소신청 시간에 따라 환불수수료 예정금액과 차이가 있을 수 있습니다.
 	</div>
 
 	<span id="returnBank" style="display:none;">
-    <div class="gg_first">환불 계좌</div>
+    <div class="gg_first">환불 계좌 <span style="font-weight:100;font-size:12px;font-family:Tahoma,Geneva,sans-serif;">(예약자와 동일한 명의의 계좌번호로 환불가능합니다.)</span></div>
     <table class="et_vars exForm bd_tb" style="width:100%">
         <tbody>
 			<tr>
@@ -59,16 +60,16 @@ echo '
                 <th style="text-align:center;">계좌번호</th>
             </tr>
 			<tr>
-				<td style="text-align:center;"><input type="hidden" id="bankUserName" name="bankUserName" value="'.$bankUserName.'" class="itx2" style="width:50px;">'.$bankUserName.'</td>
+				<td style="text-align:center;"><input type="hidden" id="bankUserName" name="bankUserName" value="'.$bankUserName.'" class="itx" style="width:50px;">'.$bankUserName.'</td>
 				<td style="text-align:center;">
 					<input type="hidden" id="gubun" name="gubun" value="">
 					<input type="hidden" id="hidtotalPrice" name="hidtotalPrice" value="0">
 					<input type="hidden" id="resparam" name="resparam" value="Cancel">
 					<input type="hidden" id="userId" name="userId" value="">
 					<input type="hidden" id="MainNumber" name="MainNumber" value="">
-					<input type="text" id="bankName" name="bankName" value="" class="itx2" style="width:80px;">
+					<input type="text" id="bankName" name="bankName" value="" class="itx" style="width:80px;">
 				</td>
-				<td style="text-align:center;"><input type="text" id="bankNum" name="bankNum" value="" class="itx2" style="width:130px;"></td>
+				<td style="text-align:center;"><input type="text" id="bankNum" name="bankNum" value="" class="itx" style="width:130px;"></td>
 			</tr>
 		</tbody>
 	</table>

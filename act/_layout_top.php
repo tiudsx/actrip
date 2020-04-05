@@ -22,7 +22,7 @@
 							<li><a href="/index.php?mid=main&act=dispMemberLoginForm"><img src="/act/images/icon/user-solidg.svg" alt=""><p>로그인</p></a></li>
 							<!--@end-->	
 							<li><a href="#"><img src="/act/images/icon/shoppingg.svg" alt=""><p>장바구니</p></a></li>
-							<li><a href="#"><img src="/act/images/icon/checkg.svg" alt=""><p>예약조회</p></a></li>
+							<li><a href="/ordersearch"><img src="/act/images/icon/checkg.svg" alt=""><p>예약조회</p></a></li>
 						</ul>
 						<ul class="menu02">
 							<li><a href="/surf"><img src="/act/images/icon/isurf.png" alt=""></a></li>

@@ -257,36 +257,39 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <tbody>
                             <tr>
                                 <th><em>*</em> 이름</th>
-                                <td><input type="text" id="userName" name="userName" value="이승철" class="itx" maxlength="15"></td>
+                                <td><input type="text" id="userName" name="userName" value="" class="itx" maxlength="15"></td>
                             </tr>
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
-                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="010" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="4437" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="0009" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"> 이메일</th>
-                                <td><input type="text" id="usermail" name="usermail" value="lud1@naver.com" class="itx"></td>
+                                <td><input type="text" id="usermail" name="usermail" value="" class="itx"></td>
                             </tr>
                             <tr>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
                                     <input type="text" id="coupon" name="coupon" value="" class="itx" maxlength="10">
+                                    <input type="hidden" id="couponcode" name="couponcode" value="">
+                                    <input type="hidden" id="couponprice" name="couponprice" value="0">
                                     <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
+                                    <span id="coupondis" style="display:none;"><br></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>특이사항</th>
                                 <td>
-                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;">test</textarea>
+                                    <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th>총 결제금액</th>
-                                <td><span id="lastPrice">0원</span></td>
+                                <td><span id="lastPrice" style="font-weight:700;color:red;">0원</span><span id="lastcouponprice"></span></td>
                             </tr>
                         </tbody>
                     </table>

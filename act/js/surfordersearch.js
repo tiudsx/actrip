@@ -35,20 +35,30 @@ function fnRefund(gubun) {
 		}
 	}
 
-	$j("#userId").val(userid);
 	var msg = "신청 하시겠습니까?";
     if (confirm(msg)) {
+		//$j("#frmCancel").attr("action", "/act/surf/surf_return.php").submit();
+		$j('.top_area_zone').block({ message: "환불신청 접수 중입니다." }); 
 		var formData = $j("#frmCancel").serializeArray();
 
-		$j.post(folderRoot + "/SearchMain_Save.php", formData,
+		$j.post("/act/surf/surf_return.php", formData,
 			function(data, textStatus, jqXHR){
-			   if(fnRtnText(data, 0)){
-				   fnResSel2();
-			   }
-			}).fail(function(jqXHR, textStatus, errorThrown){
-		 
+				setTimeout("fnRtnMove('" + data + "');", 700);
+			}
+		)
+		.fail(function() {
+			setTimeout("$j('.top_area_zone').unblock();;", 1500);
+		})
+		.always(function() {
+			setTimeout("$j('.top_area_zone').unblock();;", 1500);
 		});
     }
+}
+
+function fnRtnMove(data){
+	if(fnRtnText(data, 0)){
+		window.location.href = "/";
+	}
 }
 
 //환불 수수료 계산
@@ -69,13 +79,8 @@ function fnCancelSum(obj, gubun, MainNumber){
 		$j('#returnBank').css('display', 'none');
 	}else{
 		var resParam = "RtnPrice";
-		if(gubun == "bus" || gubun == "bbq"){
-			resParam = "RtnPrice2";
-		}
-
 		var formData = {"resparam":resParam, "gubun":gubun, "subintseq":"'" + chkVlu + "'"};
-
-		$j.post(folderRoot + "/SearchMain_Save.php", formData,
+		$j.post("/act/surf/surf_return.php", formData,
 			function(data, textStatus, jqXHR){
 			   if(data == "0"){
 				   alert("환불 수수료 계산 중 오류가 발생하였습니다.\n\n다시 체크 하시거나 관리자에게 문의주세요.");
