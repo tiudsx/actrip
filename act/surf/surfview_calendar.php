@@ -114,6 +114,7 @@ $count_cal = mysqli_num_rows($result_cal);
 $calDay = array();
 $calWeek = array();
 while ($row_cal = mysqli_fetch_assoc($result_cal)){
+	$day_type = $row_cal["day_type"];
 	$lesson_price = $row_cal["lesson_price"];
 	$rent_price = $row_cal["rent_price"];
 	$stay_price = $row_cal["stay_price"];
@@ -139,7 +140,7 @@ while ($row_cal = mysqli_fetch_assoc($result_cal)){
 			continue;
 		}
 
-		$calWeek[$i][$thisWeekNum] = array("day_week" => "Y", "lesson_price" => $lesson_price, "rent_price" => $rent_price, "stay_price" => $stay_price, "bbq_price" => $bbq_price);
+		$calWeek[$i][$thisWeekNum] = array("day_week" => "Y", "day_type" => "$day_type", "lesson_price" => $lesson_price, "rent_price" => $rent_price, "stay_price" => $stay_price, "bbq_price" => $bbq_price);
 		$calDay[$i] = $i;
 	}
 }
@@ -175,7 +176,7 @@ for($r=0;$r<=$ra;$r++){
 				$weekChk = strpos($calWeek[$ru][$weeknum]["day_week"], "Y");
 
 				if($s >= $nowDate && ($weekChk !== false)){
-					$pricePlus = "lesson_price='".$calWeek[$ru][$weeknum]["lesson_price"]."' rent_price='".$calWeek[$ru][$weeknum]["rent_price"]."' stay_price='".$calWeek[$ru][$weeknum]["stay_price"]."' bbq_price='".$calWeek[$ru][$weeknum]["bbq_price"]."'";
+					$pricePlus = "day_type='".$calWeek[$ru][$weeknum]["day_type"]."' lesson_price='".$calWeek[$ru][$weeknum]["lesson_price"]."' rent_price='".$calWeek[$ru][$weeknum]["rent_price"]."' stay_price='".$calWeek[$ru][$weeknum]["stay_price"]."' bbq_price='".$calWeek[$ru][$weeknum]["bbq_price"]."'";
 					echo "<td class='cal_type2' style='cursor:pointer;'><calBox class='tour_td_block' value='$s' weekNum='$weeknum' onclick='fnPassenger(this);' $pricePlus><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>예약가능</span></calBox></td>";
 				}else{
 					echo "<td class='cal_type2' style='padding-bottom:2px;'><span class='tour_td_block'><span class='tour_cal_day' style='color:#c2c2c2;'>$ru</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>"; //종료

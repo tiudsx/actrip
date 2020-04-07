@@ -222,7 +222,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <?}
 
                         if($arrOptT["bbq"] != null){?>
-                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐</a></li>
+                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐파티</a></li>
                         <?}?>
                             
                         </ul>
@@ -252,7 +252,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <?
                                         $i = 0;
                                         foreach($arrOpt["lesson"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
@@ -333,7 +333,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["rent"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -404,7 +404,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["stay"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -481,7 +481,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["bbq"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];

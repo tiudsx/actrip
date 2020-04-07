@@ -92,9 +92,9 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"><a href="#"><img src="images/banner/banefit.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/banner/reviewBus.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewBus.jpg" alt=""></a></div>
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
@@ -103,8 +103,8 @@
 				<div class="hashtagInner">
 					<h2>알면 알수록 좋은~</h2>
 					<div class="tagBox">
-						<a href="/event"><span>이벤트모음 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainEvent.png" alt=""></a>
-						<a href="https://cafe.naver.com/actrip/178" target="_blank"><span>맛도락 제휴식당 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainFood.png" alt=""></a>
+						<a href="https://cafe.naver.com/actrip/375" target="_blank"><span>액트립 할인쿠폰 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainEvent.png" alt=""></a>
+						<a href="/eatlist"><span>맛도락 제휴식당 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainFood.png" alt=""></a>
 						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=40&search.boardtype=L" target="_blank"><span>이용후기 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainReview.png" alt=""></a>
 						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=21&search.boardtype=W" target="_blank"><span>서핑정보/팁 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainSurf.png" alt=""></a>
 					</div>
@@ -267,8 +267,8 @@
 					<h2>기획전</h2>
 					<div class="promoBox">
 						<a href="/surfview?seq=2"><img src="images/mainImg/promobg.png" alt=""><span>액트립 당찬패키지 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑강습 한방에 해결!! 올인원 패키지~</span></span></a>
-						<a href="/bbq"><img src="images/mainImg/promobg.png" alt=""><span>액트립 바베큐파티 <i class="fas fa-chevron-circle-right"></i><span class="subinst">새로운 만남과 신나는 버스킹공연♪</span></span></a>
-						<a href="/surfbus"><img src="images/mainImg/promobg.png" alt=""><span>서울-양양, 동해 서핑버스  <i class="fas fa-chevron-circle-right"></i><span class="subinst">이보다 더 편한 셔틀버스는 없다</span></span></a>
+						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=29&search.boardtype=L" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>바베큐파티 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">바베큐파티도 즐기고~ 할인도 받자~</span></span></a>
+						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=28&search.boardtype=L" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑버스 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑버스 이용전에 꼭! 할인쿠폰 받기!!</span></span></a>
 						<a href="/eatlist"><img src="images/mainImg/promobg.png" alt=""><span>양양 맛도락 여행 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑 후엔 맛집에서 체력충전!</span></span></a>
 					</div>
 				</div>

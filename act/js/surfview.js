@@ -153,7 +153,22 @@ function fnCalMove(selDate, seq) {
 	$j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=" + selDate + "&seq=" + seq + "&t=" + nowDate.getTime());
 
     $j("#initText").css("display", "");
-    $j("#lessonarea").css("display", "none");
+	$j("#lessonarea").css("display", "none");
+	
+	$j(".fixed_wrap3 li").removeClass("on3");
+	$j("div[area=shopListArea]").css("display", "none");
+
+}
+
+// 강습/렌탈 클릭시 바인딩
+function fnSurfList(obj, num){
+	$j(".fixed_wrap3 li").removeClass("on3");
+	$j(obj).parent().addClass("on3");
+
+	$j("div[area=shopListArea]").css("display", "none");
+	$j("div[area=shopListArea]").eq(num).css("display", "block");
+
+	//var lesson_price =  parseInt($j("calbox[value='" + selDate + "']").attr("lesson_price"), 10);
 }
 
 //날짜 클릭후 표시
@@ -166,21 +181,45 @@ function fnPassenger(obj) {
     $j("#lessonarea").css("display", "");
 	$j("#resselDate").val(selDate);
 	$j("#strStayDate").val(selDate);
+	
+	if(!$j(".fixed_wrap3 li").hasClass("on3")){
+		$j(".fixed_wrap3 li:eq(0)").addClass("on3");	
+		$j("div[area=shopListArea]").eq($j(".fixed_wrap3 li:eq(0)").attr("id")).css("display", "block");	
+	}
+	$j("#stayText").text("").css("display", "none");
 
-	soldoutchk(selDate);	
+	var bbqText = $j("#selBBQ option:eq(0)").attr("opt_info");
+	$j("#bbqText").html(bbqText);
+
+	soldoutchk(selDate, obj);	
 }
 
-// 강습/렌탈 클릭시 바인딩
-function fnSurfList(obj, num){
-	$j(".fixed_wrap3 li").removeClass("on3");
-	$j(obj).parent().addClass("on3");
+function plusDate(date, count) {
+	var dateArr = date.split("-");
+	var changeDay = new Date(dateArr[0], (dateArr[1] - 1), dateArr[2]);
 
-	$j("div[area=shopListArea]").css("display", "none");
-	$j("div[area=shopListArea]").eq(num).css("display", "block");
+	// count만큼의 미래 날짜 계산
+	changeDay.setDate(changeDay.getDate() + count);
+	return dateToYYYYMMDD(changeDay);
+}
+
+function dateToYYYYMMDD(date){
+    function pad(num) {
+        num = num + '';
+        return num.length < 2 ? '0' + num : num;
+    }
+    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate());
+}
+
+Date.prototype.yyyymmdd = function() {
+	var yyyy = this.getFullYear().toString();
+	var mm = (this.getMonth() + 1).toString();
+	var dd = this.getDate().toString();
+	return  yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
 }
 
 // 달력 날짜 클릭 후 매진여부 체크
-function soldoutchk(date){
+function soldoutchk(date, obj){
 	$j("#sellesson").html($j("#hidsellesson").html());
 	$j("#selRent").html($j("#hidselRent").html());
 	$j("#selStay").html($j("#hidselStay").html());
@@ -204,8 +243,19 @@ function soldoutchk(date){
 	$j("#selStayM").parent().css("display", "");
 	$j("#selStayW").parent().css("display", "");
 	$j("#tbselBBQ").css("display", "");
-    $j("#divselBBQ").css("display", "none");
-    
+	$j("#divselBBQ").css("display", "none");
+	
+	if($j(obj).attr("day_type") == 3){
+		var nowDate = (new Date()).yyyymmdd(); //오늘 날짜
+		var resDate = plusDate(date, -6); //숙소 예약가능한 날짜
+		
+		if($j(obj).attr("weeknum") == 6 && nowDate > resDate){
+			$j("#sellesson option[stay_day=0]").remove();
+			$j("#sellesson option[stay_day=1]").remove();
+			$j("#sellesson option[stay_day=2]").remove();
+		}
+	}
+
 	if(main[date] != null){
 		for (key in main[date]) {
 			if(main[date][key].type == "lesson"){
@@ -277,6 +327,27 @@ function fnResChange(obj, key){
 		$j("#" + key + "W").css("display", "");
 		$j("#" + key + "W").prev().css("display", "none");
 	}
+	if(key == "sellesson"){
+		var stayPlus = $j("#sellesson option:selected").attr("stay_day");
+		var dis = "none";
+		var stayText = "";
+		var resselDate = $j("#resselDate").val();
+		if(stayPlus == 0){
+			dis = "";
+			stayText = "숙박 이용일 : " + resselDate + " ~ " + plusDate(resselDate, +1) + " (1박)";
+		}else if(stayPlus == 1){
+			dis = "";
+			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + resselDate + " (1박)";
+		}else if(stayPlus == 2){
+			dis = "";
+			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + plusDate(resselDate, +1) + " (2박)";
+		}
+		
+		$j("#stayText").text(stayText).css("display", dis);
+	}else if(key == "selBBQ"){
+		var bbqText = $j("#selBBQ option:selected").attr("opt_info");
+		$j("#bbqText").html(bbqText);
+	}
 }
 
 //서핑샵 예약
@@ -315,6 +386,7 @@ function fnSurfSave(){
     $j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
 }
 
+// 서핑옵션 신청버튼
 function fnSurfAdd(num, obj){
 	var selDate = $j("#resselDate").val();
 
@@ -369,6 +441,8 @@ function fnSurfAdd(num, obj){
 	fnSurfAppend(num, obj, selDate, gubun);
 }
 function fnSurfAppend(num, obj, selDate, gubun){
+	$j("#frmRes").css("display", "");
+
 	var addText = "<tr>";
 	var lesson_price =  parseInt($j("calbox[value='" + selDate + "']").attr("lesson_price"), 10);
 	var rent_price =  parseInt($j("calbox[value='" + selDate + "']").attr("rent_price"), 10);
@@ -388,8 +462,15 @@ function fnSurfAppend(num, obj, selDate, gubun){
 		selW = $j("#sellessonW").val();
 		selDate = $j("#resselDate").val();
 		selTime = $j("#sellessonTime").val();
-
-		selPrice = selPrice + lesson_price;
+		
+		var stayPlus = $j("#sellesson option:selected").attr("stay_day");
+		if(stayPlus == 0 || stayPlus == 1){
+			selPrice = selPrice + stay_price;
+		}else if(stayPlus == 2){
+			selPrice = selPrice + (stay_price * 2);
+		}else{
+			selPrice = selPrice + lesson_price;
+		}
 	}else if(num == 1){ //렌탈
 		addText += "<td style='text-align:center;'><b>" + selName + "</b></td>";
 		addText += "<td> <b>[" + $j("#resselDate").val() + "]</b></td>";
@@ -448,7 +529,10 @@ function fnSurfAppend(num, obj, selDate, gubun){
 	}
 
 	$j("#surfAdd").append(addText);
+	$j("#stayText").text("").css("display", "none");
 
+	var bbqText = $j("#selBBQ option:eq(0)").attr("opt_info");
+	$j("#bbqText").html(bbqText);
 	$j("#frmResList")[0].reset();
 	
 	// $j("#strStayDate").val(selDate);

@@ -71,27 +71,13 @@ $result_setlist = mysqli_query($conn, $select_query);
 $arrOpt = array();
 $arrOptT = array();
 while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
-	$arrOpt[$rowOpt["optcode"]][$rowOpt["optseq"]] = array("optseq" => $rowOpt["optseq"], "optname" => $rowOpt["optname"], "opttime" => $rowOpt["opttime"], "opt_sexM" => $rowOpt["opt_sexM"], "opt_sexW" => $rowOpt["opt_sexW"], "sell_price" => $rowOpt["sell_price"], "opt_info" => $rowOpt["opt_info"]);
+	$arrOpt[$rowOpt["optcode"]][$rowOpt["optseq"]] = array("optseq" => $rowOpt["optseq"], "optname" => $rowOpt["optname"], "opttime" => $rowOpt["opttime"], "opt_sexM" => $rowOpt["opt_sexM"], "opt_sexW" => $rowOpt["opt_sexW"], "sell_price" => $rowOpt["sell_price"], "opt_info" => $rowOpt["opt_info"], "stay_day" => $rowOpt["stay_day"]);
 
 	$arrOptT[$rowOpt["optcode"]] = $rowOpt["optcode"];
 }
 
 $sLng = $rowMain["shop_lat"];
 $sLat = $rowMain["shop_lng"];
-
-$startTab = 4;
-if($arrOptT["lesson"] != null){
-	$startTab = 0;
-}
-if($arrOptT["rent"] != null && $startTab == 4){
-	$startTab = 1;
-}
-if($arrOptT["stay"] != null && $startTab == 4){
-	$startTab = 2;
-}
-if($arrOptT["bbq"] != null && $startTab == 4){
-	$startTab = 3;
-}
 ?>
 
 <div id="wrap">
@@ -178,7 +164,7 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                 <div class="contentimg">
                     <?
                     if($rowMain["content_type"] == "html"){
-                        echo $rowMain["content"];
+                        //echo $rowMain["content"];
                     }else{
                         include 'surfview/'.$rowMain["content"];
                     }
@@ -222,19 +208,19 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                     <div class="fixed_wrap3" style="display:;">
                         <ul class="cnb3 btnColor" style="padding-inline-start:0px;">
                         <?if($arrOptT["lesson"] != null){?>
-                            <li class="on3" id="resTab0"><a onclick="fnSurfList(this, 0);" style="padding:10px 15px 0px 15px;">강습</a></li>
+                            <li id="0"><a onclick="fnSurfList(this, 0);" style="padding:10px 15px 0px 15px;">강습</a></li>
                         <?}
                         
                         if($arrOptT["rent"] != null){?>
-                            <li id="resTab1"><a onclick="fnSurfList(this, 1);" style="padding:10px 15px 0px 15px;">렌탈</a></li>
+                            <li id="1"><a onclick="fnSurfList(this, 1);" style="padding:10px 15px 0px 15px;">렌탈</a></li>
                         <?}
                         
                         if($arrOptT["stay"] != null){?>
-                            <li id="resTab2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">숙소</a></li>
+                            <li id="2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">숙소</a></li>
                         <?}
 
                         if($arrOptT["bbq"] != null){?>
-                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐</a></li>
+                            <li id="3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐파티</a></li>
                         <?}?>
                             
                         </ul>
@@ -264,7 +250,7 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         <?
                                         $i = 0;
                                         foreach($arrOpt["lesson"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
@@ -317,6 +303,9 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(0, this);">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4" id="stayText" style="display:none;"></td>
+                                </tr>
                             <tbody>
                         </table>
                     </div>
@@ -345,7 +334,7 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["rent"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -416,7 +405,7 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["stay"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -493,11 +482,12 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         $i = 0;
                                         $sel1 = "";
                                         foreach($arrOpt["bbq"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
                                                 $sel4 = $arrlesson["opt_sexW"];
+                                                $opt_info = $arrlesson["opt_info"];
                                             }
                                         
                                             $i++;
@@ -536,13 +526,16 @@ if($arrOptT["bbq"] != null && $startTab == 4){
                                         <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(3, this);">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4" id="bbqText"><?=$opt_info?></td>
+                                </tr>
                             <tbody>
                         </table>
                     </div>                  
                 </form>
                 </div>
 
-                <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
+                <form id="frmRes" method="post" target="ifrmResize" autocomplete="off" style="display:none;">
 				<span style="display:;">
 					<input type="hidden" id="resselDate" name="resselDate" value="" />
 					<input type="hidden" id="resparam" name="resparam" value="SurfShopI" />
@@ -654,18 +647,6 @@ if($arrOptT["bbq"] != null && $startTab == 4){
 <script src="js/surfview.js"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
-var startTab = <?=$startTab?>;
-var main = new Object();
-
-$j(document).ready(function(){
-    if(startTab < 4){
-        $j(".fixed_wrap3 li").removeClass("on3");
-        $j("#resTab" + startTab).addClass("on3");
-
-        $j("div[area=shopListArea]").css("display", "none");
-        $j("div[area=shopListArea]").eq(startTab).css("display", "block");
-    }
-});
 
 var mapView = 1;
 var sLng = "<?=$rowMain["shoplat"]?>";
@@ -676,5 +657,6 @@ var MARKER_SPRITE_X_OFFSET = 29,
         '<?=$rowMain["shopname"]?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, '<?=$shop_img[0]?>', '<?=$rowMain["categoryname"]?>']
     };
 
+var main = new Object();
 <?=$SoldoutList?>
 </script>
