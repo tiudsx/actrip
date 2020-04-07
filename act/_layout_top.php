@@ -21,7 +21,7 @@
 							<!--@else-->
 							<li><a href="/index.php?mid=main&act=dispMemberLoginForm"><img src="/act/images/icon/user-solidg.svg" alt=""><p>로그인</p></a></li>
 							<!--@end-->	
-							<li><a href="#"><img src="/act/images/icon/shoppingg.svg" alt=""><p>장바구니</p></a></li>
+							<!-- <li><a href="#"><img src="/act/images/icon/shoppingg.svg" alt=""><p>장바구니</p></a></li> -->
 							<li><a href="/ordersearch"><img src="/act/images/icon/checkg.svg" alt=""><p>예약조회</p></a></li>
 						</ul>
 						<ul class="menu02">
@@ -56,6 +56,6 @@
 			<h1 id="logo">
 				<a href="/"><img src="/act/images/logo140.jpg" alt="액트립 로고"></a>
 			</h1>
-			<div class="shopIcon"><a href="#"><img src="/act/images/icon/shop.svg" alt="장바구니"></a></div>
+			<!-- <div class="shopIcon"><a href="#"><img src="/act/images/icon/shop.svg" alt="장바구니"></a></div> -->
 		</div>
 	</header>

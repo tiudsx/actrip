@@ -77,8 +77,10 @@ var busPoint = {}
     busPoint.sPointA21.push({ "code": "금진해변", "codename": "금진해변" });
 
     busPoint.sPointA22 = busPoint.sPointA21;
+    busPoint.sPointA23 = busPoint.sPointA21;
     busPoint.sPointA51 = busPoint.sPointA21;
     busPoint.sPointA52 = busPoint.sPointA21;
+    busPoint.sPointA53 = busPoint.sPointA21;
 
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구역 &gt; 종합운동장역";
@@ -102,6 +104,8 @@ var busPointList = {
     "S53" : {li:busPoint_3},
     "A21" : {li:busPoint_4},
     "A22" : {li:busPoint_4},
+    "A23" : {li:busPoint_4},
     "A51" : {li:busPoint_4},
-    "A52" : {li:busPoint_4}
+    "A52" : {li:busPoint_4},
+    "A53" : {li:busPoint_4}
 };

@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+/*common*/
+body{background-color: #f8f8f8;}
+
+/*layout*/
+#busCat{width:100%;height:auto; position:relative; color:#333; font-size: 16px;}
+h2{padding-top: 30px; text-indent: 20px;}
+
+/*#busCat*/
+#busCat{border-bottom: 1px solid #efefef;}
+#busCat .busCatTit{width:100%; height:100px; text-indent: 20px; background: url(https://surfenjoy.cdn3.cafe24.com/act_title/busbg0.jpg) 0 -215px/auto no-repeat;}
+#busCat .busCatTit h2{color:#fff;}
+#busCat .busCatTit p,i{font-size:.8em; color:#fff; margin-top: 5px;}
+#busCat .busCatTit i{text-indent: 0}
+
+#busCat .busCatList{overflow: hidden; width: 100%; padding: 5% 3% 3% 3%; box-sizing: border-box;}
+#busCat ul{width:100%; overflow: hidden; }
+#busCat ul li{width: 100%; height: auto; margin-bottom: 2%}
+#busCat ul .yybus{margin-right:2%}
+#busCat ul li img{width: 100%;}
+
+
+
+

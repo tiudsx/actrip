@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+/*common*/
+body{background-color: #f8f8f8;}
+
+/*layout*/
+#bbqCat{width:100%;height:auto; position:relative; color:#333; font-size: 16px;}
+h2{text-indent: -9999px; width: 0; height: 0;}
+
+/*#bbqCat*/
+#bbqCat{border-bottom: 1px solid #efefef;}
+#bbqCat .bbqCatList{overflow: hidden; width: 100%; padding: 2%; box-sizing: border-box;}
+#bbqCat ul{width:100%; overflow: hidden; margin:10px 0; margin-right: 2%;}
+#bbqCat ul li{width: 100%; height: auto; margin-bottom: 10px}
+#bbqCat ul li img{width: 100%;}
+
+
+
+

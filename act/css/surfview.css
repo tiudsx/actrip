@@ -343,3 +343,23 @@
 .tour_calendar_type3 .cal_checkin .tour_td_block:after{border:1px solid #1179ea}
 .tour_calendar_type3 .cal_checkout .tour_td_block{background:0 0;border:1px solid #ef2705}
 .tour_calendar_type3 .cal_checkout .tour_td_block:after{border:1px solid #ef2705}
+
+/* 강습예약 */
+.fixed_wrap3{width:100%;padding-top:5px;height:40px;}
+.cnb3 li{list-style:none;float:left;font-size:12px;padding-right:5px;cursor: pointer;}
+.cnb3{margin:0 0 0 -2px;padding:0;}
+.cnb3 a{display:block;overflow:hidden;padding:5px 16px;margin:2px;border:1px solid #DDD;border-radius:3px;white-space:nowrap;text-overflow:ellipsis;text-decoration:none !important;text-align:center;color:#666;font-family: 'Malgun Gothic','Droid Sans','Apple-Gothic','애플고딕','Tahoma',dotum,'돋움',gulim,'굴림',sans-serif;}
+.cnb3 .on>a,.cnb3 a:hover,.cnb3 a:focus{border-color:#999;background:#DDD;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+.cnb3 .on>a{font-weight:700;}
+.cnb3 .on2>a{border-color:#999;background:#97c91d;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+.cnb3 .on3>a{border-color:#999;background:#BBB;color:#FFF;text-shadow:0 0 1px rgba(0,0,0,.5)}
+.btnColor a{height:25px;padding-top:14px;}
+.gg_first {
+	font-size:14px;
+	font-weight:bold;
+	padding-top:10px;
+	height: 22px;
+	border-bottom: 1px solid #6f7d7d;
+    margin-bottom: 3px;
+    font-family: 'Malgun Gothic','Droid Sans','Apple-Gothic','애플고딕','Tahoma',dotum,'돋움',gulim,'굴림',sans-serif;
+}

@@ -168,7 +168,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 					<br><?=$row['res_date']?>
 					</label>
 				</td>
-                <td><b><?=fnBusNum($row['res_bus'])?> <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
+                <td><b><?=fnBusNum($row['res_bus'])?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
                 <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
 			</tr>
 			<tr class="<?=$ResCss?>">

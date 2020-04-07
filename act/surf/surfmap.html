@@ -73,17 +73,28 @@
             zIndex: 100
         });
     
+    if(MARKER_SPRITE_POSITION[key][9] == ""){
+        textarea = "";
+    }else{
+        textarea = "[" + MARKER_SPRITE_POSITION[key][9] + "] ";
+    }
+
+    if(parent.mapView == 0){
+        viewtext = "상세보기";
+    }else{
+        viewtext = "";
+    }
     var shopbox2 = '<div class="overlaybox">' +
-        '    <div class="boxtitle">[' + MARKER_SPRITE_POSITION[key][9] + '] '+ key +'</div>' +
+        '    <div class="boxtitle">' + textarea + ''+ key +'</div>' +
         '    <div class="first" style="background: url(' + MARKER_SPRITE_POSITION[key][8] + ') no-repeat;background-size: 100%">' +
         '        <!--div class="movietitle text">'+ key +'</div-->' +
         '    </div>' +
         '    <ul>' +
         '        <li class="up">' +
-        '            <span class="title">' + MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "") + '</span>' +
+        '            <span class="title">' + MARKER_SPRITE_POSITION[key][4] + '</span>' + //MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "")
         '        </li>' +
         '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;">' +
-        '            <span class="title">상세보기</span>' +
+        '            <span class="title">' + viewtext + '</span>' +
         '        </li>' +
         '    </ul>' +
         '</div>';

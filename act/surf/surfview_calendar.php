@@ -62,7 +62,11 @@ $p_m= date("Ym",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 이전달
 $n_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y+1)); // 내년
 $p_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y-1)); // 작년
 
-$nowDate = date("Y-m-d");
+if($seqCal == 13 || $seqCal == 15){
+	$nowDate = date("Y-m-d");
+}else{
+	$nowDate = date("Y-m-d", strtotime(date("Y-m-d")." +1 day"));
+}
 // 변수 $s 에 새로운 값을 넣고 새문서를 만들면, $s 가 들어와 원하는 값을 표시해 줍니다.
 
 echo ("
@@ -73,8 +77,8 @@ if($selMonth > date("Ym", strtotime($nowMonth." -0 month"))){
 	echo "<a href='javascript:fnCalMove(\"$p_m\", \"$seqCal\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
-
-if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
+//if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
+if($selMonth < 202012){
 	echo "<a href='javascript:fnCalMove(\"$n_m\", \"$seqCal\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 }
 
@@ -102,19 +106,18 @@ echo ("
 if($reqDate != ""){
 }
 
-$select_query = "SELECT *, year(date_s) as yearS, month(date_s) as monthS, day(date_s) as dayS, year(date_e) as yearE, month(date_e) as monthE, day(date_e) as dayE FROM SURF_SHOP_DAY where shopSeq =".$_REQUEST["seq"]." AND date_s <= '$s_Y.$s_m.$s_t' AND date_e >= '$s_Y.$s_m.01' AND useYN = 'Y' ORDER BY date_s";
-//echo $select_query;
+$select_query = "SELECT *, year(sdate) as yearS, month(sdate) as monthS, day(sdate) as dayS, year(edate) as yearE, month(edate) as monthE, day(edate) as dayE FROM AT_PROD_DAY where seq =".$_REQUEST["seq"]." AND sdate <= '$s_Y.$s_m.$s_t' AND edate >= '$s_Y.$s_m.01' AND use_yn = 'Y' ORDER BY sdate";
+// echo $select_query;
 $result_cal = mysqli_query($conn, $select_query);
 $count_cal = mysqli_num_rows($result_cal);
 
 $calDay = array();
 $calWeek = array();
 while ($row_cal = mysqli_fetch_assoc($result_cal)){
-	$price0 = $row_cal["opt_price0"];
-	$price1 = $row_cal["opt_price1"];
-	$price2 = $row_cal["opt_price2"];
-	$price3 = $row_cal["opt_price3"];
-	$price4 = $row_cal["opt_price4"];
+	$lesson_price = $row_cal["lesson_price"];
+	$rent_price = $row_cal["rent_price"];
+	$stay_price = $row_cal["stay_price"];
+	$bbq_price = $row_cal["bbq_price"];
 
 	$forI=1;
 	$forE=$s_t;
@@ -129,57 +132,15 @@ while ($row_cal = mysqli_fetch_assoc($result_cal)){
 
 	//예약 가능한 날짜 배열
 	for($i=$forI;$i<=$forE;$i++){
-		/*$arrWeek = explode(",", $row_cal["opt_week"]);
-		for($y=0;$y<count($arrWeek);$y++){
-			echo "<br>".$y.":".$arrWeek[$y];
-		}*/
-
-		//$calDay[$i] = array("opt_week" => $row_cal["opt_week"], "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-
-
 		$thisWeekNum = date("N",mktime(0,0,0,$Mon,$i,$Year));
 		if($thisWeekNum == 7) $thisWeekNum = 0;
 
 		if($row_cal["week".$thisWeekNum] == "N"){
 			continue;
 		}
-		//echo "<br>".$row_cal["day_name"].":".$i." / ".$thisWeekNum." / ".$row_cal["week".$thisWeekNum];
 
-		$calWeek[$i][$thisWeekNum] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-
+		$calWeek[$i][$thisWeekNum] = array("day_week" => "Y", "lesson_price" => $lesson_price, "rent_price" => $rent_price, "stay_price" => $stay_price, "bbq_price" => $bbq_price);
 		$calDay[$i] = $i;
-
-/*
-		$calWeek[$i][0] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][1] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][2] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][3] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][4] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][5] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-		$calWeek[$i][6] = array("opt_week" => "N", "opt_price0" => 0, "opt_price1" => 0, "opt_price2" => 0, "opt_price3" => 0, "opt_price4" => 0);
-
-		if($row_cal["week0"] == "Y"){ //일요일
-			$calWeek[$i][0] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week1"] == "Y"){ //월요일
-			$calWeek[$i][1] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week2"] == "Y"){ //화요일
-			$calWeek[$i][2] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week3"] == "Y"){ //수요일
-			$calWeek[$i][3] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week4"] == "Y"){ //목요일
-			$calWeek[$i][4] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week5"] == "Y"){ //금요일
-			$calWeek[$i][5] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		if($row_cal["week6"] == "Y"){ //토요일
-			$calWeek[$i][6] = array("opt_week" => "Y", "opt_price0" => $price0, "opt_price1" => $price1, "opt_price2" => $price2, "opt_price3" => $price3, "opt_price4" => $price4);
-		}
-		*/
 	}
 }
 
@@ -211,12 +172,11 @@ for($r=0;$r<=$ra;$r++){
 			}
 			else
 			{
-				//$weekChk = strpos($calDay[$ru]["opt_week"], "$weeknum");
-				$weekChk = strpos($calWeek[$ru][$weeknum]["opt_week"], "Y");
+				$weekChk = strpos($calWeek[$ru][$weeknum]["day_week"], "Y");
 
 				if($s >= $nowDate && ($weekChk !== false)){
-					$pricePlus = "price0='".$calWeek[$ru][$weeknum]["opt_price0"]."' price1='".$calWeek[$ru][$weeknum]["opt_price1"]."' price2='".$calWeek[$ru][$weeknum]["opt_price2"]."' price3='".$calWeek[$ru][$weeknum]["opt_price3"]."' price4='".$calWeek[$ru][$weeknum]["opt_price4"]."'";
-					echo "<td class='cal_type2' style='cursor:pointer;'><calBox class='tour_td_block' value='$s' weekNum='$weeknum' onclick='fnPassenger(this, 1);' $pricePlus><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>예약가능</span></calBox></td>";
+					$pricePlus = "lesson_price='".$calWeek[$ru][$weeknum]["lesson_price"]."' rent_price='".$calWeek[$ru][$weeknum]["rent_price"]."' stay_price='".$calWeek[$ru][$weeknum]["stay_price"]."' bbq_price='".$calWeek[$ru][$weeknum]["bbq_price"]."'";
+					echo "<td class='cal_type2' style='cursor:pointer;'><calBox class='tour_td_block' value='$s' weekNum='$weeknum' onclick='fnPassenger(this);' $pricePlus><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>예약가능</span></calBox></td>";
 				}else{
 					echo "<td class='cal_type2' style='padding-bottom:2px;'><span class='tour_td_block'><span class='tour_cal_day' style='color:#c2c2c2;'>$ru</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>"; //종료
 				}

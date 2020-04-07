@@ -15,23 +15,23 @@ if($param_mid == ""){
 	$param = $param_mid;
 }
 
-if($param == "surfbus"){ //양양 셔틀버스
-    $bustitle = "액트립 양양 서핑버스";
-    $bussubinfo = "서울 - 양양 셔틀버스 운행 : 5월 ~ 9월, 지정좌석제";
+if($param == "surfbus_yy"){ //양양 셔틀버스
+    $shopseq = 7;
     $pointurl = "surf/surfview_bus_tab3.html";
-    $busgubun = "Y";
-    $sbusDate = "2020-05-01";
 }else{ //동해 셔틀버스
-    $bustitle = "액트립 동해 서핑버스";
-    $bussubinfo = "서울 - 동해 셔틀버스 운행 : 6월 ~ 8월, 지정좌석제";
+    $shopseq = 14;
     $pointurl = "surf/surfview_bus_tab3_2.html";
-    $busgubun = "E";
-    $sbusDate = "2020-06-01";
 }
 
-$select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = 7 AND use_yn = 'Y'";
+$select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
 $result = mysqli_query($conn, $select_query);
 $rowMain = mysqli_fetch_array($result);
+
+$bustitle = $rowMain["shopname"];
+$bussubinfo = $rowMain["sub_info"];
+$busData = explode("|", $rowMain["sub_tag"]);
+$busgubun = $busData[0];
+$sbusDate = $busData[1];
 
 //연락처 모바일 여부
 if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
@@ -100,7 +100,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                <?if($param == "surfbus"){?>
+                <?if($param == "surfbus_yy"){?>
                     <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus01.jpg" class="placeholder">
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus03.jpg" class="placeholder" style="cursor:pointer;">
                     <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus04.jpg" class="placeholder">
@@ -145,12 +145,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
+                    <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                 </span>
                 
                 <div class="busOption01" style="padding-bottom: 0px;">
                     <ul class="destination" style="margin-bottom: 0px;">
                         <li><img src="images/viewicon/route.svg" alt="">행선지</li>
-                    <?if($param == "surfbus"){?>
+                    <?if($param == "surfbus_yy"){?>
                         <li class="toYang on" onclick="fnBusGubun('Y', this);">양양행<i class="fas fa-chevron-right"></i></li>
                         <li class="toYang" onclick="fnBusGubun('S', this);">서울행<i class="fas fa-chevron-right"></i></li>
                     <?}else{?>
@@ -225,7 +226,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
-                    <?if($param == "surfbus"){?>
+                    <?if($param == "surfbus_yy"){?>
                         <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
                         <li>
                             <div id="selBusY" class="bd" style="padding-top:2px;">
@@ -237,12 +238,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </div>
                         </li>
                     <?}else{?>
-                        <li><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li><img src="images/button/btn064.png" alt="양양행 서핑버스"></li>
                         <li>
                             <div id="selBusE" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li><img src="images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li><img src="images/button/btn063.png" alt="서울행 서핑버스"></li>
                         <li>
                             <div id="selBusA" class="bd" style="padding-top:2px;">
                             </div>
@@ -298,12 +299,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk8" name="chk8" checked="checked"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk9" name="chk9" checked="checked"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
                                 </td>
                             </tr>
                         </tbody>
@@ -330,18 +331,28 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
 <? include '_layout_bottom.php'; ?>
 
+<script>    
+	var busTypeY = "E";
+    var busTypeS = "A";	
+    if($j("#shopseq").val() == 7){
+		busTypeY = "Y";
+		busTypeS = "S";
+    }
+</script>
+
 <script src="js/surfview_bus.js"></script>
 <script src="js/surfview.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/surfview_busday.js"></script>
 <script>
-    $j('.busSeat').block({ message: null }); 
+    $j('.busSeat').block({ message: null });     
     var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     
     var objParam = {
         "code":"busday",
-        "bus":"<?=$busgubun?>"
+        "bus":"<?=$busgubun?>",
+        "seq":"<?=$shopseq?>"
     }
     $j.getJSON("/act/surf/surfbus_day.php", objParam,
         function (data, textStatus, jqXHR) {

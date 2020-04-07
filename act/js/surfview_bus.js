@@ -71,8 +71,8 @@ function fnPointList(busnum, busseat, obj){
 		busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
 						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
 						'<td>&nbsp;</td>' +
-						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>' +
-						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="45"><br>45</td>';
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
+						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>';
 	}else{
 		busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
 						'<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
@@ -92,7 +92,7 @@ function fnPointList(busnum, busseat, obj){
 		"code":"busseat",
 		"busDate":selDate,
 		"busNum":busnum
-    }
+	}
     $j.getJSON("/act/surf/surfbus_day.php", objParam,
         function (data, textStatus, jqXHR) {
             seatjson = data;
@@ -148,67 +148,6 @@ jQuery(function () {
             return rtnBusDate(date, date.getDay(), busData, $j(this).attr("gubun"));
 		}
     });
-    
-	jQuery('input[cal=bbqdate]').datepicker({
-		minDate : new Date('2019-05-04'),
-		maxDate : new Date('2019-09-30'),
-		beforeShowDay: function(date) {
-			var sDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-			sDate.setDate(sDate.getDate() + 1);
-
-			var day = date.getDay();
-			if(sDate < new Date()){
-				if(day == 0){
-					return [false, "date-sunday"];
-				}else if(day == 6){
-					return [false, "date-saturday"];
-				}else{
-					return [false, ""];
-				}
-			}else{
-
-				if(day == 0){
-					return [true, "date-sunday"];
-				}else if(day == 6){
-					return [true, "date-saturday"];
-				}else{
-					return [true, ""];
-				}
-			}
-		}
-	});
-
-	jQuery('#SurfResDate3').datepicker({
-		onClose: function (selectedDate) {
-			// 시작일(fromDate) datepicker가 닫힐때
-			// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-			var date = jQuery(this).datepicker('getDate');
-
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery("#SurfResDate4").datepicker("option", "minDate", date);
-
-			//날짜 변경시 숙박 조회 데이터 초기화
-			jQuery("tr[id=trstay1]").remove();
-
-			if (jQuery("#SurfResDate4").val() != "") {
-				fnStayDate();
-			}
-		}
-	});
-	jQuery('#SurfResDate4').datepicker({
-		onClose: function (selectedDate) {
-			// 종료일(toDate) datepicker가 닫힐때
-			// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-			var date = jQuery(this).datepicker('getDate');
-
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery("#SurfResDate3").datepicker("option", "maxDate", date);
-
-			if (jQuery("#SurfResDate3").val() != "") {
-				fnStayDate();
-			}
-		}
-	});
 });
 
 jQuery(function ($) {
@@ -365,7 +304,7 @@ function fnSeatDel(obj, num){
 }
 
 function fnPriceSum(obj, num){
-	var cnt = $j("input[id=hidbusSeatY]").length + $j("input[id=hidbusSeatS]").length;
+	var cnt = $j("input[id=hidbusSeat" + busTypeY + "]").length + $j("input[id=hidbusSeat" + busTypeS + "]").length;
 
 	if(cnt == 0) return;
 	$j("#lastcouponprice").html("");
@@ -398,9 +337,12 @@ function fnBusPoint(obj) {
 		$j("table[view='tbBus1']").css("display", "");
 
 		fnBusMap('Y', 2, 1, '신도림', ".mapviewid:eq(0)", "false");
-	}else if ($j(obj).val() == "왕십리선") {
+	}else if ($j(obj).val() == "종로선") {
 		$j("table[view='tbBus2']").css("display", "");
 		fnBusMap('Y', 1, 2, '당산역', ".mapviewid:eq(6)", "false");
+	}else if ($j(obj).val() == "동해 서울행") {
+		$j("table[view='tbBus3']").css("display", "");
+		fnBusMap('A', 1, 1, '주문진해변', ".mapviewid:eq(12)", "false");
 	}else{
 		$j("table[view='tbBus3']").css("display", "");
 		fnBusMap('S', 1, 1, '주문진해변', ".mapviewid:eq(12)", "false");
@@ -431,27 +373,29 @@ function maxLengthCheck(object) {
 }
 
 function fnBusSave() {
-    var chkVluY = $j("input[id=hidbusSeatY]").map(function () { return $j(this).val(); }).get();
-    var chkVluS = $j("input[id=hidbusSeatS]").map(function () { return $j(this).val(); }).get();
+    var chkVluY = $j("input[id=hidbusSeat" + busTypeY + "]").map(function () { return $j(this).val(); }).get();
+    var chkVluS = $j("input[id=hidbusSeat" + busTypeS + "]").map(function () { return $j(this).val(); }).get();
 
-    var chksLocationY = $j("select[id=startLocationY]").map(function () { return $j(this).val(); }).get();
-    var chkeLocationY = $j("select[id=endLocationY]").map(function () { return $j(this).val(); }).get();
-    var chksLocationS = $j("select[id=startLocationS]").map(function () { return $j(this).val(); }).get();
-    var chkeLocationS = $j("select[id=endLocationS]").map(function () { return $j(this).val(); }).get();
+    var chksLocationY = $j("select[id=startLocation" + busTypeY + "]").map(function () { return $j(this).val(); }).get();
+    var chkeLocationY = $j("select[id=endLocation" + busTypeY + "]").map(function () { return $j(this).val(); }).get();
+    var chksLocationS = $j("select[id=startLocation" + busTypeS + "]").map(function () { return $j(this).val(); }).get();
+    var chkeLocationS = $j("select[id=endLocation" + busTypeS + "]").map(function () { return $j(this).val(); }).get();
+
+	
 
 	if(chkVluY == "" && chkVluS == ""){
-		alert("양양행 또는 서울행 좌석을 선택해 주세요.");
+		alert("셔틀버스 좌석을 선택해 주세요.");
 
 		fnMapView("#view_tab3", 90);
 		return;
 	}
 
 	if(chksLocationY.indexOf('N') != -1 || chkeLocationY.indexOf('N') != -1){
-		alert('양양행 정류장을 선택해주세요.');
+		alert('셔틀버스 정류장을 선택해주세요.');
 		return;
 	}
 	if(chksLocationS.indexOf('N') != -1 || chkeLocationS.indexOf('N') != -1){
-		alert('서울행 정류장을 선택해주세요.');
+		alert('셔틀버스  정류장을 선택해주세요.');
 		return;
 	}
 
@@ -465,22 +409,21 @@ function fnBusSave() {
         return;
     }
 
-    if (!jQuery("#chk8").is(':checked')) {
+    if (!$j("#chk8").is(':checked')) {
         alert("이용안내 및 취소/환불 규정에 대한 동의를 해주세요.");
         return;
     }
 
-    if (!jQuery("#chk9").is(':checked')) {
+    if (!$j("#chk9").is(':checked')) {
         alert("개인정보 취급방침에 동의를 해주세요.");
         return;
     }
 
-    if (!confirm("서울-양양 셔틀버스를 예약하시겠습니까?")) {
+    if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
         return;
-	}
-	
+	}	
 
-    $j("#frmRes").attr("action", "/act/surf/surfbus_save.php").submit();
+    $j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
 }
 
 function fnCouponCheck(obj){

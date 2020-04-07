@@ -1,19 +1,6 @@
 <? include 'db.php'; ?>
 
 <link rel="stylesheet" type="text/css" href="/act/css/main.css">
-<style>
-	/*팝업1*/
-	#gpe_divpop1{position:absolute; z-index:49;}
-	#gpe_divpop1 .pop_area_out{border:1px solid #b6b6b6;}
-	#gpe_divpop1 .pop_area_in{border:2px solid #f6f6f6;}
-	#gpe_divpop1 .pop_middle{border:1px solid #fff; background-color:#fff;}
-	#gpe_divpop1 .pop_middle img{vertical-align:bottom;}
-	#gpe_divpop1 .pop_bott{background-color:#f6f6f6; height:28px;}
-	#gpe_divpop1 .pop_bott .pop_bott_1day{float:left; padding:8px 0 0 0;}
-	#gpe_divpop1 .pop_bott .pop_bott_1day_txt{float:left; letter-spacing:-0.08em; color:#4e4f55; margin-top:8px; margin-left:3px;}
-	#gpe_divpop1 .pop_bott .pop_bott_close a{float:right; display:block; width:34px; height:13px; background:url(/layouts/portal_NOVA/imgs/default/default_02.png) no-repeat -267px -19px; margin:8px 0 0 0;}
-</style>
-
 <div id="wrap">
 
 <!--visible / hidden-->
@@ -35,12 +22,44 @@
 </div>
 
 <script> 
-	var eventCookie=gpe_getCookie1("act_pop1");
-	if ( eventCookie != "no1" ){  
-		document.all['gpe_divpop1'].style.visibility = "visible";
-	} else if(eventCookie == "no1") {
-		document.getElementById('gpe_divpop1').style.display='none'; 
+	function gpe_getCookie1(name) { 
+		var Found = false 
+		var start, end 
+		var i = 0 
+		while(i <= document.cookie.length) { 
+			start = i 
+			end = start + name.length 
+			if(document.cookie.substring(start, end) == name) { 
+				Found = true 
+				break 
+			} 
+			i++ 
+		} 
+		
+		if(Found == true) { 
+			start = end + 1 
+			end = document.cookie.indexOf(";", start) 
+
+			if(end < start) 
+				end = document.cookie.length 
+
+			return document.cookie.substring(start, end) 
+		} 
+		return "" 
+	} 
+
+	function gpe_setCookie1( name, value, expiredays ) { 
+		var todayDate = new Date(); 
+		todayDate.setDate( todayDate.getDate() + expiredays ); 
+		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
 	}
+
+	//var eventCookie=gpe_getCookie1("act_pop1");
+	// if ( eventCookie != "no1" ){  
+	// 	document.all['gpe_divpop1'].style.visibility = "visible";
+	// } else if(eventCookie == "no1") {
+	// 	document.getElementById('gpe_divpop1').style.display='none'; 
+	// }
 	function gpe_closeWin1() { 
 	if ( document.gpe_form1.event1.checked ){ 
 		gpe_setCookie1( "act_pop1", "no1" , 1 ); 
@@ -73,39 +92,36 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"><a href="#"><img src="images/sld1.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/sld2.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/sld1.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/sld2.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/sld1.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="#"><img src="images/sld2.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="#"><img src="images/banner/banefit.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="#"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
+						<div class="swiper-slide"><a href="#"><img src="images/banner/reviewBus.jpg" alt=""></a></div>
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
 			</div>
 			<section id="hashtag">
 				<div class="hashtagInner">
-					<h2>이달의 Hot Pick</h2>
+					<h2>알면 알수록 좋은~</h2>
 					<div class="tagBox">
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
-						<a href="#"><span>프로모션 <i class="fas fa-chevron-circle-right"></i></span><img src="images/thumb-promotion-nor.png" alt=""></a>
+						<a href="/event"><span>이벤트모음 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainEvent.png" alt=""></a>
+						<a href="https://cafe.naver.com/actrip/178" target="_blank"><span>맛도락 제휴식당 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainFood.png" alt=""></a>
+						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=40&search.boardtype=L" target="_blank"><span>이용후기 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainReview.png" alt=""></a>
+						<a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=21&search.boardtype=W" target="_blank"><span>서핑정보/팁 <i class="fas fa-chevron-circle-right"></i></span><img src="images/mainImg/mainSurf.png" alt=""></a>
 					</div>
 					<div class="tag">
-						<a href="#">#해시태그</a>
-						<a href="#">#해시태그</a>
-						<a href="#">#해시태그</a>
+						<a>#액트립</a>
+						<a>#여행은액티비티다</a>
+						<a>#혜택빵빵</a>
+						<a>#서핑배우기</a>
 					</div>
 				</div>
 			</section>
 			<section id="staticBnr">
-				<a class="visual" href="#" style="background-image: url(images/visual.jpg)">비주얼에 대한 내용</a>
+				<a class="visual" href="/surfbus"><img src=images/banner/bnrBus.jpg></a>
 			</section>
-			<section id="popular">
+			<!-- <section id="popular">
 				<header class="popTitle">
 					<h2>인기 액티비티</h2>
-					<!-- <a href="#">레저/액티비티</a> -->
 				</header>
 				<div class="actTab">
 					<ul class="tabs">
@@ -245,6 +261,17 @@
 						</div>
 					</div>
 				</div>
+			</section> -->
+			<section id="promo">
+				<div class="promoInner">
+					<h2>기획전</h2>
+					<div class="promoBox">
+						<a href="/surfview?seq=2"><img src="images/mainImg/promobg.png" alt=""><span>액트립 당찬패키지 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑강습 한방에 해결!! 올인원 패키지~</span></span></a>
+						<a href="/bbq"><img src="images/mainImg/promobg.png" alt=""><span>액트립 바베큐파티 <i class="fas fa-chevron-circle-right"></i><span class="subinst">새로운 만남과 신나는 버스킹공연♪</span></span></a>
+						<a href="/surfbus"><img src="images/mainImg/promobg.png" alt=""><span>서울-양양, 동해 서핑버스  <i class="fas fa-chevron-circle-right"></i><span class="subinst">이보다 더 편한 셔틀버스는 없다</span></span></a>
+						<a href="/eatlist"><img src="images/mainImg/promobg.png" alt=""><span>양양 맛도락 여행 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑 후엔 맛집에서 체력충전!</span></span></a>
+					</div>
+				</div>
 			</section>
 
 		</div>
@@ -256,10 +283,23 @@
 <!-- Initialize Swiper -->
 <script>
 	var swiper = new Swiper('.swiper-container', {
+		loop: true,
+		autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
 		pagination: {
 			el: '.swiper-pagination',
 			dynamicBullets: true,
 		},
+	});
+
+	$j(".swiper-container").hover(
+		function() {
+			swiper.autoplay.stop();
+		}, 
+		function() {
+			swiper.autoplay.start();
 	});
 </script>
 <!-- tab -->

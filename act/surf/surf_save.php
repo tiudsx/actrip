@@ -6,6 +6,7 @@ include __DIR__.'/../surf/surffunc.php';
 
 $param = $_REQUEST["resparam"];
 $InsUserID = ($_REQUEST["userId"] == "") ? $_REQUEST["userName"] : $_REQUEST["userId"];
+$shopseq = $_REQUEST["shopseq"];
 
 /*
 예약상태
@@ -21,21 +22,31 @@ $InsUserID = ($_REQUEST["userId"] == "") ? $_REQUEST["userName"] : $_REQUEST["us
 
 $success = true;
 if($param == "BusI"){
-	$ResNumber = '2'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
+    $ResNumber = '2'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
+    
+    if($shopseq == 7){
+        $busTypeY = "Y";
+        $busTypeS = "S";
+        $busTitleName = "양양";
+    }else{
+        $busTypeY = "E";
+        $busTypeS = "A";    
+        $busTitleName = "동해";    
+    }
 
-	$SurfDateBusY = $_REQUEST["hidbusDateY"]; //양양행 날짜
-    $SurfDateBusS = $_REQUEST["hidbusDateS"]; //서울행 날짜
+	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜
+    $SurfDateBusS = $_REQUEST["hidbusDate".$busTypeS]; //서울행 날짜
     
-	$busNumY = $_REQUEST["hidbusNumY"]; //양양행 버스번호
-    $busNumS = $_REQUEST["hidbusNumS"]; //서울행 버스번호
+	$busNumY = $_REQUEST["hidbusNum".$busTypeY]; //양양행 버스번호
+    $busNumS = $_REQUEST["hidbusNum".$busTypeS]; //서울행 버스번호
     
-	$arrSeatY = $_REQUEST["hidbusSeatY"]; //양양행 좌석번호
-    $arrSeatS = $_REQUEST["hidbusSeatS"]; //서울행 좌석번호
+	$arrSeatY = $_REQUEST["hidbusSeat".$busTypeY]; //양양행 좌석번호
+    $arrSeatS = $_REQUEST["hidbusSeat".$busTypeS]; //서울행 좌석번호
     
-	$startLocationY = $_REQUEST["startLocationY"]; //양양행 출발 정류장
-	$endLocationY = $_REQUEST["endLocationY"]; //양양행 도착 정류장
-	$startLocationS = $_REQUEST["startLocationS"]; //서울행 출발 정류장
-	$endLocationS = $_REQUEST["endLocationS"]; //서울행 도착 정류장
+	$startLocationY = $_REQUEST["startLocation".$busTypeY]; //양양행 출발 정류장
+	$endLocationY = $_REQUEST["endLocation".$busTypeY]; //양양행 도착 정류장
+	$startLocationS = $_REQUEST["startLocation".$busTypeS]; //서울행 출발 정류장
+	$endLocationS = $_REQUEST["endLocation".$busTypeS]; //서울행 도착 정류장
 
 	$userName = $_REQUEST["userName"];
 	$userId = $_REQUEST["userId"];
@@ -81,7 +92,7 @@ if($param == "BusI"){
     // 할인 쿠폰적용
     $coupon = $_REQUEST["couponcode"];
     $res_price_coupon = 0;
-    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND use_yn = 'N' AND a.seq = 'BUS'";
+    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq = 'BUS'";
   
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
@@ -99,7 +110,7 @@ if($param == "BusI"){
     //양양행 좌석예약
     for($i = 0; $i < count($SurfDateBusY); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', 7, null, '양양서핑버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
@@ -117,7 +128,7 @@ if($param == "BusI"){
     //서울행 좌석예약
     for($i = 0; $i < count($SurfDateBusS); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', 7, null, '양양서핑버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
@@ -146,6 +157,10 @@ if($param == "BusI"){
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGo;
 
+    $select_query = "UPDATE AT_PROD_MAIN SET sell_cnt = sell_cnt + 1 WHERE seq = $shopseq;";
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGo;
+
 	if(!$success){
         errGo:
 		mysqli_query($conn, "ROLLBACK");
@@ -169,7 +184,7 @@ if($param == "BusI"){
         }
         $totalPrice = " ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
 
-        $msgTitle = '액트립 양양서핑버스 예약안내';
+        $msgTitle = '액트립 '.$busTitleName.'서핑버스 예약안내';
         $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
         $arrKakao = array(
@@ -180,9 +195,9 @@ if($param == "BusI"){
             , "tempName"=> "at_res_step1"
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
-            , "link1"=>"ordersearch?resNumber=".$ResNumber
-            , "link2"=>"notice"
-            , "link3"=>"notice"
+            , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+            , "link2"=>"eatlist" //제휴업체 목록
+            , "link3"=>"notice" //공지사항
             , "link4"=>""
             , "link5"=>""
 			, "smsOnly"=>"N"
@@ -208,7 +223,7 @@ if($param == "BusI"){
 		// );
 
 		//endMail("surfbus1@surfenjoy.com", "surfenjoy", sendMailContentBus($arrMail), $to, $arrMail);
-        echo '<script>alert("양양 셔틀버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("'.$busTitleName.' 셔틀버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
 	}
 }
 

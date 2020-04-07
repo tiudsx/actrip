@@ -220,7 +220,7 @@ if($param == "RtnPrice"){
                 , "tempName"=> "at_res_step3"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"notice"
+                , "link1"=>"notice" //공지사항
                 , "link2"=>""
                 , "link3"=>""
                 , "link4"=>""
@@ -248,9 +248,9 @@ if($param == "RtnPrice"){
                     , "tempName"=> "at_shop_step1"
                     , "kakaoMsg"=>$kakaoMsg
                     , "userPhone"=> $admin_tel
-                    , "link1"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$shopSeq))
-                    , "link2"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$ResNumber.'|'.$shopSeq))
-                    , "link3"=>"notice"
+                    , "link1"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$shopSeq)) //전체 예약목록
+                    , "link2"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$ResNumber.'|'.$shopSeq)) //현재 예약건 보기
+                    , "link3"=>""
                     , "link4"=>""
                     , "link5"=>""
                     , "smsOnly"=>"N"

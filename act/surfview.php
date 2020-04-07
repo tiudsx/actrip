@@ -7,9 +7,7 @@ if($reqSeq == ""){
     echo '<script>alert("잘못된 접속 경로입니다.");location.href="/surf";</script>';
 	exit;
 }
-$select_query = "SELECT * FROM AT_PROD_MAIN 
-                    WHERE seq = $reqSeq 
-                        AND use_yn = 'Y'";
+$select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $reqSeq AND use_yn = 'Y'";
 $result = mysqli_query($conn, $select_query);
 $rowMain = mysqli_fetch_array($result);
 $count = mysqli_num_rows($result);
@@ -20,6 +18,80 @@ if($count == 0){
 }
 
 $reqCode = $rowMain["category"];
+$shop_img = explode('|', $rowMain["shop_img"]);
+
+// 옵션 매진여부 확인
+$select_query = "SELECT a.*, b.optcode, b.optname FROM `AT_PROD_OPT_SOLDOUT` as a INNER JOIN AT_PROD_OPT as b
+					ON a.optseq = b.optseq
+					WHERE b.seq = $reqSeq AND b.use_yn = 'Y' ORDER BY a.soldout_date, a.optseq";
+$result_setlist = mysqli_query($conn, $select_query);
+$count = mysqli_num_rows($result_setlist);
+
+if($count > 0){
+	$SoldoutList = "";
+	$Presoldoutdate = "";
+	$x = 0;
+
+	while ($rowSold = mysqli_fetch_assoc($result_setlist)){
+		$soldoutdate = $rowSold['soldout_date'];
+
+		if($soldoutdate != $Presoldoutdate && $x > 0){
+			$SoldoutList .= "main['".$Presoldoutdate."'] = sub;";
+		}
+
+		if($soldoutdate == $Presoldoutdate){
+			$i++;
+		}else{
+			$i = 0;
+		}
+
+		$x++;
+		$Presoldoutdate = $rowSold['soldout_date'];
+
+		if($i == 0){
+			$SoldoutList .= "sub = new Object();";
+		}
+
+		$soldoutdate = $rowSold["soldout_date"];
+		$optseq = $rowSold["optseq"];
+		$opt_sexM = $rowSold["opt_sexM"];
+		$opt_sexW = $rowSold["opt_sexW"];
+		$optcode = $rowSold["optcode"];
+		$optname = $rowSold["optname"];
+		
+		$SoldoutList .= "sub['$optseq'] = {type: $optcode, opt_sexM: '$opt_sexM', opt_sexW: '$opt_sexW', optseq: $optseq, optname: '$optname' }; ";
+	}
+	
+	$SoldoutList .= "main['".$Presoldoutdate."'] = sub;";
+}
+
+$select_query = 'SELECT * FROM `AT_PROD_OPT` where seq = '.$reqSeq.' AND use_yn = "Y" ORDER BY ordernum';
+$result_setlist = mysqli_query($conn, $select_query);
+
+$arrOpt = array();
+$arrOptT = array();
+while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
+	$arrOpt[$rowOpt["optcode"]][$rowOpt["optseq"]] = array("optseq" => $rowOpt["optseq"], "optname" => $rowOpt["optname"], "opttime" => $rowOpt["opttime"], "opt_sexM" => $rowOpt["opt_sexM"], "opt_sexW" => $rowOpt["opt_sexW"], "sell_price" => $rowOpt["sell_price"], "opt_info" => $rowOpt["opt_info"]);
+
+	$arrOptT[$rowOpt["optcode"]] = $rowOpt["optcode"];
+}
+
+$sLng = $rowMain["shop_lat"];
+$sLat = $rowMain["shop_lng"];
+
+$startTab = 4;
+if($arrOptT["lesson"] != null){
+	$startTab = 0;
+}
+if($arrOptT["rent"] != null && $startTab == 4){
+	$startTab = 1;
+}
+if($arrOptT["stay"] != null && $startTab == 4){
+	$startTab = 2;
+}
+if($arrOptT["bbq"] != null && $startTab == 4){
+	$startTab = 3;
+}
 ?>
 
 <div id="wrap">
@@ -145,33 +217,30 @@ $reqCode = $rowMain["category"];
                     <b>예약날짜를 선택하세요.</b>
                 </div>
 
-                <div id="lessonarea" style="display:none;">
+                <div id="lessonarea" style="display:none;padding-left:5px;padding-right:5px;">
                 <form id="frmResList">
                     <div class="fixed_wrap3" style="display:;">
-                        <ul class="cnb3 btnColor">
-                        <?if($arrOptT[0] != null){?>
+                        <ul class="cnb3 btnColor" style="padding-inline-start:0px;">
+                        <?if($arrOptT["lesson"] != null){?>
                             <li class="on3" id="resTab0"><a onclick="fnSurfList(this, 0);" style="padding:10px 15px 0px 15px;">강습</a></li>
                         <?}
                         
-                        if($arrOptT[1] != null){?>
+                        if($arrOptT["rent"] != null){?>
                             <li id="resTab1"><a onclick="fnSurfList(this, 1);" style="padding:10px 15px 0px 15px;">렌탈</a></li>
                         <?}
                         
-                        if($arrOptT[2] != null){?>
-                            <li id="resTab2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">패키지</a></li>
+                        if($arrOptT["stay"] != null){?>
+                            <li id="resTab2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">숙소</a></li>
                         <?}
-                        
-                        if($arrOptT[3] != null){?>
-                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">숙소</a></li>
-                        <?}
-                        
-                        if($arrOptT[4] != null && $rowMain["opt_bbq"] == "N"){?>
-                            <li id="resTab4"><a onclick="fnSurfList(this, 4);" style="padding:10px 15px 0px 15px;">바베큐</a></li>
+
+                        if($arrOptT["bbq"] != null){?>
+                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐</a></li>
                         <?}?>
+                            
                         </ul>
                     </div>
 
-                    <div area="shopListArea" style="display:none;">
+                    <div class="bd" area="shopListArea" style="display:none;">
                         <div class="gg_first" style="padding-top:10px;">강습예약</div>
                         <div id="divsellesson" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>강습이 매진되어 예약이 불가능합니다.</b>
@@ -194,11 +263,11 @@ $reqCode = $rowMain["category"];
                                     <td style="text-align:center;">
                                         <?
                                         $i = 0;
-                                        foreach($arrOpt[0] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["intSeq"].'" optsexM="N" optsexW="N" value="'.$arrlesson["intSeq"].'|'.$arrlesson["opt_name"].'|'.$arrlesson["opt_Price"].'">'.$arrlesson["opt_name"].'</option>';
+                                        foreach($arrOpt["lesson"] as $arrlesson){
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
-                                                foreach(explode("|", $arrlesson["opt_time"]) as $arrtime){
+                                                foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
                                                     if($arrtime != ""){
                                                         $sel2 .= '<option value="'.$arrtime.'">'.$arrtime.'</option>';
                                                     }
@@ -232,7 +301,7 @@ $reqCode = $rowMain["category"];
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명<br>
+                                            </select>명&nbsp;&nbsp;
                                         </span>
                                         <span>
                                             여 : 
@@ -252,7 +321,7 @@ $reqCode = $rowMain["category"];
                         </table>
                     </div>
 
-                    <div area="shopListArea" style="display:none;">
+                    <div class="bd" area="shopListArea" style="display:none;">
                         <div class="gg_first" style="padding-top:10px;">렌탈예약</div>
                         <div id="divselRent" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>렌탈예약이 매진되어 예약이 불가능합니다.</b>
@@ -275,8 +344,8 @@ $reqCode = $rowMain["category"];
                                         <?
                                         $i = 0;
                                         $sel1 = "";
-                                        foreach($arrOpt[1] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["intSeq"].'" optsexM="N" optsexW="N" value="'.$arrlesson["intSeq"].'|'.$arrlesson["opt_name"].'|'.$arrlesson["opt_Price"].'">'.$arrlesson["opt_name"].'</option>';
+                                        foreach($arrOpt["rent"] as $arrlesson){
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -302,7 +371,7 @@ $reqCode = $rowMain["category"];
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명<br>
+                                            </select>명&nbsp;&nbsp;
                                         </span>
                                         <span>
                                             여 : 
@@ -322,95 +391,7 @@ $reqCode = $rowMain["category"];
                         </table>
                     </div>
                     
-                    <div area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">패키지예약</div>
-                        <div id="divselPkg" style="text-align:center;font-size:14px;padding:50px;display:none;">
-                            <b>패키지예약이 매진되어 예약이 불가능합니다.</b>
-                        </div>
-                        <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselPkg">
-                            <colgroup>
-                                <col style="width:90px;">
-                                <col style="width:90px;">
-                                <col style="width:*;">
-                                <col style="width:45px;">
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th style="text-align:center;">패키지종류</th>
-                                    <th style="text-align:center;">시간</th>
-                                    <th style="text-align:center;">인원</th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;" rowspan="2">
-                                        <?
-                                        $i = 0;
-                                        $sel1 = "";
-                                        $sel2 = "";
-                                        foreach($arrOpt[2] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["intSeq"].'" optsexM="N" optsexW="N" value="'.$arrlesson["intSeq"].'|'.$arrlesson["opt_name"].'|'.$arrlesson["opt_Price"].'|'.$arrlesson["opt_PkgTitle"].'">'.$arrlesson["opt_name"].'</option>';
-                                            
-                                            if($i == 0){
-                                                foreach(explode("|", $arrlesson["opt_time"]) as $arrtime){
-                                                    if($arrtime != ""){
-                                                        $sel2 .= '<option value="'.$arrtime.'">'.$arrtime.'</option>';
-                                                    }
-                                                }
-
-                                                $sel3 = $arrlesson["opt_sexM"];
-                                                $sel4 = $arrlesson["opt_sexW"];
-                                                $sel5 = $arrlesson["opt_PkgTitle"];
-                                            }
-                                        
-                                            $i++;
-                                        }
-                                        ?>
-                                        <select id="selPkg" name="selPkg" class="select" onchange="fnDayChange(this.value);fnResChange(this, 'selPkg');">
-                                            <?=$sel1?>
-                                        </select>
-
-                                        <select id="hidselPkg" style="display:none;">
-                                            <?=$sel1?>
-                                        </select>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <select id="selPkgTime" name="selPkgTime" class="select">
-                                            <?=$sel2?>
-                                        </select>
-                                    </td>
-                                    <td style="text-align:center;line-height:2.5;">
-                                        
-                                        <span>
-                                            남 : 
-                                            <span style="display:none;"><select class="select"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
-                                            <select id="selPkgM" name="selPkgM" class="select">
-                                            <?for($i=0;$i<=$sel3;$i++){?>
-                                                <option value="<?=$i?>"><?=$i?></option>
-                                            <?}?>
-                                            </select>명<br>
-                                        </span>
-                                        <span>
-                                            여 : 
-                                            <span style="display:none;"><select class="select"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
-                                            <select id="selPkgW" name="selPkgW" class="select">
-                                            <?for($i=0;$i<=$sel4;$i++){?>
-                                                <option value="<?=$i?>"><?=$i?></option>
-                                            <?}?>
-                                            </select>명
-                                        </span>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(2, this);">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" id="pkgText"><?=$sel5?></td>
-                                </tr>
-                            <tbody>
-                        </table>
-                    </div>
-
-                    <div area="shopListArea" style="display:none;">
+                    <div class="bd" area="shopListArea" style="display:none;">
                         <div class="gg_first" style="padding-top:10px;">숙소예약</div>
                         <div id="divselStay" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>숙소예약이 매진되어 예약이 불가능합니다.</b>
@@ -434,8 +415,8 @@ $reqCode = $rowMain["category"];
                                         <?
                                         $i = 0;
                                         $sel1 = "";
-                                        foreach($arrOpt[3] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["intSeq"].'" optsexM="N" optsexW="N" value="'.$arrlesson["intSeq"].'|'.$arrlesson["opt_name"].'|'.$arrlesson["opt_Price"].'">'.$arrlesson["opt_name"].'</option>';
+                                        foreach($arrOpt["stay"] as $arrlesson){
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -469,7 +450,7 @@ $reqCode = $rowMain["category"];
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명<br>
+                                            </select>명&nbsp;&nbsp;
                                         </span>
                                         <span>
                                             여 : 
@@ -482,14 +463,14 @@ $reqCode = $rowMain["category"];
                                         </span>
                                     </td>
                                     <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(3, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(2, this);">
                                     </td>
                                 </tr>
                             <tbody>
                         </table>
-                    </div>
+                    </div> 
 
-                    <div area="shopListArea" style="display:none;">
+                    <div class="bd" area="shopListArea" style="display:none;">
                         <div class="gg_first" style="padding-top:10px;">바베큐예약</div>
                         <div id="divselBBQ" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>바베큐예약이 매진되어 예약이 불가능합니다.</b>
@@ -511,8 +492,8 @@ $reqCode = $rowMain["category"];
                                         <?
                                         $i = 0;
                                         $sel1 = "";
-                                        foreach($arrOpt[4] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["intSeq"].'" optsexM="N" optsexW="N" value="'.$arrlesson["intSeq"].'|'.$arrlesson["opt_name"].'|'.$arrlesson["opt_Price"].'">'.$arrlesson["opt_name"].'</option>';
+                                        foreach($arrOpt["bbq"] as $arrlesson){
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
@@ -552,16 +533,41 @@ $reqCode = $rowMain["category"];
                                         </span>
                                     </td>
                                     <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(4, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(3, this);">
                                     </td>
                                 </tr>
                             <tbody>
                         </table>
-                    </div>
+                    </div>                  
                 </form>
                 </div>
 
+                <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
+				<span style="display:;">
+					<input type="hidden" id="resselDate" name="resselDate" value="" />
+					<input type="hidden" id="resparam" name="resparam" value="SurfShopI" />
+					<input type="hidden" id="shopseq" name="shopseq" value="<?=$reqSeq?>" />
+					<input type="hidden" id="resNumAll" name="resNumAll" value="" />
+				</span>
                 <div class="bd" style="padding:0 4px;">
+                    <p class="restitle" style="padding-top:30px;">신청한 예약 정보</p>
+                    <table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:5px;">
+                        <colgroup>
+                            <col style="width:90px;">
+                            <col style="width:120px;">
+                            <col style="width:*;">
+                            <col style="width:40px;">
+                        </colgroup>
+                        <tbody id="surfAdd">
+                            <tr>
+                                <th style='text-align:center;'>예약종류</th>
+                                <th style='text-align:center;'>날짜/시간</th>
+                                <th style='text-align:center;'>예약인원</th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
                         <tbody>
@@ -586,6 +592,16 @@ $reqCode = $rowMain["category"];
                                 <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
                             </tr>
                             <tr>
+                                <th scope="row"> 쿠폰코드</th>
+                                <td>
+                                    <input type="text" id="coupon" name="coupon" value="" class="itx" maxlength="10">
+                                    <input type="hidden" id="couponcode" name="couponcode" value="">
+                                    <input type="hidden" id="couponprice" name="couponprice" value="0">
+                                    <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
+                                    <span id="coupondis" style="display:none;"><br></span>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>특이사항</th>
                                 <td>
                                     <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
@@ -593,7 +609,7 @@ $reqCode = $rowMain["category"];
                             </tr>
                             <tr>
                                 <th>총 결제금액</th>
-                                <td><span id="lastPrice">0원</span></td>
+                                <td><span id="lastPrice" style="font-weight:700;color:red;">0원</span><span id="lastcouponprice"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -615,14 +631,16 @@ $reqCode = $rowMain["category"];
                 </div>
                 <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
                     <div>
-                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
+                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnSurfSave();" />
                     </div>
                 </div>
+                </form>
             </div>
         </section>
     </div>
 </div>
 
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
         <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> 
@@ -636,13 +654,27 @@ $reqCode = $rowMain["category"];
 <script src="js/surfview.js"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
+var startTab = <?=$startTab?>;
+var main = new Object();
+
+$j(document).ready(function(){
+    if(startTab < 4){
+        $j(".fixed_wrap3 li").removeClass("on3");
+        $j("#resTab" + startTab).addClass("on3");
+
+        $j("div[area=shopListArea]").css("display", "none");
+        $j("div[area=shopListArea]").eq(startTab).css("display", "block");
+    }
+});
 
 var mapView = 1;
-var sLng = "37.9726807";
-var sLat = "128.7593755";
+var sLng = "<?=$rowMain["shoplat"]?>";
+var sLat = "<?=$rowMain["shoplng"]?>";
 var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50,
     MARKER_SPRITE_POSITION2 = {
-        '당찬패키지 #END': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '죽도해변', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, 'https://surfenjoy.cdn3.cafe24.com/shop/surfenjoy_new_1.jpg?v=3', '죽도']
+        '<?=$rowMain["shopname"]?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, '<?=$shop_img[0]?>', '<?=$rowMain["categoryname"]?>']
     };
+
+<?=$SoldoutList?>
 </script>

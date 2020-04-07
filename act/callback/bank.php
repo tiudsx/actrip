@@ -123,11 +123,11 @@ if($count == 1){
 		, "tempName"=> "at_res_bus1"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"ordersearch?resNumber=".$ResNumber
-		, "link2"=>"notice"
-		, "link3"=>"ordersearch?resNumber=".$ResNumber
-		, "link4"=>"notice"
-		, "link5"=>"notice"
+		, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+		, "link2"=>"notice" //셔틀버스 실시간위치 조회
+		, "link3"=>"ordersearch?resNumber=".$ResNumber //셔틀버스 탑승 위치확인
+		, "link4"=>"eatlist" //제휴업체 목록
+		, "link5"=>"notice" //공지사항
 		, "smsOnly"=>"N"
 	);
 	sendKakao($arrKakao);
