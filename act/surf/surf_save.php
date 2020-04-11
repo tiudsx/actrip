@@ -99,11 +99,23 @@ if($param == "BusI"){
     $chkCnt = mysqli_num_rows($result); //체크 개수
     if($chkCnt > 0){
         $res_price_coupon = $rowMain["dis_price"];
+        $issue_type = $rowMain["issue_type"];
 
         if($res_price_coupon <= 100){ //퍼센트 할인
             $res_totalprice = $res_Price * (1 - ($res_price_coupon / 100));
         }else{ //금액할인
             $res_totalprice = $res_Price - $res_price_coupon;
+        }
+
+        if($issue_type == "A"){
+            $user_ip = $_SERVER['REMOTE_ADDR'];
+            $select_query = "UPDATE AT_COUPON_CODE 
+                                SET use_yn = 'Y'
+                                ,user_ip = '$user_ip'
+                                ,use_date = now()
+                            WHERE seq = 'BUS' AND coupon_code = '$coupon';";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGo;
         }
     }
 
@@ -145,15 +157,6 @@ if($param == "BusI"){
 
     $select_query = "INSERT INTO `AT_RES_MAIN` (`resnum`, `pay_type`, `pay_info`, `user_id`, `user_name`, `user_tel`, `user_email`, `etc`, `insuserid`, `insdate`) VALUES ('$ResNumber', 'B', '무통장입금', '$InsUserID', '$userName', '$userPhone', '$usermail', '$etc', '$InsUserID', '$datetime');";
     //echo $select_query.'<br>';
-    $result_set = mysqli_query($conn, $select_query);
-    if(!$result_set) goto errGo;
-
-    $user_ip = $_SERVER['REMOTE_ADDR'];
-    $select_query = "UPDATE AT_COUPON_CODE 
-                        SET use_yn = 'Y'
-                        ,user_ip = '$user_ip'
-                        ,use_date = now()
-                    WHERE seq = 'BUS' AND coupon_code = '$coupon';";
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGo;
 

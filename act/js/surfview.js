@@ -51,7 +51,13 @@ $j(document).ready(function() {
             $j(".vip-tabnavi li").removeClass("on");
             $j(".vip-tabnavi li").eq(2).addClass("on");
         }
-    });
+	});
+
+	$j('#coupon').bind("keyup", function(){
+		//var regexp = /[^a-z0-9]/gi;
+		//$j(this).val($j(this).val().toUpperCase().replace(regexp,''));
+		$j(this).val($j(this).val().toUpperCase());
+	}); 
 });
 
 var isVisible = false;

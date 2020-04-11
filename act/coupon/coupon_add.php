@@ -7,7 +7,7 @@ function RandString($len){
 
     for ( $i = 0; $i < $len; $i++ ) {
         mt_srand((double)microtime()*1000000);
-        $return_str .= substr('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', mt_rand(0,35), 1);
+        $return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
     }
 
     return $return_str;
@@ -18,7 +18,7 @@ $arrdate = explode("|", decrypt($coupon));
 
  //echo '<br>'.count($arrdate).'<br>';
 // echo '<br>'.decrypt($coupon);
-if(!($arrdate[2] == "BUS" || $arrdate[2] == "BBQ" || $arrdate[2] == "SURF")){
+if(!($arrdate[2] == "BUS" || $arrdate[2] == "BBQ" || $arrdate[2] == "SUR")){
     echo "쿠폰다운로드 링크가 정상적이지 않습니다.<br>관리자에게 문의하세요.";
     return;
 }
@@ -37,7 +37,7 @@ if($arrdate[0] >= date("Y-m-d")){
                         SET use_yn = 'Y'
                         ,user_ip = '$user_ip'
                         ,use_date = now()
-                    WHERE add_date < '$add_date' AND use_yn = 'N';";
+                    WHERE add_date < '$add_date' AND use_yn = 'N' AND coupon_code NOT IN ('JOABUS');";
     $result_set = mysqli_query($conn, $select_query);
     mysqli_query($conn, "COMMIT");
     
