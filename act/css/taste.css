@@ -11,7 +11,6 @@ p{margin: 0; padding: 0;}
 #allRest{margin-top: 15px;background-color: #fff;}
 
 /*listMenu*/
-#listMenu h2{}
 #listMenu .btnArea{
 width: 100%;
 height: 35px;
@@ -35,7 +34,6 @@ padding: 5px 0;
 border-radius: 20px;
 height: 25px;
 line-height: 25px;}
-#listMenu .btnArea .btnContent i{}
 
 #listMenu .listArea{width: 100%; overflow: hidden; text-align: center; font-size: 16px; font-weight: 500; color: #3195db!important; background-color: rgba(255,255,255,.9); position: absolute; top: 55px; z-index: 1; display: none;} 
 #listMenu .listArea li{width: 100%; height: 34px; line-height: 30px; margin: 0 auto; cursor: pointer; background-color: #fff;}

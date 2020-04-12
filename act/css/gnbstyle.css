@@ -13,7 +13,6 @@
 
 
 /* Hamburger Menu */
-#headerWrap .headerBox .menuBox{}
 #headerWrap .headerBox .menuBox .gnbBox{width: 100%; background-color:#000;position: absolute;top: 0;left: 0;z-index: 90;opacity: 0.3;}
 
 
