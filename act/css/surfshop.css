@@ -1,8 +1,5 @@
 @charset "utf-8";
 
-/*common*/
-body{background-color: #f8f8f8;}
-
 /*layout*/
 #shopCat, #popShop, #popBeach{width:100%;height:auto; position:relative; color:#333; font-size: 16px;}
 h2{padding-top: 30px; text-indent: 20px;}
@@ -57,13 +54,12 @@ h2{padding-top: 30px; text-indent: 20px;}
 #popShop .popShopSldr .swiper-slide p{text-overflow:ellipsis; text-indent: 20px; text-align: left;}
 #popShop .popShopSldr .swiper-slide p:nth-child(2){font-size:.7em; color:#949494;font-weight: 300;}
 #popShop .popShopSldr .swiper-slide p:nth-child(3){font-size:.9em;}
-#popShop .popShopSldr .swiper-slide p:nth-child(4){;font-size:.7em; text-align: right; margin-right: 15px;}
+#popShop .popShopSldr .swiper-slide p:nth-child(4){font-size:.7em; text-align: right; margin-right: 15px;}
 #popShop .popShopSldr .swiper-pagination{bottom:0;}
 
 
 /*#popBeach*/
 #popBeach{height: 200px;}
-#popBeach h2{}
 #popBeach ul{overflow: hidden; margin: 7px 0 20px 15px;}
 #popBeach ul li{float: left; padding: 2px 10px;height: 30px;line-height: 30px; text-align: center; border: 1px solid #12cad6; border-radius: 10px; margin: 5px 3px;}
 #popBeach ul li a{color:#606060}

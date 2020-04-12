@@ -18,11 +18,11 @@ $j(document).ready(function(){
     <link rel="stylesheet" type="text/css" href="css/surfbus.css">
 
     <div class="top_area_zone">
+        <section id="bus">
+            <h2><img src="https://surfenjoy.cdn3.cafe24.com/act_title/bus.png" alt="액트립 서핑버스"></h2>
+            <span class="coupon"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/icon/coupon.svg" alt="">액트립 제휴쿠폰 모음<i class="fas fa-angle-right"></i></a></span>
+        </section>
         <section id="busCat">
-            <div class="busCatTit">
-                <h2>양양 서핑버스</h2>
-                <p>편하고 안전한 액트립 셔틀버스 <i class="fas fa-caret-down"></i></p>
-            </div>
             <div class="busCatList">
                 <ul>
                     <li class="yybus"><a href="/surfbus_yy"><img src="images/button/yybus.jpg" alt="서울양양셔틀버스"></a></li>

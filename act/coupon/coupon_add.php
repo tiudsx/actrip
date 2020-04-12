@@ -19,7 +19,7 @@ $arrdate = explode("|", decrypt($coupon));
  //echo '<br>'.count($arrdate).'<br>';
 // echo '<br>'.decrypt($coupon);
 if(!($arrdate[2] == "BUS" || $arrdate[2] == "BBQ" || $arrdate[2] == "SUR")){
-    echo "쿠폰다운로드 링크가 정상적이지 않습니다.<br>관리자에게 문의하세요.";
+    echo "<script>alert('쿠폰다운로드 링크가 정상적이지 않습니다.\\n\\n관리자에게 문의하세요.');</script>";
     return;
 }
 
@@ -54,19 +54,25 @@ if($arrdate[0] >= date("Y-m-d")){
 
         if(!$success){
             mysqli_query($conn, "ROLLBACK");
-            echo "쿠폰 생성중 오류가 발생하였습니다.<br>다시 시도하거나 관리자에게 문의하세요.";
+            echo "<script>alert('쿠폰 생성중 오류가 발생하였습니다.\\n\\다시 시도하거나 관리자에게 문의하세요.');window.close();</script>";
             return;
         }else{
-            mysqli_query($conn, "COMMIT");
-            echo $coupon_code;
+            mysqli_query($conn, "COMMIT");            
         }
     }else{
-        echo "이미 발급받은 쿠폰코드가 있습니다.<br>기존 쿠폰코드 : ".$rowMain["coupon_code"];
-        return;
+        //echo "이미 발급받은 쿠폰코드가 있습니다.<br>기존 쿠폰코드 : ".$rowMain["coupon_code"];
+        //return;
+        $coupon_code = $rowMain["coupon_code"];
     }
 }else{
-    echo "쿠폰다운로드 기간이 지났습니다.";
+    echo "<script>alert('쿠폰다운로드 기간이 지났습니다.\\n\\관리자에게 문의하세요.');window.close();</script>";
     return;
 }
-
 ?>
+
+<script src="/act/js/popup.js"></script>
+
+<script>
+    gpe_setCookie1("act_pop2", "<?=$coupon_code?>|<?=$arrdate[2]?>", 1);
+    location.href="/main"
+</script>

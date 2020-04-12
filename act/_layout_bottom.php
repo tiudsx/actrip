@@ -9,13 +9,13 @@
 		<div class="gpe_utilMenu">
 			<ul>
 				<li>
-					<a href="/service">서비스이용약관</a>
+					<a href="/service" target="_blank">서비스이용약관</a>
 				</li>
 				<li>
-					<a href="/privacy">개인정보취급방침</a>
+					<a href="/privacy" target="_blank">개인정보취급방침</a>
 				</li>
 				<li>
-					<a href="/youth">청소년보호정책</a>
+					<a href="/youth" target="_blank">청소년보호정책</a>
 				</li>
 			</ul>
 		</div>

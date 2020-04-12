@@ -202,7 +202,6 @@
 .busOption01 .destination li i{text-indent: 10px; opacity: .5;}
 /* .busOption01 .destination li .fas{transform: none!important;} */
 
-.busOption01 .busDate{}
 .busOption01 .busDate li{width: 193px;}
 .busOption01 .busDate li:first-child{width: 80px; text-align: left;}
 /* .busOption01 .busDate .calendar{border: 1px solid #dedede;color:#5b5b5b; border-radius: 5px; line-height: 50px; box-shadow: 1px 1px 2px rgba(0,0,0,.1);} */

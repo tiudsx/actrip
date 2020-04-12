@@ -1,7 +1,6 @@
 @charset "utf-8";
 
 /*common*/
-body{background-color: #f8f8f8;}
 p{margin: 0; padding: 0;}
 #wrap a{display: block;}
 
@@ -68,7 +67,6 @@ line-height: 25px;}
 .listShop{overflow: hidden; border-radius: 10px;}
 .listShop .listShopbox{width: 100%; height: auto;}
 .listShop .listShopbox .listItem{overflow: hidden; padding: 20px 0;margin: 2%; border-bottom: 1px solid #dedede; background-color: #fff; box-sizing: border-box;}
-.listShop .listShopbox .listItem:first-child{padding-top: ;}
 .listShop .listShopbox .listItem:last-child{border:none;}
 
 /*------------------  listItem  -----------------*/

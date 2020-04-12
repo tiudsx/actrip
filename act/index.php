@@ -1,6 +1,6 @@
 <? include 'db.php'; ?>
 
-<link rel="stylesheet" type="text/css" href="/act/css/main.css">
+<link rel="stylesheet" type="text/css" href="/act/css/main.css?v=2">
 <div id="wrap">
 
 <!--visible / hidden-->
@@ -14,57 +14,54 @@
 			<div class="pop_bott">
 				<div class="pop_bott_1day"><input name="event1" type="checkbox" value="checkbox2"></div>
 				<div class="pop_bott_1day_txt">오늘 이 창 안뛰우기</div>
-				<div class="pop_bott_close"><a href="javascript:gpe_closeWin1();"></a></div>
+				<div class="pop_bott_close"><a href="javascript:gpe_closeWin1(1);"></a></div>
 			</div>
 		</div>
 	</div>
 </form>
 </div>
 
+<div id="gpe_divpop2" style="top: 190px;padding:0 10px 0 10px; visibility: hidden;">
+	<div class="pop_area_out">
+		<div class="pop_area_in">
+			<div class="pop_middle">
+				<img id="couponBg" src="images/coupon/couponBus.jpg" class="placeholder">
+				<p id="coupontext"></p>   
+			</div>
+			<div class="pop_bott">
+				<div class="pop_bott_close"><a href="javascript:gpe_closeCoupon();"></a></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/act/js/popup.js"></script>
 <script> 
-	function gpe_getCookie1(name) { 
-		var Found = false 
-		var start, end 
-		var i = 0 
-		while(i <= document.cookie.length) { 
-			start = i 
-			end = start + name.length 
-			if(document.cookie.substring(start, end) == name) { 
-				Found = true 
-				break 
-			} 
-			i++ 
-		} 
-		
-		if(Found == true) { 
-			start = end + 1 
-			end = document.cookie.indexOf(";", start) 
-
-			if(end < start) 
-				end = document.cookie.length 
-
-			return document.cookie.substring(start, end) 
-		} 
-		return "" 
-	} 
-
-	function gpe_setCookie1( name, value, expiredays ) { 
-		var todayDate = new Date(); 
-		todayDate.setDate( todayDate.getDate() + expiredays ); 
-		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
-	}
-
-	//var eventCookie=gpe_getCookie1("act_pop1");
+	// var eventCookie=gpe_getCookie1("act_pop1");
 	// if ( eventCookie != "no1" ){  
 	// 	document.all['gpe_divpop1'].style.visibility = "visible";
 	// } else if(eventCookie == "no1") {
 	// 	document.getElementById('gpe_divpop1').style.display='none'; 
 	// }
-	function gpe_closeWin1() { 
-	if ( document.gpe_form1.event1.checked ){ 
-		gpe_setCookie1( "act_pop1", "no1" , 1 ); 
-	}
-	document.getElementById('gpe_divpop1').style.display='none';
+
+	
+	var coupon = gpe_getCookie1("act_pop2");
+	if(coupon){
+		var couponObj = decodeURIComponent(coupon).split('|');
+		var couponCode = couponObj[0];	//쿠폰 코드
+		var couponType = couponObj[1];	//쿠폰 이미지 종류
+		
+		document.getElementById('coupontext').innerText = couponCode;
+		if(couponType == "BUS"){
+			document.getElementById('couponBg').src = "/act/images/coupon/couponBus.jpg";
+		}else if(couponType == "SUR"){
+			document.getElementById('couponBg').src = "/act/images/coupon/couponSurf.jpg";
+		}else if(couponType == "BBQ"){
+			document.getElementById('couponBg').src = "/act/images/coupon/couponBbq.jpg";
+		}
+		
+		document.all['gpe_divpop2'].style.visibility = "visible";
+		gpe_setCookie1( "act_pop2", coupon , -1 ); 
 	}
 </script>
 
@@ -92,6 +89,7 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
+						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/377" target="_blank"><img src="images/banner/levelup.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewBus.jpg" alt=""></a></div>

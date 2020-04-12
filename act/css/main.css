@@ -122,6 +122,7 @@ body{width: 100%; height: 100%; background-color: #f8f8f8;}
     font-size: 1.3rem;
     font-weight: bold;
     padding: 1.5rem 1rem;
+    margin-bottom: 3px;
     text-decoration: none;}
 
 #staticBnr{background: #FFFFFF;
@@ -134,7 +135,7 @@ body{width: 100%; height: 100%; background-color: #f8f8f8;}
     #hashtag .tagBox>a{width: 23.9%; margin: 0 .3%;}
 }
 @media screen and (max-width: 414px){
-    #hashtag .tagBox>a{width: 47.3%; margin: 1%;}
+    #hashtag .tagBox>a{width: 47%; margin: 1%;}
 }
 
 
@@ -242,3 +243,24 @@ body{width: 100%; height: 100%; background-color: #f8f8f8;}
 #gpe_divpop1 .pop_bott .pop_bott_1day{float:left; padding:8px 0 0 0;}
 #gpe_divpop1 .pop_bott .pop_bott_1day_txt{float:left; letter-spacing:-0.08em; color:#4e4f55; margin-top:8px; margin-left:3px;}
 #gpe_divpop1 .pop_bott .pop_bott_close a{float:right; display:block; width:34px; height:13px; background:url(/layouts/portal_NOVA/imgs/default/default_02.png) no-repeat -267px -19px; margin:8px 0 0 0;}
+
+/*팝업2*/
+#gpe_divpop2{position: absolute; z-index:49;}
+#gpe_divpop2 .pop_area_out{border:1px solid #b6b6b6;}
+#gpe_divpop2 .pop_area_in{border:2px solid #f6f6f6;}
+#gpe_divpop2 .pop_middle{border:1px solid #fff; background-color:#fff;}
+#gpe_divpop2 .pop_middle img{vertical-align:bottom;}
+#gpe_divpop2 .pop_bott{background-color:#f6f6f6; height:28px;}
+#gpe_divpop2 .pop_bott .pop_bott_1day{float:left; padding:8px 0 0 0;}
+#gpe_divpop2 .pop_bott .pop_bott_1day_txt{float:left; letter-spacing:-0.08em; color:#4e4f55; margin-top:8px; margin-left:3px;}
+#gpe_divpop2 .pop_bott .pop_bott_close a{float:right; display:block; width:34px; height:13px; background:url(/layouts/portal_NOVA/imgs/default/default_02.png) no-repeat -267px -19px; margin:8px 0 0 0;}
+
+/* 쿠폰팝업 */
+#gpe_divpop2 img{width: 100%;}
+#gpe_divpop2 p{position: absolute; top: 43%; left: 28%;letter-spacing:8px;;}
+@media screen and (max-width: 640px){
+    #gpe_divpop2 p{top: calc(100%/2.4); left: 27%; font-size:2vw}
+} 
+@media screen and (max-width: 420px){
+    #gpe_divpop2 p{top: 34%; left: 27%; font-size:3.7vw; letter-spacing:4px}
+} 
