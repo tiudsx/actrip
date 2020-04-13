@@ -75,7 +75,7 @@ if($count > 0){
                 , "tempName"=> "at_res_step3"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"notice" //공지사항
+                , "link1"=>"event" //공지사항
                 , "link2"=>""
                 , "link3"=>""
                 , "link4"=>""
@@ -156,7 +156,7 @@ if($count > 0){
         , "tempName"=> "at_res_step3"
         , "kakaoMsg"=>$kakaoMsg
         , "userPhone"=> $userPhone
-        , "link1"=>"notice" //공지사항
+        , "link1"=>"event" //공지사항
         , "link2"=>""
         , "link3"=>""
         , "link4"=>""

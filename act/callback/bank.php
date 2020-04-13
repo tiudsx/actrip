@@ -74,62 +74,83 @@ if($count == 1){
 		$shopSeq = $row["shopSeq"];
 		$code = $row['code'];
 	}
-	
-	$busSeatInfo = "";
-	$busStopInfo = "";
-	$ressubseq = "";
-	$arrSeatInfo = array();
-	$arrStopInfo = array();
 
 	$select_query_sub = 'SELECT * FROM AT_RES_SUB WHERE res_confirm = 0 AND resnum = '.$ResNumber.' ORDER BY res_date, ressubseq';
 	$resultSite = mysqli_query($conn, $select_query_sub);
 
-	while ($rowSub = mysqli_fetch_assoc($resultSite)){
-		$shopname = $rowSub['shopname'];
-		$ressubseq .= $rowSub['ressubseq'].',';
+	if($code == "bus"){
+		$busSeatInfo = "";
+		$busStopInfo = "";
+		$ressubseq = "";
+		$arrSeatInfo = array();
+		$arrStopInfo = array();
 
-		if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfo)){
-			$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
-		}else{
-			$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+		while ($rowSub = mysqli_fetch_assoc($resultSite)){
+			$shopname = $rowSub['shopname'];
+			$ressubseq .= $rowSub['ressubseq'].',';
+
+			if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfo)){
+				$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+			}else{
+				$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+			}
+
+			$arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']));
+			$arrStopInfo[$rowSub['res_spointname']] = '    ['.$rowSub['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
+		}
+		$ressubseq .= '0';
+
+		foreach($arrSeatInfo as $x) {
+			$busSeatInfo .= $x;
 		}
 
-		$arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']));
-		$arrStopInfo[$rowSub['res_spointname']] = '    ['.$rowSub['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
+		foreach($arrStopInfo as $x) {
+			$busStopInfo .= $x;
+		}
+
+		$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+		if($etc != ''){
+			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+		}
+
+		$msgTitle = '액트립 '.$shopname.' 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_res_bus1"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+			, "link2"=>"notice" //셔틀버스 실시간위치 조회
+			, "link3"=>"ordersearch?resNumber=".$ResNumber //셔틀버스 탑승 위치확인
+			, "link4"=>"eatlist" //제휴업체 목록
+			, "link5"=>"event" //공지사항
+			, "smsOnly"=>"N"
+		);
+	}else{		
+		$msgTitle = '액트립 '.$shopname.' 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 예약시간, 신청목록 꼭 확인 부탁드립니다.\n      - 예약시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_res_step2"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+			, "link2"=>"notice" //지도로 위치확인
+			, "link3"=>"eatlist" //제휴업체 목록
+			, "link4"=>"event" //공지사항
+			, "link5"=>""
+			, "smsOnly"=>"N"
+		);
 	}
-	$ressubseq .= '0';
-
-	foreach($arrSeatInfo as $x) {
-		$busSeatInfo .= $x;
-	}
-
-	foreach($arrStopInfo as $x) {
-		$busStopInfo .= $x;
-	}
-
-	$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
-	if($etc != ''){
-		$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
-	}
-
-	$msgTitle = '액트립 '.$shopname.' 예약안내';
-	$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
-
-	$arrKakao = array(
-		"gubun"=> $code
-		, "admin"=> "N"
-		, "smsTitle"=> $msgTitle
-		, "userName"=> $userName
-		, "tempName"=> "at_res_bus1"
-		, "kakaoMsg"=>$kakaoMsg
-		, "userPhone"=> $userPhone
-		, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-		, "link2"=>"notice" //셔틀버스 실시간위치 조회
-		, "link3"=>"ordersearch?resNumber=".$ResNumber //셔틀버스 탑승 위치확인
-		, "link4"=>"eatlist" //제휴업체 목록
-		, "link5"=>"notice" //공지사항
-		, "smsOnly"=>"N"
-	);
 	sendKakao($arrKakao);
 
 	$select_query = "UPDATE `AT_RES_SUB` 

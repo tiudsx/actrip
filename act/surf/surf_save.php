@@ -200,7 +200,7 @@ if($param == "BusI"){
             , "userPhone"=> $userPhone
             , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
             , "link2"=>"eatlist" //제휴업체 목록
-            , "link3"=>"notice" //공지사항
+            , "link3"=>"event" //공지사항
             , "link4"=>""
             , "link5"=>""
 			, "smsOnly"=>"N"
