@@ -114,8 +114,8 @@
 .navbar-menu .menu-listing .menu04 li:last-child{border:0;}
 
 /*SNS*/
-.navbar-menu .menu-listing .menu05{background-color: #b2b2b2; margin: 0;}
-.navbar-menu .menu-listing .menu05 li{height:30px;}
+.navbar-menu .menu-listing .menu05{background-color: #b2b2b2; margin: 0; border-bottom: 0;}
+.navbar-menu .menu-listing .menu05 li{height:33.2px;}
 .navbar-menu .menu-listing .menu05 li a{display: inline-block; padding: 5px; float: right;}
 .navbar-menu .menu-listing .menu05 li a:first-child {margin-right: 15px;}
 .navbar-menu .menu-listing .menu05 li a img{width: 20px; vertical-align: middle;}
