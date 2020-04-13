@@ -262,5 +262,124 @@ if($param == "RtnPrice"){
         //echo '<script>alert("환불신청이 완료되었습니다.");parent.location.href="/";</script>';
         echo '0';
     }
+}else if($param == "PointChange"){ //정류장 변경
+    $ResNumber = $_REQUEST["MainNumber"];
+    $shopseq = $_REQUEST["shopseq"];
+    if($shopseq == 7){
+        $busTypeY = "Y";
+        $busTypeS = "S";
+        $busTitleName = "양양";
+    }else{
+        $busTypeY = "E";
+        $busTypeS = "A";    
+        $busTitleName = "동해";    
+    }
+
+	$ressubseq = $_REQUEST["ressubseq"]; //셔틀버스 예약 시퀀스
+    
+	$startLocation = $_REQUEST["startLocation"]; //출발 정류장
+	$endLocation = $_REQUEST["endLocation"]; //도착 정류장
+
+	$userName = $_REQUEST["userName"];
+	$userId = $_REQUEST["userId"];
+	$userPhone = $_REQUEST["userPhone1"]."-".$_REQUEST["userPhone2"]."-".$_REQUEST["userPhone3"];
+	$usermail = $_REQUEST["usermail"];
+	$etc = $_REQUEST["etc"];
+    
+	mysqli_query($conn, "SET AUTOCOMMIT=0");
+    mysqli_query($conn, "BEGIN");
+    
+	for($i = 0; $i < count($ressubseq); $i++){
+        $select_query = "UPDATE AT_RES_SUB SET 
+                            res_spoint = '$startLocation[$i]', 
+                            res_spointname = '$startLocation[$i]', 
+                            res_epoint = '$endLocation[$i]', 
+                            res_epointname = '$endLocation[$i]', 
+                            upddate = now()
+                                WHERE ressubseq = ".$ressubseq[$i];
+        $result_set = mysqli_query($conn, $select_query);
+        if(!$result_set) goto errGo;
+
+        $subseq .= $ressubseq[$i].",";
+    }
+
+    $subseq .= '0';
+
+	if(!$success){
+        errGo:
+		mysqli_query($conn, "ROLLBACK");
+		echo '<script>alert("정류장 변경 처리 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnPointChangeErr();</script>';
+	}else{
+		mysqli_query($conn, "COMMIT");
+
+        $select_query = "SELECT a.user_name, a.user_tel, a.etc, b.* 
+                            FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
+                                ON a.resnum = b.resnum 
+                            WHERE b.ressubseq IN ($subseq)
+                            ORDER BY b.ressubseq";
+        $result_setlist = mysqli_query($conn, $select_query);
+        $count = mysqli_num_rows($result_setlist);
+
+        $k = 0;
+        if($count > 0){
+            $x = 0;
+            $PreMainNumber = "";
+            $arrSeatInfo = array();
+            while ($rowTime = mysqli_fetch_assoc($result_setlist)){
+                $code = $rowTime['code'];
+                $userName = $rowTime['user_name'];
+                $userPhone = $rowTime['user_tel'];
+                $sDate = $rowTime["res_date"];
+                $shopname = $rowTime['shopname'];
+        
+                if($code == "bus"){
+                    if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
+                        $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번\n';
+                    }else{
+                        $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
+                    }
+                }else{
+                   
+                }
+        
+                $x++;
+            }
+        
+        //============================ 실행 단계 ============================
+            if($code == "bus"){
+                foreach($arrSeatInfo as $bus) {
+                    $busSeatInfo .= $bus;
+                }
+        
+                $resList =' ▶ 좌석안내\n'.$busSeatInfo;
+            }else{
+
+            }
+        
+            $msgTitle = '액트립 '.$shopname.' 정류장변경 안내';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [정류장변경]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 정류장 변경이 완료되었으니 확인해주세요.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+        
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"eatlist" //제휴업체 목록
+                , "link3"=>"notice" //공지사항
+                , "link4"=>""
+                , "link5"=>""
+                , "smsOnly"=>"N"
+            );
+            sendKakao($arrKakao);
+        
+            $k++;
+        }
+        
+        echo '<script>alert("셔틀버스 정류장 변경이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+    }
 }
 ?>

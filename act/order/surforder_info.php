@@ -3,6 +3,7 @@ $i = 1;
 $couponPrice = 0;
 $totalPrice = 0;
 $shopbankview = 0;
+$PointChangeChk = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 
@@ -42,17 +43,21 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$ResConfirm = "미입금";
 		$totalPrice += $row['res_price'];
 		$shopbankview++;
+		$PointChangeChk++;
 	}else if($res_confirm == 1){
 		$ResConfirm = "확인중";
 		$ResColor = "rescolor2";
 		$totalPrice += $row['res_price'];
+		$PointChangeChk++;
 	}else if($res_confirm == 2 || $res_confirm == 6){
 		$ResConfirm = "입금완료";
 		$ResColor = "rescolor2";
 		$totalPrice += $row['res_price'];
+		$PointChangeChk++;
 	}else if($res_confirm == 3){
 		$ResConfirm = "확정";
 		$totalPrice += $row['res_price'];
+		$PointChangeChk++;
 	}else if($res_confirm == 4){
 		$ResConfirm = "환불요청";
 		$ResColor = "rescolor1";
@@ -196,6 +201,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	if($i == $count){?>
 		</tbody>
 	</table>
+
 		<?
 		if($RtnTotalPrice > 0){
 		?>
@@ -213,7 +219,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	</table>
 		<?
 		}
-
+		?>
+	
+	<div class="write_table" style="text-align:center;">
+	<input type="button" class="gg_btn gg_btn_grid large" style="width:120px; height:28px;color: #fff !important; background: #008000;" value="정류장 변경 신청" onclick="fnPointChange(<?=$row['res_num']?>);" />
+	</div>
+	
+		<?
 		if($row['res_price_coupon'] > 0){
 			$res_price_coupon = $row['res_price_coupon'];
 	

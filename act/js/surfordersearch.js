@@ -47,10 +47,10 @@ function fnRefund(gubun) {
 			}
 		)
 		.fail(function() {
-			setTimeout("$j('.top_area_zone').unblock();;", 1500);
+			setTimeout("$j('.top_area_zone').unblock();", 1500);
 		})
 		.always(function() {
-			setTimeout("$j('.top_area_zone').unblock();;", 1500);
+			setTimeout("$j('.top_area_zone').unblock();", 1500);
 		});
     }
 }
@@ -107,4 +107,36 @@ function fnCancelSum(obj, gubun, MainNumber){
 		 
 		});
 	}
+}
+
+
+
+function fnPointChange(resnum){
+	window.location.href = "/pointchange?resNumber=" + resnum;
+}
+
+function fnPointChangeSave() {
+	var msg = "정류장 변경 신청을 하시겠습니까?";
+    if (confirm(msg)) {
+		$j('.top_area_zone').block({ message: "정류장 변경 신청 접수 중입니다." }); 
+		// var formData = $j("#frmPoint").serializeArray();
+
+		// $j.post("/act/surf/surf_return.php", formData,
+		// 	function(data, textStatus, jqXHR){
+		// 		setTimeout("location.href='/ordersearch?resNumber=" + $j("#MainNumber").val() + "';", 700);
+		// 	}
+		// )
+		// .fail(function() {
+		// 	setTimeout("$j('.top_area_zone').unblock();", 1500);
+		// })
+		// .always(function() {
+		// 	setTimeout("$j('.top_area_zone').unblock();", 1500);
+		// });
+
+		$j("#frmPoint").attr("action", "/act/surf/surf_return.php").submit();
+    }
+}
+
+function fnPointChangeErr(){
+	$j('.top_area_zone').unblock();
 }

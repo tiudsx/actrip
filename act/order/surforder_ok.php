@@ -75,7 +75,7 @@ echo '
 	</table>
 	</span>
 
-	<div class="write_table" style="padding-top:15px; text-align:center;display:;">
+	<div class="write_table" style="padding-top:15px;padding-bottom:15px;text-align:center;">
 		<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;" value="취소/환불 신청" onclick="fnRefund(0);" />&nbsp;
 		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />
 	</div>

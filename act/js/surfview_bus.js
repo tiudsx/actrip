@@ -267,7 +267,7 @@ function fnSeatSelected(obj) {
 		insHtml += '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '">' +
 					'					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
 					'					<td style="line-height:2;">' +
-					'						<select id="startLocation' + busType + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this.value, \'' + busNum + '\');">' +
+					'						<select id="startLocation' + busType + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busNum + '\', -1);">' +
 					'							' + sPoint +
 					'						</select> →' +
 					'						<select id="endLocation' + busType + '" name="endLocation' + busType + '[]" class="select">' +

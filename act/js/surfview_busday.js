@@ -109,3 +109,24 @@ var busPointList = {
     "A52" : {li:busPoint_4},
     "A53" : {li:busPoint_4}
 };
+
+function fnBusTime(obj, busnum, num){
+    if(num == -1){
+        var objStop = $j(obj).parent().find("#stopLocation");
+    }else{
+        var objStop = $j("td[id=stopLocation]").eq(num);
+    }
+    if(obj.value == "N"){
+        objStop.text('');
+        return;
+    }
+    var params = "res_spointname=" + obj.value + "&res_bus=" + busnum;
+    $j.ajax({
+        type: "POST",
+        url: "/act/surf/surfbus_point.php",
+        data: params,
+        success: function (data) {
+            objStop.text(data);
+        }
+    })
+}
