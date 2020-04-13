@@ -120,6 +120,8 @@
 .navbar-menu .menu-listing .menu05 li a:first-child {margin-right: 15px;}
 .navbar-menu .menu-listing .menu05 li a img{width: 20px; vertical-align: middle;}
 
+@media screen and (max-width: 414px){.headerBox #logo{width: 140px; height: 25px; text-align: center; margin-top: 12.5px; line-height: 25px; position: absolute; z-index: 9999; left: 32%;}}
+
 
 
 
