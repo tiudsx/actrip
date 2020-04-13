@@ -304,7 +304,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/privacy" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/act/clause/privacy.html" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
                                 </td>
                             </tr>
                         </tbody>
