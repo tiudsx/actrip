@@ -86,7 +86,7 @@ if($param == "RtnPrice"){
     $userName = $row["user_name"];
     $InsUserID = $userName;
     $userPhone = $row["user_tel"];
-    $usermail = $row["user_email"];
+    $user_email = $row["user_email"];
     $etc = $row["etc"];
 
     $FullBankText = "";
@@ -229,6 +229,38 @@ if($param == "RtnPrice"){
                 , "smsOnly"=>"N"
             );
             sendKakao($arrKakao);
+
+            // 이메일 발송
+            if(strrpos($user_email, "@") > 0){
+                $to = $user_email;
+
+                $info1_title = "좌석안내";
+                $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $msgInfo));
+                $info2_title = "";
+                $info2 = "";
+
+                $arrMail = array(
+                    "gubun"=> $code
+                    , "gubun_step" => 4
+                    , "gubun_title" => $shopname
+                    , "mailto"=> $to
+                    , "mailfrom"=> "surfbus_return@actrip.co.kr"
+                    , "mailname"=> "actrip"
+                    , "userName"=> $userName
+                    , "ResNumber"=> $ResNumber
+                    , "userPhone" => $userPhone
+                    , "etc" => $etc
+                    , "totalPrice1" => number_format($TotalPrice-$TotalFee)."원"
+                    , "totalPrice2" => "(결제금액 ".number_format($TotalPrice)."원 - 환불수수료 ".number_format($TotalFee)."원)"
+                    , "banknum" => str_replace('|', ' / ', $FullBankText)
+                    , "info1_title"=> $info1_title
+                    , "info1"=> $info1
+                    , "info2_title"=> $info2_title
+                    , "info2"=> $info2
+                );
+            }
+            
+            sendMail($arrMail); //메일 발송
             
             if($code != "bus"){
                 //카카오톡 업체 발송
@@ -280,12 +312,6 @@ if($param == "RtnPrice"){
     
 	$startLocation = $_REQUEST["startLocation"]; //출발 정류장
 	$endLocation = $_REQUEST["endLocation"]; //도착 정류장
-
-	$userName = $_REQUEST["userName"];
-	$userId = $_REQUEST["userId"];
-	$userPhone = $_REQUEST["userPhone1"]."-".$_REQUEST["userPhone2"]."-".$_REQUEST["userPhone3"];
-	$usermail = $_REQUEST["usermail"];
-	$etc = $_REQUEST["etc"];
     
 	mysqli_query($conn, "SET AUTOCOMMIT=0");
     mysqli_query($conn, "BEGIN");
@@ -313,7 +339,7 @@ if($param == "RtnPrice"){
 	}else{
 		mysqli_query($conn, "COMMIT");
 
-        $select_query = "SELECT a.user_name, a.user_tel, a.etc, b.* 
+        $select_query = "SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* 
                             FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
                                 ON a.resnum = b.resnum 
                             WHERE b.ressubseq IN ($subseq)
@@ -321,17 +347,19 @@ if($param == "RtnPrice"){
         $result_setlist = mysqli_query($conn, $select_query);
         $count = mysqli_num_rows($result_setlist);
 
-        $k = 0;
         if($count > 0){
-            $x = 0;
             $PreMainNumber = "";
+            $busStopInfo = "";
             $arrSeatInfo = array();
             while ($rowTime = mysqli_fetch_assoc($result_setlist)){
                 $code = $rowTime['code'];
                 $userName = $rowTime['user_name'];
                 $userPhone = $rowTime['user_tel'];
+                $user_email = $rowTime['user_email'];
                 $sDate = $rowTime["res_date"];
                 $shopname = $rowTime['shopname'];
+                $etc = $rowTime["etc"];
+                $res_confirm = $rowTime["res_confirm"];
         
                 if($code == "bus"){
                     if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
@@ -339,11 +367,12 @@ if($param == "RtnPrice"){
                     }else{
                         $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
                     }
+
+                    $arrData = explode("|", fnBusPoint($rowTime['res_spoint'], $rowTime['res_bus']));
+                    $arrStopInfo[$rowTime['res_spoint']] = '    ['.$rowTime['res_spoint'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
                 }else{
                    
                 }
-        
-                $x++;
             }
         
         //============================ 실행 단계 ============================
@@ -351,33 +380,74 @@ if($param == "RtnPrice"){
                 foreach($arrSeatInfo as $bus) {
                     $busSeatInfo .= $bus;
                 }
+                
+                // 정류장 정보
+                foreach($arrStopInfo as $x) {
+                    $busStopInfo .= $x;
+                }
         
                 $resList =' ▶ 좌석안내\n'.$busSeatInfo;
+                $info1_title = "좌석안내";
+                $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
+
+                if($res_confirm > 0){
+                    $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+                    $info2_title = "탑승시간/위치 안내";
+                    $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+                    
+                }
+                
+                // 카카오톡 알림톡 발송
+                $msgTitle = '액트립 '.$shopname.' 정류장변경 안내';
+                $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [정류장변경]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.$pointMsg.'---------------------------------\n ▶ 안내사항\n      - 정류장 변경이 완료되었으니 확인해주세요.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+            
+                $arrKakao = array(
+                    "gubun"=> "bus"
+                    , "admin"=> "N"
+                    , "smsTitle"=> $msgTitle
+                    , "userName"=> $userName
+                    , "tempName"=> "at_res_step1"
+                    , "kakaoMsg"=>$kakaoMsg
+                    , "userPhone"=> $userPhone
+                    , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                    , "link2"=>"eatlist" //제휴업체 목록
+                    , "link3"=>"event" //공지사항
+                    , "link4"=>""
+                    , "link5"=>""
+                    , "smsOnly"=>"N"
+                );
+                
+                // 이메일 발송
+                if(strrpos($user_email, "@") > 0){
+                    $to = $user_email;
+
+                    $arrMail = array(
+                        "gubun"=> "bus"
+                        , "gubun_step" => 9
+                        , "gubun_title" => $shopname
+                        , "mailto"=> $to
+                        , "mailfrom"=> "surfbus_point@actrip.co.kr"
+                        , "mailname"=> "actrip"
+                        , "userName"=> $userName
+                        , "ResNumber"=> $ResNumber
+                        , "userPhone" => $userPhone
+                        , "etc" => $etc
+                        , "totalPrice1" => ""
+                        , "totalPrice2" => ""
+                        , "banknum" => ""
+                        , "info1_title"=> $info1_title
+                        , "info1"=> $info1
+                        , "info2_title"=> $info2_title
+                        , "info2"=> $info2
+                    );
+                }
             }else{
 
             }
-        
-            $msgTitle = '액트립 '.$shopname.' 정류장변경 안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [정류장변경]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 정류장 변경이 완료되었으니 확인해주세요.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-        
-            $arrKakao = array(
-                "gubun"=> "bus"
-                , "admin"=> "N"
-                , "smsTitle"=> $msgTitle
-                , "userName"=> $userName
-                , "tempName"=> "at_res_step1"
-                , "kakaoMsg"=>$kakaoMsg
-                , "userPhone"=> $userPhone
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"eatlist" //제휴업체 목록
-                , "link3"=>"event" //공지사항
-                , "link4"=>""
-                , "link5"=>""
-                , "smsOnly"=>"N"
-            );
-            sendKakao($arrKakao);
-        
-            $k++;
+
+            sendKakao($arrKakao); //알림톡 발송
+
+            sendMail($arrMail); //메일 발송
         }
         
         echo '<script>alert("셔틀버스 정류장 변경이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';

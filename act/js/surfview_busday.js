@@ -39,7 +39,7 @@ var busPoint = {}
 
     busPoint.ePointE = [];
     busPoint.ePointE.push({ "code": "N", "codename": "도착" });
-    busPoint.ePointE.push({ "code": "솔서프", "codename": "솔서프" });
+    busPoint.ePointE.push({ "code": "솔게하 동해서핑점", "codename": "솔게하 동해서핑점" });
     busPoint.ePointE.push({ "code": "대진항", "codename": "대진항" });
     busPoint.ePointE.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -72,7 +72,7 @@ var busPoint = {}
     
     busPoint.sPointA21 = [];
     busPoint.sPointA21.push({ "code": "N", "codename": "출발" });
-    busPoint.sPointA21.push({ "code": "솔서프", "codename": "솔서프" });
+    busPoint.sPointA21.push({ "code": "솔게하 동해서핑점", "codename": "솔게하 동해서핑점" });
     busPoint.sPointA21.push({ "code": "대진항", "codename": "대진항" });
     busPoint.sPointA21.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -85,7 +85,7 @@ var busPoint = {}
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구역 &gt; 종합운동장역";
 var busPoint_3 = "청시행비치 &gt; 남애3리 &gt; 인구 &gt; 죽도 &gt; 동산항 &gt; 기사문 &gt; 서피비치";
-var busPoint_4 = "솔서프 &gt; 대진항 &gt; 금진해변";
+var busPoint_4 = "솔게하 동해서핑점 &gt; 대진항 &gt; 금진해변";
 var busPointList = {
     "Y1" : {li:busPoint_1},
     "Y2" : {li:busPoint_2},

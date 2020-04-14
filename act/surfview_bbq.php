@@ -164,7 +164,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="litxt">외부음식은 반입불가이며, 맥주나 음료는 매장내에서 판매합니다.</li>
                             <li class="litxt">메뉴는 인원에 따라 변경될 수 있습니다.</li>
                             <li class="litxt">미성년자 이용불가 / 신분증 확인!!</li>
-                            <li class="litxt">동해 솔서프 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
+                            <li class="litxt">솔게스트하우스 동해서핑점 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
                             <?}?>
                         </ul>
                     </article>

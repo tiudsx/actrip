@@ -56,6 +56,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$PointChangeChk++;
 	}else if($res_confirm == 3){
 		$ResConfirm = "확정";
+		$ResColor = "rescolor3";
 		$totalPrice += $row['res_price'];
 		$PointChangeChk++;
 	}else if($res_confirm == 4){
@@ -141,8 +142,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			</colgroup>
 			<tr>
                 <th style="text-align:center;">이용일</th>
-                <th style="text-align:center;">예약항목</th>
-                <th style="text-align:center;">상태</th>
+				<th style="text-align:center;">예약항목</th>
+				<th style="text-align:center;">상태</th>
 			</tr>
 	<?}else if($row['code'] == "surf"){?>
     <table class="et_vars exForm bd_tb" style="width:100%">
@@ -173,8 +174,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 					<br><?=$row['res_date']?>
 					</label>
 				</td>
-                <td><b><?=fnBusNum($row['res_bus'])?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
-                <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
+				<td><b><?=fnBusNum($row['res_bus'])?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
+				<td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
 			</tr>
 			<tr class="<?=$ResCss?>">
 				<td colspan="2"><?=$RtnBank?></td>
@@ -219,6 +220,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	</table>
 		<?
 		}
+		if($PointChangeChk > 0 && $row['code'] == "bus"){
 		?>
 	
 	<div class="write_table" style="text-align:center;">
@@ -226,6 +228,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	</div>
 	
 		<?
+		}
+
 		if($row['res_price_coupon'] > 0){
 			$res_price_coupon = $row['res_price_coupon'];
 	

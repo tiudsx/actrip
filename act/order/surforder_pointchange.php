@@ -132,14 +132,12 @@ $count = mysqli_num_rows($result_setlist);
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <tbody>
                             <colgroup>
-                                <col style="width:80px;">
+                                <col style="width:85px;">
                                 <col style="width:auto;">
-                                <col style="width:70px;">
                             </colgroup>
                             <tr>
                                 <th style="text-align:center;">이용일</th>
                                 <th style="text-align:center;">예약항목</th>
-                                <th style="text-align:center;">상태</th>
                             </tr>
                     
                 <?	}?>
@@ -184,10 +182,9 @@ $j("#endLocation<?=$busType.$i?>").html(ePoint);
                                 <span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span>
                                 <?}?>
                                 </td>
-                                <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
                             </tr>
                             <tr class="<?=$ResCss?>">
-                                <td colspan="2" id="stopLocation"><?=$RtnBank?></td>
+                                <td id="stopLocation"><?=$RtnBank?></td>
                             </tr>
                 <?
                     if($i == $count){?>

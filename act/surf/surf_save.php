@@ -208,7 +208,7 @@ if($param == "BusI"){
         sendKakao($arrKakao);
 
         if($coupon == "JOABUS"){
-            $msgTitle = '액트립&조아서프 셔틀버스 예약안내';
+            $msgTitle = '액트립&조아서프 서핑버스 예약안내';
             $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
             $arrKakao = array(
@@ -229,25 +229,39 @@ if($param == "BusI"){
             sendKakao($arrKakao);
         }
 
-		// $to = "lud1@naver.com,ttenill@naver.com";
-		// if(strrpos($usermail, "@") > 0){
-		// 	$to .= ','.$usermail;
-		// }
+        // 이메일 발송
+		$to = "lud1@naver.com,ttenill@naver.com";
+		if(strrpos($usermail, "@") > 0){
+            $to .= ','.$usermail;
+		}
 
-		// $arrMail = array(
-		// 	"campStayName"=> "busStay1"
-		// 	, "userName"=> $userName
-		// 	, "busSeatInfo"=> str_replace('\n', '<br>', $busSeatInfo)
-		// 	, "busStopInfo"=> str_replace('\n', '<br>', $busStopInfo)
-		// 	, "ResNumber"=> $ResNumber
-		// 	, "gubun"=>"양양셔틀버스"
-		// 	, "userPhone"=>$userPhone
-		// 	, "etc"=>$etc
-		// 	, "totalPrice"=>number_format($TotalPrice).'원'
-		// 	, "banknum"=>"신한은행 / 389-02-188735 / 이승철"
-		// );
+        $info1_title = "좌석안내";
+        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
+        $info2_title = "";
+        $info2 = "";
 
-		//endMail("surfbus1@surfenjoy.com", "surfenjoy", sendMailContentBus($arrMail), $to, $arrMail);
+		$arrMail = array(
+			"gubun"=> "bus"
+			, "gubun_step" => 0
+			, "gubun_title" => $busTitleName.'서핑버스'
+            , "mailto"=> $to
+			, "mailfrom"=> "surfbus_res@actrip.co.kr"
+			, "mailname"=> "actrip"
+			, "userName"=> $userName
+			, "ResNumber"=> $ResNumber
+			, "userPhone" => $userPhone
+			, "etc" => $etc
+			, "totalPrice1" => number_format($TotalPrice).'원'
+            , "totalPrice2" => ""
+			, "banknum" => "우리은행 / 1002-845-467316 / 이승철"
+			, "info1_title"=> $info1_title
+			, "info1"=> $info1
+			, "info2_title"=> $info2_title
+			, "info2"=> $info2
+		);
+
+        sendMail($arrMail); //메일 발송
+        
         echo '<script>alert("'.$busTitleName.' 셔틀버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
 	}
 }

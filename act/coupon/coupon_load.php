@@ -15,7 +15,7 @@ if($gubun == "load"){
                         SET use_yn = 'Y'
                         ,user_ip = '$user_ip'
                         ,use_date = now()
-                    WHERE add_date < '$add_date' AND use_yn = 'N' AND coupon_code NOT IN ('JOABUS');";
+                    WHERE add_date < '$add_date' AND use_yn = 'N' AND issue_type == 'A';";
     $result_set = mysqli_query($conn, $select_query);
     mysqli_query($conn, "COMMIT");
     
