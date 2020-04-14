@@ -112,7 +112,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
                 <?}?>
                 </div>
-                <div id="shopmap">
+                <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
                         <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="images/kakaochat.jpg" class="placeholder"></a>
                     </div>
