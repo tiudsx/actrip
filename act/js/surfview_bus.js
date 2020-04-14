@@ -323,8 +323,7 @@ function fnPriceSum(obj, num){
 	}
 }
 
-
-
+var MARKER_SPRITE_POSITION2 = {};
 function fnBusPoint(obj) {
 	$j("input[btnpoint='point']").css("background", "").css("color", "");
 	$j(obj).css("background", "#1973e1").css("color", "#fff");
@@ -333,23 +332,44 @@ function fnBusPoint(obj) {
 	$j("table[view='tbBus2']").css("display", "none");
 	$j("table[view='tbBus3']").css("display", "none");
 	
+	var gubun = "Y", busnum = 1, tbBus = 1, mapviewid = 0, pointname = "";
 	if($j(obj).val() == "사당선"){
 		$j("table[view='tbBus1']").css("display", "");
-
-		fnBusMap('Y', 2, 1, '신도림', ".mapviewid:eq(0)", "false");
+		mapviewid = 0;
+		tbBus = 1;
+		gubun = "Y";
+		busnum = 1;
+		pointname = "신도림";
 	}else if ($j(obj).val() == "종로선") {
-		$j("table[view='tbBus2']").css("display", "");
-		fnBusMap('Y', 1, 2, '당산역', ".mapviewid:eq(6)", "false");
+		mapviewid = 6;
+		tbBus = 2;
+		gubun = "Y";
+		busnum = 2;
+		pointname = "당산역";
 	}else if ($j(obj).val() == "동해 서울행") {
-		$j("table[view='tbBus3']").css("display", "");
-		fnBusMap('A', 1, 1, '주문진해변', ".mapviewid:eq(12)", "false");
+		mapviewid = 6;
+		tbBus = 3;
+		gubun = "A";
+		busnum = 1;
+		pointname = "솔게하 동해서핑점";
 	}else{
-		$j("table[view='tbBus3']").css("display", "");
-		fnBusMap('S', 1, 1, '주문진해변', ".mapviewid:eq(12)", "false");
+		mapviewid = 12;
+		tbBus = 3;
+		gubun = "S";
+		busnum = 1;
+		pointname = "청시행비치";
 	}
+
+	$j("table[view='tbBus" + tbBus + "']").css("display", "");
+	//$j("#ifrmBusMap").get(0).contentWindow.MARKER_SPRITE_POSITION = eval("busPointList" + gubun + busnum);
+	fnBusMap(gubun, 1, busnum, pointname, ".mapviewid:eq(" + mapviewid + ")", "false");
 }
 
-function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
+function fnBusMap(gubun, num, busnum, pointname, obj, bool) {	
+	if(MARKER_SPRITE_POSITION2[pointname] == null){
+		MARKER_SPRITE_POSITION2 = eval("busPointList" + gubun + busnum);
+	}
+
 	$j("#mapimg").css("display", "block");
 	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + gubun + busnum + "_" + num + ".JPG");
    

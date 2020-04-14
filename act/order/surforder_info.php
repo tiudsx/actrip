@@ -247,7 +247,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			<?if($shopbankview > 0){?>
 			<tr>
                 <th scope="row">입금계좌</th>
-                <td><?=$row['pay_info']?></td>
+                <td>
+				<?if($row['pay_info'] == "무통장입금"){
+					echo "우리은행 / 1002-845-467316 / 이승철";
+				}else{
+					echo $row['pay_info'];
+				}?>
+				</td>
             </tr>
 			<?}?>
 			<?if(!($row['etc'] == "")){?>

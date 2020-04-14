@@ -207,6 +207,28 @@ if($param == "BusI"){
         );
         sendKakao($arrKakao);
 
+        if($coupon == "JOABUS"){
+            $msgTitle = '액트립&조아서프 셔틀버스 예약안내';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> "010-4437-0009"
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"eatlist" //제휴업체 목록
+                , "link3"=>"event" //공지사항
+                , "link4"=>""
+                , "link5"=>""
+                , "smsOnly"=>"N"
+            );
+            sendKakao($arrKakao);
+        }
+
 		// $to = "lud1@naver.com,ttenill@naver.com";
 		// if(strrpos($usermail, "@") > 0){
 		// 	$to .= ','.$usermail;
