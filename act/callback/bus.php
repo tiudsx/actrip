@@ -1,8 +1,5 @@
 <?php
 include __DIR__.'/../db.php';
-include __DIR__.'/../surf/surfkakao.php';
-include __DIR__.'/../surf/surfmail.php';
-include __DIR__.'/../surf/surffunc.php';
 
 /*
 GPS 오프 : OFF
@@ -21,33 +18,39 @@ $stats = trim($_REQUEST["stats"]);
 $timestart = trim($_REQUEST["timestart"]);
 $timeend = trim($_REQUEST["timeend"]);
 
-mysqli_query($conn, "SET AUTOCOMMIT=0");
-mysqli_query($conn, "BEGIN");
+if($stats == "ON"){
+	mysqli_query($conn, "SET AUTOCOMMIT=0");
+	mysqli_query($conn, "BEGIN");
 
-if($lat == "" || $lng == ""){
-	//exit;
-}
-
-$select_query = "INSERT INTO SURF_BUS_GPS(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend)";
-$result_set = mysqli_query($conn, $select_query);
-$seq = mysqli_insert_id($conn);
-//echo $select_query.'<br>';
-
-if($result_set){
-	$select_query = "DELETE FROM SURF_BUS_GPS_BUS WHERE user_name = '$user_name' OR TIMESTAMPDIFF(MINUTE, insdate, now()) > 20";
+	// 셔틀버스 위치 정보 입력
+	$select_query = "INSERT INTO AT_PROD_BUS_GPS(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend)";
 	$result_set = mysqli_query($conn, $select_query);
+	$seq = mysqli_insert_id($conn);
+	if(!$result_set) goto errGo;
 
-	$select_query = "INSERT INTO SURF_BUS_GPS_BUS(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend)";
+	// 셔틀버스 데이터 삭제 : 5일전
+	$select_query = "DELETE FROM AT_PROD_BUS_GPS WHERE TIMESTAMPDIFF(DAY, insdate, now()) > 5";
 	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+
+	// 셔틀버스 마지막정보 제외 삭제
+	$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE user_name = '$user_name'";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+
+	// 셔틀버스 최종 정보 입력
+	$select_query = "INSERT INTO AT_PROD_BUS_GPS_LAST(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend)";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+
+
+	if(!$result_set){
+		errGo:
+		mysqli_query($conn, "ROLLBACK");
+		echo 'err';
+	}else{
+		mysqli_query($conn, "COMMIT");
+		echo '0';
+	}
 }
-
-
-if(!$result_set){
-	mysqli_query($conn, "ROLLBACK");
-	echo 'err';
-}else{
-	mysqli_query($conn, "COMMIT");
-	echo '0';
-}
-
 ?>

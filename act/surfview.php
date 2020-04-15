@@ -265,7 +265,7 @@ $sLat = $rowMain["shop_lng"];
                                             $i++;
                                         }
                                         ?>
-                                        <select id="sellesson" name="sellesson" class="select" onchange="fnResChange(this, 'sellesson');">
+                                        <select id="sellesson" name="sellesson" class="select" onchange="fnResChange('sellesson');">
                                             <?=$sel1?>
                                         </select>
 
@@ -305,7 +305,7 @@ $sLat = $rowMain["shop_lng"];
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="stayText"><?=$opt_info?></td>
+                                    <td colspan="2" id="stayText"></td>
                                 </tr>
                             <tbody>
                         </table>
@@ -334,6 +334,9 @@ $sLat = $rowMain["shop_lng"];
                                         <?
                                         $i = 0;
                                         $sel1 = "";
+                                        $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
                                         $opt_info = "";
                                         foreach($arrOpt["rent"] as $arrlesson){
                                             $sel1 .= '<option soldout="'.$arrlesson["optseq"].'"  opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
@@ -348,7 +351,7 @@ $sLat = $rowMain["shop_lng"];
                                         }
                                         ?>
 
-                                        <select id="selRent" name="selRent" class="select" onchange="fnResChange(this, 'selRent');">
+                                        <select id="selRent" name="selRent" class="select" onchange="fnResChange('selRent');">
                                             <?=$sel1?>
                                         </select>
                                         <select id="hidselRent" style="display:none;">
@@ -375,9 +378,12 @@ $sLat = $rowMain["shop_lng"];
                                             </select>명
                                         </span>
                                     </td>
-                                    <td style="text-align:center;">
+                                    <td style="text-align:center;" rowspan="2">
                                         <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(1, this);">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" id="rentText"></td>
                                 </tr>
                             <tbody>
                         </table>
@@ -406,6 +412,8 @@ $sLat = $rowMain["shop_lng"];
                                         $i = 0;
                                         $sel1 = "";
                                         $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
                                         $opt_info = "";
                                         foreach($arrOpt["pkg"] as $arrlesson){
                                             $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'"  optsexM="N" optsexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
@@ -425,7 +433,7 @@ $sLat = $rowMain["shop_lng"];
                                             $i++;
                                         }
                                         ?>
-                                        <select id="selPkg" name="selPkg" class="select" onchange="fnResChange(this, 'selPkg');">
+                                        <select id="selPkg" name="selPkg" class="select" onchange="fnResChange('selPkg');">
                                             <?=$sel1?>
                                         </select>
 
@@ -465,7 +473,7 @@ $sLat = $rowMain["shop_lng"];
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="pkgText"><?=$opt_info?></td>
+                                    <td colspan="2" id="pkgText"></td>
                                 </tr>
                             <tbody>
                         </table>
@@ -493,6 +501,9 @@ $sLat = $rowMain["shop_lng"];
                                         <?
                                         $i = 0;
                                         $sel1 = "";
+                                        $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
                                         $opt_info = "";
                                         foreach($arrOpt["bbq"] as $arrlesson){
                                             $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
@@ -506,7 +517,7 @@ $sLat = $rowMain["shop_lng"];
                                             $i++;
                                         }
                                         ?>
-                                        <select id="selBBQ" name="selBBQ" class="select" onchange="fnResChange(this, 'selBBQ');">
+                                        <select id="selBBQ" name="selBBQ" class="select" onchange="fnResChange('selBBQ');">
                                             <?=$sel1?>
                                         </select>
 
@@ -540,7 +551,7 @@ $sLat = $rowMain["shop_lng"];
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="bbqText"><?=$opt_info?></td>
+                                    <td colspan="2" id="bbqText"></td>
                                 </tr>
                             <tbody>
                         </table>

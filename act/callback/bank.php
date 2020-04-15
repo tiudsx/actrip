@@ -120,6 +120,11 @@ if($count == 1){
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
 		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
+		if($shopSeq == 7){
+			$resparam = "surfbus_yy";
+		}else{
+			$resparam = "surfbus_dh";			
+		}
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
@@ -129,8 +134,8 @@ if($count == 1){
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"notice" //셔틀버스 실시간위치 조회
-			, "link3"=>"ordersearch?resNumber=".$ResNumber //셔틀버스 탑승 위치확인
+			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
 			, "link4"=>"eatlist" //제휴업체 목록
 			, "link5"=>"event" //공지사항
 			, "smsOnly"=>"N"

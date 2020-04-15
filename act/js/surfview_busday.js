@@ -39,7 +39,7 @@ var busPoint = {}
 
     busPoint.ePointE = [];
     busPoint.ePointE.push({ "code": "N", "codename": "도착" });
-    busPoint.ePointE.push({ "code": "솔게하 동해서핑점", "codename": "솔게하 동해서핑점" });
+    busPoint.ePointE.push({ "code": "솔서프", "codename": "솔서프" });
     busPoint.ePointE.push({ "code": "대진항", "codename": "대진항" });
     busPoint.ePointE.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -72,7 +72,7 @@ var busPoint = {}
     
     busPoint.sPointA21 = [];
     busPoint.sPointA21.push({ "code": "N", "codename": "출발" });
-    busPoint.sPointA21.push({ "code": "솔게하 동해서핑점", "codename": "솔게하 동해서핑점" });
+    busPoint.sPointA21.push({ "code": "솔서프", "codename": "솔서프" });
     busPoint.sPointA21.push({ "code": "대진항", "codename": "대진항" });
     busPoint.sPointA21.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -85,7 +85,7 @@ var busPoint = {}
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구역 &gt; 종합운동장역";
 var busPoint_3 = "청시행비치 &gt; 남애3리 &gt; 인구 &gt; 죽도 &gt; 동산항 &gt; 기사문 &gt; 서피비치";
-var busPoint_4 = "솔게하 동해서핑점 &gt; 대진항 &gt; 금진해변";
+var busPoint_4 = "솔서프 &gt; 대진항 &gt; 금진해변";
 var busPointList = {
     "Y1" : {li:busPoint_1},
     "Y2" : {li:busPoint_2},
@@ -114,7 +114,7 @@ var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50;
 var busPointListY1 = {
     "신도림"		: [0, MARKER_SPRITE_Y_OFFSET*3, '37.5095592', '126.8885712', '홈플러스 신도림점 앞', '탑승시간 : <font color="red">07시 00분</font>', 0],
-    "구로디지털단지": [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.4833593', '126.9015249', '대림역 2번출구 앞', '탑승시간 : <font color="red">07시 10분</font>', 1],
+    "대림역	": [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.4928008', '126.8947074', '대림역 2번출구 앞', '탑승시간 : <font color="red">07시 10분</font>', 1],
     "봉천역"		: [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.4821436', '126.9426997', '봉천역 1번출구 앞', '탑승시간 : <font color="red">07시 20분</font>', 2],
     "사당역"		: [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.4764763', '126.977734', '사당역 6번출구 방향 신한성약국 앞', '탑승시간 : <font color="red">07시 30분</font>', 3],
     "강남역"		: [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.4982078', '127.0290928', '강남역 1번출구 버스정류장', '탑승시간 : <font color="red">07시 45분</font>', 4],
@@ -138,9 +138,9 @@ var busPointListS1 = {
     "서피비치": [MARKER_SPRITE_X_OFFSET*6, 0, '38.0268271', '128.7169575', '서피비치 회전교차로 횡단보도 앞', '탑승시간 : <font color="red">15시 00분 / 18시 00분</font>', 6]
 }
 var busPointListA1 = {
-    "솔게하 동해서핑점"	: [0, 0, '37.910099', '128.8168456', '솔게스트하우스 동해서핑점 입구', '탑승시간 : <font color="red">14시 00분 / 17시 00분</font>', 0],
-    "대진항"	: [MARKER_SPRITE_X_OFFSET*1, 0, '37.9452543', '128.7814356', '대진항 공영주차장 입구', '탑승시간 : <font color="red">14시 05분 / 17시 05분</font>', 1],
-    "금진해변"	: [MARKER_SPRITE_X_OFFSET*2, 0, '37.968786', '128.761337', '금진해변 공영주차장 입구', '탑승시간 : <font color="red">14시 20분 / 17시 20분</font>', 2]
+    "솔서프"	: [0, 0, '37.5782382', '129.1156248', '솔서프 입구', '탑승시간 : <font color="red">14시 00분 / 17시 00분</font>', 0],
+    "대진항"	: [MARKER_SPRITE_X_OFFSET*1, 0, '37.5807657', '129.111344', '대진항 공영주차장 입구', '탑승시간 : <font color="red">14시 05분 / 17시 05분</font>', 1],
+    "금진해변"	: [MARKER_SPRITE_X_OFFSET*2, 0, '37.6347202', '129.0450586', '금진해변 공영주차장 입구', '탑승시간 : <font color="red">14시 20분 / 17시 20분</font>', 2]
 }
 
 function fnBusTime(obj, busnum, num){

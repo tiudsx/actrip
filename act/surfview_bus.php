@@ -59,8 +59,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li class="on">
-                            <li onclick="fnResViewBus(false, '#view_tab2', 70, this);"><a>정류장안내</a></li>
+                            <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
+                            <li onclick="fnResViewBus(false, '#view_tab2', 70, this);fnMapClick();"><a>정류장안내</a></li>
                             <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li>
                             <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
                         </ul>
@@ -359,4 +359,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             busData = data;
         }
     );
+    function fnMapClick(){
+        if($j("#ifrmBusMap").css("display") == "none"){
+            setTimeout('$j("input[type=button]").eq(0).click();', 500);
+        }
+    }
 </script>

@@ -324,6 +324,7 @@ function fnPriceSum(obj, num){
 }
 
 var MARKER_SPRITE_POSITION2 = {};
+var MARKER_POINT = "", MARKER_ZOOM = 17;
 function fnBusPoint(obj) {
 	$j("input[btnpoint='point']").css("background", "").css("color", "");
 	$j(obj).css("background", "#1973e1").css("color", "#fff");
@@ -351,7 +352,7 @@ function fnBusPoint(obj) {
 		tbBus = 3;
 		gubun = "A";
 		busnum = 1;
-		pointname = "솔게하 동해서핑점";
+		pointname = "솔서프";
 	}else{
 		mapviewid = 12;
 		tbBus = 3;
@@ -366,6 +367,11 @@ function fnBusPoint(obj) {
 }
 
 function fnBusMap(gubun, num, busnum, pointname, obj, bool) {	
+	MARKER_POINT = pointname;
+	if(gubun == "S" || gubun == "A"){
+		MARKER_ZOOM = 18;
+	}
+
 	if(MARKER_SPRITE_POSITION2[pointname] == null){
 		MARKER_SPRITE_POSITION2 = eval("busPointList" + gubun + busnum);
 	}
@@ -376,10 +382,10 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
 	$j(".mapviewid").css("background", "").css("color", "");
 	$j(obj).css("background", "#1973e1").css("color", "#fff");
 	
-	$j("#ifrmBusMap").css("display", "block");
-	var obj = $j("#ifrmBusMap").get(0);
-	var objDoc = obj.contentWindow || obj.contentDocument;
-	objDoc.mapMove(pointname);
+	$j("#ifrmBusMap").css("display", "block").attr("src", "/act/surf/surfbusmap.html");
+	// var obj = $j("#ifrmBusMap").get(0);
+	// var objDoc = obj.contentWindow || obj.contentDocument;
+	// objDoc.mapMove(pointname);
 
 	if(bool != "false"){
 		fnMapView('#mapimg', 40);

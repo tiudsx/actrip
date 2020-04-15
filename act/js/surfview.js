@@ -36,11 +36,12 @@ $j(document).ready(function() {
             $j("#tabnavi").removeClass("vip-tabwrap-fixed");
             $j(".vip-tabwrap").removeClass("vip-tabwrap-top");
         }
-
-        if (checkVisible($j('.contentimg')) && !isVisible) {
-            $j(".vip-tabnavi li").removeClass("on");
-            $j(".vip-tabnavi li").eq(0).addClass("on");
-        }
+		if($j('#contentimg').length > 0){
+			if (checkVisible($j('.contentimg')) && !isVisible) {
+				$j(".vip-tabnavi li").removeClass("on");
+				$j(".vip-tabnavi li").eq(0).addClass("on");
+			}
+		}
 
 		if($j('#shopmap').length > 0){
 			if (checkVisible($j('#shopmap')) && !isVisible) {
@@ -48,11 +49,12 @@ $j(document).ready(function() {
 				$j(".vip-tabnavi li").eq(1).addClass("on");
 			}
 		}
-
-        if (checkVisible($j('#cancelinfo')) && !isVisible) {
-            $j(".vip-tabnavi li").removeClass("on");
-            $j(".vip-tabnavi li").eq(2).addClass("on");
-        }
+		if($j('#cancelinfo').length > 0){
+			if (checkVisible($j('#cancelinfo')) && !isVisible) {
+				$j(".vip-tabnavi li").removeClass("on");
+				$j(".vip-tabnavi li").eq(2).addClass("on");
+			}
+		}
 	});
 
 	$j('#coupon').bind("keyup", function(){
@@ -191,15 +193,11 @@ function fnPassenger(obj) {
 	$j("#strStayDate").val(selDate);
 	
 	if(!$j(".fixed_wrap3 li").hasClass("on3")){
-		$j(".fixed_wrap3 li:eq(0)").addClass("on3");	
+		$j(".fixed_wrap3 li:eq(0)").addClass("on3");
 		$j("div[area=shopListArea]").eq($j(".fixed_wrap3 li:eq(0)").attr("id")).css("display", "block");	
 	}
-	// $j("#stayText").text("").css("display", "none");
 
-	var bbqText = $j("#selBBQ option:eq(0)").attr("opt_info");
-	$j("#bbqText").html(bbqText);
-
-	soldoutchk(selDate, obj);	
+	soldoutchk(selDate, obj);
 }
 
 function plusDate(date, count) {
@@ -232,6 +230,22 @@ function soldoutchk(date, obj){
 	$j("#selRent").html($j("#hidselRent").html());
 	$j("#selPkg").html($j("#hidselPkg").html());
 	$j("#selBBQ").html($j("#hidselBBQ").html());
+
+	var priceText = " (" + commify(parseInt($j("#sellesson").val().split('|')[2], 10)) + "원)";
+	var infoText = $j("#sellesson option:selected").attr("opt_info");
+	$j("#stayText").text(infoText + priceText);
+
+	priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10)) + "원)";
+	infoText = $j("#selRent option:selected").attr("opt_info");
+	$j("#rentText").text(infoText + priceText);
+
+	priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10)) + "원)";
+	infoText = $j("#selPkg option:selected").attr("opt_info");
+	$j("#pkgText").text(infoText + priceText);
+	
+	priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10)) + "원)";
+	infoText = $j("#selBBQ option:selected").attr("opt_info");
+	$j("#bbqText").text(infoText + priceText);
 	
 	$j("#tbsellesson").css("display", "");
 	$j("#divsellesson").css("display", "none");
@@ -244,8 +258,6 @@ function soldoutchk(date, obj){
 
 	$j("#sellessonM").parent().css("display", "");
 	$j("#sellessonW").parent().css("display", "");
-	$j("#selRentM").parent().css("display", "");
-	$j("#selRentW").parent().css("display", "");
 	$j("#selRentM").parent().css("display", "");
 	$j("#selRentW").parent().css("display", "");
 	$j("#selPkgM").parent().css("display", "");
@@ -290,33 +302,33 @@ function soldoutchk(date, obj){
 			$j("#tbsellesson").css("display", "none");
 			$j("#divsellesson").css("display", "");
 		}else{
-			fnResChange(this, 'sellesson');
+			fnResChange('sellesson');
 		}
 
 		if($j("#selRent option").length == 0){
 			$j("#tbselRent").css("display", "none");
 			$j("#divselRent").css("display", "");
 		}else{
-			fnResChange(this, 'selRent');
+			fnResChange('selRent');
 		}
 
 		if($j("#selPkg option").length == 0){
 			$j("#tbselPkg").css("display", "none");
 			$j("#divselPkg").css("display", "");
 		}else{
-			fnResChange(this, 'selPkg');
+			fnResChange('selPkg');
 		}
         
         if($j("#selBBQ option").length == 0){
 			$j("#tbselBBQ").css("display", "none");
 			$j("#divselBBQ").css("display", "");
 		}else{
-			fnResChange(this, 'selBBQ');
+			fnResChange('selBBQ');
 		}
 	}
 }
 
-function fnResChange(obj, key){
+function fnResChange(key){
 	$j("#" + key + "M").val('0');
 	$j("#" + key + "W").val('0');
 	$j("#" + key + "M").prev().css("display", "none");
@@ -342,22 +354,32 @@ function fnResChange(obj, key){
 		var stayText = "";
 		var resselDate = $j("#resselDate").val();
 		if(stayPlus == 0){
-			stayText = "숙박 이용일 : " + resselDate + " ~ " + plusDate(resselDate, +1) + " (1박)";
+			stayText = "숙박 이용일 : " + resselDate + " ~ " + plusDate(resselDate, +1);
 		}else if(stayPlus == 1){
-			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + resselDate + " (1박)";
+			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + resselDate;
 		}else if(stayPlus == 2){
-			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + plusDate(resselDate, +1) + " (2박)";
+			stayText = "숙박 이용일 : " + plusDate(resselDate, -1) + " ~ " + plusDate(resselDate, +1);
 		}else{
 			stayText = $j("#sellesson option:selected").attr("opt_info");
 		}
 		
-		$j("#stayText").text(stayText);
+		var priceText = " (" + commify(parseInt($j("#sellesson").val().split('|')[2], 10)) + "원)";
+		$j("#stayText").text(stayText + priceText);
 	}else if(key == "selBBQ"){
 		var bbqText = $j("#selBBQ option:selected").attr("opt_info");
-		$j("#bbqText").html(bbqText);
+		var priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10)) + "원)";
+
+		$j("#bbqText").html(bbqText + priceText);
 	}else if(key == "selPkg"){
-		var bbqText = $j("#selPkg option:selected").attr("opt_info");
-		$j("#pkgText").html(bbqText);
+		var pkgText = $j("#selPkg option:selected").attr("opt_info");
+		var priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10)) + "원)";
+
+		$j("#pkgText").html(pkgText + priceText);
+	}else if(key == "selRent"){
+		var rentText = $j("#selRent option:selected").attr("opt_info");
+		var priceText = " (" + commify(parseInt($j("#selRent").val().split('|')[2], 10)) + "원)";
+		
+		$j("#rentText").html(rentText + priceText);
 	}
 }
 
@@ -536,10 +558,7 @@ function fnSurfAppend(num, obj, selDate, gubun){
 	}
 
 	$j("#surfAdd").append(addText);
-	// $j("#stayText").text("").css("display", "none");
-
-	var bbqText = $j("#selBBQ option:eq(0)").attr("opt_info");
-	$j("#bbqText").html(bbqText);
+	
 	$j("#frmResList")[0].reset();
 	
 	// $j("#strStayDate").val(selDate);
