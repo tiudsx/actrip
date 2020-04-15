@@ -264,9 +264,9 @@
 				<div class="promoInner">
 					<h2>기획전</h2>
 					<div class="promoBox">
-						<a href="https://cafe.naver.com/actrip/381" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑강습 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑강습 받는데 이건 꼭 받아야지~</span></span></a>
-						<a href="https://cafe.naver.com/actrip/380" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>바베큐파티 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">바베큐파티도 즐기고~ 할인도 받자~</span></span></a>
-						<a href="https://cafe.naver.com/actrip/379" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑버스 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑버스 이용전에 꼭! 할인쿠폰 받기!!</span></span></a>
+						<a href="https://cafe.naver.com/actrip/381" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑강습 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">예약 전에 꼭 할인혜택 체크!</span></span></a>
+						<a href="https://cafe.naver.com/actrip/380" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>바베큐파티 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">맛있게 먹고 신나게 즐기자~</span></span></a>
+						<a href="https://cafe.naver.com/actrip/379" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑버스 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">비교불가! 빠르고 편리한 액트립 셔틀</span></span></a>
 						<a href="/eatlist"><img src="images/mainImg/promobg.png" alt=""><span>양양 맛도락 여행 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑 후엔 맛집에서 체력충전!</span></span></a>
 					</div>
 				</div>
