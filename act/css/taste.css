@@ -91,6 +91,11 @@ line-height: 25px;}
 .listItem .contents p:last-child{font-size: .9em; font-weight: 600}
 .listItem .contents p span{float: none; font-size: 1em; color:#757575; text-indent: 4px; font-weight: 500}
 
+/*event*/
+.listItem .event{width: 95%; margin-left: 2.5%; height: auto; float: left; background-color: #f0f8ff; text-align: center; font-weight: 400; line-height: 2.5em; margin-top: 5px; color:#606060}
+.listItem .event span{background-color: #8ac9ff; font-size: .75em;border-radius: 15px; padding: 2px 6px; margin-right: 7px; color:#fff}
+
+
 /*.noThumb*/
 .noThumb .thumbnail{display: none;}
 .noThumb .contents{width: 95%; margin: 0 0 2% 5%}
@@ -109,12 +114,13 @@ line-height: 25px;}
 /*--------------- media ----------------*/
 @media screen and (max-width: 414px){
 .listItem .contents{margin-top:.8%}
-.listItem .contents h3{font-size: 1.4em; margin-bottom: 4px;}
+.listItem .contents h3{font-size: 1.2em; margin-bottom: 4px;}
 .listItem .contents span{height: 20px; line-height: 20px; font-size: 1em;}
 .listItem .contents span img{width: 15px;}
 .listItem .contents p{font-size: .95em; line-height: 1.55em;}
 .listItem .contents p img{width: 13px;}
 .listItem .contents p:last-child{font-size: .85em;}
+.listItem .event{font-size: .9em;}
 .noThumb .contents{width: 95%; margin: 0 0 2% 5%}
 .noThumb .contents h3{height: 29px; margin:0;}
 .noThumb .contents>span{height: 29px; line-height: 29px;}

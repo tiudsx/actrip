@@ -23,7 +23,7 @@ mysqli_query($conn, "COMMIT");
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 서핑버스 실시간 위치조회</h1>
+                <h1> 서핑버스 실시간 위치조회</h1>
                 <div class="reviewcnt">※ 서핑버스 현재위치를 1분마다 조회하여 표시됩니다.</div>
                 <div class="shopsubtitle">※ 실제위치와 오차가 있을 수 있으니 참고부탁드립니다.</div>
             </div>
@@ -48,7 +48,7 @@ $now = date("Y-m-d H:i:s");
 $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
-if($nowTime < 1330){
+if($nowTime < 2030){
     $busList = "'Y','E'";
 }else{
     $busList = "'S','A'";
@@ -59,6 +59,7 @@ $select_query = 'SELECT * FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS b
                     ON a.user_name = b.gpsname
                         AND a.gpsdate = b.busdate
                     WHERE b.busgubun IN ('.$busList.')
+                        AND b.use_yn = "Y"
                     ORDER BY b.busgubun DESC, b.busnum';
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
@@ -142,7 +143,7 @@ function fnBusGPSPoint(obj) {
     <div class="bd" style="padding-top:5px;">
         <table class="et_vars">
             <colgroup>
-                <col style="width:190px;">
+                <col style="width:110px;">
                 <col style="width:*;">
             </colgroup>
             <tbody>

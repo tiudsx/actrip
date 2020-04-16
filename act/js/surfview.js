@@ -414,9 +414,12 @@ function fnSurfSave(){
 
     if (!confirm("신청하신 항목으로 예약하시겠습니까?")) {
         return;
-    }
+	}
+	
+	$j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." }); 
 
-    $j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
+	setTimeout('$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();', 500);
+	//$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
 }
 
 // 서핑옵션 신청버튼

@@ -17,7 +17,7 @@ var busPoint = {}
     busPoint.sPointY2.push({ "code": "합정역", "codename": "합정역" });
     busPoint.sPointY2.push({ "code": "종로3가역", "codename": "종로3가역" });
     busPoint.sPointY2.push({ "code": "왕십리역", "codename": "왕십리역" });
-    busPoint.sPointY2.push({ "code": "건대입구역", "codename": "건대입구역" });
+    busPoint.sPointY2.push({ "code": "건대입구", "codename": "건대입구" });
     busPoint.sPointY2.push({ "code": "종합운동장역", "codename": "종합운동장역" });
     
     busPoint.sPointY4 = busPoint.sPointY2;
@@ -83,7 +83,7 @@ var busPoint = {}
     busPoint.sPointA53 = busPoint.sPointA21;
 
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
-var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구역 &gt; 종합운동장역";
+var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구 &gt; 종합운동장역";
 var busPoint_3 = "청시행비치 &gt; 남애3리 &gt; 인구 &gt; 죽도 &gt; 동산항 &gt; 기사문 &gt; 서피비치";
 var busPoint_4 = "솔서프 &gt; 대진항 &gt; 금진해변";
 var busPointList = {
@@ -125,7 +125,7 @@ var busPointListY2 = {
     "합정역"	: [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5507926', '126.9159159', '합정역 3번출구 앞', '탑승시간 : <font color="red">06시 50분</font>', 1],
     "종로3가역"	: [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.5703347', '126.99317687', '종로3가역 12번출구 방향 새마을금고 앞', '탑승시간 : <font color="red">07시 15분</font>', 2],
     "왕십리역"	: [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.5615557', '127.0348018', '왕십리역 11번출구 방향 우리은행 앞', '탑승시간 : <font color="red">07시 30분</font>', 3],
-    "건대입구역": [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color="red">07시 45분</font>', 4],
+    "건대입구": [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.5415224', '127.0634459', '성수사거리 서울효사랑병원 버스정류장 앞', '탑승시간 : <font color="red">07시 45분</font>', 4],
     "종합운동장역"	: [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장', '탑승시간 : <font color="red">08시 00분</font>', 5]
 };
 var busPointListS1 = {

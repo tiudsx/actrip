@@ -252,7 +252,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </ul>
                 </div>
 
-                <div class="bd" style="padding:0 4px;">
+                <div class="bd" style="padding:0 4px;" id="divConfirm">
                     <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
                         <tbody>
@@ -309,10 +309,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
-                    <div>
-                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
+                    <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
+                        <div>
+                            <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnBusSave();" />
+                        </div>
                     </div>
                 </div>
             </form>

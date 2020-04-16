@@ -377,12 +377,12 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
 	}
 
 	$j("#mapimg").css("display", "block");
-	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/busimg/" + gubun + busnum + "_" + num + ".JPG");
+	$j("#mapimg").attr("src", "https://surfenjoy.cdn3.cafe24.com/act_bus/" + gubun + busnum + "_" + num + ".JPG");
    
 	$j(".mapviewid").css("background", "").css("color", "");
 	$j(obj).css("background", "#1973e1").css("color", "#fff");
 	
-	$j("#ifrmBusMap").css("display", "block").attr("src", "/act/surf/surfbusmap.html");
+	$j("#ifrmBusMap").css("display", "block").attr("src", "/act/surf/surfmap_bus.html");
 	// var obj = $j("#ifrmBusMap").get(0);
 	// var objDoc = obj.contentWindow || obj.contentDocument;
 	// objDoc.mapMove(pointname);
@@ -449,7 +449,10 @@ function fnBusSave() {
         return;
 	}	
 
-    $j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
+	$j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
+
+	setTimeout('$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();', 500);
+	//$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
 }
 
 function fnCouponCheck(obj){

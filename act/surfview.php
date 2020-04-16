@@ -566,7 +566,7 @@ $sLat = $rowMain["shop_lng"];
 					<input type="hidden" id="shopseq" name="shopseq" value="<?=$reqSeq?>" />
 					<input type="hidden" id="resNumAll" name="resNumAll" value="" />
 				</span>
-                <div class="bd" style="padding:0 4px;">
+                <div class="bd" style="padding:0 4px;" id="divConfirm">
                     <p class="restitle" style="padding-top:30px;">신청한 예약 정보</p>
                     <table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:15px;">
                         <colgroup>
@@ -645,10 +645,10 @@ $sLat = $rowMain["shop_lng"];
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
-                    <div>
-                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnSurfSave();" />
+                    <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
+                        <div>
+                            <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:200px; height:44px;" value="예약하기" onclick="fnSurfSave();" />
+                        </div>
                     </div>
                 </div>
                 </form>

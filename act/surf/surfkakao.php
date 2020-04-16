@@ -199,7 +199,7 @@ function mailMsg($arrMail){
 																		<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:0;padding:0\">
 																			<tbody>
 																				<tr>
-																					<td width=\"150\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> 예 약 자 </td>
+																					<td width=\"105\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> 예 약 자 </td>
 																					<td style=\"padding-bottom:5px;color:#000;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> $userName ($userPhone) </td>
 																				</tr>
 																				<tr>
@@ -253,11 +253,11 @@ function mailMsg($arrMail){
 																		<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:0;padding:0\">
 																			<tbody>
 																				<tr style=\"$info3_display\">
-																					<td width=\"150\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> $info3</td>
+																					<td width=\"105\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> $info3</td>
 																					<td style=\"padding-bottom:5px;color:#000;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">$banknum </td>
 																				</tr>
 																				<tr>
-																					<td width=\"150\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">$totalinfo</td>
+																					<td width=\"105\" style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">$totalinfo</td>
 																					<td style=\"padding-bottom:5px;;color:#000;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">$totalPrice1 <span style=\"font-size:12px;$totalPrice2_display\">$totalPrice2</span></td>
 																				</tr>
 																			</tbody>

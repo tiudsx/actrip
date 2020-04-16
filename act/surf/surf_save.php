@@ -119,10 +119,18 @@ if($param == "BusI"){
         }
     }
 
+    //조아서프 패키지 예약확정 처리
+    if($coupon == "JOABUS"){
+        $res_confirm = 3;
+        $InsUserID = "JOASURF";
+    }else{
+        $res_confirm = 0;
+    }
+
     //양양행 좌석예약
     for($i = 0; $i < count($SurfDateBusY); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
@@ -140,7 +148,7 @@ if($param == "BusI"){
     //서울행 좌석예약
     for($i = 0; $i < count($SurfDateBusS); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', 0, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 서핑버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
@@ -186,30 +194,52 @@ if($param == "BusI"){
 			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
         }
         $totalPrice = " ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
-
-        $msgTitle = '액트립 '.$busTitleName.'서핑버스 예약안내';
-        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-
-        $arrKakao = array(
-            "gubun"=> "bus"
-            , "admin"=> "N"
-            , "smsTitle"=> $msgTitle
-            , "userName"=> $userName
-            , "tempName"=> "at_res_step1"
-            , "kakaoMsg"=>$kakaoMsg
-            , "userPhone"=> $userPhone
-            , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-            , "link2"=>"eatlist" //제휴업체 목록
-            , "link3"=>"event" //공지사항
-            , "link4"=>""
-            , "link5"=>""
-			, "smsOnly"=>"N"
-        );
-        sendKakao($arrKakao);
-
+        
+        
+        //조아서프 패키지 - 카카오톡 발송
         if($coupon == "JOABUS"){
+            $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
             $msgTitle = '액트립&조아서프 서핑버스 예약안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 조아서프 패키지 서핑버스 예약이 완료되었습니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            //조아서프 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_bus1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> "010-4437-0009"
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
+                , "link4"=>"eatlist" //제휴업체 목록
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+            );
+            sendKakao($arrKakao);
+
+            // 고객 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_bus1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
+                , "link4"=>"eatlist" //제휴업체 목록
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+            );
+        }else{
+            $msgTitle = '액트립 '.$busTitleName.'서핑버스 예약안내';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
             $arrKakao = array(
                 "gubun"=> "bus"
@@ -218,7 +248,7 @@ if($param == "BusI"){
                 , "userName"=> $userName
                 , "tempName"=> "at_res_step1"
                 , "kakaoMsg"=>$kakaoMsg
-                , "userPhone"=> "010-4437-0009"
+                , "userPhone"=> $userPhone
                 , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"eatlist" //제휴업체 목록
                 , "link3"=>"event" //공지사항
@@ -226,8 +256,8 @@ if($param == "BusI"){
                 , "link5"=>""
                 , "smsOnly"=>"N"
             );
-            sendKakao($arrKakao);
         }
+        sendKakao($arrKakao); //알림톡 발송
 
         // 이메일 발송
 		$to = "lud1@naver.com,ttenill@naver.com";
@@ -237,32 +267,57 @@ if($param == "BusI"){
 
         $info1_title = "좌석안내";
         $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "";
-        $info2 = "";
 
-		$arrMail = array(
-			"gubun"=> "bus"
-			, "gubun_step" => 0
-			, "gubun_title" => $busTitleName.'서핑버스'
-            , "mailto"=> $to
-			, "mailfrom"=> "surfbus_res@actrip.co.kr"
-			, "mailname"=> "actrip"
-			, "userName"=> $userName
-			, "ResNumber"=> $ResNumber
-			, "userPhone" => $userPhone
-			, "etc" => $etc
-			, "totalPrice1" => number_format($TotalPrice).'원'
-            , "totalPrice2" => ""
-			, "banknum" => "우리은행 / 1002-845-467316 / 이승철"
-			, "info1_title"=> $info1_title
-			, "info1"=> $info1
-			, "info2_title"=> $info2_title
-			, "info2"=> $info2
-		);
+        if($coupon == "JOABUS"){
+            $info2_title = "탑승시간/<br>위치 안내";
+            $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
 
+            $arrMail = array(
+                "gubun"=> "bus"
+                , "gubun_step" => 3
+                , "gubun_title" => "조아서프 패키지 서핑버스"
+                , "mailto"=> $to
+                , "mailfrom"=> "surfbus_res@actrip.co.kr"
+                , "mailname"=> "actrip"
+                , "userName"=> $userName
+                , "ResNumber"=> $ResNumber
+                , "userPhone" => $userPhone
+                , "etc" => $etc
+                , "totalPrice1" => ""
+                , "totalPrice2" => ""
+                , "banknum" => ""
+                , "info1_title"=> $info1_title
+                , "info1"=> $info1
+                , "info2_title"=> $info2_title
+                , "info2"=> $info2
+            );
+        }else{
+            $info2_title = "";
+            $info2 = "";
+
+            $arrMail = array(
+                "gubun"=> "bus"
+                , "gubun_step" => 0
+                , "gubun_title" => $busTitleName.'서핑버스'
+                , "mailto"=> $to
+                , "mailfrom"=> "surfbus_res@actrip.co.kr"
+                , "mailname"=> "actrip"
+                , "userName"=> $userName
+                , "ResNumber"=> $ResNumber
+                , "userPhone" => $userPhone
+                , "etc" => $etc
+                , "totalPrice1" => number_format($TotalPrice).'원'
+                , "totalPrice2" => ""
+                , "banknum" => "우리은행 / 1002-845-467316 / 이승철"
+                , "info1_title"=> $info1_title
+                , "info1"=> $info1
+                , "info2_title"=> $info2_title
+                , "info2"=> $info2
+            );
+        }
         sendMail($arrMail); //메일 발송
         
-        echo '<script>alert("'.$busTitleName.' 셔틀버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
 	}
 }
 
