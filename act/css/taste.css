@@ -72,12 +72,13 @@ line-height: 25px;}
 /*listRest*/
 .listRest{overflow: hidden; border-radius: 10px;}
 .listRest .listRestbox{width: 100%; height: auto;}
-.listRest .listRestbox .listItem{overflow: hidden; padding: 2% 0 0 0; margin: 0 2% 2% 2%; border-bottom: 1px solid #dedede; background-color: #fff; box-sizing: border-box;}
+.listRest .listRestbox .listItem{overflow: hidden; padding: 4% 0 0 0; margin: 0 2% 2% 2%; border-bottom: 1px solid #dedede; background-color: #fff; box-sizing: border-box;}
 .listRest .listRestbox .listItem:last-child{border:none;}
 
 /*------------------  listItem  -----------------*/
 /*thumbnail*/
 .listItem .thumbnail{width: 30%; float: left;}
+.listItem .thumbnail a{display: block; font-size: 0;}
 .listItem .thumbnail a img{width: 80%; max-width: 130px; margin: 0 10% 5% 10%; border-radius: 6px}
 
 /*contents*/
@@ -92,8 +93,8 @@ line-height: 25px;}
 .listItem .contents p span{float: none; font-size: 1em; color:#757575; text-indent: 4px; font-weight: 500}
 
 /*event*/
-.listItem .event{width: 95%; margin-left: 2.5%; height: auto; float: left; background-color: #f0f8ff; text-align: center; font-weight: 400; line-height: 2.5em; margin-top: 5px; color:#606060}
-.listItem .event span{background-color: #8ac9ff; font-size: .75em;border-radius: 15px; padding: 2px 6px; margin-right: 7px; color:#fff}
+.listItem .event{width: 95%; height: 35px; line-height: 35px; clear: both; margin: 0 0 3% 2.5%; background: url(https://surfenjoy.cdn3.cafe24.com/eat/servicebg.jpg) 0 0/cover no-repeat; color: #fff;font-size: 1em; text-align: center; border-radius: 6px;}
+.listItem .event span{background-color: #736957; font-size: .75em; border-radius: 15px; padding: 2px 6px; margin-right: 7px; color: #fff;}
 
 
 /*.noThumb*/
