@@ -9,6 +9,7 @@ p{margin: 0; padding: 0;}
 #listMenu{width: 100%; height: auto; padding-top: 10px; background-color: #fff; position: relative;}
 #popAcm, #allAcm{width: 100%; height: 100%; position: relative;  box-shadow: 1px 1px 2px rgba(0,0,0,.1);background-color: #f5eee6;}
 #allAcm{margin-top: 15px;background-color: #fff;}
+.popAcmTop{margin-top: 15px;}
 
 /*listMenu*/
 #listMenu .btnArea{
@@ -55,7 +56,7 @@ line-height: 25px;}
 #taste .coupon a i{text-indent: 6px;}
 
 /*popAcm*/
-#popAcm h2{width: 100%; text-indent: 5%; line-height: 2em; padding: 5px 0 0;}
+#popAcm h2{width: 100%; text-indent: 5%; line-height: 2em; padding: 5px 10 0;}
 
 /*allAcm*/
 #allAcm h2{width: 100%; color: #3195db; text-indent: 5%; line-height: 2em; padding: 10px 0 0;}

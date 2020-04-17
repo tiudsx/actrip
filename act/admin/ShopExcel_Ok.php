@@ -67,6 +67,50 @@ foreach($data as $key => $row) {
 
             $i++;
         }
+    }else if($row[1] == "stay"){
+        $selData[] = array("입력여부" => $row[0]
+            , "code" => $row[1]
+            , "구분" => $row[2]
+            , "샵이름" => $row[3]
+            , "카테고리명" => $row[4]
+            , "카테고리 코드" => $row[5]
+            , "대표번호" => $row[6]
+            , "샵주소" => $row[7]
+            , "위도" => $row[8]
+            , "경도" => $row[9]
+            , "비수기" => $row[10]
+            , "준성수기" => $row[11]
+            , "성수기" => $row[12]);
+
+        if($row[0] != "P"){
+            // 기존데이터 삭제
+            $select_query = "DELETE FROM AT_PROD_MAIN WHERE code = '$row[1]' AND shopname = '$row[3]'";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGo;
+
+            $sub_tag = "";
+            if($row[10] != ""){
+                $sub_tag .= "비수기|$row[10]";
+            }
+            if($row[11] != ""){
+                $sub_tag .= "@준성수기|$row[11]";
+            }
+            if($row[12] != ""){
+                $sub_tag .= "@성수기|$row[12]";
+            }
+
+            if($sub_tag == ""){
+                $sub_tag = "|가격은 연락처로 문의해주세요.";
+            }
+
+            $select_query = "INSERT INTO `AT_PROD_MAIN` (`code`, `bankseq`, `shopcharge`, `account_yn`, `category`, `categoryname`, `shopname`, `tel_kakao`, `tel_admin`, `shopaddr`, `shoplat`, `shoplng`, `img_ver`, `sub_title`, `sub_tag`, `shop_option`, `sub_info`, `shop_resinfo`, `shop_img`, `content_type`, `content`, `lesson_yn`, `rent_yn`, `bbq_yn`, `use_yn`, `view_yn`, `link_url`, `link_yn`, `sell_cnt`, `insuserid`, `insdate`, `upduserid`, `upddate`) VALUES
+            ('$row[1]', 0, 0, 'N', '$row[5]', '$row[4]', '$row[3]', '', '$row[6]', '$row[7]', '$row[8]', '$row[9]', 0, '$row[2]', '$sub_tag', '', '', '', '', 'html', '', 'N', 'N', 'N', 'Y', 'Y', '', 'N', 0, 'admin', now(), 'admin', now());";
+            //echo $select_query;
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGo;
+
+            $i++;
+        }
     }
     $groupData[$key] = $selData;
     // }else{
