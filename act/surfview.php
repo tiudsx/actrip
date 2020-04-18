@@ -86,27 +86,23 @@ $sLat = $rowMain["shop_lng"];
     <link rel="stylesheet" href="css/surfview.css">
 
     <div class="top_area_zone">
+        
+        <link rel="stylesheet" href="/act/css/surfview_cate.css">
         <? include '_layout_category.php'; ?>
 
         <section id="viewSlide">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
+                    <?foreach ($shop_img as $key => $value) {
+                        if($key == 0 || $value == "") {
+                            continue;
+                        }
+                    ?>
                     <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/resize/place/v4/2017/08/24/06/640/599df9c8524630.94491845.jpg);">
+                        <div class="swiperimg swiper-slide" style="background-image:url(<?=$value?>);">
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3efb2b4b6.48098605.jpg);">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3f0f19e82.75213230.jpg);">
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="swiperimg swiper-slide" style="background-image:url(https://yaimg.yanolja.com/v5/2017/12/07/16/640/5a28f3f234b378.27602610.jpg);">
-                        </div>
-                    </div>
+                    <?}?>
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
@@ -130,7 +126,7 @@ $sLat = $rowMain["shop_lng"];
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"><a onclick="fnResView(true, '#content_tab1', 69, this);">상세설명</a></li>
+                            <li class="on" onclick="fnResView(true, '#content_tab1', 69, this);"><a>상세설명</a></li>
                             <li onclick="fnResView(true, '#shopmap', 500, this);"><a>위치안내</a></li>
                             <li onclick="fnResView(true, '#cancelinfo', 69, this);"><a>취소/환불</a></li>
                             <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li>
@@ -144,7 +140,7 @@ $sLat = $rowMain["shop_lng"];
                     <article>
                         <p class="noticesub">예약 및 방문 안내</p>
                         <ul>
-                            <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li>
+                            <!-- <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li> -->
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야 합니다.</li>
                             <li class="litxt">예약하신 이용일 샵 방문 시 확정안내 카톡 또는 이름/전화번호를 알려주시면 됩니다.</li>
                             <li class="litxt">강습 예약 시 강습시간 10분 전에 샵에 방문해주세요.</li>
@@ -162,9 +158,10 @@ $sLat = $rowMain["shop_lng"];
                     </article>
                 </div>
                 <div class="contentimg">
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/res_step.jpg" class="placeholder">
                     <?
                     if($rowMain["content_type"] == "html"){
-                        //echo $rowMain["content"];
+                        echo $rowMain["content"];
                     }else{
                         include 'surfview/'.$rowMain["content"];
                     }
@@ -560,28 +557,21 @@ $sLat = $rowMain["shop_lng"];
                 </div>
 
                 <form id="frmRes" method="post" target="ifrmResize" autocomplete="off" style="display:none;">
-				<span style="display:;">
+				<span>
 					<input type="hidden" id="resselDate" name="resselDate" value="" />
 					<input type="hidden" id="resparam" name="resparam" value="SurfShopI" />
 					<input type="hidden" id="shopseq" name="shopseq" value="<?=$reqSeq?>" />
 					<input type="hidden" id="resNumAll" name="resNumAll" value="" />
 				</span>
                 <div class="bd" style="padding:0 4px;" id="divConfirm">
-                    <p class="restitle" style="padding-top:30px;">신청한 예약 정보</p>
+                    <p class="restitle" style="padding-top:10px;">신청한 예약 정보</p>
                     <table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:15px;">
                         <colgroup>
-                            <col style="width:90px;">
-                            <col style="width:120px;">
                             <col style="width:*;">
-                            <col style="width:40px;">
+                            <col style="width:70px;">
+                            <col style="width:35px;">
                         </colgroup>
                         <tbody id="surfAdd">
-                            <tr>
-                                <th style='text-align:center;'>예약종류</th>
-                                <th style='text-align:center;'>날짜/시간</th>
-                                <th style='text-align:center;'>예약인원</th>
-                                <th></th>
-                            </tr>
                         </tbody>
                     </table>
 

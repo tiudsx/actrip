@@ -147,7 +147,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="litxt">
                                 <span>    
                                 액트립 바베큐파티 이용금액은 부가세 별도금액입니다.<br>
-                                <span>현금영수증 신청은 이용일 이후 [예약조회] 메뉴에서 신청가능합니다.</span>
+                                <span>현금영수증 신청은 이용일 이후 <label style="color:#059bc0;">[카카오 채널 @액트립]</label> 에서 신청가능합니다.</span>
                                 </span>
                             </li>
                         </ul>
@@ -159,7 +159,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="litxt">맥주나 음료는 제공되지 않으나 가지고 오셔서 드셔도 됩니다.</li>
                             <li class="litxt">메뉴는 인원에 따라 변경될 수 있습니다.</li>
                             <li class="litxt">미성년자 이용불가 / 신분증 확인!!</li>
-                            <li class="litxt">죽도리비치 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
+                            <li class="litxt">양양 죽도해변 바베큐파티는 선착순 진행으로 인원 마감시 참여가 불가능합니다.</li>
                             <?}else{?>
                             <li class="litxt">외부음식은 반입불가이며, 맥주나 음료는 매장내에서 판매합니다.</li>
                             <li class="litxt">메뉴는 인원에 따라 변경될 수 있습니다.</li>

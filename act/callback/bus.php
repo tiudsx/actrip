@@ -7,7 +7,7 @@ GPS 미수신 : UNKNOWN
 GPS 수신 : ON
 */
 $success = true;
-$datetime = date('Y/m/d H:i'); 
+$datetime = date('Y-m-d'); 
 
 $lat = trim($_REQUEST["lat"]);
 $lng = trim($_REQUEST["lng"]);
@@ -39,7 +39,7 @@ if($stats == "ON"){
 	if(!$result_set) goto errGo;
 
 	// 셔틀버스 최종 정보 입력
-	$select_query = "INSERT INTO AT_PROD_BUS_GPS_LAST(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend)";
+	$select_query = "INSERT INTO AT_PROD_BUS_GPS_LAST(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `gpsdate`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend, '$datetime')";
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 

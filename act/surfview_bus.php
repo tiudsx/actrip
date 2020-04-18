@@ -73,13 +73,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <article>
                         <p class="noticesub">셔틀버스 예약안내</p>
                         <ul>
-                            <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li>
+                            <!-- <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li> -->
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
                             <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li>
                             <li class="litxt">
                                 <span>    
                                 액트립 서핑버스 이용금액은 부가세 별도금액입니다.<br>
-                                <span>현금영수증 신청은 이용일 이후 [예약조회] 메뉴에서 신청가능합니다.</span>
+                                <span>현금영수증 신청은 이용일 이후 <label style="color:#059bc0;">[카카오 채널 @액트립]</label> 에서 신청가능합니다.</span>
                                 </span>
                             </li>
                         </ul>
@@ -100,17 +100,11 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                <?if($param == "surfbus_yy"){?>
-                    <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus01.jpg" class="placeholder">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus03.jpg" class="placeholder" style="cursor:pointer;">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/bus/res_bus04.jpg" class="placeholder">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus05.jpg" class="placeholder" style="cursor:pointer;"/>
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus06.jpg" class="placeholder" />
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder" />
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus08.jpg" class="placeholder" />
-                <?}else{?>
-
-                <?}?>
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/res_step.jpg" class="placeholder">
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step1.jpg" class="placeholder">
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step2.jpg" class="placeholder">
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step3.jpg" class="placeholder">
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step4.jpg" class="placeholder">
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">

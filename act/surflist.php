@@ -23,6 +23,7 @@ $reqCode = ($_REQUEST["code"] == "") ? "jukdo" : $_REQUEST["code"];
     <div class="top_area_zone">
         <div id="listWrap">
             
+            <link rel="stylesheet" href="/act/css/surflist.css">
             <? include '_layout_category.php'; ?>
 
 
