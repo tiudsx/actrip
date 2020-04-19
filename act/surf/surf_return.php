@@ -175,7 +175,7 @@ if($param == "RtnPrice"){
                     $ResNum .= '\n';
 
                     $optname = $rowSub["optname"];
-                    $surfMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum;
+                    $surfMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum.'\n';
                 }
             }else{
                 $success = false;
@@ -201,13 +201,15 @@ if($param == "RtnPrice"){
 
                 $msgInfo = " ▶ 좌석안내\n".$msgInfo;
                 $mailmsgInfo = $msgInfo;
+                $subtitlename = '액트립';
             }else{
                 $msgInfo = " ▶ 신청목록\n".$surfMsg;
                 $mailmsgInfo = $surfMsg;
+                $subtitlename = $shopname;
             }
 
             $msgTitle = '액트립 '.$shopname.' 환불안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [환불요청]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 환불처리기간은 1~7일정도 소요됩니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [환불요청]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 환불처리기간은 1~7일정도 소요됩니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
             $arrKakao = array(
                 "gubun"=> $code
@@ -271,8 +273,9 @@ if($param == "RtnPrice"){
                 $rowshop = mysqli_fetch_array($result_setlist);
 
                 $admin_tel = $rowshop["tel_kakao"];
+                $admin_tel = "010-4437-0009";
 
-                $msgTitle = '액트립 ['.$userName.'] 예약취소';
+                $msgTitle = '액트립 ['.$userName.']님 예약취소';
                 $kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 예약취소건 안내입니다.\n\n액트립 예약정보 [예약취소]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 예약취소내역 확인부탁드립니다.\n\n';
 
                 $arrKakao = array(
@@ -290,7 +293,7 @@ if($param == "RtnPrice"){
                     , "link5"=>""
                     , "smsOnly"=>"N"
                 );
-                //sendKakao($arrKakao);
+                sendKakao($arrKakao);
             }
         }
 

@@ -211,7 +211,7 @@ if($param == "BusI"){
                 , "userName"=> $userName
                 , "tempName"=> "at_res_bus1"
                 , "kakaoMsg"=>$kakaoMsg
-                , "userPhone"=> "010-4437-0009"
+                , "userPhone"=> "010-9509-9994"
                 , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
                 , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
@@ -471,7 +471,7 @@ if($param == "BusI"){
                 $eaPrice = $arrOpt[$optseq];
             }
         }
-		$optName = $arrOptVlu[$optseq];
+		$optname = $arrOptVlu[$optseq];
 
         $sumMem = $resM[$i] + $resW[$i];
         $sumMemPrice = ($eaPrice * $resM[$i]) + ($eaPrice * $resW[$i]);
@@ -486,12 +486,12 @@ if($param == "BusI"){
         }
 		$TotalPrice += $sumPrice;
 
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'surf', $shopseq, $optseq, '$shopname', '$resGubun[$i]', '$optName', '$arrOptInfo[$optseq]', '$resDate[$i]', '$resTime[$i]', '', '', '', '', '', '', '', 0, $sumMemPrice, $res_price_coupon, '$coupon', $sumPrice, $sumMem, $resM[$i], $resW[$i], 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'surf', $shopseq, $optseq, '$shopname', '$resGubun[$i]', '$optname', '$arrOptInfo[$optseq]', '$resDate[$i]', '$resTime[$i]', '$arrStayDay[$optseq]', '', '', '', '', '', '', 0, $sumMemPrice, $res_price_coupon, '$coupon', $sumPrice, $sumMem, $resM[$i], $resW[$i], 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         if(!$result_set) goto errGoSurf;
 
 		$TimeDate = '';
-		if($resGubun[$i] == "lesson" || $resGubun[$i] == "pkg"){
+		if(($resGubun[$i] == "lesson" || $resGubun[$i] == "pkg") && $resTime[$i] != ""){
 			$TimeDate = '      - 시간 : '.$resTime[$i].'\n';
 		}
 
@@ -532,7 +532,7 @@ if($param == "BusI"){
             //$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $arrOptInfo[$optseq]).'\n';
         }
         
-		$surfshopMsg .= '    ['.$optName.']\n      - 예약일 : '.$resDate[$i].'\n'.$ResOptStay.$ResNum.$ResOptInfo;
+		$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$resDate[$i].'\n'.$ResOptStay.$ResNum.$ResOptInfo.'\n';
     }
     
     $select_query = "INSERT INTO `AT_RES_MAIN` (`resnum`, `pay_type`, `pay_info`, `user_id`, `user_name`, `user_tel`, `user_email`, `etc`, `insuserid`, `insdate`) VALUES ('$ResNumber', 'B', '무통장입금', '$InsUserID', '$userName', '$userPhone', '$usermail', '$etc', '$InsUserID', '$datetime');";

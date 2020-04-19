@@ -60,12 +60,14 @@ if($count > 0){
                 }
         
                 $resList =' ▶ 좌석안내\n'.$busSeatInfo;
+                $subtitlename = '액트립';
             }else{
                 $resList =' ▶ 신청목록\n'.$surfshopMsg;
+                $subtitlename = $shopname;
             }
         
             $msgTitle = '액트립 '.$shopname.' 자동취소 안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [자동취소]\n ▶ 예약번호 : '.$PreMainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [자동취소]\n ▶ 예약번호 : '.$PreMainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
         
             $arrKakao = array(
                 "gubun"=> $code
@@ -97,6 +99,7 @@ if($count > 0){
 		$userPhone = $rowTime['user_tel'];
 		$sDate = $rowTime["res_date"];
         $shopname = $rowTime['shopname'];
+        $optname = $rowTime["optname"];
 
         if($code == "bus"){
             if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
@@ -105,26 +108,19 @@ if($count > 0){
                 $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
             }
         }else{
-            $TimeDate = "";
-            // if($rowTime['ResGubun'] == 0 || $rowTime['ResGubun'] == 2){
-            //     $TimeDate = '('.$rowTime['ResTime'].')';
-            // }else if($rowTime['ResGubun'] == 3){
-            //     $TimeDate = '('.$rowTime['ResDay'].')';
-            // }
-            
-            $ResNum = "";
+            $ResNum = "      - 인원 : ";
             if($rowTime['res_m'] > 0){
-                $ResNum = "남:".$rowTime['res_m'].' ';
+                $ResNum .= "남:".$rowTime['res_m'].'명';
             }
-
+            if($rowTime['res_m'] > 0 && $rowTime['res_w'] > 0){
+                $ResNum .= ",";
+            }
             if($rowTime['res_w'] > 0){
-                $ResNum .= "여:".$rowTime['res_w'];
+                $ResNum .= "여:".$rowTime['res_w'].'명';
             }
+            $ResNum .= '\n';
 
-            $surfshopMsg .= '    -  ['.$sDate.'] '.$rowTime["optname"].$TimeDate.' / '.$ResNum.'\n';
-            // if($rowTime["ResGubun"] == 2){
-            //     $surfshopMsg .= '         ('.preg_replace('/\s+/', '', $rowTime["ResDay"]).')\n';
-            // }
+            $surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum.'\n';
         }
 
         $x++;
@@ -141,12 +137,14 @@ if($count > 0){
         }
 
         $resList =' ▶ 좌석안내\n'.$busSeatInfo;
+        $subtitlename = '액트립';
     }else{
         $resList =' ▶ 신청목록\n'.$surfshopMsg;
+        $subtitlename = $shopname;
     }
 
     $msgTitle = '액트립 '.$shopname.' 자동취소 안내';
-    $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [자동취소]\n ▶ 예약번호 : '.$MainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+    $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [자동취소]\n ▶ 예약번호 : '.$MainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
     $arrKakao = array(
         "gubun"=> $code

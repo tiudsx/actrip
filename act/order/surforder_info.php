@@ -94,17 +94,16 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		
 		$ResNum = "";
 		if($row['res_m'] > 0){
-			$ResNum = "남:".$row['res_m'];
+			$ResNum = "남:".$row['res_m']."명";
 		}
 		if($row['res_m'] > 0 && $row['res_w'] > 0){
             $ResNum .= ",";
         }
 		if($row['res_w'] > 0){
-			$ResNum .= "여:".$row['res_w'];
+			$ResNum .= "여:".$row['res_w']."명";
 		}
 
 		$ResOptInfo = "";
-		$ResOptStay = "";
 		$optinfo = $row['optsubname'];
         if($row['optcode'] == "lesson"){
 			$arrdate = explode("-", $row['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
@@ -117,13 +116,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             $preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
             $nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
             if($stayPlus == 0){
-                $ResOptStay = "숙박일 : $resDate[$i](1박)";
+                $ResOptInfo = "숙박일 : ".$row['res_date']."(1박)";
             }else if($stayPlus == 1){
-                $ResOptStay = "숙박일 : $preDate(1박)";
+                $ResOptInfo = "숙박일 : $preDate(1박)";
             }else if($stayPlus == 2){
-                $ResOptStay = "숙박일 : $preDate(2박)";
+                $ResOptInfo = "숙박일 : $preDate(2박)";
             }else{
-                $ResOptInfo = "안내 : $optinfo";
+                // $ResOptInfo = "안내 : $optinfo";
             }
         }else if($row['optcode'] == "rent"){
 

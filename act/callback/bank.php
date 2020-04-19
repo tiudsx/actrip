@@ -83,6 +83,7 @@ if($count == 1){
 	$resultSite = mysqli_query($conn, $select_query_sub);
 
 	if($code == "bus"){
+		$res_confirm = 3;
 		$busSeatInfo = "";
 		$busStopInfo = "";
 		$ressubseq = "";
@@ -140,6 +141,7 @@ if($count == 1){
 			, "link5"=>"event" //공지사항
 			, "smsOnly"=>"N"
 		);
+		sendKakao($arrKakao); //알림톡 발송
 
 		// 이메일 발송
 		//$to = "lud1@naver.com,ttenill@naver.com";
@@ -171,9 +173,75 @@ if($count == 1){
 			, "info2_title"=> $info2_title
 			, "info2"=> $info2
 		);
-	}else{		
+		sendMail($arrMail); //메일 발송
+
+	}else{	//서핑샵, 바베큐
+		$res_confirm = 2;
+		$surfshopMsg .= "";
+		$ressubseq = "";
+
+		while ($rowSub = mysqli_fetch_assoc($resultSite)){
+			$shopname = $rowSub['shopname'];
+			$ressubseq .= $rowSub['ressubseq'].',';
+
+			$TimeDate = '';
+			if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
+				$TimeDate = '      - 시간 : '.$resTime[$i].'\n';
+			}
+	
+			$ResNum = '      - 인원 : ';
+			if($rowSub['res_m'] > 0){
+				$ResNum .= '남:'.$rowSub['res_m'].'명';
+			}
+			if($rowSub['res_m'] > 0 && $rowSub['res_w'] > 0){
+				$ResNum .= ',';
+			}
+			if($rowSub['res_w'] > 0){
+				$ResNum .= '여:'.$rowSub['res_w'].'명';
+			}
+			$ResNum .= '\n';
+	
+			$ResOptInfo = "";
+			$ResOptStay = "";
+			if($rowSub['sub_title'] == "lesson"){
+				$stayPlus = $rowSub['res_bus']; //숙박 여부
+				$optname = $rowSub["optname"];
+				$optinfo = $rowSub['optsubname'];
+				
+				$arrdate = explode("-", $rowSub['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+				$s_Y=$arrdate[0]; // 지정된 년도 
+				$s_m=$arrdate[1]; // 지정된 월
+				$s_d=$arrdate[2]; // 지정된 요일
+				
+				//이전일 요일구하기
+				$preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
+				$nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
+				if($stayPlus == 0){
+					$ResOptStay = '      - 숙박일 : '.$rowSub['res_date'].'(1박)\n';
+				}else if($stayPlus == 1){
+					$ResOptStay = '      - 숙박일 : '.$preDate.'(1박)\n';
+				}else if($stayPlus == 2){
+					$ResOptStay = '      - 숙박일 : '.$preDate.'(2박)\n';
+				}else{
+					//$ResOptInfo = '      - 안내 : '.$arrOptInfo[$optseq].'\n';
+				}
+			}else if($resGubun[$i] == "rent"){
+	
+			}else if($resGubun[$i] == "pkg"){
+				$ResOptInfo = '      - '.$optinfo.'\n';
+			}else if($resGubun[$i] == "bbq"){
+				$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $optinfo).'\n';
+			}
+			$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$rowSub['res_date'].'\n'.$ResOptStay.$ResNum.'\n'.$ResOptInfo;	
+		}
+		$ressubseq .= '0';
+        
+		if($etc != ''){
+			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+		}
+		
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 예약시간, 신청목록 꼭 확인 부탁드립니다.\n      - 예약시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신건은 예약확정 후 이용가능합니다.\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
 		$arrKakao = array(
 			"gubun"=> $code
@@ -190,13 +258,66 @@ if($count == 1){
 			, "link5"=>""
 			, "smsOnly"=>"N"
 		);
-	}
-	sendKakao($arrKakao); //알림톡 발송
+		sendKakao($arrKakao); //알림톡 발송
 
-	sendMail($arrMail); //메일 발송
+		//카카오톡 업체 발송
+		$select_query = 'SELECT * FROM AT_PROD_MAIN WHERE seq = '.$shopSeq;
+		$result_setlist = mysqli_query($conn, $select_query);
+		$rowshop = mysqli_fetch_array($result_setlist);
+
+		$admin_tel = $rowshop["tel_kakao"];
+		$admin_tel = $rowshop["tel_kakao"];
+		$admin_tel = "010-4437-0009";
+
+		$msgTitle = '액트립 ['.$userName.']님 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약내역 확인 후 승인처리 부탁드립니다.\n      - 예약이 불가할 경우 임시취소해주시면 취소진행하겠습니다.\n\n';
+
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_shop_step1"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $admin_tel
+			, "link1"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$shopSeq)) //전체 예약목록
+			, "link2"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$ResNumber.'|'.$shopSeq)) //현재 예약건 보기
+			, "link3"=>""
+			, "link4"=>""
+			, "link5"=>""
+			, "smsOnly"=>"N"
+		);
+		sendKakao($arrKakao);
+
+		$info1_title = "신청목록";
+        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));
+        $info2_title = "";
+        $info2 = "";
+
+		$arrMail = array(
+			"gubun"=> "surf"
+			, "gubun_step" => 3
+			, "gubun_title" => $shopname
+            , "mailto"=> $to
+			, "mailfrom"=> "surfbus_res@actrip.co.kr"
+			, "mailname"=> "actrip"
+			, "userName"=> $userName
+			, "ResNumber"=> $ResNumber
+			, "userPhone" => $userPhone
+			, "etc" => $etc
+			, "totalPrice1" => ""
+			, "totalPrice2" => ""
+			, "banknum" => ""
+			, "info1_title"=> $info1_title
+			, "info1"=> $info1
+			, "info2_title"=> $info2_title
+			, "info2"=> $info2
+		);
+		//sendMail($arrMail); //메일 발송
+	}
 
 	$select_query = "UPDATE `AT_RES_SUB` 
-						SET res_confirm = 3
+						SET res_confirm = $res_confirm
 							,upddate = now()
 							,confirmdate = now()
 							,upduserid = 'autobank'
