@@ -82,34 +82,63 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	//============= 환불금액 구역 =============
 	if($row['code'] == "bus"){
 		$RtnBank = str_replace("|", " / ", fnBusPoint($row['res_spointname'], $row['res_bus']));
+		$ResNum = "구매수:".$row['res_ea'];
 	}else{
 		$RtnBank = '';
+		
+		//============= 예약항목 구역 =============
+		$TimeDate = "";
+		if(($row['optcode'] == "lesson" || $row['optcode'] == "pkg") && $row['res_time'] != ""){
+			$TimeDate = '강습시간 : '.$row['res_time'];
+		}
+		
+		$ResNum = "";
+		if($row['res_m'] > 0){
+			$ResNum = "남:".$row['res_m'];
+		}
+		if($row['res_m'] > 0 && $row['res_w'] > 0){
+            $ResNum .= ",";
+        }
+		if($row['res_w'] > 0){
+			$ResNum .= "여:".$row['res_w'];
+		}
+
+		$ResOptInfo = "";
+		$ResOptStay = "";
+		$optinfo = $row['optsubname'];
+        if($row['optcode'] == "lesson"){
+			$arrdate = explode("-", $row['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+			$s_Y=$arrdate[0]; // 지정된 년도 
+			$s_m=$arrdate[1]; // 지정된 월
+			$s_d=$arrdate[2]; // 지정된 요일
+		
+            $stayPlus = $row['stay_day']; //숙박 여부
+            //이전일 요일구하기
+            $preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
+            $nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
+            if($stayPlus == 0){
+                $ResOptStay = "숙박일 : $resDate[$i](1박)";
+            }else if($stayPlus == 1){
+                $ResOptStay = "숙박일 : $preDate(1박)";
+            }else if($stayPlus == 2){
+                $ResOptStay = "숙박일 : $preDate(2박)";
+            }else{
+                $ResOptInfo = "안내 : $optinfo";
+            }
+        }else if($row['optcode'] == "rent"){
+
+        }else if($row['optcode'] == "pkg"){
+			$ResOptInfo = $optinfo;
+        }else if($row['optcode'] == "bbq"){
+			//$ResOptInfo = str_replace('<br>', '', $optinfo);
+			$ResOptInfo = $optinfo;
+        }
 	}
+
+	// 환불금액 표시
 	if($res_confirm == 4 || $res_confirm == 5){
 		$RtnBank = '<b>환불금액 : '.number_format($row['rtn_totalprice']).'원</b> ('.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).')';
 	}
-
-	//============= 예약항목 구역 =============
-	$TimeDate = "";
-	// if($row['ResGubun'] == 0 || $row['ResGubun'] == 2){
-	// 	$TimeDate = '(시간 : '.$row['ResTime'].')';
-	// }else if($row['ResGubun'] == 3){
-	// 	$TimeDate = '(기간 : '.$row['ResDay'].')';
-	// }
-
-	
-    $ResNum = "";
-    if($row['res_ea'] == 0){
-        if($row['res_m'] > 0){
-            $ResNum = "남:".$row['res_m'].'<br>';
-        }
-
-        if($row['res_w'] > 0){
-            $ResNum .= "여:".$row['res_w'];
-        }
-    }else{
-        $ResNum = "구매수:".$row['res_ea'];
-    }
 
 	if($i == 1){
 ?>
@@ -132,7 +161,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             </tr>
 			<tr>
 				<td colspan="2">
-	<?if($row['code'] == "bus"){?>
     <table class="et_vars exForm bd_tb" style="width:100%">
         <tbody>
 			<colgroup>
@@ -145,24 +173,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 				<th style="text-align:center;">예약항목</th>
 				<th style="text-align:center;">상태</th>
 			</tr>
-	<?}else if($row['code'] == "surf"){?>
-    <table class="et_vars exForm bd_tb" style="width:100%">
-        <tbody>
-			<colgroup>
-				<col style="width:100px;">
-				<col style="width:auto;">
-				<col style="width:55px;">
-				<col style="width:70px;">
-			</colgroup>
-			<tr>
-                <th style="text-align:center;">이용일</th>
-                <th style="text-align:center;">예약항목</th>
-                <th style="text-align:center;">인원</th>
-                <th style="text-align:center;">상태</th>
-			</tr>
-	<?}?>
-<?	}?>
-	<?if($row['code'] == "bus"){?>
+<?
+	}
+
+	if($row['code'] == "bus"){?>
 			<tr class="<?=$ResCss?>">
                 <td style="text-align:center;" rowspan="2">
 					<label>
@@ -189,11 +203,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 				<?}else{?>
 					<input type="checkbox" disabled="disabled" />
 				<?}?>
-					<?=$row['res_date']?>
+					<br><?=$row['res_date']?>
 					</label>
 				</td>
-                <td>[<?=$row['optname']?>] <?=$row['optsubname']?><br><span style="padding-left:40px;"><?=$TimeDate?></span></td>
-                <td style="text-align:center;"><?=$ResNum?></td>
+                <td>
+					<?=$row['optname']?><br>
+					<span class="resoption"><?=$TimeDate?> (<?=$ResNum?>)</span>
+					<span class="resoption"><?=$ResOptInfo?></span>
+				</td>
                 <td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
 			</tr>
 			<?=$RtnBank?>

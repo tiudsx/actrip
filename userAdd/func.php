@@ -1155,24 +1155,26 @@ function cancelPrice($regDate, $timeM, $ResConfirm, $ResPrice){
 	if($timeM <= 130 || $ResConfirm == "0"){
 
 	}else{
-		if($resNow == 8){
-			$cancelPrcie = $ResPrice * 0.1;
-		}else if($resNow == 7){
-			$cancelPrcie = $ResPrice * 0.2;
-		}else if($resNow == 6){
-			$cancelPrcie = $ResPrice * 0.3;
-		}else if($resNow == 5){
-			$cancelPrcie = $ResPrice * 0.4;
-		}else if($resNow == 4){
-			$cancelPrcie = $ResPrice * 0.5;
-		}else if($resNow == 3){
-			$cancelPrcie = $ResPrice * 0.6;
-		}else if($resNow == 2){
-			$cancelPrcie = $ResPrice * 0.7;
-		}else if($resNow == 0 || $resNow == 1){
-			$cancelPrcie = $ResPrice;
-		}else{
-			$cancelPrcie = 0;
+		if($ResConfirm == "3"){
+			if($resNow == 8){
+				$cancelPrcie = $ResPrice * 0.1;
+			}else if($resNow == 7){
+				$cancelPrcie = $ResPrice * 0.2;
+			}else if($resNow == 6){
+				$cancelPrcie = $ResPrice * 0.3;
+			}else if($resNow == 5){
+				$cancelPrcie = $ResPrice * 0.4;
+			}else if($resNow == 4){
+				$cancelPrcie = $ResPrice * 0.5;
+			}else if($resNow == 3){
+				$cancelPrcie = $ResPrice * 0.6;
+			}else if($resNow == 2){
+				$cancelPrcie = $ResPrice * 0.7;
+			}else if($resNow == 0 || $resNow == 1){
+				$cancelPrcie = $ResPrice;
+			}else{
+				$cancelPrcie = 0;
+			}
 		}
 	}
 

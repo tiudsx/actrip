@@ -144,7 +144,7 @@ function fnBusGPSPoint(obj) {
         <table class="et_vars">
             <colgroup>
                 <col style="width:110px;">
-                <col style="width:*;">
+                <col style="width:auto;">
             </colgroup>
             <tbody>
                 <tr>

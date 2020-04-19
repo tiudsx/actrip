@@ -21,6 +21,10 @@
     
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zhh3svia3i"></script>
 <script>
+function fnShopViewMove(param){
+	parent.location.href = "/surfview?seq=" + param;
+}
+
     MARKER_SPRITE_POSITION = parent.MARKER_SPRITE_POSITION2;
     var mapOptions = {
         zoomControl: true,
@@ -46,12 +50,6 @@
         infoWindows = [];
     
     for (var key in MARKER_SPRITE_POSITION) {
-    
-        /*
-        var position = new naver.maps.LatLng(
-            southWest.lat() + latSpan * Math.random(),
-            southWest.lng() + lngSpan * Math.random());
-        */
         var position = new naver.maps.LatLng(MARKER_SPRITE_POSITION[key][2],MARKER_SPRITE_POSITION[key][3]);
     
         var marker = new naver.maps.Marker({
@@ -80,12 +78,12 @@
     }
 
     if(parent.mapView == 0){
-        viewtext = "상세보기";
+        viewtext = "<span class=\"title\" style=\"cursor:pointer;\" onclick=\"fnShopViewMove(" + MARKER_SPRITE_POSITION[key][7] + ");\">상세내용 보기</span>";
     }else{
-        viewtext = "";
+        viewtext = "<span class=\"title\">" + MARKER_SPRITE_POSITION[key][5] + "</span>";
     }
     var shopbox2 = '<div class="overlaybox">' +
-        '    <div class="boxtitle">' + textarea + ''+ key +'</div>' +
+        '    <div class="boxtitle">' + textarea + ''+ MARKER_SPRITE_POSITION[key][10] +'</div>' +
         '    <div class="first" style="background: url(' + MARKER_SPRITE_POSITION[key][8] + ') no-repeat;background-size: 100%">' +
         '        <!--div class="movietitle text">'+ key +'</div-->' +
         '    </div>' +
@@ -93,8 +91,8 @@
         '        <li class="up">' +
         '            <span class="title">' + MARKER_SPRITE_POSITION[key][4] + '</span>' + //MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "")
         '        </li>' +
-        '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;">' +
-        '            <span class="title">' + viewtext + '</span>' +
+        '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;">' +
+        '            ' + viewtext +
         '        </li>' +
         '    </ul>' +
         '</div>';
@@ -271,9 +269,9 @@
     function mapMove(vlu){
         var position = new naver.maps.LatLng(parseFloat(MARKER_SPRITE_POSITION[vlu][2]),MARKER_SPRITE_POSITION[vlu][3]);
 
-        if(parent.mapView == 0){
+        //if(parent.mapView == 0){
             map.panTo(position);
-        }
+        // }
     
         var num = MARKER_SPRITE_POSITION[vlu][6];
         var marker = markers[num],

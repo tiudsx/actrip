@@ -198,6 +198,7 @@ if($count == 1){
 	$select_query = "UPDATE `AT_RES_SUB` 
 						SET res_confirm = 3
 							,upddate = now()
+							,confirmdate = now()
 							,upduserid = 'autobank'
 						WHERE ressubseq IN (".$ressubseq.")";
 	$result_set = mysqli_query($conn, $select_query);

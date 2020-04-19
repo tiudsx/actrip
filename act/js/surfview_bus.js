@@ -392,12 +392,6 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
 	}
 }
 
-function maxLengthCheck(object) {
-	if (object.value.length > object.maxLength) {
-		object.value = object.value.slice(0, object.maxLength);
-	}
-}
-
 function fnBusSave() {
     var chkVluY = $j("input[id=hidbusSeat" + busTypeY + "]").map(function () { return $j(this).val(); }).get();
     var chkVluS = $j("input[id=hidbusSeat" + busTypeS + "]").map(function () { return $j(this).val(); }).get();

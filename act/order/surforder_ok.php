@@ -7,11 +7,23 @@ $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 
 $gubun = substr($resNumber, 0, 1);
 
-$select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
-ON a.resnum = b.resnum 
-where a.resnum = "'.$resNumber.'"
-ORDER BY a.resnum, b.ressubseq';
+if($gubun == 1){
+	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
+						FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
+							ON a.resnum = b.resnum
+								AND b.code = 'surf'
+						INNER JOIN `AT_PROD_OPT` c
+							ON b.optseq = c.optseq
+						WHERE a.resnum = $resNumber
+							ORDER BY a.resnum, b.ressubseq";
 
+}else{
+	$select_query = "SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM 
+						FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
+							ON a.resnum = b.resnum 
+						WHERE a.resnum = $resNumber
+							ORDER BY a.resnum, b.ressubseq";
+}
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -27,6 +39,7 @@ echo '<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="of
 include_once("surforder_info.php");
 
 echo '
+<span id="returnBank" style="display:none;">
 	<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
 	※ 이용 1일전에는 취소/환불이 안됩니다.
 	</div>
@@ -50,7 +63,6 @@ echo '
 	※ 취소신청 시간에 따라 환불수수료 예정금액과 차이가 있을 수 있습니다.
 	</div>
 
-	<span id="returnBank" style="display:none;">
     <div class="gg_first">환불 계좌 <span style="font-weight:100;font-size:12px;font-family:Tahoma,Geneva,sans-serif;">(예약자와 동일한 명의의 계좌번호로 환불가능합니다.)</span></div>
     <table class="et_vars exForm bd_tb" style="width:100%">
         <tbody>
@@ -73,7 +85,7 @@ echo '
 			</tr>
 		</tbody>
 	</table>
-	</span>
+</span>
 
 	<div class="write_table" style="padding-top:15px;padding-bottom:15px;text-align:center;">
 		<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;" value="취소/환불 신청" onclick="fnRefund(0);" />&nbsp;

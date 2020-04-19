@@ -63,7 +63,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
                         $shoptype = str_replace("@", ",", $row["sub_tag"]);
                         $shopmenu = "<b>대표메뉴</b>  ".$row["sub_title"];
                         $shopmenu .= "<br>&nbsp;&nbsp;&nbsp;<img src=\"/act/images/icon/phone.svg\" class=\"phoneimg\"> ".$row["tel_admin"];
-                        $shopevent = "<img src=\"/act/images/icon/pin.svg\" class=\"phoneimg\">".$row["shopaddr"]."<br>&nbsp;&nbsp;&nbsp;<span class=\"spaninfo\">이벤트</span> ".$row["sub_info"];
+                        $shopevent = "<img src=\"/act/images/icon/pin.svg\" class=\"phoneimg\">".$row["shopaddr"]."<br>&nbsp;&nbsp;&nbsp;<span class=\"spaninfo\">쿠폰제시</span>".$row["sub_info"];
 
                         $eatLocation .= "MARKER_SPRITE_POSITION2.eat$seq = [0, 0, '$eatlat', '$eatlng', '$shopmenu', '$shopevent', $i, '$shopname [$shoptype]'];\n";
                         $i++;
@@ -84,7 +84,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                 <p>대표메뉴<span><?=$row["sub_title"]?></span></p>
                             </li>
                             <?if($row["sub_info"] != ""){?>
-                            <li class="event"><span>이벤트</span><?=$row["sub_info"]?></li>
+                            <li class="event"><a href="https://cafe.naver.com/ArticleList.nhn?search.clubid=29998302&search.menuid=27&search.boardtype=L" style="color:#fff;" target="_blank"><span>쿠폰제시</span><?=$row["sub_info"]?></a></li>
                             <?}?>
                         </ul>
                     <?}?>

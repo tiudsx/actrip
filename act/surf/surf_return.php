@@ -28,7 +28,7 @@ if($param == "RtnPrice"){
 	$totalFee = 0;
 	$totalOpt = 0;
 	for($i=0;$i<count($arrSeq);$i++) {
-        $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, insdate, now()) as timeM FROM AT_RES_SUB where ressubseq IN ('.$arrSeq[$i].')';
+        $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, confirmdate, now()) as timeM FROM AT_RES_SUB where ressubseq IN ('.$arrSeq[$i].')';
 		$resultSite = mysqli_query($conn, $select_query_sub);
 		$count = mysqli_num_rows($resultSite);
 
@@ -52,12 +52,12 @@ if($param == "RtnPrice"){
             if($ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6"){
                 $boolConfirm = true;
             }
-			
-			$rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);
+            
+            $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);
 
 			if($boolConfirm){
-				$totalPrice += $ResPrice;
-				$totalFee += $rtnFee;
+                $totalPrice += $ResPrice;
+                $totalFee += $rtnFee;
 				$totalOpt += $arrOpt;
 			}
 		}
@@ -95,7 +95,7 @@ if($param == "RtnPrice"){
     }
 
     $arrSeatInfo = array();
-    $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, insdate, now()) as timeM FROM AT_RES_SUB where res_confirm IN (0,1,2,3,6) AND ressubseq IN ('.$ressubseq.') AND resnum = '.$ResNumber;
+    $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, confirmdate, now()) as timeM FROM AT_RES_SUB where res_confirm IN (0,1,2,3,6) AND ressubseq IN ('.$ressubseq.') AND resnum = '.$ResNumber;
     $resultSite = mysqli_query($conn, $select_query_sub);
     $chkSubCnt = mysqli_num_rows($resultSite); //체크 개수
     if($chkSubCnt == 0){
@@ -136,7 +136,7 @@ if($param == "RtnPrice"){
                 $result_set = mysqli_query($conn, $select_query);
                 if(!$result_set) $success = false;
             }else if($boolConfirm){ //확정 상태 환불요청
-                $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);
+                $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);                
 
                 $select_query = "UPDATE AT_RES_SUB  
                                 SET res_confirm = 4
@@ -162,26 +162,20 @@ if($param == "RtnPrice"){
                         $arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번\n';
                     }
                 }else{
-                    $TimeDate = "";
-                    // if($rowSub["ResGubun"] == 0 || $rowSub["ResGubun"] == 2){
-                    //     $TimeDate = '('.$rowSub["ResTime"].')';
-                    // }else if($rowSub["ResGubun"] == 3){
-                    //     $TimeDate = '('.$rowSub["ResDay"].')';
-                    // }
-
-                    $ResNum = "";
+                    $ResNum = "      - 인원 : ";
                     if($rowSub["res_m"] > 0){
-                        $ResNum = "남:".$rowSub["res_m"].'명 ';
+                        $ResNum .= "남:".$rowSub["res_m"].'명';
                     }
-
+                    if($row['res_m'] > 0 && $row['res_w'] > 0){
+                        $ResNum .= ",";
+                    }
                     if($rowSub["res_w"] > 0){
                         $ResNum .= "여:".$rowSub["res_w"].'명';
                     }
+                    $ResNum .= '\n';
 
-                    $surfMsg .= '    -  ['.$sDate.'] '.$rowSub["optname"].$TimeDate.' / '.$ResNum.'\n';
-                    // if($rowSub["ResGubun"] == 2){
-                    //     $surfMsg .= '         ('.preg_replace('/\s+/', '', $rowSub["ResDay"]).')\n';
-                    // }
+                    $optname = $rowSub["optname"];
+                    $surfMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum;
                 }
             }else{
                 $success = false;
@@ -205,9 +199,11 @@ if($param == "RtnPrice"){
                     $msgInfo .= $x;
                 }
 
-                $msgInfo = " ▶ 좌석안내\n".$msgInfo;                       
+                $msgInfo = " ▶ 좌석안내\n".$msgInfo;
+                $mailmsgInfo = $msgInfo;
             }else{
                 $msgInfo = " ▶ 신청목록\n".$surfMsg;
+                $mailmsgInfo = $surfMsg;
             }
 
             $msgTitle = '액트립 '.$shopname.' 환불안내';
@@ -234,8 +230,14 @@ if($param == "RtnPrice"){
             if(strrpos($user_email, "@") > 0){
                 $to = $user_email;
 
-                $info1_title = "좌석안내";
-                $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $msgInfo));
+                if($code == "bus"){
+                    $info1_title = "좌석안내";
+                    $mailform = "surfbus_return@actrip.co.kr";
+                }else{
+                    $info1_title = "신청목록";
+                    $mailform = "surfshop_return@actrip.co.kr";
+                }
+                $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $mailmsgInfo));
                 $info2_title = "";
                 $info2 = "";
 
@@ -244,7 +246,7 @@ if($param == "RtnPrice"){
                     , "gubun_step" => 4
                     , "gubun_title" => $shopname
                     , "mailto"=> $to
-                    , "mailfrom"=> "surfbus_return@actrip.co.kr"
+                    , "mailfrom"=> $mailform
                     , "mailname"=> "actrip"
                     , "userName"=> $userName
                     , "ResNumber"=> $ResNumber
@@ -288,7 +290,7 @@ if($param == "RtnPrice"){
                     , "link5"=>""
                     , "smsOnly"=>"N"
                 );
-                sendKakao($arrKakao);
+                //sendKakao($arrKakao);
             }
         }
 

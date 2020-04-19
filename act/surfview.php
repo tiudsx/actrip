@@ -78,6 +78,9 @@ while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
 
 $sLng = $rowMain["shop_lat"];
 $sLat = $rowMain["shop_lng"];
+
+//연락처 모바일 여부
+if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
 ?>
 
 <div id="wrap">
@@ -119,6 +122,7 @@ $sLat = $rowMain["shop_lng"];
                 </a>
                 <div class="shopsubtitle"><?=$rowMain["shop_resinfo"]?></div>
             </div>
+            
         </section>
 
         <section class="notice">
@@ -230,8 +234,8 @@ $sLat = $rowMain["shop_lng"];
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbsellesson">
                             <colgroup>
-                                <col style="width:*;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -245,7 +249,7 @@ $sLat = $rowMain["shop_lng"];
                                         <?
                                         $i = 0;
                                         foreach($arrOpt["lesson"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" opttime="'.$arrlesson["opttime"].'" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
@@ -276,7 +280,7 @@ $sLat = $rowMain["shop_lng"];
                                         </select>							
                                     </td>
                                     <td style="text-align:center;" rowspan="3">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(0, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('lesson', this);">
                                     </td>
                                 </tr>
                                 <tr>
@@ -315,8 +319,8 @@ $sLat = $rowMain["shop_lng"];
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselRent">
                             <colgroup>
-                                <col style="width:*;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
 
                             </colgroup>
@@ -376,7 +380,7 @@ $sLat = $rowMain["shop_lng"];
                                         </span>
                                     </td>
                                     <td style="text-align:center;" rowspan="2">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(1, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('rent', this);">
                                     </td>
                                 </tr>
                                 <tr>
@@ -393,8 +397,8 @@ $sLat = $rowMain["shop_lng"];
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselPkg">
                             <colgroup>
-                                <col style="width:*;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -413,7 +417,7 @@ $sLat = $rowMain["shop_lng"];
                                         $sel4 = "";
                                         $opt_info = "";
                                         foreach($arrOpt["pkg"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'"  optsexM="N" optsexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'"  optsexM="N" optsexW="N" opttime="'.$arrlesson["opttime"].'" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
@@ -444,7 +448,7 @@ $sLat = $rowMain["shop_lng"];
                                         </select>
                                     </td>
                                     <td style="text-align:center;" rowspan="3">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(2, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('pkg', this);">
                                     </td>
                                 </tr>
                                 <tr>
@@ -484,7 +488,7 @@ $sLat = $rowMain["shop_lng"];
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselBBQ">
                             <colgroup>
                                 <col style="width:100px;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -544,7 +548,7 @@ $sLat = $rowMain["shop_lng"];
                                         </span>
                                     </td>
                                     <td style="text-align:center;" rowspan="2">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(3, this);">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('bbq', this);">
                                     </td>
                                 </tr>
                                 <tr>
@@ -567,7 +571,7 @@ $sLat = $rowMain["shop_lng"];
                     <p class="restitle" style="padding-top:10px;">신청한 예약 정보</p>
                     <table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:15px;">
                         <colgroup>
-                            <col style="width:*;">
+                            <col style="width:auto;">
                             <col style="width:70px;">
                             <col style="width:35px;">
                         </colgroup>
@@ -589,9 +593,9 @@ $sLat = $rowMain["shop_lng"];
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
-                                    <input type="number" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
                                 </td>
                             </tr>
                             <tr>
@@ -659,6 +663,7 @@ $sLat = $rowMain["shop_lng"];
 <? include '_layout_bottom.php'; ?>
 
 <script src="js/surfview.js"></script>
+<script src="js/surfview_shop.js"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
 
@@ -668,7 +673,7 @@ var sLat = "<?=$rowMain["shoplng"]?>";
 var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50,
     MARKER_SPRITE_POSITION2 = {
-        '<?=$rowMain["shopname"]?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, '<?=$shop_img[0]?>', '<?=$rowMain["categoryname"]?>']
+        '<?=$rowMain["shopname"]?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '구매 <b><?=number_format($rowMain["sell_cnt"])?></b>개', 0, <?=$reqSeq?>, '<?=$shop_img[0]?>', '<?=$rowMain["categoryname"]?>', '<?=$rowMain["shopname"]?>']
     };
 
 var main = new Object();

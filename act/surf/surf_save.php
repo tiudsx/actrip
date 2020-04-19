@@ -7,6 +7,8 @@ include __DIR__.'/../surf/surffunc.php';
 $param = $_REQUEST["resparam"];
 $InsUserID = ($_REQUEST["userId"] == "") ? $_REQUEST["userName"] : $_REQUEST["userId"];
 $shopseq = $_REQUEST["shopseq"];
+$datetime = date('Y/m/d H:i'); 
+$TotalPrice = 0;
 
 /*
 예약상태
@@ -53,7 +55,6 @@ if($param == "BusI"){
 	$userPhone = $_REQUEST["userPhone1"]."-".$_REQUEST["userPhone2"]."-".$_REQUEST["userPhone3"];
 	$usermail = $_REQUEST["usermail"];
 	$etc = $_REQUEST["etc"];
-	$datetime= date('Y/m/d H:i'); 
     
 	for($i = 0; $i < count($SurfDateBusY); $i++){
         $select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusY[$i].'" AND res_bus = "'.$busNumY[$i].'" AND res_seat = "'.$arrSeatY[$i].'" AND res_confirm IN (0, 1, 2, 3)';
@@ -85,7 +86,6 @@ if($param == "BusI"){
 	$busStopInfo = "";
 	$arrSeatInfo = array();
 	$arrStopInfo = array();
-    $TotalPrice = 0;
 
     $res_Price = 20000;
     $res_totalprice = $res_Price;
@@ -318,6 +318,298 @@ if($param == "BusI"){
         sendMail($arrMail); //메일 발송
         
         echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+	}
+}else if($param == "SurfShopI"){
+    $ResNumber = '1'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
+	$resSeq = $_REQUEST["resSeq"]; //예약항목 Seq
+	$resDate = $_REQUEST["resDate"]; //이용날짜
+	$resTime = $_REQUEST["resTime"]; //이용시간
+	$resDay = $_REQUEST["resDay"]; //숙박일
+	$resGubun = $_REQUEST["resGubun"]; //예약항목 구분
+	$resM = $_REQUEST["resM"]; //예약인원 : 남
+	$resW = $_REQUEST["resW"]; //예약인원 : 여
+
+	$resNumAll = $_REQUEST["resNumAll"]; //신청 옵션 전체
+	$userName = $_REQUEST["userName"];
+	$userId = $_REQUEST["userId"];
+	$userPhone = $_REQUEST["userPhone1"]."-".$_REQUEST["userPhone2"]."-".$_REQUEST["userPhone3"];
+	$usermail = $_REQUEST["usermail"];
+    $etc = $_REQUEST["etc"];
+    
+    // 할인 쿠폰적용
+    $coupon = $_REQUEST["couponcode"];
+    $res_price_coupon = 0;
+    $res_totalprice = 0;
+    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq = 'SUR'";
+
+    $result = mysqli_query($conn, $select_query);
+    $rowMain = mysqli_fetch_array($result);
+    $chkCnt = mysqli_num_rows($result); //체크 개수
+    if($chkCnt > 0){
+        $res_price_coupon = $rowMain["dis_price"];
+        $issue_type = $rowMain["issue_type"];
+
+        if($res_price_coupon <= 100){ //퍼센트 할인
+            $res_totalprice = (1 - ($res_price_coupon / 100));
+        }else{ //금액할인
+            $res_totalprice = $res_price_coupon;
+        }
+
+        if($issue_type == "A"){
+            $user_ip = $_SERVER['REMOTE_ADDR'];
+            $select_query = "UPDATE AT_COUPON_CODE 
+                                SET use_yn = 'Y'
+                                ,user_ip = '$user_ip'
+                                ,use_date = now()
+                            WHERE seq = 'BUS' AND coupon_code = '$coupon';";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGoSurf;
+        }
+    }
+
+	$select_query = "SELECT a.*, b.code, b.shopname, b.tel_kakao, c.uppercode as areagubun, b.category FROM `AT_PROD_OPT` as a 
+                        INNER JOIN AT_PROD_MAIN as b
+                            ON a.seq = b.seq 
+                        INNER JOIN AT_CODE c 
+                            ON b.category = c.code 
+                                AND b.code in ('surf', 'bbq') 
+                        WHERE a.seq = $shopseq
+                            AND a.use_yn = 'Y' 
+                            AND a.optseq IN ($resNumAll)";
+	$result_setlist = mysqli_query($conn, $select_query);
+
+	$arrOpt = array();
+	$arrOptVlu = array();
+	$arrOptInfo = array();
+	$arrStayDay = array();
+	while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
+		$arrOpt[$rowOpt["optseq"]] = $rowOpt["sell_price"];
+		$arrOptVlu[$rowOpt["optseq"]] = $rowOpt["optname"];
+		$arrOptInfo[$rowOpt["optseq"]] = $rowOpt["opt_info"];
+		$arrStayDay[$rowOpt["optseq"]] = $rowOpt["stay_day"];
+
+		$shopname = $rowOpt["shopname"];
+		$shopbank = "우리은행 / 1002-845-467316 / 이승철";
+		$areagubun = $rowOpt["areagubun"];
+		$tel_kakao = $rowOpt["tel_kakao"]; //카톡 발송 연락처
+
+		$ordersearch = "surfres?seq=".$shopseq;
+		if($areagubun == "surfeast1"){
+			$area = "[양양]";
+		}else if($areagubun = "surfeast2"){
+			$area = "[고성]";
+		}else if($areagubun == "surfeast3"){
+			$area = "[강릉,동해]";
+		}else if($areagubun == "surfjeju"){
+			$area = "[제주]";
+		}else if($areagubun == "surfsouth"){
+			$area = "[남해]";
+		}else if($areagubun == "surfwest"){
+			$area = "[서해]";
+		}else if($areagubun == "etc"){
+			$area = "[기타]";
+		}else{
+			$area = "[기타]";
+        }
+	}
+
+	mysqli_query($conn, "SET AUTOCOMMIT=0");
+	mysqli_query($conn, "BEGIN");
+
+	$surfshopMsg = "";
+	for($i = 0; $i < count($resSeq); $i++){
+        $select_query = "SELECT *, year(sdate) as yearS, month(sdate) as monthS, day(sdate) as dayS, year(edate) as yearE, month(edate) as monthE, day(edate) as dayE FROM AT_PROD_DAY where seq = $shopseq AND sdate <= '$resDate[$i]' AND edate >= '$resDate[$i]' AND use_yn = 'Y' limit 1";
+
+		$result_cal = mysqli_query($conn, $select_query);
+		$row_cal = mysqli_fetch_array($result_cal);
+
+        $optseq = $resSeq[$i]; //옵션 seq
+        /*
+        resGubun
+          lesson : 서핑강습
+          rent : 렌탈
+          stay : 숙소
+          pkg : 패키지
+          bbq : 바베큐
+        */
+
+        //성수기 항목
+        $arrdate = explode("-", $resDate[$i]); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+        $s_Y=$arrdate[0]; // 지정된 년도 
+        $s_m=$arrdate[1]; // 지정된 월
+        $s_d=$arrdate[2]; // 지정된 요일
+
+        $thisWeekNum = date("w",mktime(0,0,0,$s_m,$s_d,$s_Y));
+        if(strrpos($row_cal["day_week"], (string)$thisWeekNum) === false){
+            $eaPrice = $arrOpt[$optseq];
+        }else{
+            if($resGubun[$i] == "lesson"){
+                $stayPlus = $arrStayDay[$optseq]; //숙박 여부
+                
+                //이전일 요일구하기
+                $preWeekNum = date("w", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
+                if(strrpos($row_cal["day_week"], (string)$preWeekNum) === false){
+                    $eaPrePrice = 0;
+                }else{
+                    $eaPrePrice = $row_cal["stay_price"];
+                }
+
+                if($stayPlus == 0){
+                    $eaPrice = $arrOpt[$optseq] + $row_cal["stay_price"];
+                }else if($stayPlus == 1){
+                    $eaPrice = $arrOpt[$optseq] + $eaPrePrice;
+                }else if($stayPlus == 2){
+                    $eaPrice = $arrOpt[$optseq] + $eaPrePrice + $row_cal["stay_price"];
+                }else{
+                    $eaPrice = $arrOpt[$optseq];
+                }
+            }else if($resGubun[$i] == "rent"){
+                $eaPrice = $arrOpt[$optseq];
+            }else if($resGubun[$i] == "pkg"){
+                $eaPrice = $arrOpt[$optseq] + $row_cal["stay_price"];
+            }else if($resGubun[$i] == "bbq"){
+                $eaPrice = $arrOpt[$optseq];
+            }
+        }
+		$optName = $arrOptVlu[$optseq];
+
+        $sumMem = $resM[$i] + $resW[$i];
+        $sumMemPrice = ($eaPrice * $resM[$i]) + ($eaPrice * $resW[$i]);
+        if($chkCnt > 0){
+            if($res_price_coupon <= 100){ //퍼센트 할인
+                $sumPrice = $sumMemPrice * $res_totalprice;
+            }else{ //금액 할인
+                $sumPrice = $sumMemPrice - $res_totalprice;
+            }
+        }else{
+            $sumPrice = $sumMemPrice;
+        }
+		$TotalPrice += $sumPrice;
+
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'surf', $shopseq, $optseq, '$shopname', '$resGubun[$i]', '$optName', '$arrOptInfo[$optseq]', '$resDate[$i]', '$resTime[$i]', '', '', '', '', '', '', '', 0, $sumMemPrice, $res_price_coupon, '$coupon', $sumPrice, $sumMem, $resM[$i], $resW[$i], 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $result_set = mysqli_query($conn, $select_query);
+        if(!$result_set) goto errGoSurf;
+
+		$TimeDate = '';
+		if($resGubun[$i] == "lesson" || $resGubun[$i] == "pkg"){
+			$TimeDate = '      - 시간 : '.$resTime[$i].'\n';
+		}
+
+		$ResNum = '      - 인원 : ';
+		if($resM[$i] > 0){
+			$ResNum .= '남:'.$resM[$i].'명';
+		}
+        if($resM[$i] > 0 && $resW[$i] > 0){
+            $ResNum .= ',';
+        }
+		if($resW[$i] > 0){
+			$ResNum .= '여:'.$resW[$i].'명';
+        }
+        $ResNum .= '\n';
+
+        $ResOptInfo = "";
+        $ResOptStay = "";
+        if($resGubun[$i] == "lesson"){
+            $stayPlus = $arrStayDay[$optseq]; //숙박 여부
+            
+            //이전일 요일구하기
+            $preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
+            $nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
+            if($stayPlus == 0){
+                $ResOptStay = '      - 숙박일 : '.$resDate[$i].'(1박)\n';
+            }else if($stayPlus == 1){
+                $ResOptStay = '      - 숙박일 : '.$preDate.'(1박)\n';
+            }else if($stayPlus == 2){
+                $ResOptStay = '      - 숙박일 : '.$preDate.'(2박)\n';
+            }else{
+                //$ResOptInfo = '      - 안내 : '.$arrOptInfo[$optseq].'\n';
+            }
+        }else if($resGubun[$i] == "rent"){
+
+        }else if($resGubun[$i] == "pkg"){
+            //$ResOptInfo = '      - '.$arrOptInfo[$optseq].'\n';
+        }else if($resGubun[$i] == "bbq"){
+            //$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $arrOptInfo[$optseq]).'\n';
+        }
+        
+		$surfshopMsg .= '    ['.$optName.']\n      - 예약일 : '.$resDate[$i].'\n'.$ResOptStay.$ResNum.$ResOptInfo;
+    }
+    
+    $select_query = "INSERT INTO `AT_RES_MAIN` (`resnum`, `pay_type`, `pay_info`, `user_id`, `user_name`, `user_tel`, `user_email`, `etc`, `insuserid`, `insdate`) VALUES ('$ResNumber', 'B', '무통장입금', '$InsUserID', '$userName', '$userPhone', '$usermail', '$etc', '$InsUserID', '$datetime');";
+    //echo $select_query.'<br>';
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGoSurf;
+
+	if(!$success){
+        errGoSurf:
+		mysqli_query($conn, "ROLLBACK");
+		echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnSaveErr("divConfirm");</script>';
+	}else{
+		mysqli_query($conn, "COMMIT");
+
+		//==================== 카카오톡 발송 Start ====================
+		if($etc != ''){
+			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+        }
+        $totalPrice = " ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
+        
+        $msgTitle = "액트립 [$shopname] 예약안내";
+        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n'.$shopname.' 예약정보 [예약대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+		$arrKakao = array(
+            "gubun"=> "surf"
+            , "admin"=> "N"
+            , "smsTitle"=> $msgTitle
+            , "userName"=> $userName
+            , "tempName"=> "at_res_step1"
+            , "kakaoMsg"=>$kakaoMsg
+            , "userPhone"=> $userPhone
+            , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+            , "link2"=>"eatlist" //제휴업체 목록
+            , "link3"=>"event" //공지사항
+            , "link4"=>""
+            , "link5"=>""
+            , "smsOnly"=>"N"
+        );
+        sendKakao($arrKakao); //알림톡 발송
+		//==================== 카카오톡 발송 End ====================
+
+		//==================== 이메일 발송 Start ====================
+		// 이메일 발송
+		$to = "lud1@naver.com,ttenill@naver.com";
+		if(strrpos($usermail, "@") > 0){
+            $to .= ','.$usermail;
+		}
+
+        $info1_title = "신청목록";
+        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));
+        $info2_title = "";
+        $info2 = "";
+
+        $arrMail = array(
+            "gubun"=> "surf"
+            , "gubun_step" => 0
+            , "gubun_title" => $shopname
+            , "mailto"=> $to
+            , "mailfrom"=> "surfshop_res@actrip.co.kr"
+            , "mailname"=> "actrip"
+            , "userName"=> $userName
+            , "ResNumber"=> $ResNumber
+            , "userPhone" => $userPhone
+            , "etc" => $etc
+            , "totalPrice1" => number_format($TotalPrice).'원'
+            , "totalPrice2" => ""
+            , "banknum" => "우리은행 / 1002-845-467316 / 이승철"
+            , "info1_title"=> $info1_title
+            , "info1"=> $info1
+            , "info2_title"=> $info2_title
+            , "info2"=> $info2
+        );
+        sendMail($arrMail); //메일 발송
+		//==================== 이메일 발송 End ====================
+
+        echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        //echo '<script>alert("예약이 완료되었습니다.");parent.fnSaveErr("divConfirm");</script>';
 	}
 }
 

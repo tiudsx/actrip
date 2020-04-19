@@ -33,3 +33,13 @@ function fnMapView(pointname){
         type = "down";
     }
 }
+
+function maxLengthCheck(object) {
+	if (object.value.length > object.maxLength) {
+		object.value = object.value.slice(0, object.maxLength);
+	}
+}
+
+function fnSaveErr(ojb){
+	$j(divConfirm).unblock();
+}

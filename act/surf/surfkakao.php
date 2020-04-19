@@ -102,23 +102,25 @@ function mailMsg($arrMail){
 			if($info2_title != ""){
 				$info2_display = "";
 			}
-
 		}
 	}else if($gubun == "surf"){
 		if($gubun_step == 0){ //미입금 - 입금대기
-			$state_title = "입금대기";
-		}else if($gubun_step == 1){ //예약대기
-			$state_title = "예약대기";
-		}else if($gubun_step == 2){ //임시확정
-			$state_title = "임시확정";
+			$info3_display = "";
+			$info4_display = "";
 		}else if($gubun_step == 3){ //확정
-			$state_title = "예약확정";
+			$info2_display = "";
 		}else if($gubun_step == 4){ //환불요청
-			$state_title = "환불요청";
-		}else if($gubun_step == 6){ //임시취소
-			$state_title = "임시취소";
+			$gubun_subtitle = " 환불요청안내";
+			$gubun_title1 = $gubun_title."를(을) 환불요청하셨습니다.";
+			$gubun_title2 = "아래의 환불요청 내역 확인 부탁드립니다.";
+			$gubun_title3 = "환불요청 정보";
+
+			$info3 = "환불계좌";
+			$info3_display = "";
+			$info4_display = "";
+			$totalPrice2_display = "";
+			$totalinfo = "환불금액";
 		}
-		$state_title .= " (".$arrMail["userName"].")";;
 	}else if($gubun == "bank"){
 		if($gubun_step == 0){
 			$gubun_subtitle = " : 동일 이름, 금액건 발생";

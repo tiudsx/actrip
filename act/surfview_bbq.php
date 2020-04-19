@@ -237,7 +237,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <colgroup>
                                 <col style="width:100px;">
                                 <col style="width:90px;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -317,7 +317,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselRent">
                             <colgroup>
                                 <col style="width:100px;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
 
                             </colgroup>
@@ -388,7 +388,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <colgroup>
                                 <col style="width:100px;">
                                 <col style="width:70px;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -466,7 +466,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselBBQ">
                             <colgroup>
                                 <col style="width:100px;">
-                                <col style="width:*;">
+                                <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
@@ -543,7 +543,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <colgroup>
                             <col style="width:90px;">
                             <col style="width:120px;">
-                            <col style="width:*;">
+                            <col style="width:auto;">
                             <col style="width:40px;">
                         </colgroup>
                         <tbody id="surfAdd">
