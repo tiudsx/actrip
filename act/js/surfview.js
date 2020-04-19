@@ -234,46 +234,54 @@ function fnResListInit(date){
 	var stay_price =  parseInt($j("calbox[value='" + date + "']").attr("stay_price"), 10);
 	var bbq_price =  parseInt($j("calbox[value='" + date + "']").attr("bbq_price"), 10);
 	
-	var priceText = " (" + commify(parseInt($j("#sellesson").val().split('|')[2], 10)) + "원)";
-	var infoText = $j("#sellesson option:selected").attr("opt_info");
-	$j("#stayText").text(infoText + (priceText));
-
-	priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10) + rent_price) + "원)";
-	infoText = $j("#selRent option:selected").text();
-	$j("#rentText").text(infoText + priceText);
-
-	priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10) + stay_price) + "원)";
-	infoText = $j("#selPkg option:selected").attr("opt_info");
-	$j("#pkgText").text(infoText + priceText);
+	if($j("#sellesson").length > 0 && $j("#sellesson option").length > 0){
+		var priceText = " (" + commify(parseInt($j("#sellesson").val().split('|')[2], 10)) + "원)";
+		var infoText = $j("#sellesson option:selected").attr("opt_info");
+		$j("#stayText").text(infoText + (priceText));
 	
-	priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10) + bbq_price) + "원)";
-	infoText = $j("#selBBQ option:selected").attr("opt_info");
-	$j("#bbqText").text(infoText + priceText);
+		var opttime = $j("#sellesson option:selected").attr("opttime");
+		if(opttime == ""){
+			$j("#sellessonTime").html("<option value=''>-</option>");
+		}else{
+			var opttimeHtml = "";
+			opttime.split('|').forEach(function(el){
+				if(el != ""){
+					opttimeHtml += "<option value='" + el + "'>" + el + "</option>";
+				}
+			});
+			$j("#sellessonTime").html(opttimeHtml);
+		}
+	}
 	
-	var opttime = $j("#sellesson option:selected").attr("opttime");
-	if(opttime == ""){
-		$j("#sellessonTime").html("<option value=''>-</option>");
-	}else{
-		var opttimeHtml = "";
-		opttime.split('|').forEach(function(el){
-			if(el != ""){
-				opttimeHtml += "<option value='" + el + "'>" + el + "</option>";
-			}
-		});
-		$j("#sellessonTime").html(opttimeHtml);
+	if($j("#selBBQ").length > 0 && $j("#selBBQ option").length > 0){
+		priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10) + rent_price) + "원)";
+		infoText = $j("#selRent option:selected").text();
+		$j("#rentText").text(infoText + priceText);
 	}
 
-	var opttime = $j("#selPkg option:selected").attr("opttime");
-	if(opttime == ""){
-		$j("#selPkgTime").html("<option value=''>-</option>");
-	}else{
-		var opttimeHtml = "";
-		opttime.split('|').forEach(function(el){
-			if(el != ""){
-				opttimeHtml += "<option value='" + el + "'>" + el + "</option>";
-			}
-		});
-		$j("#selPkgTime").html(opttimeHtml);
+	if($j("#selPkg").length > 0 && $j("#selPkg option").length > 0){
+		priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10) + stay_price) + "원)";
+		infoText = $j("#selPkg option:selected").attr("opt_info");
+		$j("#pkgText").text(infoText + priceText);
+	
+		var opttime = $j("#selPkg option:selected").attr("opttime");
+		if(opttime == ""){
+			$j("#selPkgTime").html("<option value=''>-</option>");
+		}else{
+			var opttimeHtml = "";
+			opttime.split('|').forEach(function(el){
+				if(el != ""){
+					opttimeHtml += "<option value='" + el + "'>" + el + "</option>";
+				}
+			});
+			$j("#selPkgTime").html(opttimeHtml);
+		}
+	}
+	
+	if($j("#selBBQ").length > 0 && $j("#selBBQ option").length > 0){
+		priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10) + bbq_price) + "원)";
+		infoText = $j("#selBBQ option:selected").attr("opt_info");
+		$j("#bbqText").text(infoText + priceText);
 	}
 }
 

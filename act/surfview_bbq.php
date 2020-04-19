@@ -28,7 +28,6 @@ $rowMain = mysqli_fetch_array($result);
 $bbqtitle = $rowMain["shopname"];
 $bbqsubinfo = $rowMain["sub_info"];
 
-
 // 옵션 매진여부 확인
 $select_query = "SELECT a.*, b.optcode, b.optname FROM `AT_PROD_OPT_SOLDOUT` as a INNER JOIN AT_PROD_OPT as b
 					ON a.optseq = b.optseq
@@ -80,27 +79,13 @@ $result_setlist = mysqli_query($conn, $select_query);
 $arrOpt = array();
 $arrOptT = array();
 while ($rowOpt = mysqli_fetch_assoc($result_setlist)){
-	$arrOpt[$rowOpt["optcode"]][$rowOpt["optseq"]] = array("optseq" => $rowOpt["optseq"], "optname" => $rowOpt["optname"], "opttime" => $rowOpt["opttime"], "opt_sexM" => $rowOpt["opt_sexM"], "opt_sexW" => $rowOpt["opt_sexW"], "sell_price" => $rowOpt["sell_price"], "opt_info" => $rowOpt["opt_info"]);
+	$arrOpt[$rowOpt["optcode"]][$rowOpt["optseq"]] = array("optseq" => $rowOpt["optseq"], "optname" => $rowOpt["optname"], "opttime" => $rowOpt["opttime"], "opt_sexM" => $rowOpt["opt_sexM"], "opt_sexW" => $rowOpt["opt_sexW"], "sell_price" => $rowOpt["sell_price"], "opt_info" => $rowOpt["opt_info"], "stay_day" => $rowOpt["stay_day"]);
 
 	$arrOptT[$rowOpt["optcode"]] = $rowOpt["optcode"];
 }
 
 $sLng = $rowMain["shop_lat"];
 $sLat = $rowMain["shop_lng"];
-
-$startTab = 4;
-if($arrOptT["lesson"] != null){
-	$startTab = 0;
-}
-if($arrOptT["rent"] != null && $startTab == 4){
-	$startTab = 1;
-}
-if($arrOptT["stay"] != null && $startTab == 4){
-	$startTab = 2;
-}
-if($arrOptT["bbq"] != null && $startTab == 4){
-	$startTab = 3;
-}
 
 //연락처 모바일 여부
 if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
@@ -170,7 +155,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
+                    <?if($param == "bbq_yy"){?>
                     <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder" />
+                    <?}else{?>
+                    <?}?>
                 </div>
                 <div id="shopmap">
                     <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:490px;" src="surf/surfmap.html"></iframe>
@@ -210,19 +198,19 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div class="fixed_wrap3" style="display:;">
                         <ul class="cnb3 btnColor" style="padding-inline-start:0px;">
                         <?if($arrOptT["lesson"] != null){?>
-                            <li class="on3" id="resTab0"><a onclick="fnSurfList(this, 0);" style="padding:10px 15px 0px 15px;">강습</a></li>
+                            <li id="0"><a onclick="fnSurfList(this, 0);" style="padding:10px 15px 0px 15px;">강습</a></li>
                         <?}
                         
                         if($arrOptT["rent"] != null){?>
-                            <li id="resTab1"><a onclick="fnSurfList(this, 1);" style="padding:10px 15px 0px 15px;">렌탈</a></li>
+                            <li id="1"><a onclick="fnSurfList(this, 1);" style="padding:10px 15px 0px 15px;">렌탈</a></li>
                         <?}
                         
-                        if($arrOptT["stay"] != null){?>
-                            <li id="resTab2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">숙소</a></li>
+                        if($arrOptT["pkg"] != null){?>
+                            <li id="2"><a onclick="fnSurfList(this, 2);" style="padding:10px 15px 0px 15px;">할인패키지</a></li>
                         <?}
 
                         if($arrOptT["bbq"] != null){?>
-                            <li id="resTab3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐파티</a></li>
+                            <li id="3"><a onclick="fnSurfList(this, 3);" style="padding:10px 15px 0px 15px;">바베큐파티</a></li>
                         <?}?>
                             
                         </ul>
@@ -235,8 +223,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbsellesson">
                             <colgroup>
-                                <col style="width:100px;">
-                                <col style="width:90px;">
+                                <col style="width:auto;">
                                 <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
@@ -244,7 +231,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 <tr>
                                     <th style="text-align:center;">강습종류</th>
                                     <th style="text-align:center;">시간</th>
-                                    <th style="text-align:center;">인원</th>
                                     <th style="text-align:center;"></th>
                                 </tr>
                                 <tr>
@@ -252,7 +238,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <?
                                         $i = 0;
                                         foreach($arrOpt["lesson"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" opttime="'.$arrlesson["opttime"].'" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
@@ -263,12 +249,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
                                                 $sel3 = $arrlesson["opt_sexM"];
                                                 $sel4 = $arrlesson["opt_sexW"];
+                                                $opt_info = $arrlesson["opt_info"];
                                             }
                                         
                                             $i++;
                                         }
                                         ?>
-                                        <select id="sellesson" name="sellesson" class="select" onchange="fnResChange(this, 'sellesson');">
+                                        <select id="sellesson" name="sellesson" class="select" onchange="fnResChange('sellesson');">
                                             <?=$sel1?>
                                         </select>
 
@@ -281,18 +268,23 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             <?=$sel2?>
                                         </select>							
                                     </td>
-                                    <td style="text-align:center;line-height:2.5;">
+                                    <td style="text-align:center;" rowspan="3">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('lesson', this);">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;line-height:2.5;" colspan="2">
                                         <span>
-                                            남 : 
+                                            남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="sellessonM" name="sellessonM" class="select">
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명&nbsp;&nbsp;
+                                            </select>명&nbsp;
                                         </span>
                                         <span>
-                                            여 : 
+                                            여:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="sellessonW" name="sellessonW" class="select">
                                             <?for($i=0;$i<=$sel4;$i++){?>
@@ -301,9 +293,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             </select>명
                                         </span>
                                     </td>
-                                    <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(0, this);">
-                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" id="stayText"></td>
                                 </tr>
                             <tbody>
                         </table>
@@ -316,7 +308,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselRent">
                             <colgroup>
-                                <col style="width:100px;">
+                                <col style="width:auto;">
                                 <col style="width:auto;">
                                 <col style="width:45px;">
 
@@ -332,19 +324,24 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <?
                                         $i = 0;
                                         $sel1 = "";
+                                        $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
+                                        $opt_info = "";
                                         foreach($arrOpt["rent"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'"  opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
                                                 $sel4 = $arrlesson["opt_sexW"];
+                                                $opt_info = $arrlesson["opt_info"];
                                             }
                                         
                                             $i++;
                                         }
                                         ?>
 
-                                        <select id="selRent" name="selRent" class="select" onchange="fnResChange(this, 'selRent');">
+                                        <select id="selRent" name="selRent" class="select" onchange="fnResChange('selRent');">
                                             <?=$sel1?>
                                         </select>
                                         <select id="hidselRent" style="display:none;">
@@ -353,16 +350,16 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     </td>
                                     <td style="text-align:center;">
                                         <span>
-                                            남 : 
+                                            남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="selRentM" name="selRentM" class="select">
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명&nbsp;&nbsp;
+                                            </select>명&nbsp;
                                         </span>
                                         <span>
-                                            여 : 
+                                            여:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="selRentW" name="selRentW" class="select">
                                             <?for($i=0;$i<=$sel4;$i++){?>
@@ -371,31 +368,32 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             </select>명
                                         </span>
                                     </td>
-                                    <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(1, this);">
+                                    <td style="text-align:center;" rowspan="2">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('rent', this);">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" id="rentText"></td>
                                 </tr>
                             <tbody>
                         </table>
                     </div>
                     
                     <div class="bd" area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">숙소예약</div>
-                        <div id="divselStay" style="text-align:center;font-size:14px;padding:50px;display:none;">
-                            <b>숙소예약이 매진되어 예약이 불가능합니다.</b>
+                        <div class="gg_first" style="padding-top:10px;">패키지예약</div>
+                        <div id="divselPkg" style="text-align:center;font-size:14px;padding:50px;display:none;">
+                            <b>할인패키지 예약이 매진되어 예약이 불가능합니다.</b>
                         </div>
-                        <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselStay">
+                        <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselPkg">
                             <colgroup>
-                                <col style="width:100px;">
-                                <col style="width:70px;">
+                                <col style="width:auto;">
                                 <col style="width:auto;">
                                 <col style="width:45px;">
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th style="text-align:center;">숙소종류</th>
-                                    <th style="text-align:center;">날짜</th>
-                                    <th style="text-align:center;">인원</th>
+                                    <th style="text-align:center;">패키지종류</th>
+                                    <th style="text-align:center;">시간</th>
                                     <th style="text-align:center;"></th>
                                 </tr>
                                 <tr>
@@ -403,60 +401,73 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <?
                                         $i = 0;
                                         $sel1 = "";
-                                        foreach($arrOpt["stay"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
+                                        $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
+                                        $opt_info = "";
+                                        foreach($arrOpt["pkg"] as $arrlesson){
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" stay_day="'.$arrlesson["stay_day"].'"  optsexM="N" optsexW="N" opttime="'.$arrlesson["opttime"].'" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
+                                                foreach(explode("|", $arrlesson["opttime"]) as $arrtime){
+                                                    if($arrtime != ""){
+                                                        $sel2 .= '<option value="'.$arrtime.'">'.$arrtime.'</option>';
+                                                    }
+                                                }
+
                                                 $sel3 = $arrlesson["opt_sexM"];
                                                 $sel4 = $arrlesson["opt_sexW"];
+                                                $opt_info = $arrlesson["opt_info"];
                                             }
                                         
                                             $i++;
                                         }
                                         ?>
-                                        <select id="selStay" name="selStay" class="select" onchange="fnResChange(this, 'selStay');">
+                                        <select id="selPkg" name="selPkg" class="select" onchange="fnResChange('selPkg');">
                                             <?=$sel1?>
                                         </select>
 
-                                        <select id="hidselStay" style="display:none;">
+                                        <select id="hidselPkg" style="display:none;">
                                             <?=$sel1?>
                                         </select>
                                     </td>
-                                    <td style="text-align:center;line-height:2.5;">
-                                        <input type="text" id="strStayDate" name="strStayDate" readonly="readonly" value="" class="itx" cal="sdate" size="7" maxlength="7">
-                                        <select id="selStayDay" name="selStayDay" class="select" style="display:none;">
-                                            <?for($i=1;$i<=5;$i++){?>
-                                                <option value="<?=$i?>박"><?=$i?> 박</option>
-                                            <?}?>
-                                        </select>						
+                                    <td style="text-align:center;">
+                                        <select id="selPkgTime" name="selPkgTime" class="select">
+                                            <?=$sel2?>
+                                        </select>
                                     </td>
-                                    <td style="text-align:center;line-height:2.5;">
+                                    <td style="text-align:center;" rowspan="3">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('pkg', this);">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;line-height:2.5;" colspan="2">
                                         <span>
-                                            남 : 
-                                            <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
-                                            <select id="selStayM" name="selStayM" class="select">
+                                            남:
+                                            <span style="display:none;"><select class="select"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
+                                            <select id="selPkgM" name="selPkgM" class="select">
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명&nbsp;&nbsp;
+                                            </select>명&nbsp;
                                         </span>
                                         <span>
-                                            여 : 
-                                            <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
-                                            <select id="selStayW" name="selStayW" class="select">
+                                            여:
+                                            <span style="display:none;"><select class="select"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
+                                            <select id="selPkgW" name="selPkgW" class="select">
                                             <?for($i=0;$i<=$sel4;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
                                             </select>명
                                         </span>
                                     </td>
-                                    <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(2, this);">
-                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" id="pkgText"></td>
                                 </tr>
                             <tbody>
                         </table>
-                    </div> 
+                    </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
                         <div class="gg_first" style="padding-top:10px;">바베큐예약</div>
@@ -480,18 +491,23 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <?
                                         $i = 0;
                                         $sel1 = "";
+                                        $sel2 = "";
+                                        $sel3 = "";
+                                        $sel4 = "";
+                                        $opt_info = "";
                                         foreach($arrOpt["bbq"] as $arrlesson){
-                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'|'.$arrlesson["stay_day"].'">'.$arrlesson["optname"].'</option>';
+                                            $sel1 .= '<option soldout="'.$arrlesson["optseq"].'" opt_info="'.$arrlesson["opt_info"].'" opt_sexM="N" opt_sexW="N" value="'.$arrlesson["optseq"].'|'.$arrlesson["optname"].'|'.$arrlesson["sell_price"].'">'.$arrlesson["optname"].'</option>';
                                             
                                             if($i == 0){
                                                 $sel3 = $arrlesson["opt_sexM"];
                                                 $sel4 = $arrlesson["opt_sexW"];
+                                                $opt_info = $arrlesson["opt_info"];
                                             }
                                         
                                             $i++;
                                         }
                                         ?>
-                                        <select id="selBBQ" name="selBBQ" class="select" onchange="fnResChange(this, 'selBBQ');">
+                                        <select id="selBBQ" name="selBBQ" class="select" onchange="fnResChange('selBBQ');">
                                             <?=$sel1?>
                                         </select>
 
@@ -502,62 +518,62 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     </td>
                                     <td style="text-align:center;line-height:2.5;">
                                         <span>
-                                            남 : 
+                                            남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="selBBQM" name="selBBQM" class="select">
                                             <?for($i=0;$i<=$sel3;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명&nbsp;&nbsp;
+                                            </select>&nbsp;
                                         </span>
                                         <span>
-                                            여 : 
+                                            여:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
                                             <select id="selBBQW" name="selBBQW" class="select">
                                             <?for($i=0;$i<=$sel4;$i++){?>
                                                 <option value="<?=$i?>"><?=$i?></option>
                                             <?}?>
-                                            </select>명
+                                            </select>
                                         </span>
                                     </td>
-                                    <td style="text-align:center;">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd(3, this);">
+                                    <td style="text-align:center;" rowspan="2">
+                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('bbq', this);">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" id="bbqText"></td>
                                 </tr>
                             <tbody>
                         </table>
-                    </div>                  
+                    </div>                 
                 </form>
                 </div>
 
-                <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
-				<span style="display:;">
+                <form id="frmRes" method="post" target="ifrmResize" autocomplete="off" style="display:none;">
+				<span>
 					<input type="hidden" id="resselDate" name="resselDate" value="" />
 					<input type="hidden" id="resparam" name="resparam" value="SurfShopI" />
 					<input type="hidden" id="shopseq" name="shopseq" value="<?=$reqSeq?>" />
 					<input type="hidden" id="resNumAll" name="resNumAll" value="" />
 				</span>
-                <div class="bd" style="padding:0 4px;">
+                <div class="bd" style="padding:0 4px;" id="divConfirm">
                     <p class="restitle" style="padding-top:30px;">신청한 예약 정보</p>
                     <table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:5px;">
                         <colgroup>
-                            <col style="width:90px;">
-                            <col style="width:120px;">
                             <col style="width:auto;">
-                            <col style="width:40px;">
+                            <col style="width:70px;">
+                            <col style="width:35px;">
                         </colgroup>
                         <tbody id="surfAdd">
-                            <tr>
-                                <th style='text-align:center;'>예약종류</th>
-                                <th style='text-align:center;'>날짜/시간</th>
-                                <th style='text-align:center;'>예약인원</th>
-                                <th></th>
-                            </tr>
                         </tbody>
                     </table>
 
                     <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
+                        <colgroup>
+                            <col style="width:100px;">
+                            <col style="width:auto;">
+                        </colgroup>
                         <tbody>
                             <tr>
                                 <th><em>*</em> 이름</th>
@@ -570,9 +586,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
-                                    <input type="number" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
-                                    <input type="number" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
+                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="<?=$userphone[0]?>" size="3" maxlength="3" class="tel itx" style="width:50px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="<?=$userphone[1]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="<?=$userphone[2]?>" size="4" maxlength="4" class="tel itx" style="width:60px;" oninput="maxLengthCheck(this)">
                                 </td>
                             </tr>
                             <tr>
@@ -582,7 +598,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
-                                    <input type="text" id="coupon" name="coupon" value="" class="itx" maxlength="10">
+                                    <input type="text" id="coupon" name="coupon" value="" size="10" class="itx" maxlength="10">
                                     <input type="hidden" id="couponcode" name="couponcode" value="">
                                     <input type="hidden" id="couponprice" name="couponprice" value="0">
                                     <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
@@ -639,21 +655,11 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
 <? include '_layout_bottom.php'; ?>
 
+<script src="js/surf.js"></script>
 <script src="js/surfview.js"></script>
+<script src="js/surfview_shop.js"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
-var startTab = <?=$startTab?>;
-var main = new Object();
-
-$j(document).ready(function(){
-    if(startTab < 4){
-        $j(".fixed_wrap3 li").removeClass("on3");
-        $j("#resTab" + startTab).addClass("on3");
-
-        $j("div[area=shopListArea]").css("display", "none");
-        $j("div[area=shopListArea]").eq(startTab).css("display", "block");
-    }
-});
 
 var mapView = 1;
 var sLng = "<?=$rowMain["shoplat"]?>";
@@ -661,8 +667,9 @@ var sLat = "<?=$rowMain["shoplng"]?>";
 var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50,
     MARKER_SPRITE_POSITION2 = {
-        '<?=$bbqtitle?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '#당찬패키지  #해변바베큐파티 #서핑버스 ', 0, 64, '<?=$rowMain["shop_img"]?>', '']
+        '<?=$rowMain["shopname"]?>': [0, MARKER_SPRITE_Y_OFFSET * 3, sLng, sLat, '<?=$rowMain["shopaddr"]?>', '구매 <b><?=number_format($rowMain["sell_cnt"])?></b>개', 0, <?=$reqSeq?>, '<?=$rowMain["shop_img"]?>', '<?=$rowMain["categoryname"]?>', '<?=$rowMain["shopname"]?>']
     };
 
+var main = new Object();
 <?=$SoldoutList?>
 </script>

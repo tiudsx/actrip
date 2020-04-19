@@ -249,6 +249,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div class="bd" style="padding:0 4px;" id="divConfirm">
                     <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
+                        <colgroup>
+                            <col style="width:100px;">
+                            <col style="width:auto;">
+                        </colgroup>
                         <tbody>
                             <tr>
                                 <th><em>*</em> 이름</th>
@@ -269,7 +273,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
-                                    <input type="text" id="coupon" name="coupon" value="" class="itx" maxlength="10">
+                                    <input type="text" id="coupon" name="coupon" value="" size="10" class="itx" maxlength="10">
                                     <input type="hidden" id="couponcode" name="couponcode" value="">
                                     <input type="hidden" id="couponprice" name="couponprice" value="0">
                                     <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />

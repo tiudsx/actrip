@@ -203,10 +203,10 @@ if($count == 1){
 	
 			$ResOptInfo = "";
 			$ResOptStay = "";
+			$optname = $rowSub["optname"];
+			$optinfo = $rowSub['optsubname'];
 			if($rowSub['sub_title'] == "lesson"){
 				$stayPlus = $rowSub['res_bus']; //숙박 여부
-				$optname = $rowSub["optname"];
-				$optinfo = $rowSub['optsubname'];
 				
 				$arrdate = explode("-", $rowSub['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
 				$s_Y=$arrdate[0]; // 지정된 년도 
