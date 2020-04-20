@@ -155,10 +155,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                    <?if($param == "bbq_yy"){?>
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder" />
-                    <?}else{?>
-                    <?}?>
+                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/res_step.jpg" class="placeholder">
+                    <?
+                    if($rowMain["content_type"] == "html"){
+                        echo $rowMain["content"];
+                    }else{
+                        include 'surfview/'.$rowMain["content"];
+                    }
+                    ?>
                 </div>
                 <div id="shopmap">
                     <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:490px;" src="surf/surfmap.html"></iframe>
