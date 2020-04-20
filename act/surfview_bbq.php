@@ -2,6 +2,7 @@
 
 <?
 $param_mid = $_REQUEST["mid"];
+$reqView = $_REQUEST["view"];
 
 if($param_mid == ""){
 	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
@@ -155,10 +156,15 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                    <?if($param == "bbq_yy"){?>
-                    <img src="https://surfenjoy.cdn3.cafe24.com/content/res_bus07.jpg" class="placeholder" />
-                    <?}else{?>
-                    <?}?>
+                    <?
+                    include 'surfview_content.php';
+
+                    if($rowMain["content_type"] == "html"){
+                        echo $rowMain["content"];
+                    }else{
+                        include 'surfview/'.$rowMain["content"];
+                    }
+                    ?>
                 </div>
                 <div id="shopmap">
                     <iframe scrolling="no" frameborder="0" id="ifrmMap" name="ifrmMap" style="width:100%;height:490px;" src="surf/surfmap.html"></iframe>
@@ -217,24 +223,19 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">강습예약</div>
+                        <!-- <div class="gg_first" style="padding-top:10px;">강습예약</div> -->
                         <div id="divsellesson" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>강습이 매진되어 예약이 불가능합니다.</b>
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbsellesson">
                             <colgroup>
+                                <col style="width:80px;">
                                 <col style="width:auto;">
-                                <col style="width:auto;">
-                                <col style="width:45px;">
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th style="text-align:center;">강습종류</th>
-                                    <th style="text-align:center;">시간</th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;">
+                                    <th style="text-align:center;">종류</th>
+                                    <td>
                                         <?
                                         $i = 0;
                                         foreach($arrOpt["lesson"] as $arrlesson){
@@ -262,18 +263,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <select id="hidsellesson" style="display:none;">
                                             <?=$sel1?>
                                         </select>
-                                    </td>
-                                    <td style="text-align:center;">
                                         <select id="sellessonTime" name="sellessonTime" class="select">
                                             <?=$sel2?>
-                                        </select>							
-                                    </td>
-                                    <td style="text-align:center;" rowspan="3">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('lesson', this);">
+                                        </select>	
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:center;line-height:2.5;" colspan="2">
+                                    <th style="text-align:center;">인원</th>
+                                    <td>
                                         <span>
                                             남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
@@ -295,32 +292,27 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="stayText"></td>
+                                    <td colspan="2"><img src="images/icon/check.svg" alt="" style="width: 17px; vertical-align: middle; margin-right: 8px;"><label id="stayText"></label></td>
                                 </tr>
                             <tbody>
                         </table>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('lesson', this);"></div>
                     </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">렌탈예약</div>
+                        <!-- <div class="gg_first" style="padding-top:10px;">렌탈예약</div> -->
                         <div id="divselRent" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>렌탈예약이 매진되어 예약이 불가능합니다.</b>
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselRent">
                             <colgroup>
+                                <col style="width:80px;">
                                 <col style="width:auto;">
-                                <col style="width:auto;">
-                                <col style="width:45px;">
-
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th style="text-align:center;">렌탈종류</th>
-                                    <th style="text-align:center;">인원</th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;">
+                                    <th style="text-align:center;">종류</th>
+                                        <td>
                                         <?
                                         $i = 0;
                                         $sel1 = "";
@@ -348,7 +340,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             <?=$sel1?>
                                         </select>
                                     </td>
-                                    <td style="text-align:center;">
+                                    </tr>
+                                <tr>
+                                    <th style="text-align:center;">인원</th>
+                                    <td>
                                         <span>
                                             남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
@@ -368,36 +363,29 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             </select>명
                                         </span>
                                     </td>
-                                    <td style="text-align:center;" rowspan="2">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('rent', this);">
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="rentText"></td>
+                                    <td colspan="2"><img src="images/icon/check.svg" alt="" style="width: 17px; vertical-align: middle; margin-right: 8px;"><label id="rentText"></label></td>
                                 </tr>
                             <tbody>
                         </table>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('rent', this);"></div>
                     </div>
                     
                     <div class="bd" area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">패키지예약</div>
+                        <!-- <div class="gg_first" style="padding-top:10px;">패키지예약</div> -->
                         <div id="divselPkg" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>할인패키지 예약이 매진되어 예약이 불가능합니다.</b>
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselPkg">
                             <colgroup>
+                                <col style="width:80px;">
                                 <col style="width:auto;">
-                                <col style="width:auto;">
-                                <col style="width:45px;">
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th style="text-align:center;">패키지종류</th>
-                                    <th style="text-align:center;">시간</th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;">
+                                    <th style="text-align:center;">종류</th>
+                                    <td>
                                         <?
                                         $i = 0;
                                         $sel1 = "";
@@ -430,18 +418,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         <select id="hidselPkg" style="display:none;">
                                             <?=$sel1?>
                                         </select>
-                                    </td>
-                                    <td style="text-align:center;">
                                         <select id="selPkgTime" name="selPkgTime" class="select">
                                             <?=$sel2?>
                                         </select>
                                     </td>
-                                    <td style="text-align:center;" rowspan="3">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('pkg', this);">
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:center;line-height:2.5;" colspan="2">
+                                    <th style="text-align:center;">인원</th>
+                                    <td>
                                         <span>
                                             남:
                                             <span style="display:none;"><select class="select"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
@@ -463,31 +447,27 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="pkgText"></td>
+                                    <td colspan="2"><img src="images/icon/check.svg" alt="" style="width: 17px; vertical-align: middle; margin-right: 8px;"><label id="pkgText"></label></td>
                                 </tr>
                             <tbody>
                         </table>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('pkg', this);"></div>
                     </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
-                        <div class="gg_first" style="padding-top:10px;">바베큐예약</div>
+                        <!-- <div class="gg_first" style="padding-top:10px;">바베큐예약</div> -->
                         <div id="divselBBQ" style="text-align:center;font-size:14px;padding:50px;display:none;">
                             <b>바베큐예약이 매진되어 예약이 불가능합니다.</b>
                         </div>
                         <table class="et_vars exForm bd_tb" style="width:100%;" id="tbselBBQ">
                             <colgroup>
-                                <col style="width:100px;">
+                                <col style="width:80px;">
                                 <col style="width:auto;">
-                                <col style="width:45px;">
                             </colgroup>
                             <tbody>
                                 <tr>
                                     <th style="text-align:center;">종류</th>
-                                    <th style="text-align:center;">인원</th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;">
+                                    <td>
                                         <?
                                         $i = 0;
                                         $sel1 = "";
@@ -516,7 +496,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                         </select>
                                         <input type="hidden" id="strBBQDate" name="strBBQDate" readonly="readonly" value="" class="itx" cal="sdate" size="7" maxlength="7">		
                                     </td>
-                                    <td style="text-align:center;line-height:2.5;">
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center;">인원</th>
+                                    <td>
                                         <span>
                                             남:
                                             <span style="display:none;"><select class="select" class="soldsel"><option value="0" style="color:red; background:#EEFF00;">매진</option></select></span>
@@ -536,16 +519,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                             </select>
                                         </span>
                                     </td>
-                                    <td style="text-align:center;" rowspan="2">
-                                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color btnsize1" value="신청" onclick="fnSurfAdd('bbq', this);">
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" id="bbqText"></td>
+                                    <td colspan="2"><img src="images/icon/check.svg" alt="" style="width: 17px; vertical-align: middle; margin-right: 8px;"><label id="bbqText"></label></td>
                                 </tr>
                             <tbody>
                         </table>
-                    </div>                 
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('bbq', this);"></div>
+                    </div>                  
                 </form>
                 </div>
 
@@ -660,6 +641,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script src="js/surfview_shop.js"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
+
+<?if($reqView == 1){ echo '$j(".vip-tabnavi li").eq(1).click();'; }?>
 
 var mapView = 1;
 var sLng = "<?=$rowMain["shoplat"]?>";

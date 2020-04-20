@@ -243,6 +243,13 @@ if($count == 1){
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
 		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신건은 예약확정 후 이용가능합니다.\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
+		$navilink = "/surfview?view=1&seq=".$shopSeq;
+		if($shopSeq == 13){
+			$navilink = "/bbq_yy?view=1";
+		}else if($shopSeq == 15){
+			$navilink = "/bbq_dh?view=1";
+		}
+
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
@@ -252,7 +259,7 @@ if($count == 1){
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"notice" //지도로 위치확인
+			, "link2"=>$navilink //지도로 위치확인
 			, "link3"=>"eatlist" //제휴업체 목록
 			, "link4"=>"event" //공지사항
 			, "link5"=>""
@@ -266,8 +273,7 @@ if($count == 1){
 		$rowshop = mysqli_fetch_array($result_setlist);
 
 		$admin_tel = $rowshop["tel_kakao"];
-		$admin_tel = $rowshop["tel_kakao"];
-		$admin_tel = "010-4437-0009";
+		// $admin_tel = "010-4437-0009";
 
 		$msgTitle = '액트립 ['.$userName.']님 예약안내';
 		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약내역 확인 후 승인처리 부탁드립니다.\n      - 예약이 불가할 경우 임시취소해주시면 취소진행하겠습니다.\n\n';

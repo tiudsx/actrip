@@ -273,7 +273,7 @@ if($param == "RtnPrice"){
                 $rowshop = mysqli_fetch_array($result_setlist);
 
                 $admin_tel = $rowshop["tel_kakao"];
-                $admin_tel = "010-4437-0009";
+                // $admin_tel = "010-4437-0009";
 
                 $msgTitle = '액트립 ['.$userName.']님 예약취소';
                 $kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 예약취소건 안내입니다.\n\n액트립 예약정보 [예약취소]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 예약취소내역 확인부탁드립니다.\n\n';

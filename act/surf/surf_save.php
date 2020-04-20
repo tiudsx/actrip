@@ -361,7 +361,7 @@ if($param == "BusI"){
                                 SET use_yn = 'Y'
                                 ,user_ip = '$user_ip'
                                 ,use_date = now()
-                            WHERE seq = 'BUS' AND coupon_code = '$coupon';";
+                            WHERE seq = 'SUR' AND coupon_code = '$coupon';";
             $result_set = mysqli_query($conn, $select_query);
             if(!$result_set) goto errGoSurf;
         }

@@ -25,6 +25,8 @@ $select_query = "SELECT a.code AS areacode, a.codename as areaname, b.code
                     FROM `AT_CODE` a INNER JOIN `AT_CODE` b
                         ON a.uppercode = 'surf'
                             AND a.code = b.uppercode
+                            AND a.use_yn = 'Y'
+                            AND b.use_yn = 'Y'
                             AND b.ordernum = 1";
 $result_setlist = mysqli_query($conn, $select_query);
 

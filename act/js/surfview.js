@@ -253,8 +253,8 @@ function fnResListInit(date){
 		}
 	}
 	
-	if($j("#selBBQ").length > 0 && $j("#selBBQ option").length > 0){
-		priceText = " (" + commify(parseInt($j("#selBBQ").val().split('|')[2], 10) + rent_price) + "원)";
+	if($j("#selRent").length > 0 && $j("#selRent option").length > 0){
+		priceText = " (" + commify(parseInt($j("#selRent").val().split('|')[2], 10) + rent_price) + "원)";
 		infoText = $j("#selRent option:selected").text();
 		$j("#rentText").text(infoText + priceText);
 	}
@@ -267,7 +267,9 @@ function fnResListInit(date){
 		var opttime = $j("#selPkg option:selected").attr("opttime");
 		if(opttime == ""){
 			$j("#selPkgTime").html("<option value=''>-</option>");
+			$j("#selPkgTime").css("display", "none");
 		}else{
+			$j("#selPkgTime").css("display", "");
 			var opttimeHtml = "";
 			opttime.split('|').forEach(function(el){
 				if(el != ""){
@@ -453,7 +455,9 @@ function fnResChange(key){
 		var opttime = $j("#selPkg option:selected").attr("opttime");
 		if(opttime == ""){
 			$j("#selPkgTime").html("<option value=''>-</option>");
+			$j("#selPkgTime").css("display", "none");
 		}else{
+			$j("#selPkgTime").css("display", "");
 			var opttimeHtml = "";
 			opttime.split('|').forEach(function(el){
 				if(el != ""){
