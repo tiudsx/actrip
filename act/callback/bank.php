@@ -252,7 +252,7 @@ if($count == 1){
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"notice" //지도로 위치확인
+			, "link2"=>"/surfview?view=1&seq=".$shopSeq //지도로 위치확인
 			, "link3"=>"eatlist" //제휴업체 목록
 			, "link4"=>"event" //공지사항
 			, "link5"=>""

@@ -53,7 +53,7 @@ h2{padding-top: 30px; text-indent: 20px;}
 #popShop .popShopSldr .swiper-slide img{width: 100%; border-radius: 7px 7px 0 0;}
 #popShop .popShopSldr .swiper-slide p{text-overflow:ellipsis; text-indent: 20px; text-align: left;}
 #popShop .popShopSldr .swiper-slide p:nth-child(2){font-size:.7em; color:#949494;font-weight: 300;}
-#popShop .popShopSldr .swiper-slide p:nth-child(3){font-size:.9em;}
+#popShop .popShopSldr .swiper-slide p:nth-child(3){font-size:.8em;}
 #popShop .popShopSldr .swiper-slide p:nth-child(4){font-size:.7em; text-align: right; margin-right: 15px;}
 #popShop .popShopSldr .swiper-pagination{bottom:0;}
 

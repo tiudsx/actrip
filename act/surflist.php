@@ -81,8 +81,8 @@ $notSeq = "";
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
-                                    <img src="images/icon/house.svg" alt="">
-                                    <img src="images/icon/pet.svg" alt="">
+                                    <!-- <img src="images/icon/house.svg" alt=""> -->
+                                    <!-- <img src="images/icon/pet.svg" alt=""> -->
                                     <img src="images/icon/toilet.svg" alt="">
                                 </span>
                             </li>
@@ -112,6 +112,15 @@ $notSeq = "";
                                     </p>
                                     <p><?=number_format($arrlecture[2])?>원</p>
                                 </span>
+                                <?if($arrrental[0] == "숙박"){?>
+                                <span class="rental">
+                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p>
+                                    <?if($arrrental[2] != 0) echo number_format($arrrental[2]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrrental[3])?>원</p>
+                                </span>
+                                <?}else{?>
                                 <span class="rental">
                                     <p><span><?=$arrrental[0]?></span></p>
                                     <p>
@@ -119,6 +128,7 @@ $notSeq = "";
                                     </p>
                                     <p><?=number_format($arrrental[2])?>원</p>
                                 </span>
+                                <?}?>
                                 
                             </li>
                             <?if($row["sub_tag"] != ""){?>
@@ -164,8 +174,8 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
-                                    <img src="images/icon/house.svg" alt="">
-                                    <img src="images/icon/pet.svg" alt="">
+                                    <!-- <img src="images/icon/house.svg" alt=""> -->
+                                    <!-- <img src="images/icon/pet.svg" alt=""> -->
                                     <img src="images/icon/toilet.svg" alt="">
                                 </span>
                             </li>
@@ -195,6 +205,15 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                     </p>
                                     <p><?=number_format($arrlecture[2])?>원</p>
                                 </span>
+                                <?if($arrrental[0] == "숙박"){?>
+                                <span class="rental">
+                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p>
+                                    <?if($arrrental[2] != 0) echo number_format($arrrental[2]).'원';?>
+                                    </p>
+                                    <p><?=number_format($arrrental[3])?>원</p>
+                                </span>
+                                <?}else{?>
                                 <span class="rental">
                                     <p><span><?=$arrrental[0]?></span></p>
                                     <p>
@@ -202,6 +221,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                     </p>
                                     <p><?=number_format($arrrental[2])?>원</p>
                                 </span>
+                                <?}?>
                                 
                             </li>
                             <?if($row["sub_tag"] != ""){?>
