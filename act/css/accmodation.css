@@ -86,8 +86,8 @@ line-height: 25px;}
 /*.noThumb*/
 .noThumb .thumbnail{display: none;}
 .noThumb .contents{width: 95%; margin: 0 0 2% 5%}
-.noThumb .contents h3{width: 58%; height: 34px; margin: 0; font-size: 1.7em; line-height: 1em;}
-.noThumb .contents>span{width: 37%; height: 34px; line-height: 36px; text-align: right; margin-right: 5%;}
+.noThumb .contents h3{width: 65%; height: 34px; margin: 0; font-size: 1.7em; line-height: 1em;}
+.noThumb .contents>span{width: 30%; height: 34px; line-height: 36px; text-align: right; margin-right: 5%;}
 .noThumb .contents p{display: inline-block; margin-right: 3%}
 .noThumb .contents p:last-child{display: block;}
 
