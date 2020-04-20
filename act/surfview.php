@@ -163,8 +163,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/res_step.jpg" class="placeholder">
                     <?
+                    include 'surfview_content.php';
+
                     if($rowMain["content_type"] == "html"){
                         echo $rowMain["content"];
                     }else{
@@ -648,7 +649,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
 
 <?if($reqView == 1){ echo '$j(".vip-tabnavi li").eq(1).click();'; }?>
-
 
 var mapView = 1;
 var sLng = "<?=$rowMain["shoplat"]?>";
