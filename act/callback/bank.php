@@ -250,18 +250,33 @@ if($count == 1){
 			$navilink = "/bbq_dh?view=1";
 		}
 
+		// $arrKakao = array(
+		// 	"gubun"=> $code
+		// 	, "admin"=> "N"
+		// 	, "smsTitle"=> $msgTitle
+		// 	, "userName"=> $userName
+		// 	, "tempName"=> "at_res_step1"
+		// 	, "kakaoMsg"=>$kakaoMsg
+		// 	, "userPhone"=> $userPhone
+		// 	, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+		// 	, "link2"=>$navilink //지도로 위치확인
+		// 	, "link3"=>"eatlist" //제휴업체 목록
+		// 	, "link4"=>"event" //공지사항
+		// 	, "link5"=>""
+		// 	, "smsOnly"=>"N"
+		// );
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_res_step2"
+			, "tempName"=> "at_res_step1"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>$navilink //지도로 위치확인
-			, "link3"=>"eatlist" //제휴업체 목록
-			, "link4"=>"event" //공지사항
+			, "link2"=>"eatlist" //제휴업체 목록
+			, "link3"=>"event" //공지사항
+			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
 		);

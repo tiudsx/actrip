@@ -34,8 +34,8 @@ function sendKakao($arrKakao){
 function kakaoMsg($arrKakao){
     if($arrKakao["tempName"] == "at_res_step1"){ //입금대기 기본정보
         $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},';
-	}else if($arrKakao["tempName"] == "at_res_step2"){ //서핑 예약확정 정보
-		$btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"지도로 위치확인","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link4"].'"},';
+	}else if($arrKakao["tempName"] == "at_res_step5"){ //서핑 예약확정 정보
+		$btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"지도로 위치보기","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link4"].'"},';
 	}else if($arrKakao["tempName"] == "at_res_step3"){ //입금대기 기본정보
 		$btnList = '"button1":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},';
 	}else if($arrKakao["tempName"] == "at_shop_step1"){ //입점샵 예약안내
