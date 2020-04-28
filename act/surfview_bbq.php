@@ -642,7 +642,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
 
+$j(document).ready(function() {
 <?if($reqView == 1){ echo '$j(".vip-tabnavi li").eq(1).click();'; }?>
+});
 
 var mapView = 1;
 var sLng = "<?=$rowMain["shoplat"]?>";

@@ -6,6 +6,7 @@ include __DIR__.'/../surf/surffunc.php';
 
 $param = $_REQUEST["resparam"];
 $gubun = $_REQUEST["gubun"];
+$to = "lud1@naver.com,ttenill@naver.com";
 
 /*
 예약상태
@@ -230,39 +231,39 @@ if($param == "RtnPrice"){
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
-                $to = $user_email;
-
-                if($code == "bus"){
-                    $info1_title = "좌석안내";
-                    $mailform = "surfbus_return@actrip.co.kr";
-                }else{
-                    $info1_title = "신청목록";
-                    $mailform = "surfshop_return@actrip.co.kr";
-                }
-                $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $mailmsgInfo));
-                $info2_title = "";
-                $info2 = "";
-
-                $arrMail = array(
-                    "gubun"=> $code
-                    , "gubun_step" => 4
-                    , "gubun_title" => $shopname
-                    , "mailto"=> $to
-                    , "mailfrom"=> $mailform
-                    , "mailname"=> "actrip"
-                    , "userName"=> $userName
-                    , "ResNumber"=> $ResNumber
-                    , "userPhone" => $userPhone
-                    , "etc" => $etc
-                    , "totalPrice1" => number_format($TotalPrice-$TotalFee)."원"
-                    , "totalPrice2" => "(결제금액 ".number_format($TotalPrice)."원 - 환불수수료 ".number_format($TotalFee)."원)"
-                    , "banknum" => str_replace('|', ' / ', $FullBankText)
-                    , "info1_title"=> $info1_title
-                    , "info1"=> $info1
-                    , "info2_title"=> $info2_title
-                    , "info2"=> $info2
-                );
+                $to .= $user_email;
             }
+
+            if($code == "bus"){
+                $info1_title = "좌석안내";
+                $mailform = "surfbus_return@actrip.co.kr";
+            }else{
+                $info1_title = "신청목록";
+                $mailform = "surfshop_return@actrip.co.kr";
+            }
+            $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $mailmsgInfo));
+            $info2_title = "";
+            $info2 = "";
+
+            $arrMail = array(
+                "gubun"=> $code
+                , "gubun_step" => 4
+                , "gubun_title" => $shopname
+                , "mailto"=> $to
+                , "mailfrom"=> $mailform
+                , "mailname"=> "actrip"
+                , "userName"=> $userName
+                , "ResNumber"=> $ResNumber
+                , "userPhone" => $userPhone
+                , "etc" => $etc
+                , "totalPrice1" => number_format($TotalPrice-$TotalFee)."원"
+                , "totalPrice2" => "(결제금액 ".number_format($TotalPrice)."원 - 환불수수료 ".number_format($TotalFee)."원)"
+                , "banknum" => str_replace('|', ' / ', $FullBankText)
+                , "info1_title"=> $info1_title
+                , "info1"=> $info1
+                , "info2_title"=> $info2_title
+                , "info2"=> $info2
+            );
             
             sendMail($arrMail); //메일 발송
             
@@ -424,28 +425,28 @@ if($param == "RtnPrice"){
                 
                 // 이메일 발송
                 if(strrpos($user_email, "@") > 0){
-                    $to = $user_email;
-
-                    $arrMail = array(
-                        "gubun"=> "bus"
-                        , "gubun_step" => 9
-                        , "gubun_title" => $shopname
-                        , "mailto"=> $to
-                        , "mailfrom"=> "surfbus_point@actrip.co.kr"
-                        , "mailname"=> "actrip"
-                        , "userName"=> $userName
-                        , "ResNumber"=> $ResNumber
-                        , "userPhone" => $userPhone
-                        , "etc" => $etc
-                        , "totalPrice1" => ""
-                        , "totalPrice2" => ""
-                        , "banknum" => ""
-                        , "info1_title"=> $info1_title
-                        , "info1"=> $info1
-                        , "info2_title"=> $info2_title
-                        , "info2"=> $info2
-                    );
+                    $to .= $user_email;
                 }
+
+                $arrMail = array(
+                    "gubun"=> "bus"
+                    , "gubun_step" => 9
+                    , "gubun_title" => $shopname
+                    , "mailto"=> $to
+                    , "mailfrom"=> "surfbus_point@actrip.co.kr"
+                    , "mailname"=> "actrip"
+                    , "userName"=> $userName
+                    , "ResNumber"=> $ResNumber
+                    , "userPhone" => $userPhone
+                    , "etc" => $etc
+                    , "totalPrice1" => ""
+                    , "totalPrice2" => ""
+                    , "banknum" => ""
+                    , "info1_title"=> $info1_title
+                    , "info1"=> $info1
+                    , "info2_title"=> $info2_title
+                    , "info2"=> $info2
+                );
             }else{
 
             }
