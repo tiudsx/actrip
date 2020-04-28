@@ -114,7 +114,7 @@ $notSeq = "";
                                 </span>
                                 <?if($arrrental[0] == "숙박"){?>
                                 <span class="rental">
-                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p><span><?=$arrrental[1]?></span></p>
                                     <p>
                                     <?if($arrrental[2] != 0) echo number_format($arrrental[2]).'원';?>
                                     </p>
@@ -207,7 +207,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                 </span>
                                 <?if($arrrental[0] == "숙박"){?>
                                 <span class="rental">
-                                    <p><span><?=$arrrental[0]?></span></p>
+                                    <p><span><?=$arrrental[1]?></span></p>
                                     <p>
                                     <?if($arrrental[2] != 0) echo number_format($arrrental[2]).'원';?>
                                     </p>
