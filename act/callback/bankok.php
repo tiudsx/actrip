@@ -99,7 +99,7 @@ if($count == 1){
 	}
 	
 	$msgTitle = '액트립 '.$shopname.' 예약안내';
-	$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신건은 예약확정 후 이용가능합니다.\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+	$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 에약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
 	$navilink = "/surfview?view=1&seq=".$shopSeq;
 	if($shopSeq == 13){
