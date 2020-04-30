@@ -18,6 +18,7 @@ $to = "lud1@naver.com,ttenill@naver.com";
     5 : 환불완료
     6 : 임시취소
     7 : 취소
+    8 : 입금완료
 */
 $success = true;
 if($param == "RtnPrice"){

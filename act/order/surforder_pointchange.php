@@ -67,6 +67,7 @@ $count = mysqli_num_rows($result_setlist);
                     5 : 환불완료
                     6 : 임시취소
                     7 : 취소
+                    8 : 입금완료
                 */
                     $ResColor = "";
                     $ResCss = "";
@@ -77,7 +78,7 @@ $count = mysqli_num_rows($result_setlist);
                     }else if($res_confirm == 1){
                         $ResConfirm = "확인중";
                         $ResColor = "rescolor2";
-                    }else if($res_confirm == 2 || $res_confirm == 6){
+                    }else if($res_confirm == 2 || $res_confirm == 6 || $res_confirm == 8){
                         $ResConfirm = "입금완료";
                         $ResColor = "rescolor2";
                     }else if($res_confirm == 3){

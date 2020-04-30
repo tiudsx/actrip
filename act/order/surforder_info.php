@@ -16,7 +16,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$chkView = 0;
 	$datDate = $row['res_date'];
 	if($datDate >= $now){
-		if($res_confirm == 0 || $res_confirm == 2 || $res_confirm == 6){
+		if($res_confirm == 0 || $res_confirm == 6){
 			$chkView = 1;
 		} else if($res_confirm == 3){
 			$cancelDate = date("Y-m-d", strtotime($datDate." -1 day"));
@@ -35,6 +35,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     5 : 환불완료
     6 : 임시취소
     7 : 취소
+    8 : 입금완료
 */
     $ResColor = "";
     $ResCss = "";
@@ -44,12 +45,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$totalPrice += $row['res_price'];
 		$shopbankview++;
 		$PointChangeChk++;
-	}else if($res_confirm == 1){
+	}else if($res_confirm == 1 || $res_confirm == 2){
 		$ResConfirm = "확인중";
 		$ResColor = "rescolor2";
 		$totalPrice += $row['res_price'];
 		$PointChangeChk++;
-	}else if($res_confirm == 2 || $res_confirm == 6){
+	}else if($res_confirm == 6 || $res_confirm == 8){
 		$ResConfirm = "입금완료";
 		$ResColor = "rescolor2";
 		$totalPrice += $row['res_price'];
