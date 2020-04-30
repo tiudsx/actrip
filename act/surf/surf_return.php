@@ -45,13 +45,13 @@ if($param == "RtnPrice"){
             $ResConfirm = $rowSub['res_confirm'];
             $ResPrice = $rowSub['res_totalprice'];
 
-            if(!($ResConfirm == "0" || $ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6")){
+            if(!($ResConfirm == "0" || $ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6" || $ResConfirm == "8")){
                 echo 'err';
                 exit;
             }
             $sDate = $rowSub['res_date'];
             
-            if($ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6"){
+            if($ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6" || $ResConfirm == "8"){
                 $boolConfirm = true;
             }
             
@@ -125,7 +125,7 @@ if($param == "RtnPrice"){
             $shopSeq = $rowSub['seq']; //입점샵 seq
             $code = $rowSub['code'];
 
-            if($ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6"){
+            if($ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6" || $ResConfirm == "8"){
                 $boolConfirm = true;
             }
 

@@ -281,7 +281,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$rowshop = mysqli_fetch_array($result_setlist);
 	
 		$admin_tel = $rowshop["tel_kakao"];
-		$admin_tel = "010-4437-0009";
+		// $admin_tel = "010-4437-0009";
 	
 		$msgTitle = '액트립 ['.$userName.']님 예약안내';
 		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 연락처 : '.$userPhone.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약확정이 완료되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n';

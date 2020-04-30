@@ -302,10 +302,10 @@ if($count == 1){
 
 		$arrMail = array(
 			"gubun"=> "surf"
-			, "gubun_step" => 3
+			, "gubun_step" => 8
 			, "gubun_title" => $shopname
             , "mailto"=> $to
-			, "mailfrom"=> "surfbus_res@actrip.co.kr"
+			, "mailfrom"=> "surfshop_res@actrip.co.kr"
 			, "mailname"=> "actrip"
 			, "userName"=> $userName
 			, "ResNumber"=> $ResNumber

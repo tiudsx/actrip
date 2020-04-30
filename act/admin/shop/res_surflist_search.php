@@ -1,101 +1,71 @@
 <?
 $reqDate = $_REQUEST["selDate"];
-$selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
-
+if($reqDate == ""){
+    $selDate = str_replace("-", "", date("Y-m-d"));
+}else{
+	include __DIR__.'/../../db.php';
+    $shopseq = $_REQUEST["seq"];
+    $selDate = $reqDate;
+}
 $Year = substr($selDate,0,4);
 $Mon = substr($selDate,4,2);
-if($reqDate != ""){
+
+if($_REQUEST["chkResConfirm"] == ""){
+    $res_confirm = "8";
+}else{
 	include __DIR__.'/../../db.php';
-	$shopseq = $_REQUEST["seq"];
+    $res_confirm = "";
+    
+    $chkResConfirm = $_REQUEST["chkResConfirm"];
+    $sDate = $_REQUEST["sDate"];
+    $eDate = $_REQUEST["eDate"];
+    $schText = trim($_REQUEST["schText"]);
+    $shopseq = $_REQUEST["seq"];
+    
+    for($i = 0; $i < count($chkResConfirm); $i++){
+        $res_confirm .= $chkResConfirm[$i].',';
+    }
+    $res_confirm .= '99';
 }
 
-$datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
-$x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
-$s_Y=$x[0]; // 지정된 년도 
-$s_m=$x[1]; // 지정된 월
-$s_d=$x[2]; // 지정된 요일
+if($sDate == ""){
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                        WHERE Month(b.res_date) = '.$Mon.'
+                            AND b.seq = '.$shopseq.'
+                            AND b.res_confirm IN ('.$res_confirm.')
+                            ORDER BY b.resnum, b.ressubseq';
+}else{
+    if($schText != ""){
+        $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
+    }
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                        WHERE b.seq = '.$shopseq.'
+                            AND b.res_confirm IN ('.$res_confirm.')
+                            AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))'.$schText.'
+                            ORDER BY b.resnum, b.ressubseq';
+}
 
-$selMonth = date("Ym",mktime(0,0,0,$s_m,$s_d,$s_Y));
-$n_m= date("Ym",mktime(0,0,0,$s_m+1,$s_d,$s_Y)); // 다음달 (빠뜨린 부분 추가분이에요)
-$p_m= date("Ym",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 이전달
-
-$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-					ON a.resnum = b.resnum 
-                    WHERE Month(b.res_date) = '.$Mon.'
-                        AND b.seq = '.$shopseq.'
-                        AND b.res_confirm IN (2, 3, 6, 8, 5)
-                        ORDER BY b.resnum, b.ressubseq';
-                        
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
 if($count == 0){
-
     $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
 
 ?>
-    <div class="top_area_zone">
-        <section class="shoptitle">
-            <div style="padding:6px;">
-                <h1><?=$rowMain["shopname"]?></h1>
-                <a class="reviewlink">
-                    <span class="reviewcnt">예약상태가 [입금완료], [확정] 예약건만 목록에 표시됩니다. </span>
-                </a>
-                <div class="shopsubtitle">월별 예약목록 보기</div>
-            </div>
-        </section>
-
-        <section class="notice">
-            <div class="vip-tabwrap">
-                <div id="tabnavi" class="fixed1" style="top: 49px;">
-                    <div class="vip-tabnavi">
-                        <ul>
-                            <li class="on"><a>예약건 안내</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="view_tab1">
-                <div class="noticeline" id="content_tab1">
-
-<?
-echo ("
-<div class='tour_calendar_box'>
-	<div class='tour_calendar_header'>
-");
-
-if($selMonth > 202004){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
-}
-
-if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
-}
-
-echo ("
-		<div class='tour_calendar_title'>
-			<span class='tour_calendar_month'>$s_Y.$s_m</span>
-		</div>
-    </div>
-</div>");
-?>
-
-
-                </div>
-                <div class="contentimg bd">
-
-<form name="frmConfirm" id="frmConfirm" autocomplete="off">
-<div class="gg_first"><?=$Mon?>월 예약목록</div>
+ <div class="contentimg bd">
+    <div class="gg_first"><?=$Mon?>월 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-		<colgroup>
-			<col width="auto" />
-			<col width="22%" />
-			<col width="16%" />
-			<col width="16%" />
-			<col width="16%" />
-		</colgroup>
+        <colgroup>
+            <col width="auto" />
+            <col width="22%" />
+            <col width="16%" />
+            <col width="16%" />
+            <col width="16%" />
+        </colgroup>
         <tbody>
             <tr>
                 <th>예약번호</th>
@@ -109,18 +79,9 @@ echo ("
                 <b>예약된 목록이 없습니다. 달력 월을 변경해보세요.</b>
                 </td>
             </tr>
-		</tbody>
-	</table>
-
-                </div>
-                <div>
-                    <div style="padding:10px 0 5px 0;font-size:12px;">
-                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        </tbody>
+    </table>
+</div>
 
 <?
 	return;
@@ -196,7 +157,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     </table>
                     <?if($ChangeChk > 0){?>
                     <div class="write_table" style="padding-bottom:15px;text-align:center;">
-                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:90px; height:30px;" value="상태변경하기" onclick="fnConfirmUpdate(this, 0);" />
+                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:90px; height:30px;" value="상태변경하기" onclick="fnConfirmUpdate(this, 2);" />
                     </div>
                     <?}?>
                 </td>
@@ -224,51 +185,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     
     if($c == 0){
 ?>
-
-    <div class="top_area_zone">
-        <section class="shoptitle">
-            <div style="padding:6px;">
-                <h1><?=$shopname?></h1>
-                <div class="shopsubtitle">월별 예약목록 보기</div>
-            </div>
-        </section>
-
-        <section class="notice">
-            <div class="vip-tabwrap">
-                <div id="tabnavi" class="fixed1" style="top: 49px;">
-                    <div class="vip-tabnavi">
-                        <ul>
-                            <li class="on"><a>예약건 안내</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="view_tab1">
-                <div class="noticeline" id="content_tab1">
-<?
-echo ("
-<div class='tour_calendar_box'>
-	<div class='tour_calendar_header'>
-");
-
-if($selMonth > 202004){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
-}
-
-if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
-}
-
-echo ("
-		<div class='tour_calendar_title'>
-			<span class='tour_calendar_month'>$s_Y.$s_m</span>
-		</div>
-    </div>
-</div>");
-?>
-                </div>
-                <div class="contentimg bd">
-
+<div class="contentimg bd">
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
 <div class="gg_first"><?=$Mon?>월 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
@@ -481,7 +398,7 @@ $reslist .= "
                     </table>
                     <?if($ChangeChk > 0){?>
                     <div class="write_table" style="padding-bottom:15px;text-align:center;">
-                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:90px; height:30px;" value="상태변경하기" onclick="fnConfirmUpdate(this, 0);" />
+                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:90px; height:30px;" value="상태변경하기" onclick="fnConfirmUpdate(this, 2);" />
                     </div>
                     <?}?>
                 </td>
@@ -496,13 +413,4 @@ $reslist .= "
 </form>
 <form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
 
-                </div>
-                <div>
-                    <div style="padding:10px 0 5px 0;font-size:12px;">
-                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
 </div>

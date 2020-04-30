@@ -2,6 +2,7 @@
 $reqDate = $_REQUEST["selDate"];
 if($reqDate != ""){
 	include __DIR__.'/../../db.php';
+	$shopseq = $_REQUEST["seq"];
 }
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
@@ -67,12 +68,12 @@ echo ("
 	<div class='tour_calendar_header'>
 ");
 if($selMonth > 202003){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
+	echo "<a href='javascript:fnCalMoveAdminList(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
 //if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
 if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
+	echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 }
 
 echo ("
@@ -95,11 +96,12 @@ echo ("
 		</thead>
 		<tbody>
 	");
-//a.seq = '.$shopseq.' AND 
+	
 $select_query_cal = 'SELECT COUNT(*) AS Cnt, a.res_date, DAY(a.res_date) AS sDay, a.res_confirm FROM `AT_RES_SUB` as a INNER JOIN `AT_RES_MAIN` as b
 				ON a.resnum = b.resnum
 			WHERE (Year(a.res_date) = '.$Year.' AND Month(a.res_date) = '.$Mon.')
 				AND a.seq = '.$shopseq.'
+				AND a.res_confirm IN (2, 3, 6, 8, 5)
 			GROUP BY a.res_date, a.res_confirm';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 

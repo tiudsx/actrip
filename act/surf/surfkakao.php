@@ -111,6 +111,8 @@ function mailMsg($arrMail){
 			$info2_display = "";
 		}else if($gubun_step == 3){ //확정
 			$info2_display = "";
+		}else if($gubun_step == 8){ //입금완료
+			$info2_display = "";
 		}else if($gubun_step == 4){ //환불요청
 			$gubun_subtitle = " 환불요청안내";
 			$gubun_title1 = $gubun_title."를(을) 환불요청하셨습니다.";
@@ -352,6 +354,8 @@ function sendMail($arrMail){
 			$state_title = "환불요청";
 		}else if($gubun_step == 6){ //임시취소
 			$state_title = "임시취소";
+		}else if($gubun_step == 8){ //입금완료
+			$state_title = "입금완료";
 		}
 		$state_title .= " (".$arrMail["userName"].")";;
 	}else if($gubun == "bank"){

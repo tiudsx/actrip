@@ -19,7 +19,7 @@ if(plusDate($dateChk, 2) <= date("Y-m-d")){
     <? include __DIR__.'/../../_layout_top.php'; ?>
 
     <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
-    <link rel="stylesheet" type="text/css" href="/act/css/admin_surf.css">
+    <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
     <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
     
 <?
