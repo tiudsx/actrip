@@ -107,6 +107,8 @@ function mailMsg($arrMail){
 		if($gubun_step == 0){ //미입금 - 입금대기
 			$info3_display = "";
 			$info4_display = "";
+		}else if($gubun_step == 2){ //임시확정/취소
+			$info2_display = "";
 		}else if($gubun_step == 3){ //확정
 			$info2_display = "";
 		}else if($gubun_step == 4){ //환불요청
@@ -343,7 +345,7 @@ function sendMail($arrMail){
 		}else if($gubun_step == 1){ //예약대기
 			$state_title = "예약대기";
 		}else if($gubun_step == 2){ //임시확정
-			$state_title = "임시확정";
+			$state_title = "임시확정/취소";
 		}else if($gubun_step == 3){ //확정
 			$state_title = "예약확정";
 		}else if($gubun_step == 4){ //환불요청

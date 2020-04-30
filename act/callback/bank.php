@@ -176,7 +176,7 @@ if($count == 1){
 		sendMail($arrMail); //메일 발송
 
 	}else{	//서핑샵, 바베큐
-		$res_confirm = 2;
+		$res_confirm = 8;
 		$surfshopMsg .= "";
 		$ressubseq = "";
 
@@ -186,7 +186,7 @@ if($count == 1){
 
 			$TimeDate = '';
 			if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
-				$TimeDate = '      - 시간 : '.$resTime[$i].'\n';
+				$TimeDate = '      - 강습시간 : '.$resTime[$i].'\n';
 			}
 	
 			$ResNum = '      - 인원 : ';
@@ -225,11 +225,11 @@ if($count == 1){
 				}else{
 					//$ResOptInfo = '      - 안내 : '.$arrOptInfo[$optseq].'\n';
 				}
-			}else if($resGubun[$i] == "rent"){
+			}else if($rowSub['sub_title'] == "rent"){
 	
-			}else if($resGubun[$i] == "pkg"){
+			}else if($rowSub['sub_title'] == "pkg"){
 				$ResOptInfo = '      - '.$optinfo.'\n';
-			}else if($resGubun[$i] == "bbq"){
+			}else if($rowSub['sub_title'] == "bbq"){
 				$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $optinfo).'\n';
 			}
 			$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$rowSub['res_date'].'\n'.$ResOptStay.$ResNum.'\n'.$ResOptInfo;	
@@ -250,21 +250,6 @@ if($count == 1){
 			$navilink = "/bbq_dh?view=1";
 		}
 
-		// $arrKakao = array(
-		// 	"gubun"=> $code
-		// 	, "admin"=> "N"
-		// 	, "smsTitle"=> $msgTitle
-		// 	, "userName"=> $userName
-		// 	, "tempName"=> "at_res_step1"
-		// 	, "kakaoMsg"=>$kakaoMsg
-		// 	, "userPhone"=> $userPhone
-		// 	, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
-		// 	, "link2"=>$navilink //지도로 위치확인
-		// 	, "link3"=>"eatlist" //제휴업체 목록
-		// 	, "link4"=>"event" //공지사항
-		// 	, "link5"=>""
-		// 	, "smsOnly"=>"N"
-		// );
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
@@ -291,7 +276,7 @@ if($count == 1){
 		// $admin_tel = "010-4437-0009";
 
 		$msgTitle = '액트립 ['.$userName.']님 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약내역 확인 후 승인처리 부탁드립니다.\n      - 예약이 불가할 경우 임시취소해주시면 취소진행하겠습니다.\n\n';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약내역 확인 후 승인처리 부탁드립니다.\n      - 예약이 불가할 경우 취소 상태로 변경해주시면 됩니다.\n\n';
 
 		$arrKakao = array(
 			"gubun"=> $code
@@ -334,7 +319,7 @@ if($count == 1){
 			, "info2_title"=> $info2_title
 			, "info2"=> $info2
 		);
-		//sendMail($arrMail); //메일 발송
+		sendMail($arrMail); //메일 발송
 	}
 
 	$select_query = "UPDATE `AT_RES_SUB` 

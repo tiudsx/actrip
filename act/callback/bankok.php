@@ -44,7 +44,7 @@ if($count == 1){
 
 		$TimeDate = '';
 		if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
-			$TimeDate = '      - 시간 : '.$resTime[$i].'\n';
+			$TimeDate = '      - 강습시간 : '.$resTime[$i].'\n';
 		}
 
 		$ResNum = '      - 인원 : ';
@@ -82,12 +82,13 @@ if($count == 1){
 				$ResOptStay = '      - 숙박일 : '.$preDate.'(2박)\n';
 			}else{
 				//$ResOptInfo = '      - 안내 : '.$arrOptInfo[$optseq].'\n';
+				$ResOptInfo = $TimeDate;
 			}
-		}else if($resGubun[$i] == "rent"){
+		}else if($rowSub['sub_title'] == "rent"){
 
-		}else if($resGubun[$i] == "pkg"){
-			$ResOptInfo = '      - '.$optinfo.'\n';
-		}else if($resGubun[$i] == "bbq"){
+		}else if($rowSub['sub_title'] == "pkg"){
+			$ResOptInfo = '      - '.$optinfo.'\n'.$TimeDate;
+		}else if($rowSub['sub_title'] == "bbq"){
 			$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $optinfo).'\n';
 		}
 		$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$rowSub['res_date'].'\n'.$ResOptStay.$ResNum.'\n'.$ResOptInfo;	
