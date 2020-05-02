@@ -71,8 +71,9 @@ function fnConfirmUpdate(obj, num){
 				if(num == 1){
 					setTimeout('location.reload();', 500);
 				}else if(num == 0){
-					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
+					//fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 				}else if(num == 2){
+					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 					fnSearchAdmin();
 				}
 				
