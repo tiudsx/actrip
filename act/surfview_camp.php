@@ -30,9 +30,9 @@
                     <article>
                         <p class="noticesub">예약서비스 종료안내</p>
                         <ul>
-                            <li class="litxt">액트립에서 그동안 운영되었던 실시간 예약서비스가 계약종료되어 예약진행이 불가능합니다.</li>
-                            <li class="litxt">야영장 문의 및 예약안내는 아래 연락처로 문의주세요.</li>
-                            <li class="litxt">현장관리자 : 010-8412-9699</li>
+                            <li class="litxt">액트립에서 운영되었던 실시간 예약서비스가 계약종료되었습니다.</li>
+                            <li class="litxt">더욱더 좋은 서비스로 찾아뵙겠습니다.</li>
+                            <li class="litxt">감사합니다.</li>
                         </ul>
                     </article>
                 </div>
