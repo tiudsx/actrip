@@ -36,6 +36,9 @@ $select_query = "SELECT a.*, b.ad_title1 FROM AT_PROD_MAIN a INNER JOIN AT_PROD_
                         AND a.use_yn = 'Y'
                         AND a.view_yn = 'Y'
                     ORDER BY rand()";
+
+//임시 인기서핑샵 목록                    
+$select_query = "SELECT *, categoryname as ad_title1 FROM AT_PROD_MAIN WHERE code = 'surf' AND use_yn = 'Y' AND view_yn = 'Y' ORDER BY rand() LIMIT 6;";
 $result_shopadlist = mysqli_query($conn, $select_query);
 $shopadcount = mysqli_num_rows($result_shopadlist);
 
