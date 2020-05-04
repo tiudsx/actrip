@@ -78,7 +78,7 @@
 						</a></li>
 					<li><a href="/bbq"><img src="images/icon/ibbq.png" alt="">
 						</a></li>
-					<li><a href="/camp"><img src="images/icon/itent.png" alt="">
+					<li><a href="/event"><img src="images/icon/ievent.png" alt="">
 						</a></li>
 					<li><a href="/staylist"><img src="images/icon/ibed.png" alt="">
 						</a></li>
