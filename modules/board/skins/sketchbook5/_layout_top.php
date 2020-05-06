@@ -40,7 +40,7 @@
 							<br>주말 06:00-20:00</li>
 						</ul>                          
 						<ul class="menu04">
-							<li><a href="/event">이벤트</a></li>
+							<li><a href="https://cafe.naver.com/actrip" target="_blank">네이버카페</a></li>
 							<li><a href="/notice">공지사항</a></li>
 							<li><a href="/surfFAQ">자주묻는질문</a></li>
 						</ul>
