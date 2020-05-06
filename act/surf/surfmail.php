@@ -39,27 +39,27 @@ function sendMailContentBus($arrMail){
                 <table width='100%' border='0' cellspacing='0' cellpadding='0'>
                     <tbody>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예&nbsp;약&nbsp;자 </td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예&nbsp;약&nbsp;자 </td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['userName']." (".$arrMail['userPhone'].")</td>
                         </tr>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
                             </td>
                         </tr>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- ".$addText2."좌석안내</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- ".$addText2."좌석안내</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px;padding-top: 8px;padding-bottom: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['busSeatInfo']."</td>
                         </tr>";
 		if($arrMail["campStayName"] != "busCancel1"){
 			$contents .= "<tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 탑승시간/위치 안내</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 탑승시간/위치 안내</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px;padding-top: 8px;padding-bottom: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['busStopInfo']."</td>
@@ -68,14 +68,14 @@ function sendMailContentBus($arrMail){
 
 		if($arrMail['SurfBBQMem'] > 0){
 			$contents .= "<tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 바베큐 ".$addText1."</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 바베큐 ".$addText1."</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>[".$arrMail['SurfBBQ']."] ".$arrMail['SurfBBQMem']."명</td>
                         </tr>";
 		}
            $contents .= "<tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 특이사항</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 특이사항</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; padding-top:5px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'><textarea name='etc' id='etc' style='margin: 0px; width: 97%; height: 80px; resize: none;' rows='8' cols='42' disabled='disabled'>".$arrMail['etc']."</textarea></td>
@@ -99,20 +99,20 @@ $contents .= "<tr>
                 <table width='100%' border='0' cellspacing='0' cellpadding='0'>
                     <tbody>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 입금계좌</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 입금계좌</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'><font color='#8000ff'><b>".$arrMail['banknum']."</b></font>
                             </td>
                         </tr>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 입금금액</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 입금금액</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['totalPrice']."</td>
                         </tr>";
            	$contents .= "<tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 플러스친구</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 플러스친구</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;' height='45'><a href='http://pf.kakao.com/_HxmtMxl' target='_blank'>http://pf.kakao.com/_HxmtMxl</a></td>
@@ -135,21 +135,21 @@ $contents .= "<tr>
                 <table width='100%' border='0' cellspacing='0' cellpadding='0'>
                     <tbody>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 환불금액</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 환불금액</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['totalPrice']."
                             </td>
                         </tr>
                         <tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 환불계좌</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 환불계좌</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['banknum']."
                             </td>
                         </tr>";
            	$contents .= "<tr>
-                            <td width='130' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 플러스친구</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 플러스친구</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;' height='45'><a href='http://pf.kakao.com/_HxmtMxl' target='_blank'>http://pf.kakao.com/_HxmtMxl</a></td>

@@ -1,5 +1,10 @@
 function fnCouponCheck(obj){
-	var cp = fnCoupon("SUR", "load", $j("#coupon").val());
+	if($j("#shopseq").val() == 15){
+		var couponType = "BBQ";
+	}else{
+		var couponType = "SUR";
+	}
+	var cp = fnCoupon(couponType, "load", $j("#coupon").val());
 	if(cp > 0){
 		$j("#coupondis").css("display", "");
 		$j("#couponcode").val($j("#coupon").val())

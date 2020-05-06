@@ -16,8 +16,11 @@ if($param_mid == ""){
 	$param = $param_mid;
 }
 
-if($param == "bbq_yy"){ //죽도 바베큐
-    $reqSeq = 13;
+// if($param == "bbq_yy"){ //죽도 바베큐
+//     $reqSeq = 13;
+
+if($param == "bbq_pkg"){ //동해 패키지
+    $reqSeq = 184;
 }else{ //동해 바베큐
     $reqSeq = 15;
 }
@@ -576,7 +579,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 <th scope="row"> 이메일</th>
                                 <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
                             </tr>
-                            <tr>
+                            <tr <?if($reqSeq == 184){ echo "style='display:none;'"; }?>>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
                                     <input type="text" id="coupon" name="coupon" value="" size="10" class="itx" maxlength="10">
