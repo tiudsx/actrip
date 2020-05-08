@@ -24,7 +24,6 @@ $to = "lud1@naver.com,ttenill@naver.com";
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-$success = true;
 if($param == "changeConfirm"){ //상태 정보 업데이트
 	for($i = 0; $i < count($chkCancel); $i++){
 		$intseq .= $chkCancel[$i].",";
@@ -333,12 +332,52 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		sendMail($arrMail); //메일 발송
 	}
 
+}else if($param == "soldoutdel"){
+	session_start();
+
+	$shopseq = $_SESSION['shopseq']; //샵 seq
+	$soldoutseq = $_REQUEST['soldoutseq'];
+
+	$select_query = "DELETE FROM `AT_PROD_OPT_SOLDOUT` WHERE seq = $shopseq AND soldoutseq = $soldoutseq";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+	
+	mysqli_query($conn, "COMMIT");
+}else if($param == "soldout"){
+	session_start();
+	
+	$shopseq = $_SESSION['shopseq']; //샵 seq
+	$InsUserID = $_SESSION['userid'];
+
+	$strDate = $_REQUEST["strDate"];
+	$selItem = $_REQUEST["selItem"];
+
+	$chkSexM = "N";
+	$chkSexW = "N";
+	if($_REQUEST["chkSexM"] == 1) $chkSexM = "Y";
+	if($_REQUEST["chkSexW"] == 1) $chkSexW = "Y";
+
+	$select_query = 'SELECT * FROM `AT_PROD_OPT_SOLDOUT` WHERE seq = '.$shopseq.' AND soldout_date = "'.$strDate.'" AND optseq = '.$selItem;
+	$result = mysqli_query($conn, $select_query);
+	$count = mysqli_num_rows($result);
+
+	if($count != 0){
+		echo '1';
+		exit;
+	}
+
+
+	$select_query = "INSERT INTO `AT_PROD_OPT_SOLDOUT`(`seq`, `soldout_date`, `optseq`, `opt_sexM`, `opt_sexW`, `insuserid`, `insdate`) VALUES ($shopseq, '$strDate', $selItem, '$chkSexM', '$chkSexW', '$InsUserID', now())";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+	
+	mysqli_query($conn, "COMMIT");
 }
 
 if(!$success){
 	errGo:
 	mysqli_query($conn, "ROLLBACK");
-	echo 'err';
+	echo $param.'err';
 }else{
 	echo '0';
 }

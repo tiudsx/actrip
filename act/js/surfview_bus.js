@@ -192,6 +192,10 @@ jQuery(function () {
 			jQuery(this).prev().datepicker("option", "maxDate", date);
 		}
 	});
+
+	jQuery('input[cal=date]').datepicker({
+		minDate : new Date("2020-04-01")
+	});
 });
 
 jQuery(function ($) {

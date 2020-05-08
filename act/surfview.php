@@ -23,8 +23,9 @@ $shop_img = explode('|', $rowMain["shop_img"]);
 
 // 옵션 매진여부 확인
 $select_query = "SELECT a.*, b.optcode, b.optname FROM `AT_PROD_OPT_SOLDOUT` as a INNER JOIN AT_PROD_OPT as b
-					ON a.optseq = b.optseq
-					WHERE b.seq = $reqSeq AND b.use_yn = 'Y' ORDER BY a.soldout_date, a.optseq";
+					ON a.seq = b.seq
+						AND a.optseq = b.optseq
+					WHERE a.seq = $reqSeq AND b.use_yn = 'Y' ORDER BY a.soldout_date, a.optseq";
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -60,7 +61,7 @@ if($count > 0){
 		$optcode = $rowSold["optcode"];
 		$optname = $rowSold["optname"];
 		
-		$SoldoutList .= "sub['$optseq'] = {type: $optcode, opt_sexM: '$opt_sexM', opt_sexW: '$opt_sexW', optseq: $optseq, optname: '$optname' }; ";
+		$SoldoutList .= "sub['$optseq'] = {type: '$optcode', opt_sexM: '$opt_sexM', opt_sexW: '$opt_sexW', optseq: $optseq, optname: '$optname' }; ";
 	}
 	
 	$SoldoutList .= "main['".$Presoldoutdate."'] = sub;";

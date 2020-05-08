@@ -106,6 +106,67 @@ echo ("
 if($reqDate != ""){
 }
 
+$arrPreDate = explode("-",$PreDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+$PreDate_Y=$arrPreDate[0]; // 지정된 년도 
+$PreDate_m=$arrPreDate[1]; // 지정된 월
+$PreDate_d=$arrPreDate[2]; // 지정된 요일
+
+$PreDate_t=date("t",mktime(0,0,0,$PreDate_m,$PreDate_d,$PreDate_Y)); // 지정된 달은 몇일까지 있을까요?
+
+$select_query = "SELECT *, year(sdate) as yearS, month(sdate) as monthS, day(sdate) as dayS, year(edate) as yearE, month(edate) as monthE, day(edate) as dayE FROM AT_PROD_DAY where seq =".$_REQUEST["seq"]." AND sdate <= '$PreDate_Y.$PreDate_m.$PreDate_t' AND edate >= '$PreDate_Y.$PreDate_m.$PreDate_t' AND use_yn = 'Y' ORDER BY sdate";
+$result_precal = mysqli_query($conn, $select_query);
+$count_precal = mysqli_num_rows($result_precal);
+
+if($count_precal == 0 || "$PreDate_Y-$PreDate_m-$PreDate_t" == date("Y-m-d")){
+	echo "<tr style='display:none;'>";
+	echo "	<td class='cal_type2'><span class='tour_td_block'><span class='tour_cal_day'>$PreDate_t</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>";
+	echo "</tr>";
+}else{
+	while ($row_precal = mysqli_fetch_assoc($result_precal)){
+		$day_type = $row_precal["day_type"];
+		$lesson_price = $row_precal["lesson_price"];
+		$rent_price = $row_precal["rent_price"];
+		$stay_price = $row_precal["stay_price"];
+		$bbq_price = $row_precal["bbq_price"];
+		$pkg_price = $row_precal["pkg_price"];
+		$day_week = $row_precal["day_week"];
+
+		$forI=$PreDate_t;
+		$forE=$PreDate_t;
+
+		//예약 가능한 날짜 배열
+		echo "<tr style='display:none;'>";
+		for($i=$forI;$i<=$forE;$i++){
+			$thisWeekNum = date("w",mktime(0,0,0,$Mon,$i,$Year));
+			// if($thisWeekNum == 7) $thisWeekNum = 0;
+
+			if($row_precal["week".$thisWeekNum] == "N"){
+				echo "	<td class='cal_type2'><span class='tour_td_block'><span class='tour_cal_day'>$forE</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>";
+				continue;
+			}
+
+			if(strrpos($day_week, (string)$thisWeekNum) === false){
+				$calWeek[$i][$thisWeekNum] = array("day_week" => "Y", "day_type" => "$day_type", "lesson_price" => 0, "rent_price" => 0, "stay_price" => 0, "bbq_price" => 0, "pkg_price" => 0);
+			}else{
+				$calWeek[$i][$thisWeekNum] = array("day_week" => "Y", "day_type" => "$day_type", "lesson_price" => $lesson_price, "rent_price" => $rent_price, "stay_price" => $stay_price, "bbq_price" => $bbq_price, "pkg_price" => $pkg_price);
+			}
+			$calDay[$i] = $i;
+
+			$weekChk = strpos($calWeek[$i][$thisWeekNum]["day_week"], "Y");
+
+			$s = date("Y-m-d",mktime(0,0,0,$PreDate_m,$i,$PreDate_Y)); // 현재칸의 날짜
+			if($s >= $nowDate && ($weekChk !== false)){
+				$pricePlus = "day_type='".$calWeek[$i][$thisWeekNum]["day_type"]."' lesson_price='".$calWeek[$i][$thisWeekNum]["lesson_price"]."' rent_price='".$calWeek[$i][$thisWeekNum]["rent_price"]."' stay_price='".$calWeek[$i][$thisWeekNum]["stay_price"]."' bbq_price='".$calWeek[$i][$thisWeekNum]["bbq_price"]."' pkg_price='".$calWeek[$i][$thisWeekNum]["pkg_price"]."'";
+
+				echo "<td class='cal_type2' style='cursor:pointer;'><calBox class='tour_td_block' value='$s' weekNum='$thisWeekNum' $pricePlus><span class='tour_cal_day' $holidayChk>$i</span><span class='tour_cal_pay'>예약가능</span></calBox></td>";
+			}else{
+				echo "<td class='cal_type2' style='padding-bottom:2px;'><span class='tour_td_block'><span class='tour_cal_day' style='color:#c2c2c2;'>$i</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>"; //종료
+			}
+		}
+		echo "</tr>";
+	}
+}
+
 $select_query = "SELECT *, year(sdate) as yearS, month(sdate) as monthS, day(sdate) as dayS, year(edate) as yearE, month(edate) as monthE, day(edate) as dayE FROM AT_PROD_DAY where seq =".$_REQUEST["seq"]." AND sdate <= '$s_Y.$s_m.$s_t' AND edate >= '$s_Y.$s_m.01' AND use_yn = 'Y' ORDER BY sdate";
 // echo $select_query;
 $result_cal = mysqli_query($conn, $select_query);

@@ -237,6 +237,9 @@ function fnResListInit(date){
 	if($j("#sellesson").length > 0 && $j("#sellesson option").length > 0){
 		var priceText = " (" + commify(parseInt($j("#sellesson").val().split('|')[2], 10)) + "원)";
 		var infoText = $j("#sellesson option:selected").attr("opt_info");
+		if(infoText == ""){
+			infoText = $j("#sellesson option:selected").text();
+		}
 		$j("#stayText").text(infoText + (priceText));
 	
 		var opttime = $j("#sellesson option:selected").attr("opttime");
@@ -314,8 +317,8 @@ function soldoutchk(date, obj){
 	$j("#tbselBBQ").css("display", "");
 	$j("#divselBBQ").css("display", "none");
 	
+	var nowDate = (new Date()).yyyymmdd(); //오늘 날짜
 	if($j(obj).attr("day_type") == 3){
-		var nowDate = (new Date()).yyyymmdd(); //오늘 날짜
 		var resDate = plusDate(date, -6); //숙소 예약가능한 날짜
 		
 		if($j(obj).attr("weeknum") == 6 && nowDate > resDate){
@@ -323,11 +326,11 @@ function soldoutchk(date, obj){
 			$j("#sellesson option[stay_day=1]").remove();
 			$j("#sellesson option[stay_day=2]").remove();
 		}
-
-		if(plusDate(nowDate, 1) == date){
-			$j("#sellesson option[stay_day=1]").remove();
-			$j("#sellesson option[stay_day=2]").remove();
-		}
+	}
+	
+	if(plusDate(nowDate, 1) == date || $j("calbox[value='" + plusDate(date, -1) + "']").length == 0){
+		$j("#sellesson option[stay_day=1]").remove();
+		$j("#sellesson option[stay_day=2]").remove();
 	}
 
 	if(main[date] != null){
@@ -420,7 +423,8 @@ function fnResChange(key){
 			stayText = "숙박일 : " + plusDate(resselDate, -1) + "(2박)";
 			stay_price = stay_price1 + stay_price2;
 		}else{
-			stayText = $j("#sellesson option:selected").attr("opt_info");
+			// stayText = $j("#sellesson option:selected").attr("opt_info");
+			stayText = $j("#sellesson option:selected").text();
 			stay_price = 0;
 		}
 		

@@ -101,122 +101,60 @@ if($_SESSION['shopseq'] == ""){
 
 		<div id="tab2" class="tab_content" style="display:none;">
 <?
-$select_query = 'SELECT opt_bbq, shopcharge FROM `SURF_SHOP` WHERE intseq = '.$_SESSION['shopseq'];
-$result_shop = mysqli_query($conn, $select_query);
-$rowshop = mysqli_fetch_array($result_shop);
-
-$opt_bbq = $rowshop["opt_bbq"]; //서프엔조이 바베큐 여부
-
-$bbqSql = "";
-if($opt_bbq == "Y"){
-	$bbqSql = " AND opt_type != 4";
-}
-
-$select_query = 'SELECT * FROM `SURF_SHOP_OPT` WHERE shopSeq = '.$_SESSION['shopseq'].$bbqSql.' ORDER BY opt_type, opt_order';
+$select_query = "SELECT a.*, b.codename FROM `AT_PROD_OPT` a INNER JOIN `AT_CODE` b
+					ON a.optcode = b.code
+						AND b.uppercode = 'surfres'
+ 					WHERE a.seq = ".$_SESSION['shopseq']." 
+						AND a.use_yn = 'Y' 
+					ORDER BY a.optcode, a.ordernum";
 $result_opt = mysqli_query($conn, $select_query);
 ?>
-<script>
-function fnSoldout(){
-	var formData = $j("#frmSold").serializeArray();
-
-	if ($j("#strDate").val() == "") {
-        alert("날짜를 선택하세요.");
-        return;
-    }
-	if (!($j("#chkSexM").is(':checked') || $j("#chkSexW").is(':checked'))) {
-        alert("성별 중 하나이상 선택하세요.");
-        return;
-    }
-
-	if(!confirm("선택항목을 매진 처리 하시겠습니까?")){
-		return;
-	}
-
-	$j.post(folderBusRoot + "/Admin_SurfSave.php", formData,
-		function(data, textStatus, jqXHR){
-			if(data == "1"){
-				alert("해당 날짜와 항목은 이미 매진처리 되었습니다.\n\n해당 항목을 삭제 후 추가해주세요.");
-			}else if(data == "0"){
-				alert("정상적으로 매진 처리되었습니다.");
-				$j("#divSoldOutList").load(folderBusRoot + "/Admin_SurfSoldOut.php");
-			}else{
-				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
-			}
-		   
-		}).fail(function(jqXHR, textStatus, errorThrown){
-	});
-}
-
-function fnSoldModify(seq){
-	if(!confirm("선택항목을 삭제 처리 하시겠습니까?")){
-		return;
-	}
-
-	var params = "resparam=soldoutdel&seq=" + seq;
-	jQuery.ajax({
-		type: "POST",
-		url: folderBusRoot + "/Admin_SurfSave.php",
-		data: params,
-		success: function (data) {                
-			if (data == "0") {
-				alert("정상적으로 매진 처리되었습니다.");
-				$j("#divSoldOutList").load(folderBusRoot + "/Admin_SurfSoldOut.php");
-			} else {
-				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
-			}
-		}
-	});
-}
-</script>
-
-<form name="frmSold" id="frmSold" autocomplete="off">
-	<div class="gg_first" style="margin-top:0px;">매진항목 추가</div>
-	<table class='et_vars exForm bd_tb' style="width:100%">
-		<colgroup>
-			<col style="width:65px;">
-			<col style="width:*;">
-			<col style="width:65px;">
-			<col style="width:*;">
-		</colgroup>
-		
-		<tr>
-			<th>날짜</th>
-			<td>
-				<input type="text" id="strDate" name="strDate" readonly="readonly" value="" class="itx2" cal="sdate" style="width:66px;">
-				<input type="hidden" id="resparam" name="resparam" size="10" value="soldout" class="itx">
-				<input type="hidden" id="userid" name="userid" size="10" value="<?=$user_id?>" class="itx">
-			</td>
-			<th>항목</th>
-			<td>
-				<select id="selItem" name="selItem" class="select">
-				<?while ($rowOpt = mysqli_fetch_assoc($result_opt)){?>
-					<option value="<?=$rowOpt["intSeq"]?>"><?=$rowOpt["opt_name"]?></option>
-				<?}?>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<th>성별</th>
-			<td colspan="3">
-				<label><input type="checkbox" id="chkSexM" name="chkSexM" value="1" checked="checked" style="vertical-align:-3px;" />남</label>&nbsp;
-				<label><input type="checkbox" id="chkSexW" name="chkSexW" value="1" checked="checked" style="vertical-align:-3px;" />여</label>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align:center;" colspan="4"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:100px; height:30px;" value="매진 추가" onclick="fnSoldout();" /></td>
-		</tr>
-	</table>
-</form>
-
-
+			<form name="frmSold" id="frmSold" autocomplete="off">
+				<div class="gg_first" style="margin-top:0px;">매진항목 추가</div>
+				<table class='et_vars exForm bd_tb' style="width:100%">
+					<colgroup>
+						<col style="width:65px;">
+						<col style="width:*;">
+					</colgroup>
+					
+					<tr>
+						<th>날짜</th>
+						<td>
+							<input type="text" id="strDate" name="strDate" readonly="readonly" value="" class="itx2" cal="date" style="width:66px;">
+							<input type="hidden" id="resparam" name="resparam" size="10" value="soldout" class="itx">
+							<input type="hidden" id="userid" name="userid" size="10" value="<?=$user_id?>" class="itx">
+						</td>
+					</tr>
+					<tr>
+						<th>항목</th>
+						<td>
+							<select id="selItem" name="selItem" class="select">
+							<?while ($rowOpt = mysqli_fetch_assoc($result_opt)){?>
+								<option value="<?=$rowOpt["optseq"]?>">[<?=$rowOpt["codename"]?>] <?=$rowOpt["optname"]?></option>
+							<?}?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>성별</th>
+						<td>
+							<label><input type="checkbox" id="chkSexM" name="chkSexM" value="1" checked="checked" style="vertical-align:-3px;" />남</label>&nbsp;
+							<label><input type="checkbox" id="chkSexW" name="chkSexW" value="1" checked="checked" style="vertical-align:-3px;" />여</label>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:center;" colspan="2"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:100px; height:30px;" value="매진 추가" onclick="fnSoldout();" /></td>
+					</tr>
+				</table>
+			</form>
 			<div id="divSoldOutList">
-				<?include 'Admin_SurfSoldOut.php'?>
+				<?include 'res_surflist_soldout.php'?>
 			</div>
 		</div>
 
 		<div id="tab3" class="tab_content" style="display:none;">
 			<div id="divCalList">
-				<?include 'Admin_SurfCalList.php'?>
+				<?include 'res_surflist_cal.php'?>
 			</div>
 		</div>
     </div>

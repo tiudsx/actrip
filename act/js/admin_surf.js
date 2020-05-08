@@ -109,7 +109,7 @@ function fnPassengerAdmin(obj) {
 		$j("input[id=chkResConfirm][value=" + arrGubun[i] + "]").prop('checked', true);
 	}
 
-	// fnSearchAdmin();
+	fnSearchAdmin();
 }
 
 function fnCalMoveAdminList(selDate, day, seq) {
@@ -177,3 +177,79 @@ function fnListView(obj){
 		$j(obj).parent().next().css("display", "none");
 	}
 }
+
+function fnSoldout(){
+	var formData = $j("#frmSold").serializeArray();
+
+	if ($j("#strDate").val() == "") {
+        alert("날짜를 선택하세요.");
+        return;
+    }
+	if (!($j("#chkSexM").is(':checked') || $j("#chkSexW").is(':checked'))) {
+        alert("성별 중 하나이상 선택하세요.");
+        return;
+    }
+
+	if(!confirm("선택항목을 매진 처리 하시겠습니까?")){
+		return;
+	}
+
+	$j.post("/act/admin/shop/res_kakao_save.php", formData,
+		function(data, textStatus, jqXHR){
+			if(data == 1){
+				alert("해당 날짜와 항목은 이미 매진처리 되었습니다.\n\n해당 항목을 삭제 후 추가해주세요.");
+			}else if(data == 0){
+				alert("정상적으로 매진 처리되었습니다.");
+				$j("#divSoldOutList").load("/act/admin/shop/res_surflist_soldout.php?chk=1");
+			}else{
+				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
+			}
+		   
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	});
+}
+
+function fnSoldModify(seq){
+	if(!confirm("선택항목을 삭제 처리 하시겠습니까?")){
+		return;
+	}
+
+	var params = "resparam=soldoutdel&soldoutseq=" + seq;
+	$j.ajax({
+		type: "POST",
+		url: "/act/admin/shop/res_kakao_save.php",
+		data: params,
+		success: function (data) {
+			if (data == 0) {
+				alert("정상적으로 매진 처리되었습니다.");
+				$j("#divSoldOutList").load("/act/admin/shop/res_surflist_soldout.php?chk=1");
+			} else {
+				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
+			}
+		}
+	});
+}
+
+function fnCalSearch(){
+	var formData = $j("#frmCal").serializeArray();
+
+	$j.post("/act/admin/shop/res_surflist_cal.php", formData,
+		function(data, textStatus, jqXHR){
+		   $j("#divCalList").html(data);
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	 
+	});
+}
+
+$j(function () {
+    $j("ul.tabs li").click(function () {
+        $j("ul.tabs li").removeClass("active").css("color", "#333");
+        $j(this).addClass("active").css("color", "darkred");
+        //$j(".tab_content").hide();
+		$j("div[class=tab_content]").css('display', 'none');
+        var activeTab = $j(this).attr("rel");
+        //$j("#" + activeTab).fadeIn();
+
+		$j("#" + activeTab).css('display', 'block');
+    });
+});

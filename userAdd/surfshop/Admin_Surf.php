@@ -4,8 +4,7 @@ include __DIR__.'/../encrypt.php';
 include 'menu_top.php';
 
 session_start();
-
-if($_SESSION['shopseq'] == ""){
+$surftype = "joasurf";
 	$select_query_admin = 'SELECT * FROM `SURF_SHOP` where shopcode="'.$surftype.'" limit 1';
 	$resultAdmin = mysqli_query($conn, $select_query_admin);
 	$countAdmin = mysqli_num_rows($resultAdmin);
@@ -20,7 +19,6 @@ if($_SESSION['shopseq'] == ""){
 	$_SESSION['shopseq'] = $rowAdmin["intseq"];
 	$_SESSION['shopname'] = $rowAdmin["shopname"];
 	$_SESSION['opt_reslist'] = $rowAdmin["opt_reslist"];
-}
 
 $typeT = explode(",", $_SESSION['opt_reslist']);
 
