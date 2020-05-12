@@ -25,7 +25,7 @@ if($_SESSION['shopseq'] == ""){
 }
 ?>
 
-<div class="bd_tl" style="width:100%;display:;">
+<div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>[<?=$_SESSION['shopname']?>] 예약관리</h1>
 </div>
 
@@ -41,10 +41,10 @@ if($_SESSION['shopseq'] == ""){
 
 <div class="container" id="contenttop">
   <section>
-    <article class="right_article3">
+    <article id="right_article3" class="right_article3">
 		<?include 'res_surfcalendar.php'?>
     </article>
-    <aside class="left_article3">
+    <aside id="left_article3" class="left_article3">
 <!-- .tab_container -->
 <div id="containerTab" class="areaRight">
     <ul class="tabs">
@@ -92,7 +92,7 @@ if($_SESSION['shopseq'] == ""){
 					<td><input type="text" id="schText" name="schText" value="" class="itx2" style="width:140px;"></td>
 				</tr>
 				<tr>
-					<td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin();" /></td>
+					<td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('shop/res_surflist_search.php');" /></td>
 				</tr>
 			</table>
 		</form>

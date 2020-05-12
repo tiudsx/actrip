@@ -541,6 +541,10 @@ if($param == "BusI"){
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGoSurf;
 
+    $select_query = "UPDATE AT_PROD_MAIN SET sell_cnt = sell_cnt + 1 WHERE seq = $shopseq;";
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGo;
+
 	if(!$success){
         errGoSurf:
 		mysqli_query($conn, "ROLLBACK");

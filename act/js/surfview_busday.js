@@ -36,6 +36,9 @@ var busPoint = {}
     busPoint.sPointE1 = busPoint.sPointY1;
     busPoint.sPointE2 = busPoint.sPointY1;
     busPoint.sPointE3 = busPoint.sPointY1;
+    busPoint.sPointE4 = busPoint.sPointY1;
+    busPoint.sPointE5 = busPoint.sPointY1;
+    busPoint.sPointE6 = busPoint.sPointY1;
 
     busPoint.ePointE = [];
     busPoint.ePointE.push({ "code": "N", "codename": "도착" });
@@ -96,6 +99,9 @@ var busPointList = {
     "E1" : {li:busPoint_1},
     "E2" : {li:busPoint_1},
     "E3" : {li:busPoint_1},
+    "E4" : {li:busPoint_1},
+    "E5" : {li:busPoint_1},
+    "E6" : {li:busPoint_1},
     "S21" : {li:busPoint_3},
     "S22" : {li:busPoint_3},
     "S23" : {li:busPoint_3},

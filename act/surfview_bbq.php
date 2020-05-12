@@ -31,6 +31,7 @@ $rowMain = mysqli_fetch_array($result);
 
 $bbqtitle = $rowMain["shopname"];
 $bbqsubinfo = $rowMain["sub_info"];
+$coupon_yn = $rowMain["coupon_yn"];
 
 // 옵션 매진여부 확인
 $select_query = "SELECT a.*, b.optcode, b.optname FROM `AT_PROD_OPT_SOLDOUT` as a INNER JOIN AT_PROD_OPT as b
@@ -579,7 +580,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 <th scope="row"> 이메일</th>
                                 <td><input type="text" id="usermail" name="usermail" value="<?=$email_address?>" class="itx"></td>
                             </tr>
-                            <tr <?if($reqSeq == 184){ echo "style='display:none;'"; }?>>
+                            <tr <?if($coupon_yn == "N"){ echo "style='display:none;'"; }?>>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
                                     <input type="text" id="coupon" name="coupon" value="" size="10" class="itx" maxlength="10">

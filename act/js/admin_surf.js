@@ -74,7 +74,7 @@ function fnConfirmUpdate(obj, num){
 					//fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 				}else if(num == 2){
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
-					fnSearchAdmin();
+					fnSearchAdmin("shop/res_surflist_search.php");
 				}
 				
 			}else{
@@ -85,22 +85,67 @@ function fnConfirmUpdate(obj, num){
 	});
 }
 
+//상태 변경처리 - 건당
+function fnConfirmUpdateBus(obj){
+	$j("#frmConfirmSel").html($j("#hidInitParam").html());
+
+	var tbObj = $j(obj).parent().parent();
+	var chkObj = tbObj.find("input[id=chkCancel]");
+	if(!confirm("상태변경 하시겠습니까?")){
+		return;
+	}
+	
+	var chkBox = '';
+	for (var i = 0; i < chkObj.length; i++) {
+		if(chkObj.eq(i).is(":checked")){
+			chkBox += '<input type="checkbox" id="chkCancel" name="chkCancel[]" checked="checked" value="' + chkObj.eq(i).val() + '" />';
+
+			selres_confirm = tbObj.find("select[id=selConfirm]").eq(i).val();
+			chkBox += '<input type="text" id="selConfirm" name="selConfirm[]" value="' + selres_confirm + '" />';
+		}
+	}
+	chkBox += '<input type="text" id="MainNumber" name="MainNumber" value="' + tbObj.find("input[id=MainNumber]").val() + '" />';
+	chkBox += '<textarea id="memo" name="memo">' + tbObj.find("textarea[id=memo]").val() + '</textarea>';
+
+	$j("#frmConfirmSel").append(chkBox);
+
+	var formData = $j("#frmConfirmSel").serializeArray();
+
+	$j.post("/act/admin/bus/res_bus_save.php", formData,
+		function(data, textStatus, jqXHR){
+		   if(data == 0){
+				alert("정상적으로 처리되었습니다.");
+				fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
+				fnSearchAdmin("bus/res_buslist_search.php");
+			}else{
+				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	 
+	});
+}
+
 //달력 날짜 클릭
-function fnPassengerAdmin(obj) {
+function fnPassengerAdmin(obj, seq) {
 	var selDate = obj.attributes.value.value;
-    $j(".right_article3 calBox").css("background", "white");
+    $j("#right_article3 calBox").css("background", "white");
     $j("calBox[sel=yes]").attr("sel", "no");
 	$j(obj).css("background", "#efefef");
 	$j(obj).attr("sel", "yes");
 
 	$j("#sDate").val(selDate);
 	$j("#eDate").val(selDate);
+	$j("#hidselDate").val(selDate);
 
 	$j("#schText").val('');
 
-    $j("#divResList").load("/act/admin/Admin_SurfSearchList.php?selDate=" + selDate);
-
-	$j("#initText2").css("display", "none");
+	if(seq == 0){
+    	$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + selDate);
+		$j("#initText2").css("display", "none");
+		var url = "bus/res_buslist_search.php";
+	}else{
+		var url = "shop/res_surflist_search.php";
+	}
 
 	$j("input[id=chkResConfirm]").prop("checked", false);
 
@@ -109,14 +154,22 @@ function fnPassengerAdmin(obj) {
 		$j("input[id=chkResConfirm][value=" + arrGubun[i] + "]").prop('checked', true);
 	}
 
-	fnSearchAdmin();
+	fnSearchAdmin(url);
 }
 
 function fnCalMoveAdminList(selDate, day, seq) {
 	var nowDate = new Date();
-	$j(".right_article3").load("/act/admin/shop/res_surfcalendar.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
+	$j("#right_article3").load("/act/admin/shop/res_surfcalendar.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	
-	$j("#mngSearch").load("/act/admin/shop/res_surflist_search.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
+	if(seq == 0){
+		$j("#divResList").html("");
+		$j("#initText2").css("display", "");
+		var url = "bus/res_buslist_search.php";
+	}else{
+		var url = "shop/res_surflist_search.php";
+	}
+
+	$j("#mngSearch").load("/act/admin/" + url + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	
 	$j("input[id=chkResConfirm]").prop("checked", false);
 	$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
@@ -130,19 +183,15 @@ function fnCalMoveAdminList(selDate, day, seq) {
 	$j("#schText").val('');
 }
 
+//카카오톡 예약관리 목록
 function fnCalMoveAdmin(selDate, day, seq) {
 	var nowDate = new Date();
 	$j("#rescontent").load("/act/admin/shop/res_kakao_all.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
-	
-	// if(day == "0"){
-	// 	$j("#divResList").html("");
-	// 	$j("#initText2").css("display", "");
-	// }
 }
 
-function fnSearchAdmin(){
+function fnSearchAdmin(url){
 	var formData = $j("#frmSearch").serializeArray();
-	$j.post("/act/admin/shop/res_surflist_search.php", formData,
+	$j.post("/act/admin/" + url, formData,
 		function(data, textStatus, jqXHR){
 		   $j("#mngSearch").html(data);
 		}).fail(function(jqXHR, textStatus, errorThrown){
@@ -241,6 +290,60 @@ function fnCalSearch(){
 	});
 }
 
+function fnDateReset(){
+	$j("#sDate").val('2020-04-01');
+	$j("#eDate").val('2020-10-31');
+}
+
+function fnModifyInfo(seq, gubun, obj){
+	// $j("tr[name='btnTr']").removeClass('selTr');
+	// $j("tr[name='btnTrPoint']").removeClass('selTr');
+	// $j(obj).parent().parent().addClass('selTr');
+
+	// if($j(obj).parent().parent().next().attr('name') == 'btnTrPoint'){
+	// 	$j(obj).parent().parent().next().addClass('selTr');
+	// }
+
+	// $j("#tab3").load(folderBusRoot + "/Admin_BusModify.php?subintseq=" + seq + '&gubun=' + gubun);
+	// $j(".tab_content").hide();
+	// $j("#tab3").fadeIn();
+
+	$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'30%'} }); 
+}
+
+function fnModifyClose(){
+	$j.unblockUI();
+}
+
+function fnDataModify(){
+	if(!confirm("정보수정을 하시겠습니까?")){
+		return;
+	}
+
+	var calObj = $j("calBox[sel=yes]");
+	var formData = $j("#frmModify").serializeArray();
+	// $j("#frmModify #userid").val(userid);
+
+	$j.post("/act/admin/bus/res_bus_save.php", formData,
+		function(data, textStatus, jqXHR){
+			if(data == 0){
+				alert("정상적으로 처리되었습니다.");
+				$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + $j("#hidselDate").val());
+
+
+				if(calObj.attr("value") == null){
+					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 99);
+				}else{
+					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2]);
+				}
+			}else{
+				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	 
+	});
+}
+
 $j(function () {
     $j("ul.tabs li").click(function () {
         $j("ul.tabs li").removeClass("active").css("color", "#333");
@@ -251,5 +354,6 @@ $j(function () {
         //$j("#" + activeTab).fadeIn();
 
 		$j("#" + activeTab).css('display', 'block');
-    });
+	});
+	
 });

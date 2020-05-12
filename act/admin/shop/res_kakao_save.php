@@ -377,7 +377,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 if(!$success){
 	errGo:
 	mysqli_query($conn, "ROLLBACK");
-	echo $param.'err';
+	echo 'err';
 }else{
 	echo '0';
 }
