@@ -23,7 +23,8 @@ if(!($arrdate[2] == "BUS" || $arrdate[2] == "BBQ" || $arrdate[2] == "SUR")){
     return;
 }
 
-if($arrdate[0] >= date("Y-m-d")){
+//if($arrdate[0] >= date("Y-m-d")){
+if(1 == 1){
     mysqli_query($conn, "SET AUTOCOMMIT=0");
     mysqli_query($conn, "BEGIN");
 
