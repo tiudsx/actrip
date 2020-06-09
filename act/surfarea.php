@@ -39,7 +39,7 @@ $select_query = "SELECT a.*, b.ad_title1 FROM AT_PROD_MAIN a INNER JOIN AT_PROD_
                     ORDER BY rand()";
 
 //임시 인기서핑샵 목록                    
-$select_query = "SELECT *, categoryname as ad_title1 FROM AT_PROD_MAIN WHERE code = 'surf' AND use_yn = 'Y' AND view_yn = 'Y' ORDER BY rand() LIMIT 6;";
+$select_query = "SELECT *, categoryname as ad_title1 FROM AT_PROD_MAIN WHERE code = 'surf' AND use_yn = 'Y' AND view_yn = 'Y' AND seq NOT IN (185, 5) ORDER BY rand() LIMIT 6;";
 $result_shopadlist = mysqli_query($conn, $select_query);
 $shopadcount = mysqli_num_rows($result_shopadlist);
 
@@ -80,19 +80,26 @@ $result_shopadbeach = mysqli_query($conn, $select_query);
             <h2><i class="far fa-thumbs-up"></i> 인기서핑샵</h2>
             <div class="popShopSldr">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <a href="/surfview?seq=185">
-                            <img src="https://surfenjoy.cdn3.cafe24.com/act_content/soleast/sol.east_thumbnail_200x200.jpg" alt="">
-                            <p>대진</p>
-                            <p>솔.동해서핑점 오픈파티</p>
-                            <p>40,000원</p>
-                        </a>
-                    </div>
-                <?while ($row = mysqli_fetch_assoc($result_shopadlist)){
+                <?
+                $i = 0;
+                while ($row = mysqli_fetch_assoc($result_shopadlist)){
                     $shop_img = explode('|', $row["shop_img"]);
 
                     $shop_price = explode('@', $row["sub_info"]);
                     $arrlecture = explode('|', $shop_price[0]);
+
+                    if($i == 1){
+                ?>
+                    <div class="swiper-slide">
+                        <a href="/surfview?seq=5">
+                            <img src="https://surfenjoy.cdn3.cafe24.com/act_content/soleast/sol.east_thumbnail_200x200.jpg" alt="">
+                            <p>대진</p>
+                            <p>솔.동해서핑점</p>
+                            <p>50,000원</p>
+                        </a>
+                    </div>
+                <?
+                    }
                 ?>
                     <div class="swiper-slide">
                         <a href="/surfview?seq=<?=$row["seq"]?>">
@@ -102,7 +109,9 @@ $result_shopadbeach = mysqli_query($conn, $select_query);
                             <p><?=number_format($arrlecture[2])?>원</p>
                         </a>
                     </div>
-                <?}?>
+                <?
+                $i++;
+                }?>
                 </div>
             </div>
         </section>

@@ -19,11 +19,13 @@ $selMonth = date("Ym",mktime(0,0,0,$s_m,$s_d,$s_Y));
 $n_m= date("Ym",mktime(0,0,0,$s_m+1,$s_d,$s_Y)); // 다음달 (빠뜨린 부분 추가분이에요)
 $p_m= date("Ym",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 이전달
 
-$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
 					ON a.resnum = b.resnum 
+                INNER JOIN `AT_PROD_OPT` c
+                    ON b.optseq = c.optseq
                     WHERE Month(b.res_date) = '.$Mon.'
                         AND b.seq = '.$shopseq.'
-                        AND b.res_confirm IN (2, 3, 6, 8, 5)
+                        AND b.res_confirm IN (2, 3, 5, 6, 8)
                         ORDER BY b.resnum, b.ressubseq';
                         
 $result_setlist = mysqli_query($conn, $select_query);
@@ -383,7 +385,7 @@ echo ("
     }else if($row['sub_title'] == "rent"){
 
     }else if($row['sub_title'] == "pkg"){
-        //$ResOptInfo = $optinfo.$TimeDate;
+        $ResOptInfo = $optinfo.$TimeDate;
     }else if($row['sub_title'] == "bbq"){
         //$ResOptInfo = str_replace('<br>', '', $optinfo);
         //$ResOptInfo = $optinfo;

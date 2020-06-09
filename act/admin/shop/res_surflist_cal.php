@@ -33,7 +33,7 @@ if($_REQUEST["selY"] != ""){
 				<?}?>
 				</select>월
 			</td>
-			<td style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:23px;" value="조회" onclick="fnCalSearch();" /></td>
+			<td style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:23px;" value="조회" onclick="fnCalSearch('shop/res_surflist_cal.php');" /></td>
 		</tr>
 	</table>
 </form>
@@ -47,7 +47,7 @@ $shopcharge = $rowshop["shopcharge"];
 $shopchargePer = ($rowshop["shopcharge"] / 100); //수수료
 $account_yn = $rowshop["account_yn"]; //정산여부
 
-$select_query = "SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, a.res_confirm, SUM(res_totalprice) AS price, SUM(rtn_totalprice) AS RtnPrice, d.cal_year, d.cal_month, d.cal_yn FROM `AT_RES_SUB` as a 
+$select_query = "SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, a.res_confirm, SUM(res_price) AS price, SUM(rtn_totalprice) AS RtnPrice, d.cal_year, d.cal_month, d.cal_yn FROM `AT_RES_SUB` as a 
             INNER JOIN `AT_RES_MAIN` as b
                 ON a.resnum = b.resnum
             LEFT JOIN AT_PROD_CAL as d
@@ -88,7 +88,7 @@ if($count == 0){
 	<tr>
 		<th style="text-align:center;">확정</th>
 		<th style="text-align:center;">수수료율</th>
-		<th style="text-align:center;">총 수수료</th>
+		<th style="text-align:center;">수수료</th>
 	</tr>
 <?
 	$TotalPrice = 0;

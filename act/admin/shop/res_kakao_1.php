@@ -1,6 +1,8 @@
 <?
-$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
 					ON a.resnum = b.resnum 
+                INNER JOIN `AT_PROD_OPT` c
+                    ON b.optseq = c.optseq
 					WHERE b.seq = '.$shopseq.'
 						AND b.resnum = '.$MainNumber.'
 						ORDER BY b.resnum, b.ressubseq';
@@ -192,7 +194,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else if($row['sub_title'] == "rent"){
 
     }else if($row['sub_title'] == "pkg"){
-        //$ResOptInfo = $optinfo.$TimeDate;
+        $ResOptInfo = $optinfo.$TimeDate;
     }else if($row['sub_title'] == "bbq"){
         //$ResOptInfo = str_replace('<br>', '', $optinfo);
         //$ResOptInfo = $optinfo;
@@ -246,8 +248,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <tr>
                 <th>사유 및<br>메모</th>
                 <td>                
-					<textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;" <?if($ChangeChk == 0){ echo 'disabled="disabled"';}?>><?=$memo?></textarea>
-				</td>
+                    <textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea>
+                </td>
             </tr>
 		</tbody>
 	</table>

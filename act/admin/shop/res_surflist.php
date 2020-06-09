@@ -2,31 +2,82 @@
 include __DIR__.'/../../db.php';
 include __DIR__.'/../../common/logininfo.php';
 
+// 0 : 관리자
+// 2 : 사업자회원
 session_start();
 
-if($_SESSION['shopseq'] == ""){
-	$select_query_admin = 'SELECT * FROM `AT_PROD_MAIN` where seq="'.$surftype.'" limit 1';
-	$resultAdmin = mysqli_query($conn, $select_query_admin);
-	$countAdmin = mysqli_num_rows($resultAdmin);
-	$rowAdmin = mysqli_fetch_array($resultAdmin);
+if($_SESSION['shopseq'] == ""){	
+	Header("Location:/shopadmin");
+}
 
-	if($countAdmin == 0){
-		echo '<script>alert("관리자 권한이 없습니다.");history.back();</script>';
-		exit;
-	}
+$shopseq = $_SESSION["shopseq"];
 
-	$_SESSION['userid'] = $user_id;
-	$_SESSION['shopseq'] = $rowAdmin["seq"];
-	$_SESSION['shopname'] = $rowAdmin["shopname"];
+$arrShop = explode(",", $surftype);
+$Shopcnt = count($arrShop);
 
-	$shopseq = $rowAdmin["seq"];
-}else{
-	$shopseq = $_SESSION['shopseq'];
+if($Shopcnt > 0){
+	$select_query = "SELECT * FROM `AT_PROD_MAIN` WHERE seq IN ($surftype) ORDER BY categoryname, code, shopname";
+	$result_setlist = mysqli_query($conn, $select_query);
+	$countAdmin = mysqli_num_rows($result_setlist);
+
+	// if($countAdmin == 0){
+	// 	echo '<script>alert("관리자 권한이 없습니다.");location.href="/";</script>';
+	// 	exit;
+	// }
+}
+
+// if($_SESSION['shopseq'] == ""){	
+
+// 	$_SESSION['userid'] = $user_id;
+// 	$_SESSION['shopseq'] = $rowAdmin["seq"];
+// 	$_SESSION['shopname'] = $rowAdmin["shopname"];
+
+// 	$shopseq = $rowAdmin["seq"];
+// }else{
+// 	$shopseq = $_SESSION['shopseq'];
+// }
+
+
+if($Shopcnt > 1){
+	$css = ' style="line-height:2em;"';
 }
 ?>
-
+<script>
+//서핑샵 변경
+function fnChangeShop(){
+	var shopseq = $j("#selShop").val();
+	
+	location.href = "/shopadmin?seq="+shopseq;
+}
+</script>
 <div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>[<?=$_SESSION['shopname']?>] 예약관리</h1>
+	<h1 class="ngeb clear"<?=$css?>>
+		<i class="bg_color"></i>[<?=$_SESSION['shopname']?>] 예약관리
+		<?
+		if($Shopcnt > 1){
+		?>
+		<br>
+		<select id='selShop' name='selShop' class='select' style='padding:1px 2px 4px 2px;'>
+
+		<?while ($row = mysqli_fetch_assoc($result_setlist)){
+			$seq = $row['seq'];
+			$categoryname = $row['categoryname'];
+			$shopname = $row['shopname'];
+
+			$selected = "";
+			if($_SESSION['shopseq'] == $seq){
+				$selected = " selected='selected'";
+			}
+
+			echo "<option value='$seq'$selected>[$categoryname] $shopname</option>";
+		}?>
+
+		</select>
+		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:45px; height:24px;background:green;" value="변경" onclick="fnChangeShop();">
+		<?
+		}
+		?>
+	</h1>
 </div>
 
 <script>
@@ -68,14 +119,16 @@ if($_SESSION['shopseq'] == ""){
 				<tr>
 					<th>구분</th>
 					<td>
-						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="0" checked="checked" style="vertical-align:-3px;" />미입금</label> -->
+					<?if($user_id == "surfenjoy"){?>
+						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="0" style="vertical-align:-3px;" />미입금</label>
+					<?}?>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="8" checked="checked" style="vertical-align:-3px;" />입금완료</label>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
 						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label><br> -->
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="2" style="vertical-align:-3px;" />임시확정</label>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="6" style="vertical-align:-3px;" />임시취소</label>
 						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="4" checked="checked" style="vertical-align:-3px;" />환불요청</label> -->
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="5" style="vertical-align:-3px;" />취소</label>
+						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="5" style="vertical-align:-3px;" />취소</label> -->
 					</td>
 				</tr>
 				<tr>

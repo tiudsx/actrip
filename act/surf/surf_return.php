@@ -369,10 +369,18 @@ if($param == "RtnPrice"){
                 $res_confirm = $rowTime["res_confirm"];
         
                 if($code == "bus"){
-                    if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
-                        $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번\n';
+                    if($res_confirm == 0){
+                        if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
+                            $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번\n';
+                        }else{
+                            $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
+                        }
                     }else{
-                        $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
+                        if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
+                            $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
+                        }else{
+                            $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
+                        }
                     }
 
                     $arrData = explode("|", fnBusPoint($rowTime['res_spoint'], $rowTime['res_bus']));

@@ -26,10 +26,14 @@ function fnConfirmUpdate(obj, num){
 	// }
 	var chk_cnt = tbObj.find("input[id=chkCancel]:not(:checked)").length;
 	var res_cnt = tbObj.find("select[id=selConfirm] option:selected[value=3]").length;
+	var sel_cnt = tbObj.find("select[id=selConfirm] option:selected[value=8]").length;
 
-	if(chk_cnt > 0){
-		alert("승인처리 변경이 안된 항목이 있습니다.");
-		return;
+	if(num < 3){
+		//if(chk_cnt > 0){
+		if(sel_cnt > 0){
+			alert("승인처리 변경이 안된 항목이 있습니다.");
+			return;
+		}
 	}
 
 	if(!confirm("상태변경 하시겠습니까?")){
@@ -58,6 +62,9 @@ function fnConfirmUpdate(obj, num){
 	}
 	chkBox += '<input type="text" id="MainNumber" name="MainNumber" value="' + tbObj.find("input[id=MainNumber]").val() + '" />';
 	chkBox += '<textarea id="memo" name="memo">' + tbObj.find("textarea[id=memo]").val() + '</textarea>';
+	if(num == 3){
+		chkBox += '<input type="text" id="shopseq" name="shopseq" value="' + tbObj.find("input[id=shopseq]").val() + '" />';
+	}
 
 	$j("#frmConfirmSel").append(chkBox);
 
@@ -71,10 +78,13 @@ function fnConfirmUpdate(obj, num){
 				if(num == 1){
 					setTimeout('location.reload();', 500);
 				}else if(num == 0){
-					//fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
-				}else if(num == 2){
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
+				}else if(num == 2){
+					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 					fnSearchAdmin("shop/res_surflist_search.php");
+				}else if(num == 3){
+					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
+					fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
 				
 			}else{
@@ -143,6 +153,8 @@ function fnPassengerAdmin(obj, seq) {
     	$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + selDate);
 		$j("#initText2").css("display", "none");
 		var url = "bus/res_buslist_search.php";
+	}else if(seq == -1){
+		var url = "act_admin/res_surflist_search.php";
 	}else{
 		var url = "shop/res_surflist_search.php";
 	}
@@ -159,16 +171,21 @@ function fnPassengerAdmin(obj, seq) {
 
 function fnCalMoveAdminList(selDate, day, seq) {
 	var nowDate = new Date();
-	$j("#right_article3").load("/act/admin/shop/res_surfcalendar.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	
 	if(seq == 0){
 		$j("#divResList").html("");
 		$j("#initText2").css("display", "");
 		var url = "bus/res_buslist_search.php";
+		var calurl = "shop/res_surfcalendar.php";
+	}else if(seq == -1){
+		var url = "act_admin/res_buslist_search.php";
+		var calurl = "act_admin/res_surfcalendar.php";
 	}else{
 		var url = "shop/res_surflist_search.php";
+		var calurl = "shop/res_surfcalendar.php";
 	}
-
+	
+	$j("#right_article3").load("/act/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	$j("#mngSearch").load("/act/admin/" + url + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	
 	$j("input[id=chkResConfirm]").prop("checked", false);
@@ -279,10 +296,10 @@ function fnSoldModify(seq){
 	});
 }
 
-function fnCalSearch(){
+function fnCalSearch(url){
 	var formData = $j("#frmCal").serializeArray();
 
-	$j.post("/act/admin/shop/res_surflist_cal.php", formData,
+	$j.post("/act/admin/" + url, formData,
 		function(data, textStatus, jqXHR){
 		   $j("#divCalList").html(data);
 		}).fail(function(jqXHR, textStatus, errorThrown){
@@ -342,6 +359,37 @@ function fnDataModify(){
 		}).fail(function(jqXHR, textStatus, errorThrown){
 	 
 	});
+}
+
+var shopList2 = {
+	"surfeast1" : {},
+	"surfeast2" : {},
+	"surfeast3" : {},
+	"surfjeju" : {},
+	"surfsouth" : {},
+	"surfwest" : {},
+	"bbqparty" : {},
+	"etc" : {}
+};
+var shopList3 = {};
+
+function cateList(obj, objName){
+	$j("#" + objName + "2").html('<option value="ALL">== 전체 ==</option>');
+	$j("#" + objName + "3").html('<option value="ALL">== 전체 ==</option>');
+	if($j(obj).val() != "ALL"){
+		$j.each(shopList2[$j(obj).val()], function(key, vlu) {
+			$j("#" + objName + "2").append('<option value="' + key + '">' + vlu + '</option>');
+		});
+	}
+}
+
+function cateList2(obj, objName){
+	$j("#" + objName + "3").html('<option value="ALL">== 전체 ==</option>');
+	if($j(obj).val() != "ALL"){
+		$j.each(shopList3[$j(obj).val()], function(key, vlu) {
+			$j("#" + objName + "3").append('<option value="' + key + '">' + vlu + '</option>');
+		});
+	}
 }
 
 $j(function () {

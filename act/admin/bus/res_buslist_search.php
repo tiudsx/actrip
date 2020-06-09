@@ -77,10 +77,10 @@ if($count == 0){
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
             <col width="16%" />
-            <col width="14%" />
+            <col width="*" />
             <col width="14%" />
             <col width="20%" />
-            <col width="*" />
+            <col width="10%" />
             <col width="8%" />
             <col width="8%" />
         </colgroup>
@@ -112,9 +112,12 @@ $c = 0;
 $PreMainNumber = "";
 $RtnTotalPrice = 0;
 $TotalPrice = 0;
+$TotalDisPrice = 0;
+$res_coupon = "";
 $ChangeChk = 0;
 $reslist = "";
 $reslistConfirm = "";
+$busNum = "";
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 	$MainNumber = $row['resnum'];
@@ -124,12 +127,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
-                <td style="text-align: center;"><?=$shopname?></td>
+                <td style="text-align: left;"><?=$shopname?> (<?=implode(',',array_unique(explode(',',$busNum)));?>)</td>
                 <td style="text-align: center;"><?=$res_date?></td>
                 <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
                 <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?></td>
+                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
                 <td colspan="7">
@@ -175,7 +178,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>
-                                <td><?=number_format($TotalPrice).'원'?></td>
+                                <td><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b> (<?=number_format($TotalPrice).'원'?> - 할인쿠폰:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)</td>
                             </tr>
                         <?}?>
                         <?if($etc != ""){?>
@@ -204,11 +207,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$b++;
 	}else{
 		$RtnTotalPrice = 0;
-		$TotalPrice = 0;
+        $TotalPrice = 0;
+        $TotalDisPrice = 0;
+        $res_coupon = "";
 		$b = 0;
         $ChangeChk = 0;
         $reslist = "";
         $reslistConfirm = "";
+        $busNum = "";
     }
     
 	$shopname = $row['shopname'];
@@ -227,10 +233,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
                 <colgroup>
                     <col width="16%" />
-                    <col width="14%" />
-                    <col width="14%" />
-                    <col width="20%" />
                     <col width="*" />
+                    <col width="10%" />
+                    <col width="16%" />
+                    <col width="10%" />
                     <col width="8%" />
                     <col width="8%" />
                 </colgroup>
@@ -266,33 +272,43 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$ResCss = "";
 	$datDate = substr($row['res_date'], 0, 10);
 
-	$ResConfirm = $row['res_confirm'];
+    $ResConfirm = $row['res_confirm'];
+    $res_coupon = $row['res_coupon'];    
     if($ResConfirm == 0){
         $ResConfirmText = "미입금";
-		$TotalPrice += $row['ResPrice'];
+		$TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
         $ChangeChk++;
     }else if($ResConfirm == 1){
         $ResConfirmText = "예약대기";
     }else if($ResConfirm == 2){
         $ResConfirmText = "임시확정";
         $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
     }else if($ResConfirm == 6){
         $ResConfirmText = "임시취소";
     }else if($ResConfirm == 8){
         $ResConfirmText = "입금완료";
         $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
         $ChangeChk++;
     }else if($ResConfirm == 3){
         $ResConfirmText = "확정";
         $ResColor = "rescolor3";
         $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
     }else if($ResConfirm == 4){
         $ResConfirmText = "환불요청";
         $ResColor = "rescolor1";
+        $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
         $RtnTotalPrice += $row['rtn_totalprice'];
     }else if($ResConfirm == 5){
         $ResConfirmText = "환불완료";
         $ResCss = "rescss";
+        $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
+        $RtnTotalPrice += $row['rtn_totalprice'];
     }else if($ResConfirm == 7){
         $ResConfirmText = "취소";
         $ResCss = "rescss";
@@ -319,10 +335,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	if($ResConfirm == 4 || $ResConfirm == 5){
 		$RtnPrice = ''.number_format($row['rtn_totalprice']).'원';
 		$RtnBank = '<tr class="'.$ResCss.'" name="btnTrPoint">
-						<td style="text-align:center;" colspan="3">'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).' | 환불액 : '.$RtnPrice.'</td>
+						<td style="text-align:center;" colspan="4">'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).' | 환불액 : '.$RtnPrice.'</td>
                     </tr>';
         $RtnBankRow = 'rowspan="2"';
     }
+
+    $busNumText = fnBusNum($row['res_busnum']);
+    $busNum .= $busNumText.',';
+    
     
 $reslist .= "
 <tr>
@@ -333,11 +353,19 @@ $reslist .= "
          $res_date
          </label>
      </td>
-     <td style='text-align:center;'>".fnBusNum($row['res_busnum'])."</td>
+     <td style='text-align:center;'>".$busNumText."</td>
      <td style='text-align:center;'>".$row['res_seat']."번</td>
      <td style='text-align:center;'>".$row["res_spointname"]." -> ".$row["res_epointname"]."</td>
      <td style='text-align:center;'>".$ResConfirmText."</td>
      <td style='text-align:center;' $RtnBankRow>";
+
+     $ResConfirm0 = '';
+     $ResConfirm1 = '';
+     $ResConfirm3 = '';
+     $ResConfirm4 = '';
+     $ResConfirm5 = '';
+     $ResConfirm7 = '';
+     $ResConfirm8 = '';
 
 if($ResConfirm == 0) $ResConfirm0 = 'selected';
 if($ResConfirm == 1) $ResConfirm1 = 'selected';
@@ -363,16 +391,17 @@ $reslist .= "
  $reslist .= $RtnBank;
 //while end
 }
+
 ?>
 
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
-                <td style="text-align: center;"><?=$shopname?></td>
+                <td style="text-align: left;"><?=$shopname?> (<?=implode(',',array_unique(explode(',',$busNum)));?>)</td>
                 <td style="text-align: center;"><?=$res_date?></td>
                 <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
                 <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?></td>
+                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
                 <td colspan="7">
@@ -418,7 +447,7 @@ $reslist .= "
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>
-                                <td><?=number_format($TotalPrice).'원'?></td>
+                                <td><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b> (<?=number_format($TotalPrice).'원'?> - 할인쿠폰:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)</td>
                             </tr>
                         <?}?>
                         <?if($etc != ""){?>

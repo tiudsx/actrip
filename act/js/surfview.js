@@ -331,6 +331,9 @@ function soldoutchk(date, obj){
 	if(plusDate(nowDate, 1) == date || $j("calbox[value='" + plusDate(date, -1) + "']").length == 0){
 		$j("#sellesson option[stay_day=1]").remove();
 		$j("#sellesson option[stay_day=2]").remove();
+
+		$j("#selPkg option[stay_day=1]").remove();
+		$j("#selPkg option[stay_day=2]").remove();
 	}
 
 	if(main[date] != null){
@@ -452,8 +455,26 @@ function fnResChange(key){
 	}else if(key == "selPkg"){
 		var stay_price =  parseInt($j("calbox[value='" + resselDate + "']").attr("stay_price"), 10);
 		var pkgText = $j("#selPkg option:selected").attr("opt_info");
-		var priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10) + stay_price) + "원)";
-		
+
+		var stayPlus = $j("#selPkg option:selected").attr("stay_day");
+		var stayText = "";
+		if(stayPlus == 0){
+			// stayText = "숙박일 : " + resselDate + "(1박)";
+		}else if(stayPlus == 1){
+			stay_price =  parseInt($j("calbox[value='" + plusDate(resselDate, -1) + "']").attr("stay_price"), 10);
+			// stayText = "숙박일 : " + plusDate(resselDate, -1) + "(1박)";
+		}else if(stayPlus == 2){
+			var stay_price1 =  parseInt($j("calbox[value='" + plusDate(resselDate, -1) + "']").attr("stay_price"), 10);
+			var stay_price2 =  parseInt($j("calbox[value='" + resselDate + "']").attr("stay_price"), 10);
+			// stayText = "숙박일 : " + plusDate(resselDate, -1) + "(2박)";
+			stay_price = stay_price1 + stay_price2;
+		}else{
+			// stayText = $j("#sellesson option:selected").attr("opt_info");
+			// stayText = $j("#sellesson option:selected").text();
+			stay_price = 0;
+		}
+
+		var priceText = " (" + commify(parseInt($j("#selPkg").val().split('|')[2], 10) + stay_price) + "원)";		
 		$j("#pkgText").html(pkgText + priceText);
 
 		var opttime = $j("#selPkg option:selected").attr("opttime");
@@ -615,8 +636,7 @@ function fnSurfAppend(num, obj, selDate, gubun){
 	}else if(num == "pkg"){ //패키지
 		var pkg_price =  parseInt($j("calbox[value='" + selDate + "']").attr("pkg_price"), 10);
 		var stay_price =  parseInt($j("calbox[value='" + selDate + "']").attr("stay_price"), 10);
-		var opt_info = $j("#selPkg option:selected").attr("opt_info");
-
+		
 		if($j("#selPkgTime").val() == ""){
 			addSurfType = selDate;
 		}else{
@@ -629,8 +649,23 @@ function fnSurfAppend(num, obj, selDate, gubun){
 
 		var stayPlus = $j("#selPkg option:selected").attr("stay_day");
 		if(stayPlus == 0){
+			// var opt_info = "숙박일 : " + selDate + "(1박)";
 			selPrice = selPrice + stay_price;
+		}else if(stayPlus == 1){
+			stay_price =  parseInt($j("calbox[value='" + plusDate(selDate, -1) + "']").attr("stay_price"), 10);
+			// var opt_info = "숙박일 : " + plusDate(selDate, -1) + "(1박)";
+			selPrice = selPrice + stay_price;
+		}else if(stayPlus == 2){
+			var stay_price1 =  parseInt($j("calbox[value='" + plusDate(selDate, -1) + "']").attr("stay_price"), 10);
+			var stay_price2 =  parseInt($j("calbox[value='" + selDate + "']").attr("stay_price"), 10);
+			// var opt_info = "숙박일 : " + plusDate(selDate, -1) + "(2박)";
+			selPrice = selPrice + stay_price1 + stay_price2;;
+		}else{
+			// var opt_info = "";
+			selPrice = selPrice;
 		}
+		var opt_info = $j("#selPkg option:selected").attr("opt_info");
+
 	}else if(num == "bbq"){ //바베큐
 		var bbq_price =  parseInt($j("calbox[value='" + selDate + "']").attr("bbq_price"), 10);
 		var opt_info = $j("#selBBQ option:selected").attr("opt_info");

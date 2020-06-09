@@ -24,4 +24,14 @@ $surftype = $logged_info->surftype;
 $oContext->close;
 
 $group_list = $logged_info->group_list;
+
+$_UserType = "";
+foreach ($group_list as $key => $value) {
+	if($value == "사업자회원"){	
+		$_UserType = "2";
+	}else if($value == "운영자" || $value == "매니저"){
+		$_UserType = "0";
+		break;
+	}
+}
 ?>

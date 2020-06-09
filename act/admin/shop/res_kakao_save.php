@@ -255,6 +255,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			$navilink = "/bbq_yy?view=1";
 		}else if($shopseq == 15){
 			$navilink = "/bbq_dh?view=1";
+		}else if($shopseq == 184){
+			$navilink = "/bbq_pkg?view=1";
 		}
 	
 		$arrKakao = array(
