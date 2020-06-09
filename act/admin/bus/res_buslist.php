@@ -193,7 +193,7 @@ $shopseq = 0;
             </tr>
             <tr>
                 <th>상태</th>
-                <td colspan="3">
+                <td>
                     <select id="res_confirm" name="res_confirm" class="select">
                         <option value='0'>미입금</option>
                         <option value='1'>예약대기</option>
@@ -204,24 +204,26 @@ $shopseq = 0;
                         <option value='8'>입금완료</option>
                     </select>
                 </td>
+                <th>이용일</th>
+                <td><input type="text" id="res_date" name="busDate" size="10" value="<?=$row["busDate"]?>" class="itx"></td>
             </tr>
             <tr>
                 <th>이름</th>
                 <td><input type="text" id="user_name" name="user_name" size="11" value="" class="itx"></td>
                 <th>연락처</th>
-                <td><input type="text" id="uesr_tel" name="uesr_tel" size="12" value="" class="itx"></td>
+                <td><input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx"></td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
                 <th>수수료여부</th>
-                <td><input type="text" id="rtn_chargeprice" name="rtn_chargeprice" size="12" value="" class="itx"></td>
+                <td><input type="text" id="cashreceipt_yn" name="cashreceipt_yn" size="12" value="" class="itx"></td>
             </tr>
             <tr>
                 <th>할인금액</th>
                 <td><input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="18"></td>
                 <th>이용금액</th>
-                <td><input type="text" id="res_price" name="res_price" size="12" value="" class="itx"></td>
+                <td><input type="text" id="res_totalprice" name="res_totalprice" size="12" value="" class="itx"></td>
             </tr>
             <tr>
                 <th>호차</th>
@@ -233,16 +235,28 @@ $shopseq = 0;
                         <option value="Y4">양양행 4호차</option>
                         <option value="Y5">양양행 5호차</option>
                         <option value="Y6">양양행 6호차</option>
-                        <option value="Y7">양양행 7호차</option>
-                        <option value="Y8">양양행 8호차</option>
-                        <option value="S1">서울행 1호차</option>
-                        <option value="S2">서울행 2호차</option>
-                        <option value="S3">서울행 3호차</option>
-                        <option value="S4">서울행 4호차</option>
+                        <option value="S1">(양양)서울행 2시 1호차</option>
+                        <option value="S3">(양양)서울행 2시 2호차</option>
+                        <option value="S3">(양양)서울행 2시 3호차</option>
+                        <option value="S2">(양양)서울행 5시 1호차</option>
+                        <option value="S2">(양양)서울행 5시 2호차</option>
+                        <option value="S2">(양양)서울행 5시 3호차</option>
+                        <option value="E1">동해행 1호차</option>
+                        <option value="E2">동해행 2호차</option>
+                        <option value="E3">동해행 3호차</option>
+                        <option value="E4">동해행 4호차</option>
+                        <option value="E5">동해행 5호차</option>
+                        <option value="E6">동해행 6호차</option>
+                        <option value="A1">(동해)서울행 2시 1호차</option>
+                        <option value="A2">(동해)서울행 2시 2호차</option>
+                        <option value="A2">(동해)서울행 2시 3호차</option>
+                        <option value="A3">(동해)서울행 5시 1호차</option>
+                        <option value="A3">(동해)서울행 5시 2호차</option>
+                        <option value="A3">(동해)서울행 5시 3호차</option>
                     </select>
                 </td>
                 <th>좌석</th>
-                <td><input type="text" id="res_seat" name="busSeat" value="<?=$row["busSeat"]?>" class="itx tel"></td>
+                <td><input type="text" id="res_seat" name="res_seat" value="<?=$row["busSeat"]?>" class="itx tel"></td>
             </tr>
             <tr>
                 <th>정류장</th>
@@ -256,18 +270,9 @@ $shopseq = 0;
                 </td>
             </tr>
             <tr>
-                <th>이용일</th>
-                <td><input type="text" id="res_date" name="busDate" size="10" value="<?=$row["busDate"]?>" class="itx"></td>
-                <th>문자안내</th>
-                <td>
-                    <select id="msgYN" name="msgYN" class="select">
-                        <option value="N">미발송</option>
-                        <option value="Y">발송</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td class="col-02" style="text-align:center;" colspan="4">
+                    <input type="hidden" id="res_price" name="res_price" size="10" value="0" class="itx">
+                    <input type="hidden" id="gubun" name="gubun" size="10" value="0" class="itx">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
                     <input type="hidden" id="userid" name="userid" size="10" value="admin" class="itx">
                     <input type="hidden" id="ressubseq" name="ressubseq" size="10" value="" class="itx">

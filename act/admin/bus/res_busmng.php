@@ -38,25 +38,69 @@ if($count == 0){
 }
 
 $arrBus = array();
+$arrBusY = array(); //양양행
+$arrBusS = array(); //양양 서울행
+$arrBusE = array(); //동해행
+$arrBusA = array(); //동해 서울행
 while ($rowSub = mysqli_fetch_assoc($result_bus)){
+	$bus = substr($rowSub['res_busnum'], 0, 1);
+	if($bus == "Y"){
+		$arrBusY[$rowSub['res_busnum']] = $rowSub['CntBus'];
+	}else if($bus == "S"){
+		$arrBusS[$rowSub['res_busnum']] = $rowSub['CntBus'];
+	}else if($bus == "E"){
+		$arrBusE[$rowSub['res_busnum']] = $rowSub['CntBus'];
+	}else if($bus == "A"){
+		$arrBusA[$rowSub['res_busnum']] = $rowSub['CntBus'];
+	}
+
 	$arrBus[$rowSub['res_busnum']][$rowSub['res_confirm']] = $rowSub['CntBus'];
 }
 ?>
 
 <form name="frmDaySearch" id="frmDaySearch" autocomplete="off">
+
+<input type="hidden" id="selDate" name="selDate" value="<?=$selDate?>">
+<input type="hidden" id="busNum" name="busNum" value="">
+
 <div class="gg_first" style="margin-top:0px;">셔틀버스 예약정보</div>
 <table class='et_vars exForm bd_tb' style="width:100%;display:;">
 	<colgroup>
-		<col style="width:16%;">
+		<col style="width:10%;">
+		<col style="width:10%;">
 		<col style="width:*;">
 	</colgroup>
 	<tr>
-		<th>버스종류</th>
-		<td colspan="3" style="line-height:35px;">
-			<input type="hidden" id="selDate" name="selDate" value="<?=$selDate?>">
-			<input type="hidden" id="busNum" name="busNum" value="">
-			<?foreach($arrBus as $key=>$value){?>
-				<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value[3]?>명]" onclick="fnDayList('<?=$key?>');" /> <br>
+		<th rowspan="2">양양행</th>
+		<th>서울-양양행</th>
+		<td>
+			<?foreach($arrBusY as $key=>$value){?>
+				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+			<?}?>
+		</td>
+	</tr>
+	<tr>
+		<th>양양-서울행</th>
+		<td>
+			<?foreach($arrBusS as $key=>$value){?>
+				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+			<?}?>
+		</td>
+	</tr>
+	<tr>
+		<th rowspan="2">동해행</th>
+		<th>서울-동해행</th>
+		<td>
+			<?foreach($arrBusE as $key=>$value){?>
+				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+			<?}?>
+		</td>
+	</tr>
+	<tr>
+		<th>동해-서울행</th>
+		<td>
+			<?foreach($arrBusA as $key=>$value){?>
+				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
 	</tr>
@@ -70,10 +114,12 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 </div>
 
 <script>
-function fnDayList(vlu){
+function fnDayList(vlu, obj){
+	$j("input[name=buspoint]").css("background", "white");
 	if(vlu == "ALL"){
 		$j("#dayList").html('<div style="text-align:center;font-size:14px;padding:50px;"><b>버스종류를 선택하세요.</b></div>');
 	}else{
+		$j(obj).css("background", "#2dc15e");
 		$j("#busNum").val(vlu);
 
 		var formData = $j("#frmDaySearch").serializeArray();
@@ -86,13 +132,4 @@ function fnDayList(vlu){
 		});
 	}
 }
-
-function fnModifyInfoDay(seq){
-	$j("tr[name='btnTr']").removeClass('selTr');
-	$j("tr[name='btnTrPoint']").removeClass('selTr');
-	$j("#tab3").load("/Admin_BusModify.php?subintseq=" + seq + '&gubun=bus');
-	$j(".tab_content").hide();
-	$j("#tab3").fadeIn();
-}
-
 </script>

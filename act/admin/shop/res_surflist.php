@@ -43,12 +43,6 @@ if($Shopcnt > 1){
 }
 ?>
 <script>
-//서핑샵 변경
-function fnChangeShop(){
-	var shopseq = $j("#selShop").val();
-	
-	location.href = "/shopadmin?seq="+shopseq;
-}
 </script>
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"<?=$css?>>

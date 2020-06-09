@@ -312,7 +312,7 @@ function fnDateReset(){
 	$j("#eDate").val('2020-10-31');
 }
 
-function fnModifyInfo(seq, gubun, obj){
+function fnModifyInfo(type, seq, gubun, obj){
 	// $j("tr[name='btnTr']").removeClass('selTr');
 	// $j("tr[name='btnTrPoint']").removeClass('selTr');
 	// $j(obj).parent().parent().addClass('selTr');
@@ -324,8 +324,44 @@ function fnModifyInfo(seq, gubun, obj){
 	// $j("#tab3").load(folderBusRoot + "/Admin_BusModify.php?subintseq=" + seq + '&gubun=' + gubun);
 	// $j(".tab_content").hide();
 	// $j("#tab3").fadeIn();
+	if(type == "surf"){
 
-	$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'30%'} }); 
+	}else if(type == "bus"){
+		var params = "resparam=busmodify&ressubseq=" + seq;
+		$j.ajax({
+			type: "POST",
+			url: "/act/admin/bus/res_bus_info.php",
+			data: params,
+			success: function (data) {
+				if (data == "err") {
+					alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
+				} else {
+					$j("#gubun").val(gubun); //구분코드
+					$j("#resnum").val(data.resnum); //예약번호
+					$j("#ressubseq").val(data.ressubseq);
+					$j("#insdate").val(data.insdate);
+					$j("#confirmdate").val(data.confirmdate);
+					$j("#res_confirm").val(data.res_confirm);
+					$j("#res_date").val(data.res_date);
+					$j("#user_name").val(data.user_name);
+					$j("#user_tel").val(data.user_tel);
+					$j("#user_email").val(data.user_email);
+					$j("#cashreceipt_yn").val(data.cashreceipt_yn);
+					$j("#res_price_coupon").val(data.res_price_coupon); //쿠폰
+					$j("#res_totalprice").val(data.res_totalprice); //최종가격
+					$j("#res_price").val(data.res_price); //기본가격
+					$j("#res_busnum").val(data.res_busnum); //호차
+					$j("#res_seat").val(data.res_seat);
+					$j("#res_spointname").val(data.res_seat); //출발 정류장
+					$j("#res_epointname").val(data.res_seat); //도착 정류장
+
+					$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'30%'} }); 
+				}
+			}
+		});
+
+		
+	}
 }
 
 function fnModifyClose(){
@@ -390,6 +426,13 @@ function cateList2(obj, objName){
 			$j("#" + objName + "3").append('<option value="' + key + '">' + vlu + '</option>');
 		});
 	}
+}
+
+//서핑샵 변경
+function fnChangeShop(){
+	var shopseq = $j("#selShop").val();
+	
+	location.href = "/shopadmin?seq="+shopseq;
 }
 
 $j(function () {

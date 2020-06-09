@@ -367,6 +367,19 @@ $reslist .= "
      $ResConfirm7 = '';
      $ResConfirm8 = '';
 
+/*
+예약상태
+    0 : 미입금
+    1 : 예약대기
+    2 : 임시확정
+    3 : 확정
+    4 : 환불요청
+    5 : 환불완료
+    6 : 임시취소
+    7 : 취소
+    8 : 입금완료
+*/
+
 if($ResConfirm == 0) $ResConfirm0 = 'selected';
 if($ResConfirm == 1) $ResConfirm1 = 'selected';
 if($ResConfirm == 3) $ResConfirm3 = 'selected';
@@ -386,7 +399,7 @@ $reslist .= "
         </select>";
 $reslist .= "
      </td>
-     <td style='text-align:center;' $RtnBankRow><input type='button' class='gg_btn gg_btn_grid large gg_btn_color' style='width:45px; height:24px;background:green;' value='수정' onclick='fnModifyInfo($ressubseq);' /></td>
+     <td style='text-align:center;' $RtnBankRow><input type='button' class='gg_btn gg_btn_grid large gg_btn_color' style='width:45px; height:24px;background:green;' value='수정' onclick='fnModifyInfo(\"bus\", $ressubseq, 1);' /></td>
  </tr>";
  $reslist .= $RtnBank;
 //while end

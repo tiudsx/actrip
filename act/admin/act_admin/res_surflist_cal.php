@@ -161,7 +161,7 @@ foreach($arrShopDate as $x => $x_value) {
 	<?if($arrShopcharge[$x] == 0 || $arrShopCal[$x] == "Y"){?>
 		<td style="text-align:center;">완료</td>
 	<?}else{?>
-		<td style="text-align:center;"><input type='button' class='gg_btn gg_btn_grid large gg_btn_color' style='width:45px; height:24px;background:green;' value='정산' onclick='fnModifyInfo();' /></td>
+		<td style="text-align:center;"><input type='button' class='gg_btn gg_btn_grid large gg_btn_color' style='width:45px; height:24px;background:green;' value='정산' onclick='fnModifyInfo("surf");' /></td>
 	<?}?>
 	</tr>
 <?
