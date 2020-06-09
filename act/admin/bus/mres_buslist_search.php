@@ -77,25 +77,24 @@ if($count == 0){
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
             <col width="16%" />
-            <col width="*" />
             <col width="14%" />
-            <col width="20%" />
-            <col width="10%" />
+            <col width="*" />
             <col width="8%" />
             <col width="8%" />
         </colgroup>
         <tbody>
             <tr>
-                <th>예약번호</th>
-                <th>행선지</th>
-                <th>이용일</th>
-                <th>이름</th>
+                <th rowspan="2">예약번호</th>
+                <th rowspan="2">이용일</th>
+                <th colspan="3">이름</th>
+            </tr>
+            <tr>
                 <th>상태</th>
                 <th>승인여부</th>
                 <th>특이사항</th>
             </tr>
             <tr>
-                <td colspan="7" style="text-align:center;height:50px;">
+                <td colspan="5" style="text-align:center;height:50px;">
                 <b>예약된 목록이 없습니다.</b>
                 </td>
             </tr>
@@ -126,39 +125,34 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
 
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
-                <td style="text-align: center;"><?=$PreMainNumber?></td>
-                <td style="text-align: left;"><?=$shopname?> (<?=implode(',',array_unique(explode(',',$busNum)));?>)</td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;" rowspan="2"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
-                <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
-                <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
-                <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;" colspan="2"><?=$user_name?><br>(<?=$user_tel?>)</td>
             </tr>
+            <tr>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+            </tr>
+            
             <tr id="<?=$PreMainNumber?>" style="display:none;">
-                <td colspan="7">
+                <td colspan="4">
 
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
-                            <col style="width:120px;">
+                            <col style="width:80px;">
                             <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:100px;">
-                            <col style="width:70px;">
+                            <col style="width:90px;">
                         </colgroup>
                         <tbody>
                             <tr>
                                 <th style="text-align:center;" rowspan="2">이용일</th>
-                                <th style="text-align:center;" colspan="3">예약항목</th>
-                                <th style="text-align:center;" rowspan="2">현재상태</th>
-                                <th style="text-align:center;" rowspan="2">상태</th>
-                                <th style="text-align:center;" rowspan="2"></th>
+                                <th style="text-align:center;">행선지</th>
+                                <th style="text-align:center;">현재상태</th>
                             </tr>
                             <tr>
-                                <th style="text-align:center;">행선지</th>
-                                <th style="text-align:center;">좌석번호</th>
                                 <th style="text-align:center;">정류장</th>
+                                <th style="text-align:center;">상태</th>
                             </tr>
                             <?=$reslist?>
                         </tbody>
@@ -232,20 +226,18 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <div class="gg_first">셔틀버스 예약정보</div>
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
                 <colgroup>
-                    <col width="16%" />
-                    <col width="*" />
-                    <col width="10%" />
-                    <col width="16%" />
-                    <col width="10%" />
-                    <col width="8%" />
-                    <col width="8%" />
+                    <col width="31%" />
+                    <col width="25%" />
+                    <col width="22%" />
+                    <col width="22%" />
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>예약번호</th>
-                        <th>행선지</th>
+                        <th rowspan="2">예약번호</th>
                         <th>이용일</th>
-                        <th>이름</th>
+                        <th colspan="2">이름</th>
+                    </tr>
+                    <tr>
                         <th>상태</th>
                         <th>승인여부</th>
                         <th>특이사항</th>
@@ -346,17 +338,18 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     
 $reslist .= "
 <tr>
-     <td style='text-align:center;' $RtnBankRow>
+     <td style='text-align:center;' rowspan='2'>
          <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
          <label>
-         <input type='checkbox' id='chkCancel' name='chkCancel[]' value='$ressubseq' style='vertical-align:-3px;' />
+         <input type='checkbox' id='chkCancel' name='chkCancel[]' value='$ressubseq' style='vertical-align:-3px;' /><br>
          $res_date
          </label>
      </td>
-     <td style='text-align:center;'>".$busNumText."</td>
-     <td style='text-align:center;'>".$row['res_seat']."번</td>
-     <td style='text-align:center;'>".$row["res_spointname"]." -> ".$row["res_epointname"]."</td>
+     <td style='text-align:center;' onclick='fnModifyInfo(\"bus\", $ressubseq, 1);'>".$busNumText." ".$row['res_seat']."번</td>
      <td style='text-align:center;'>".$ResConfirmText."</td>
+</tr>
+<tr>
+     <td style='text-align:center;'>".$row["res_spointname"]." -> ".$row["res_epointname"]."</td>
      <td style='text-align:center;' $RtnBankRow>";
 
      $ResConfirm0 = '';
@@ -399,7 +392,6 @@ $reslist .= "
         </select>";
 $reslist .= "
      </td>
-     <td style='text-align:center;' $RtnBankRow><input type='button' class='gg_btn gg_btn_grid large gg_btn_color' style='width:45px; height:24px;background:green;' value='수정' onclick='fnModifyInfo(\"bus\", $ressubseq, 1);' /></td>
  </tr>";
  $reslist .= $RtnBank;
 //while end
@@ -408,39 +400,33 @@ $reslist .= "
 ?>
 
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
-                <td style="text-align: center;"><?=$PreMainNumber?></td>
-                <td style="text-align: left;"><?=$shopname?> (<?=implode(',',array_unique(explode(',',$busNum)));?>)</td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;" rowspan="2"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
-                <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
-                <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
-                <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;" colspan="2"><?=$user_name?><br>(<?=$user_tel?>)</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
-                <td colspan="7">
+                <td colspan="4">
 
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
-                            <col style="width:120px;">
+                            <col style="width:80px;">
                             <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:*;">
-                            <col style="width:100px;">
-                            <col style="width:70px;">
+                            <col style="width:90px;">
                         </colgroup>
                         <tbody>
                             <tr>
                                 <th style="text-align:center;" rowspan="2">이용일</th>
-                                <th style="text-align:center;" colspan="3">예약항목</th>
-                                <th style="text-align:center;" rowspan="2">현재상태</th>
-                                <th style="text-align:center;" rowspan="2">상태</th>
-                                <th style="text-align:center;" rowspan="2"></th>
+                                <th style="text-align:center;">행선지</th>
+                                <th style="text-align:center;">현재상태</th>
                             </tr>
                             <tr>
-                                <th style="text-align:center;">행선지</th>
-                                <th style="text-align:center;">좌석번호</th>
                                 <th style="text-align:center;">정류장</th>
+                                <th style="text-align:center;">상태</th>
                             </tr>
                             <?=$reslist?>
                         </tbody>

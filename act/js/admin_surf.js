@@ -1,7 +1,10 @@
 //셀렉트 박스 상태 변경
 function fnChangeModify(obj, confirmVlu){
-	var trObj = $j(obj).parent().parent();
+	if(mobileuse == "m"){
 
+	}else{
+		var trObj = $j(obj).parent().parent();
+	}
 	if(confirmVlu == $j(obj).val()){
 		trObj.find("#chkCancel").prop("checked", false);
 	}else{
@@ -229,30 +232,32 @@ function fnSearchAdmin(url){
 }
 // row 클릭
 function fnListViewKakao(obj){
-	if($j(obj).next().css("display") == "none"){
+	if(mobileuse == "m"){
+		var objNext = $j(obj).next().next();
 		$j("tr[name='btnTrList']").removeClass('selTr');
-		$j(obj).addClass('selTr');
+		$j("tr[name='btnTrList']").next().removeClass('selTr');
+		if(objNext.css("display") == "none"){
+			$j(obj).addClass('selTr');
+			$j(obj).next().addClass('selTr');
 
-		$j("tr[name='btnTrList']").next().css("display", "none");
-		$j(obj).next().css("display", "");
+			$j("tr[name='btnTrList']").next().next().css("display", "none");
+			objNext.css("display", "");
+		}else{
+
+			objNext.css("display", "none");
+		}
 	}else{
+		var objNext = $j(obj).next();
 		$j("tr[name='btnTrList']").removeClass('selTr');
+		if(objNext.css("display") == "none"){
+			$j(obj).addClass('selTr');
 
-		$j(obj).next().css("display", "none");
-	}
-}
+			$j("tr[name='btnTrList']").next().css("display", "none");
+			objNext.css("display", "");
+		}else{
 
-function fnListView(obj){
-	if($j(obj).parent().next().css("display") == "none"){
-		$j("tr[name='btnTrList']").removeClass('selTr');
-		$j(obj).parent().addClass('selTr');
-
-		$j("tr[name='btnTrList']").next().css("display", "none");
-		$j(obj).parent().next().css("display", "");
-	}else{
-		$j("tr[name='btnTrList']").removeClass('selTr');
-
-		$j(obj).parent().next().css("display", "none");
+			objNext.css("display", "none");
+		}
 	}
 }
 
