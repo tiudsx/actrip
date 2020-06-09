@@ -18,7 +18,7 @@ $shopseq = 0;
 
 <script>
     var busDateinit = "2020-04-01";
-    var mobileuse = "";
+    var mobileuse = "m";
 </script>
 
 <div class="container" id="contenttop">
@@ -31,7 +31,6 @@ $shopseq = 0;
     <ul class="tabs">
         <li class="active" rel="tab1">검색관리</li>
         <li rel="tab2">예약관리</li>
-        <li rel="tab3">정산관리</li>
     </ul>
 
 	<!-- #container -->
@@ -41,19 +40,16 @@ $shopseq = 0;
 		<form name="frmSearch" id="frmSearch" autocomplete="off">
 			<table class='et_vars exForm bd_tb' style="width:100%">
 				<colgroup>
-					<col style="width:100px;">
-					<col style="width:80px;">
-					<col style="width:*;">
-					<col style="width:100px;">
-					<col style="width:80px;">
+					<col style="width:70px;">
+					<col style="width:70px;">
 					<col style="width:*;">
 				</colgroup>
 				<tr>
 					<th>구분</th>
-					<td colspan="5">
+					<td colspan="2">
                         <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="0" style="vertical-align:-3px;" />미입금</label>
                         <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="1" style="vertical-align:-3px;" />예약대기</label>
-                        <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="8" style="vertical-align:-3px;" />입금완료</label>
+                        <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="8" style="vertical-align:-3px;" />입금완료</label><br>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="4" style="vertical-align:-3px;" />환불요청</label>
@@ -61,19 +57,29 @@ $shopseq = 0;
 					</td>
 				</tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="3">
 						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" />양양행</label>
 					</td>
 				</tr>
 				<tr>
-					<th rowspan="2">서울-양양행</th>
+					<th rowspan="2">양양행</th>
 					<th>사당선</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y1" style="vertical-align:-3px;" />1호차</label>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y3" style="vertical-align:-3px;" />3호차</label>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y5" style="vertical-align:-3px;" />5호차</label>
                     </td>
-                    <th rowspan="2">양양-서울행</th>
+                </tr>
+                <tr>
+					<th>종로선</th>
+					<td>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y2" style="vertical-align:-3px;" />2호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
+                    </td>
+                </tr>
+                <tr>
+                    <th rowspan="2">서울행</th>
                     <th>오후 2시</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S21" style="vertical-align:-3px;" />1호차</label>
@@ -82,12 +88,6 @@ $shopseq = 0;
 					</td>
 				</tr>
 				<tr>
-					<th>종로선</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
-                    </td>
                     <th>오후 5시</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S51" style="vertical-align:-3px;" />1호차</label>
@@ -96,19 +96,24 @@ $shopseq = 0;
 					</td>
 				</tr>
                 <tr>
-					<td colspan="6">
+					<td colspan="3">
 						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" />동해행</label>
 					</td>
 				</tr>
 				<tr>
-                    <th rowspan="2">서울-동해행</th>
-					<th rowspan="2">사당선</th>
+                    <th>동해행</th>
+					<th>사당선</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E1" style="vertical-align:-3px;" />1호차</label>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label><br>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
                     </td>
-                    <th rowspan="2">서울-동해행</th>
+                </tr>
+                <tr>
+                    <th rowspan="2">서울행</th>
                     <th>오후 2시</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
@@ -117,11 +122,6 @@ $shopseq = 0;
 					</td>
                 </tr>
                 <tr>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
-                    </td>
                     <th>오후 5시</th>
 					<td>
 						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
@@ -131,7 +131,7 @@ $shopseq = 0;
 				</tr>
 				<tr>
 					<th>검색기간</th>
-					<td colspan="5">
+					<td colspan="2">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
 						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=$Year?>-<?=$Mon?>-<?=$s_t?>" class="itx2" maxlength="7" >
 						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
@@ -140,10 +140,10 @@ $shopseq = 0;
 				</tr>
 				<tr>
 					<th>검색어</th>
-					<td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
+					<td colspan="2"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
 				</tr>
 				<tr>
-					<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
+					<td colspan="3" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
 				</tr>
 			</table>
 		</form>
@@ -157,12 +157,6 @@ $shopseq = 0;
 				<b>날짜를 선택하세요.</b>
 			</div>
 			<div id="divResList"></div>
-		</div>
-
-		
-        <!-- #tab3 -->
-        <div id="tab3" class="tab_content" style="display:none;">
-			<?include 'Admin_BusCalendarCal.php'?>
 		</div>
     </div>
     <!-- .tab_container -->

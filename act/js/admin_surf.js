@@ -150,9 +150,9 @@ function fnPassengerAdmin(obj, seq) {
 	$j("#schText").val('');
 
 	if(seq == 0){
-    	$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + selDate);
+    	$j("#divResList").load("/act/admin/bus/" + mobileuse + "res_busmng.php?selDate=" + selDate);
 		$j("#initText2").css("display", "none");
-		var url = "bus/res_buslist_search.php";
+		var url = "bus/" + mobileuse + "res_buslist_search.php";
 	}else if(seq == -1){
 		var url = "act_admin/res_surflist_search.php";
 	}else{
@@ -171,25 +171,37 @@ function fnPassengerAdmin(obj, seq) {
 
 function fnCalMoveAdminList(selDate, day, seq) {
 	var nowDate = new Date();
-	
-	if(seq == 0){
+
+	$j("input[id=chkResConfirm]").prop("checked", false);
+	if(seq == 0){ //서핑버스
 		$j("#divResList").html("");
 		$j("#initText2").css("display", "");
-		var url = "bus/res_buslist_search.php";
+		var url = "bus/" + mobileuse + "res_buslist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
-	}else if(seq == -1){
+		
+		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(5)").prop("checked", true);
+	}else if(seq == -1){ //입점샵 전체
 		var url = "act_admin/res_buslist_search.php";
 		var calurl = "act_admin/res_surfcalendar.php";
-	}else{
+		
+		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(4)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(6)").prop("checked", true);
+		$j("input[id=chkResConfirm]:eq(8)").prop("checked", true);
+	}else{ //입점샵 일반
 		var url = "shop/res_surflist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
+	
+		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
 	}
 	
 	$j("#right_article3").load("/act/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 	$j("#mngSearch").load("/act/admin/" + url + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
-	
-	$j("input[id=chkResConfirm]").prop("checked", false);
-	$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
 
 	var nowYear = selDate.substring(0, 4);
 	var nowMon = selDate.substring(4, 6);
