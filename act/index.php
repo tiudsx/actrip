@@ -89,6 +89,7 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
+						<div class="swiper-slide"><a href="https://actrip.co.kr/event/1494" target="_blank"><img src="images/banner/pkgbnr.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/377" target="_blank"><img src="images/banner/levelup.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
