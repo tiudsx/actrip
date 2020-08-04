@@ -14,7 +14,9 @@ if(plusDate($dateChk, 2) <= date("Y-m-d")){
 	//return;
 }
 ?>
-
+<script>
+    var mobileuse = "";
+</script>
 <div id="wrap">
     <? include __DIR__.'/../../_layout_top.php'; ?>
 

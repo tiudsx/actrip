@@ -31,14 +31,15 @@ if($_REQUEST["chkResConfirm"] == ""){
 }
 
 if($sDate == ""){
+    $sDate = $Year."-".$Mon."-01";
+    $eDate = "2020-10-31";
     $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
                     INNER JOIN `AT_PROD_OPT` c
                         ON b.optseq = c.optseq
-                        WHERE Month(b.res_date) = '.$Mon.'
-                            AND b.res_confirm IN ('.$res_confirm.')
+                        WHERE b.res_confirm IN ('.$res_confirm.')
                             AND b.code = "surf"
-                            ORDER BY b.resnum, b.ressubseq';
+                            ORDER BY b.seq, b.resnum, b.ressubseq';
 }else{
 /*
 SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a 
@@ -87,16 +88,17 @@ if($count == 0){
 
 ?>
  <div class="contentimg bd">
-    <div class="gg_first"><?=$Mon?>월 예약목록</div>
+    <div class="gg_first">[<?=$sDate?> ~  <?=$eDate?>] 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
             <col width="5%" />
-            <col width="*" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
+			<col width="*" />
+            <col width="12%" />
+            <col width="10%" />
+            <col width="8%" />
+            <col width="18%" />
+            <col width="8%" />
+            <col width="8%" />
         </colgroup>
         <tbody>
             <tr>
@@ -105,11 +107,12 @@ if($count == 0){
                 <th>예약번호</th>
                 <th>이용일</th>
                 <th>이름</th>
+                <th>상태</th>
                 <th>승인여부</th>
                 <th>특이사항</th>
             </tr>
             <tr>
-                <td colspan="7" style="text-align:center;height:50px;">
+                <td colspan="8" style="text-align:center;height:50px;">
                 <b>예약된 목록이 없습니다. 달력 월을 변경해보세요.</b>
                 </td>
             </tr>
@@ -125,11 +128,13 @@ $z = 0;
 $b = 0;
 $c = 0;
 $PreMainNumber = "";
+$RtnTotalPrice = 0;
 $TotalPrice = 0;
 $TotalDisPrice = 0;
 $res_coupon = "";
 $ChangeChk = 0;
 $reslist = '';
+$reslistConfirm = "";
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 	$MainNumber = $row['resnum'];
@@ -143,11 +148,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
                 <td style="text-align: center;"><?=$user_name?></td>
+                <td style="text-align: center;"><b><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></b></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
                 <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
-                <td colspan="7">
+                <td colspan="8">
 
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
@@ -174,6 +180,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                 <th>연락처</th>
                                 <td><?=$user_tel?></td>
                             </tr>
+                        <?if($RtnTotalPrice > 0){?>
+                            <tr>
+                                <th>환불금액</th>
+                                <td><b><?=number_format($RtnTotalPrice).'원'?></b></td>
+                            </tr>
+                        <?}?>
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>
@@ -207,11 +219,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$b++;
 	}else{
 		$b = 0;
+        $RtnTotalPrice = 0;
         $TotalPrice = 0;
         $TotalDisPrice = 0;
         $res_coupon = "";
         $ChangeChk = 0;
 		$reslist = '';
+        $reslistConfirm = "";
         $z++;
     }
     
@@ -228,16 +242,17 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
 <div class="contentimg bd">
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-<div class="gg_first"><?=$Mon?>월 예약목록</div>
+    <div class="gg_first">[<?=$sDate?> ~  <?=$eDate?>] 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
 		<colgroup>
             <col width="5%" />
 			<col width="*" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
-            <col width="13%" />
+            <col width="12%" />
+            <col width="10%" />
+            <col width="8%" />
+            <col width="18%" />
+            <col width="8%" />
+            <col width="8%" />
 		</colgroup>
         <tbody>
             <tr>
@@ -246,6 +261,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th>예약번호</th>
                 <th>이용일</th>
                 <th>이름</th>
+                <th>상태</th>
                 <th>승인여부</th>
                 <th>특이사항</th>
             </tr>
@@ -275,6 +291,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $res_coupon = $row['res_coupon'];
     if($ResConfirm == 0){
         $ResConfirmText = "미입금";
+        $ChangeChk++;
     }else if($ResConfirm == 1){
         $ResConfirmText = "예약대기";
     }else if($ResConfirm == 2){
@@ -299,12 +316,24 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $ResConfirmText = "환불요청";
         $ResColor = "rescolor1";
         $ChangeChk++;
+        $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
+        $RtnTotalPrice += $row['rtn_totalprice'];
     }else if($ResConfirm == 5){
         $ResConfirmText = "환불완료";
         $ResCss = "rescss";
+        $TotalPrice += $row['res_price'];
+        $TotalDisPrice += $row['res_totalprice'];
+        $RtnTotalPrice += $row['rtn_totalprice'];
     }else if($ResConfirm == 7){
         $ResConfirmText = "취소";
         $ResCss = "rescss";
+    }
+
+    $str_pos = strpos($reslistConfirm, $ResConfirmText);
+    if($str_pos === false)
+    {
+        $reslistConfirm .= $ResConfirmText."/";
     }
 
     if ($datDate < date("Y-m-d", strtotime($now." 0 day")))
@@ -352,16 +381,30 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else if($row['sub_title'] == "rent"){
 
     }else if($row['sub_title'] == "pkg"){
-        $ResOptInfo = $optinfo.$TimeDate;
+        // $ResOptInfo = $optinfo.$TimeDate;
+        $ResOptInfo = $optinfo;
     }else if($row['sub_title'] == "bbq"){
         // $ResOptInfo = str_replace('<br>', '', $optinfo);
         // $ResOptInfo = $optinfo;
     }
     $ressubseq = $row['ressubseq'];
     $optname = $row['optname'];
+
+    $RtnPrice = '';
+    $RtnBank = '';
+    $RtnBankRow = '';
+	if($ResConfirm == 4 || $ResConfirm == 5){
+		$RtnPrice = ''.number_format($row['rtn_totalprice']).'원';
+		$RtnBank = '<tr class="'.$ResCss.'" name="btnTrPoint">
+						<td style="text-align:center;" colspan="4">'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).' | 환불액 : '.$RtnPrice.'</td>
+                    </tr>';
+        $RtnBankRow = 'rowspan="2"';
+    }
+
+
 $reslist .= "
            <tr>
-                <td style='text-align:center;'>
+                <td style='text-align:center;' $RtnBankRow>
                     <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
                     <input type='hidden' id='shopseq' name='shopseq' value='$shopseq'>
 					<label>
@@ -374,7 +417,7 @@ $reslist .= "
 					<span class='resoption'>$TimeDate ($ResNum)</span>
 					<span class='resoption'>$ResOptInfo</span>
 				</td>
-                <td style='text-align:center;'>";                
+                <td style='text-align:center;' $RtnBankRow>";                
     $ResConfirm0 = '';
     $ResConfirm1 = '';
     $ResConfirm2 = '';
@@ -409,6 +452,7 @@ $reslist .= "
 $reslist .= "
                 </td>
 			</tr>";
+$reslist .= $RtnBank;
 //while end
 }
 ?>
@@ -420,11 +464,12 @@ $reslist .= "
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
                 <td style="text-align: center;"><?=$user_name?></td>
+                <td style="text-align: center;"><b><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></b></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
                 <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
-                <td colspan="7">
+                <td colspan="8">
 
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
@@ -451,6 +496,12 @@ $reslist .= "
                                 <th>연락처</th>
                                 <td><?=$user_tel?></td>
                             </tr>
+                        <?if($RtnTotalPrice > 0){?>
+                            <tr>
+                                <th>환불금액</th>
+                                <td><b><?=number_format($RtnTotalPrice).'원'?></b></td>
+                            </tr>
+                        <?}?>
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>

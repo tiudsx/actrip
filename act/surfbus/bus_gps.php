@@ -48,7 +48,7 @@ $now = date("Y-m-d H:i:s");
 $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
-if($nowTime < 2030){
+if($nowTime < 1400){
     $busList = "'Y','E'";
 }else{
     $busList = "'S','A'";
@@ -118,7 +118,7 @@ var busGPSList = {}
     busGPSList.Y1 = [];
 <?=$busGPS?>
 
-var MARKER_POINT = "", MARKER_ZOOM = 17;
+var MARKER_POINT = "", MARKER_ZOOM = 16;
 var MARKER_SPRITE_POSITION2 = {};
 function fnBusGPSPoint(obj) {
 	$j("input[btnpoint='point']").css("background", "").css("color", "");
@@ -129,9 +129,11 @@ function fnBusGPSPoint(obj) {
     MARKER_POINT = busnum;
     
 	if(gubun == "S" || gubun == "A"){
-		MARKER_ZOOM = 18;
-	}
-
+		MARKER_ZOOM = 17;
+	}else{
+		MARKER_ZOOM = 17;
+    }
+    
 	if(MARKER_SPRITE_POSITION2[busnum] == null){
 		MARKER_SPRITE_POSITION2 = eval("busGPSList." + busnum)[0];
 	}

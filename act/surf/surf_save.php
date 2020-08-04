@@ -124,6 +124,12 @@ if($param == "BusI"){
     if($coupon == "JOABUS"){
         $res_confirm = 3;
         $InsUserID = "JOASURF";
+    }else if($coupon == "KLOOK"){
+        $res_confirm = 3;
+        $InsUserID = "KLOOK";
+    }else if($coupon == "NAVER"){
+        $res_confirm = 3;
+        $InsUserID = "NAVER";
     }else{
         $res_confirm = 0;
     }
@@ -238,6 +244,50 @@ if($param == "BusI"){
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
+        }else if($coupon == "KLOOK"){
+            $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+            $msgTitle = '액트립&KLOOK 서핑버스 예약안내';
+
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - KLOOK 서핑버스 예약이 완료되었습니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            // 고객 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_bus1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
+                , "link4"=>"eatlist" //제휴업체 목록
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+            );
+        }else if($coupon == "NAVER"){
+            $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+            $msgTitle = '액트립 서핑버스 예약안내';
+
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 액트립 서핑버스 예약이 완료되었습니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            // 고객 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_res_bus1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
+                , "link4"=>"eatlist" //제휴업체 목록
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+            );
         }else{
             $msgTitle = '액트립 '.$busTitleName.'서핑버스 예약안내';
             $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
@@ -277,6 +327,52 @@ if($param == "BusI"){
                 "gubun"=> "bus"
                 , "gubun_step" => 3
                 , "gubun_title" => "조아서프 패키지 서핑버스"
+                , "mailto"=> $to
+                , "mailfrom"=> "surfbus_res@actrip.co.kr"
+                , "mailname"=> "actrip"
+                , "userName"=> $userName
+                , "ResNumber"=> $ResNumber
+                , "userPhone" => $userPhone
+                , "etc" => $etc
+                , "totalPrice1" => ""
+                , "totalPrice2" => ""
+                , "banknum" => ""
+                , "info1_title"=> $info1_title
+                , "info1"=> $info1
+                , "info2_title"=> $info2_title
+                , "info2"=> $info2
+            );
+        }else if($coupon == "KLOOK"){
+            $info2_title = "탑승시간/<br>위치 안내";
+            $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+
+            $arrMail = array(
+                "gubun"=> "bus"
+                , "gubun_step" => 3
+                , "gubun_title" => "KLOOK 서핑버스"
+                , "mailto"=> $to
+                , "mailfrom"=> "surfbus_res@actrip.co.kr"
+                , "mailname"=> "actrip"
+                , "userName"=> $userName
+                , "ResNumber"=> $ResNumber
+                , "userPhone" => $userPhone
+                , "etc" => $etc
+                , "totalPrice1" => ""
+                , "totalPrice2" => ""
+                , "banknum" => ""
+                , "info1_title"=> $info1_title
+                , "info1"=> $info1
+                , "info2_title"=> $info2_title
+                , "info2"=> $info2
+            );
+        }else if($coupon == "NAVER"){
+            $info2_title = "탑승시간/<br>위치 안내";
+            $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+
+            $arrMail = array(
+                "gubun"=> "bus"
+                , "gubun_step" => 3
+                , "gubun_title" => "액트립 서핑버스"
                 , "mailto"=> $to
                 , "mailfrom"=> "surfbus_res@actrip.co.kr"
                 , "mailname"=> "actrip"
@@ -341,7 +437,7 @@ if($param == "BusI"){
     $coupon = $_REQUEST["couponcode"];
     $res_price_coupon = 0;
     $res_totalprice = 0;
-    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq = 'SUR'";
+    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq IN ('SUR', 'BBQ')";
 
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
@@ -362,7 +458,7 @@ if($param == "BusI"){
                                 SET use_yn = 'Y'
                                 ,user_ip = '$user_ip'
                                 ,use_date = now()
-                            WHERE seq = 'SUR' AND coupon_code = '$coupon';";
+                            WHERE seq IN ('SUR', 'BBQ') AND coupon_code = '$coupon';";
             $result_set = mysqli_query($conn, $select_query);
             if(!$result_set) goto errGoSurf;
         }

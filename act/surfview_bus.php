@@ -247,6 +247,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <?}?>
                     </ul>
                 </div>
+                <div class="bd" style="padding:0 4px;font-size:16px;font-family:Tahoma,Geneva,sans-serif;color:red;">
+                    <strong>※ 서핑버스 왕복 예약하실 경우 상단 행선지를 변경 후 추가 예약진행하시면 됩니다.</strong>
+                </div>
 
                 <div class="bd" style="padding:0 4px;" id="divConfirm">
                     <p class="restitle">예약자 정보</p>

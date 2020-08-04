@@ -300,7 +300,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </tr>
                             <tbody>
                         </table>
-                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('lesson', this);"></div>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="추가하기" onclick="fnSurfAdd('lesson', this);"></div>
                     </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
@@ -373,7 +373,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </tr>
                             <tbody>
                         </table>
-                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('rent', this);"></div>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="추가하기" onclick="fnSurfAdd('rent', this);"></div>
                     </div>
                     
                     <div class="bd" area="shopListArea" style="display:none;">
@@ -455,7 +455,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </tr>
                             <tbody>
                         </table>
-                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('pkg', this);"></div>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="추가하기" onclick="fnSurfAdd('pkg', this);"></div>
                     </div>
 
                     <div class="bd" area="shopListArea" style="display:none;">
@@ -529,7 +529,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </tr>
                             <tbody>
                         </table>
-                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="신청하기" onclick="fnSurfAdd('bbq', this);"></div>
+                        <div style="text-align:center;"><input type="button" class="btnsurfadd" value="추가하기" onclick="fnSurfAdd('bbq', this);"></div>
                     </div>                  
                 </form>
                 </div>

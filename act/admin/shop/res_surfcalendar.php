@@ -134,7 +134,7 @@ for($r=0;$r<=$ra;$r++){
 		$rv=7*$r+$z; $ru=$rv-$l; // 칸에 번호를 매겨줍니다. 1일이 되기전 공백들 부터 마이너스 값으로 채운 뒤 ~ 
 
 		if($ru<=0 || $ru>$s_t){ 
-			echo "<td><span class='tour_td_block' style='min-height:80px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
+			echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
 		}else{
 			$s = date("Y-m-d",mktime(0,0,0,$s_m,$ru,$s_Y)); // 현재칸의 날짜
 			$h = date("H");
@@ -161,7 +161,11 @@ for($r=0;$r<=$ra;$r++){
 			}
 
 			if($arrResCount[3][$ru] != ""){
-				$adminText .= "<br><font color='red'><b>확정</b></font>";
+				if($shopseq == 0){ //셔틀버스
+					$adminText .= "<br><font color='red'><b>".$arrResCount[3][$ru]."명 확정</b></font>";
+				}else{
+					$adminText .= "<br><font color='red'><b>확정</b></font>";
+				}
 				$gubunChk .= "3,";
 			}
 
@@ -199,7 +203,11 @@ for($r=0;$r<=$ra;$r++){
 				$selYNbg = 'background:#efefef;';
 			}
 			
-			echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, $shopseq);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+			if($gubunChk == "99"){
+				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>$ru</span></span></td>";
+			}else{
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, $shopseq);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+			}
 		}
 	}
 

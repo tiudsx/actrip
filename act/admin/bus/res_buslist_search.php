@@ -132,7 +132,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
                 <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
                 <td colspan="7">
@@ -414,7 +414,7 @@ $reslist .= "
                 <td style="text-align: center;"><?=$user_name?> (<?=$user_tel?>)</td>
                 <td style="text-align: center;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
                 <td colspan="7">

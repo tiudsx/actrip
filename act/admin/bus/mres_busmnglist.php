@@ -198,32 +198,32 @@ $rowMain = mysqli_fetch_array($result);
 			if($rowMain["busseat"] == 44){
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
 				<td class="col-3">&nbsp;</td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
 			</tr>
 	<?
 			}else{
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num5?>" class="tab1"><span style="width:45px;"><label><?=$num5?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num5?>" class="tab1"><span style="width:35px;"><label><?=$num5?></label></span></span></td>
 			</tr>
 	<?
 			}
 		}else{
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
 				<td>&nbsp;</td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
 			</tr>
 	<?
 		}

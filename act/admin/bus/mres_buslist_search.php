@@ -75,24 +75,23 @@ if($count == 0){
  <div class="contentimg bd">
  <div class="gg_first">셔틀버스 예약정보</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-        <colgroup>
-            <col width="16%" />
-            <col width="14%" />
-            <col width="*" />
-            <col width="8%" />
-            <col width="8%" />
-        </colgroup>
-        <tbody>
-            <tr>
-                <th rowspan="2">예약번호</th>
-                <th rowspan="2">이용일</th>
-                <th colspan="3">이름</th>
-            </tr>
-            <tr>
-                <th>상태</th>
-                <th>승인여부</th>
-                <th>특이사항</th>
-            </tr>
+    <colgroup>
+        <col width="31%" />
+        <col width="25%" />
+        <col width="22%" />
+        <col width="22%" />
+    </colgroup>
+    <tbody>
+        <tr>
+            <th rowspan="2">예약번호</th>
+            <th>이용일</th>
+            <th colspan="2">이름</th>
+        </tr>
+        <tr>
+            <th>상태</th>
+            <th>승인여부</th>
+            <th>특이사항</th>
+        </tr>
             <tr>
                 <td colspan="5" style="text-align:center;height:50px;">
                 <b>예약된 목록이 없습니다.</b>
@@ -132,7 +131,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <tr>
                 <td style="text-align: center;border-bottom: 3px solid #efefef;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             
             <tr id="<?=$PreMainNumber?>" style="display:none;">
@@ -407,7 +406,7 @@ $reslist .= "
             <tr>
                 <td style="text-align: center;border-bottom: 3px solid #efefef;"><?=substr($reslistConfirm, 0, strlen($reslistConfirm) - 1)?></td>
                 <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td>
-                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
+                <td style="text-align: center;border-bottom: 3px solid #efefef;"><?if($etc != ""){ echo "있음"; }?><?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?></td>
             </tr>
             <tr id="<?=$PreMainNumber?>" style="display:none;">
                 <td colspan="4">

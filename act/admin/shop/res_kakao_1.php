@@ -194,7 +194,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else if($row['sub_title'] == "rent"){
 
     }else if($row['sub_title'] == "pkg"){
-        $ResOptInfo = $optinfo.$TimeDate;
+        // $ResOptInfo = $optinfo.$TimeDate;
+        $ResOptInfo = $optinfo;
     }else if($row['sub_title'] == "bbq"){
         //$ResOptInfo = str_replace('<br>', '', $optinfo);
         //$ResOptInfo = $optinfo;

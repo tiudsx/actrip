@@ -111,9 +111,9 @@ $shopseq = 0;
                     <th rowspan="2">서울-동해행</th>
                     <th>오후 2시</th>
 					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A3" style="vertical-align:-3px;" />3호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
 					</td>
                 </tr>
                 <tr>
@@ -124,16 +124,16 @@ $shopseq = 0;
                     </td>
                     <th>오후 5시</th>
 					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A3" style="vertical-align:-3px;" />3호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
 					</td>
 				</tr>
 				<tr>
 					<th>검색기간</th>
 					<td colspan="5">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=$Year?>-<?=$Mon?>-<?=$s_t?>" class="itx2" maxlength="7" >
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2020-10-31" class="itx2" maxlength="7" >
 						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 					</td>
 					
@@ -162,7 +162,7 @@ $shopseq = 0;
 		
         <!-- #tab3 -->
         <div id="tab3" class="tab_content" style="display:none;">
-			<?include 'Admin_BusCalendarCal.php'?>
+			<?include 'res_bus_cal.php'?>
 		</div>
     </div>
     <!-- .tab_container -->
@@ -175,7 +175,7 @@ $shopseq = 0;
 
 <div id="res_busmodify" style="display:none;padding:5px;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경 (<?=$row["MainNumber"]?>)</div>
+    <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
             <col width="15%" />
@@ -186,7 +186,10 @@ $shopseq = 0;
         <tbody>
             <tr>
                 <th>신청일</th>
-                <td colspan="3"><input type="text" id="insdate" name="insdate" size="20" value="" class="itx"></td>
+                <td colspan="3">
+                    <input type="text" id="insdate" name="insdate" size="20" value="" class="itx">
+                    <input type="text" id="resnum" name="resnum" size="10" value="" class="itx">
+                </td>
             </tr>
             <tr>
                 <th>확정일</th>
@@ -218,7 +221,12 @@ $shopseq = 0;
                 <th>이메일</th>
                 <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
                 <th>수수료여부</th>
-                <td><input type="text" id="cashreceipt_yn" name="cashreceipt_yn" size="12" value="" class="itx"></td>
+                <td>
+                    <select id="rtn_charge_yn" name="rtn_charge_yn" class="select">
+                        <option value="Y">있음</option>
+                        <option value="N">없음</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>할인금액</th>
@@ -257,7 +265,13 @@ $shopseq = 0;
                     </select>
                 </td>
                 <th>좌석</th>
-                <td><input type="text" id="res_seat" name="res_seat" value="<?=$row["busSeat"]?>" class="itx tel"></td>
+                <td>
+                    <select id="res_seat" name="res_seat" class="select">
+                    <?for ($i=1; $i < 46; $i++) { 
+                        echo "<option value='$i'>$i</option>";
+                    }?>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>정류장</th>
@@ -277,7 +291,6 @@ $shopseq = 0;
                     <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
                     <input type="hidden" id="userid" name="userid" size="10" value="admin" class="itx">
                     <input type="hidden" id="ressubseq" name="ressubseq" size="10" value="" class="itx">
-                    <input type="hidden" id="resnum" name="resnum" size="10" value="" class="itx">
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="정보수정" onclick="fnDataModify();" />&nbsp;
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();" />
                 </td>

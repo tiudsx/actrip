@@ -6,9 +6,9 @@ $shopseq = 0;
 
 <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
-<link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
+<link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css?v=1">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
-<script type="text/javascript" src="/act/js/admin_surf.js"></script>
+<script type="text/javascript" src="/act/js/admin_surf.js?v=1"></script>
 <script type="text/javascript" src="/act/js/surfview_bus.js"></script>
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 
@@ -116,24 +116,24 @@ $shopseq = 0;
                     <th rowspan="2">서울행</th>
                     <th>오후 2시</th>
 					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A3" style="vertical-align:-3px;" />3호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
 					</td>
                 </tr>
                 <tr>
                     <th>오후 5시</th>
 					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A3" style="vertical-align:-3px;" />3호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
+						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
 					</td>
 				</tr>
 				<tr>
 					<th>검색기간</th>
 					<td colspan="2">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=$Year?>-<?=$Mon?>-<?=$s_t?>" class="itx2" maxlength="7" >
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2020-10-31" class="itx2" maxlength="7" >
 						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 					</td>
 					
@@ -143,12 +143,12 @@ $shopseq = 0;
 					<td colspan="2"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
 				</tr>
 				<tr>
-					<td colspan="3" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
+					<td colspan="3" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/mres_buslist_search.php');" /></td>
 				</tr>
 			</table>
 		</form>
 
-        <div id="mngSearch"><?include 'res_buslist_search.php'?></div>
+        <div id="mngSearch"><?include 'mres_buslist_search.php'?></div>
 		</div>
 
         <!-- #tab2 -->
@@ -169,22 +169,23 @@ $shopseq = 0;
 
 <div id="res_busmodify" style="display:none;padding:5px;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경 (<?=$row["MainNumber"]?>)</div>
+    <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
-            <col width="15%" />
-            <col width="35%" />
-            <col width="15%" />
-            <col width="35%" />
+            <col width="25%" />
+            <col width="75%" />
         </colgroup>
         <tbody>
             <tr>
                 <th>신청일</th>
-                <td colspan="3"><input type="text" id="insdate" name="insdate" size="20" value="" class="itx"></td>
+                <td>
+                    <input type="text" id="insdate" name="insdate" size="20" value="" class="itx">
+                    <input type="text" id="resnum" name="resnum" size="10" value="" class="itx">
+                </td>
             </tr>
             <tr>
                 <th>확정일</th>
-                <td colspan="3"><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
+                <td><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
             </tr>
             <tr>
                 <th>상태</th>
@@ -199,26 +200,49 @@ $shopseq = 0;
                         <option value='8'>입금완료</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
                 <th>이용일</th>
                 <td><input type="text" id="res_date" name="busDate" size="10" value="<?=$row["busDate"]?>" class="itx"></td>
             </tr>
             <tr>
                 <th>이름</th>
                 <td><input type="text" id="user_name" name="user_name" size="11" value="" class="itx"></td>
+            </tr>
+            <tr>
                 <th>연락처</th>
                 <td><input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx"></td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
+            </tr>
+            <tr>
                 <th>수수료여부</th>
-                <td><input type="text" id="cashreceipt_yn" name="cashreceipt_yn" size="12" value="" class="itx"></td>
+                <td>
+                    <select id="rtn_charge_yn" name="rtn_charge_yn" class="select">
+                        <option value="Y">있음</option>
+                        <option value="N">없음</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>할인금액</th>
                 <td><input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="18"></td>
+            </tr>
+            <tr>
                 <th>이용금액</th>
                 <td><input type="text" id="res_totalprice" name="res_totalprice" size="12" value="" class="itx"></td>
+            </tr>
+            <tr>
+                <th>좌석</th>
+                <td>
+                    <select id="res_seat" name="res_seat" class="select">
+                    <?for ($i=1; $i < 46; $i++) { 
+                        echo "<option value='$i'>$i</option>";
+                    }?>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>호차</th>
@@ -250,12 +274,10 @@ $shopseq = 0;
                         <option value="A3">(동해)서울행 5시 3호차</option>
                     </select>
                 </td>
-                <th>좌석</th>
-                <td><input type="text" id="res_seat" name="res_seat" value="<?=$row["busSeat"]?>" class="itx tel"></td>
             </tr>
             <tr>
                 <th>정류장</th>
-                <td colspan="3">
+                <td>
                     <select id="res_spointname" name="res_spointname" class="select">
                         <option value="N">출발</option>
                     </select> →
@@ -265,13 +287,12 @@ $shopseq = 0;
                 </td>
             </tr>
             <tr>
-                <td class="col-02" style="text-align:center;" colspan="4">
+                <td class="col-02" style="text-align:center;" colspan="2">
                     <input type="hidden" id="res_price" name="res_price" size="10" value="0" class="itx">
                     <input type="hidden" id="gubun" name="gubun" size="10" value="0" class="itx">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
                     <input type="hidden" id="userid" name="userid" size="10" value="admin" class="itx">
                     <input type="hidden" id="ressubseq" name="ressubseq" size="10" value="" class="itx">
-                    <input type="hidden" id="resnum" name="resnum" size="10" value="" class="itx">
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="정보수정" onclick="fnDataModify();" />&nbsp;
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();" />
                 </td>

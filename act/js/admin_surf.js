@@ -1,7 +1,7 @@
 //셀렉트 박스 상태 변경
 function fnChangeModify(obj, confirmVlu){
 	if(mobileuse == "m"){
-
+		var trObj = $j(obj).parents("tbody");
 	}else{
 		var trObj = $j(obj).parent().parent();
 	}
@@ -84,10 +84,10 @@ function fnConfirmUpdate(obj, num){
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 				}else if(num == 2){
 					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
-					fnSearchAdmin("shop/res_surflist_search.php");
+					// fnSearchAdmin("shop/res_surflist_search.php");
 				}else if(num == 3){
 					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
-					fnSearchAdmin("act_admin/res_surflist_search.php");
+					// fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
 				
 			}else{
@@ -128,8 +128,9 @@ function fnConfirmUpdateBus(obj){
 		function(data, textStatus, jqXHR){
 		   if(data == 0){
 				alert("정상적으로 처리되었습니다.");
-				fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
-				fnSearchAdmin("bus/res_buslist_search.php");
+				
+				fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
+				//fnSearchAdmin("bus/" + mobileuse + "res_buslist_search.php");
 			}else{
 				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
 			}
@@ -180,14 +181,19 @@ function fnCalMoveAdminList(selDate, day, seq) {
 		$j("#divResList").html("");
 		$j("#initText2").css("display", "");
 		var url = "bus/" + mobileuse + "res_buslist_search.php";
-		var calurl = "shop/res_surfcalendar.php";
+		if(mobileuse == "m"){
+			// var calurl = "bus/mres_buslist_2_calendar.php";
+			var calurl = "shop/res_surfcalendar.php";
+		}else{
+			var calurl = "shop/res_surfcalendar.php";
+		}
 		
 		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
 		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
 		$j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
 		$j("input[id=chkResConfirm]:eq(5)").prop("checked", true);
 	}else if(seq == -1){ //입점샵 전체
-		var url = "act_admin/res_buslist_search.php";
+		var url = "act_admin/res_surflist_search.php";
 		var calurl = "act_admin/res_surfcalendar.php";
 		
 		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
@@ -196,6 +202,8 @@ function fnCalMoveAdminList(selDate, day, seq) {
 		$j("input[id=chkResConfirm]:eq(4)").prop("checked", true);
 		$j("input[id=chkResConfirm]:eq(6)").prop("checked", true);
 		$j("input[id=chkResConfirm]:eq(8)").prop("checked", true);
+
+		fnSearchAdmin("act_admin/res_surflist_search.php");
 	}else{ //입점샵 일반
 		var url = "shop/res_surflist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
@@ -204,7 +212,7 @@ function fnCalMoveAdminList(selDate, day, seq) {
 	}
 	
 	$j("#right_article3").load("/act/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
-	$j("#mngSearch").load("/act/admin/" + url + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
+	//$j("#mngSearch").load("/act/admin/" + url + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 
 	var nowYear = selDate.substring(0, 4);
 	var nowMon = selDate.substring(4, 6);
@@ -213,6 +221,8 @@ function fnCalMoveAdminList(selDate, day, seq) {
 	$j("#sDate").val(nowYear + '-' + nowMon + '-01');
 	$j("#eDate").val(nowYear + '-' + nowMon + '-' + lastDate.getDate());
 	$j("#schText").val('');
+	
+	fnSearchAdmin(url);
 }
 
 //카카오톡 예약관리 목록
@@ -363,7 +373,7 @@ function fnModifyInfo(type, seq, gubun, obj){
 					$j("#user_name").val(data.user_name);
 					$j("#user_tel").val(data.user_tel);
 					$j("#user_email").val(data.user_email);
-					$j("#cashreceipt_yn").val(data.cashreceipt_yn);
+					$j("#rtn_charge_yn").val(data.rtn_charge_yn);
 					$j("#res_price_coupon").val(data.res_price_coupon); //쿠폰
 					$j("#res_totalprice").val(data.res_totalprice); //최종가격
 					$j("#res_price").val(data.res_price); //기본가격
@@ -372,7 +382,13 @@ function fnModifyInfo(type, seq, gubun, obj){
 					$j("#res_spointname").val(data.res_seat); //출발 정류장
 					$j("#res_epointname").val(data.res_seat); //도착 정류장
 
-					$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'30%'} }); 
+					if(mobileuse == ""){
+						$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'20%'} }); 
+					}else{
+						if($j('#res_busmodify').length != 0){
+							$j.blockUI({ message: $j('#res_busmodify'), css: { width: '90%', textAlign:'left', left:'5%', top:'5%'} }); 
+						}
+					}
 				}
 			}
 		});
@@ -450,6 +466,13 @@ function fnChangeShop(){
 	var shopseq = $j("#selShop").val();
 	
 	location.href = "/shopadmin?seq="+shopseq;
+}
+
+//서핑버스 정산
+function fnCalMoveAdminCal(selDate, day) {
+	var nowDate = new Date();
+	$j("#tab3").load("/act/admin/bus/res_bus_cal.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
+
 }
 
 $j(function () {

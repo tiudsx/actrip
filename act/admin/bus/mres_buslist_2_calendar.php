@@ -2,6 +2,7 @@
 $reqDate = $_REQUEST["selDate"];
 if($reqDate != ""){
 	include __DIR__.'/../../db.php';
+	$shopseq = $_REQUEST["seq"];
 }
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
@@ -64,12 +65,12 @@ echo ("
 	<div class='tour_calendar_header'>
 ");
 if($selMonth > 202003){
-	echo "<a href='javascript:fnCalMoveAdminList(\"$p_m\", 0, -1);' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
+	echo "<a href='javascript:fnCalMoveAdminList2(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
 //if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
 if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, -1);' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
+	echo "<a href='javascript:fnCalMoveAdminList2(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 }
 
 echo ("
@@ -92,11 +93,19 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, a.res_date, DAY(a.res_date) AS sDay, a.res_confirm FROM `AT_RES_SUB` as a INNER JOIN `AT_RES_MAIN` as b
-				ON a.resnum = b.resnum
-			WHERE (Year(a.res_date) = '.$Year.' AND Month(a.res_date) = '.$Mon.')
-				AND a.code = "surf"
-			GROUP BY a.res_date, a.res_confirm';
+if($shopseq == 0){ //셔틀버스
+	$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm FROM `AT_RES_SUB`
+				WHERE code = "bus"			
+					AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
+				GROUP BY res_date, res_confirm';
+}else{ //서핑샵
+	$select_query_cal = 'SELECT COUNT(*) AS Cnt, a.res_date, DAY(a.res_date) AS sDay, a.res_confirm FROM `AT_RES_SUB` as a INNER JOIN `AT_RES_MAIN` as b
+					ON a.resnum = b.resnum
+				WHERE (Year(a.res_date) = '.$Year.' AND Month(a.res_date) = '.$Mon.')
+					AND a.seq = '.$shopseq.'
+					AND a.res_confirm IN (2, 3, 6, 8, 5)
+				GROUP BY a.res_date, a.res_confirm';
+}
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 
 $arrResCount = array();
@@ -125,7 +134,7 @@ for($r=0;$r<=$ra;$r++){
 		$rv=7*$r+$z; $ru=$rv-$l; // 칸에 번호를 매겨줍니다. 1일이 되기전 공백들 부터 마이너스 값으로 채운 뒤 ~ 
 
 		if($ru<=0 || $ru>$s_t){ 
-			echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
+			echo "<td><span class='tour_td_block' style='min-height:50px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
 		}else{
 			$s = date("Y-m-d",mktime(0,0,0,$s_m,$ru,$s_Y)); // 현재칸의 날짜
 			$h = date("H");
@@ -136,49 +145,10 @@ for($r=0;$r<=$ra;$r++){
 			
 			$adminText = "";
 			$gubunChk = "";
-			if($arrResCount[0][$ru] != ""){
-				$adminText = "<font color='black'>미입금</font>";
-				$gubunChk = "0,";
-			}
-
-			if($arrResCount[1][$ru] != ""){
-				$adminText .= "<br><font color='blue'>예약대기</font>";
-				$gubunChk .= "1,";
-			}
-
-			if($arrResCount[2][$ru] != ""){
-				$adminText .= "<br><font color='red'>임시확정</font>";
-				$gubunChk .= "2,";
-			}
-
+			
 			if($arrResCount[3][$ru] != ""){
-				$adminText .= "<br><font color='red'><b>확정</b></font>";
+				$adminText .= "<br><font color='red'><b>".$arrResCount[3][$ru]."명 예약</b></font>";
 				$gubunChk .= "3,";
-			}
-
-			if($arrResCount[4][$ru] != ""){
-				$adminText .= "<br><font color='008040'><b>환불요청</b></font>";
-				$gubunChk .= "4,";
-			}
-
-			if($arrResCount[5][$ru] != ""){
-				$adminText .= "<br><font color='919191'>환불완료</font>";
-				//$gubunChk .= "5,";
-			}
-
-			if($arrResCount[6][$ru] != ""){
-				$adminText .= "<br><font color='black'>임시취소</font>";
-				$gubunChk .= "6,";
-			}
-
-			if($arrResCount[7][$ru] != ""){
-				$adminText .= "<br><font color='black'>취소</font>";
-				// $gubunChk .= "7,";
-			}
-
-			if($arrResCount[8][$ru] != ""){
-				$adminText .= "<br><font color='blue'>입금완료</font>";
-				$gubunChk .= "8,";
 			}
 
 			$gubunChk .= "99";
@@ -191,9 +161,9 @@ for($r=0;$r<=$ra;$r++){
 			}
 			
 			if($gubunChk == "99"){
-				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>$ru</span></span></td>";
+				echo "<td><span class='tour_td_block' style='min-height:50px;'><span class='tour_cal_day'>$ru</span></span></td>";
 			}else{
-				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -1);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:50px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, $shopseq);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}
 		}
 	}

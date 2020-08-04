@@ -43,6 +43,7 @@ if($Shopcnt > 1){
 }
 ?>
 <script>
+    var mobileuse = "";
 </script>
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"<?=$css?>>

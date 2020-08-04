@@ -39,7 +39,8 @@ $select_query = "SELECT a.*, b.ad_title1 FROM AT_PROD_MAIN a INNER JOIN AT_PROD_
                     ORDER BY rand()";
 
 //임시 인기서핑샵 목록                    
-$select_query = "SELECT *, categoryname as ad_title1 FROM AT_PROD_MAIN WHERE code = 'surf' AND use_yn = 'Y' AND view_yn = 'Y' AND seq NOT IN (185, 5) ORDER BY rand() LIMIT 6;";
+$select_query = "SELECT *, categoryname as ad_title1 FROM AT_PROD_MAIN WHERE code = 'surf' AND use_yn = 'Y' AND view_yn = 'Y' ORDER BY rand() LIMIT 6;";
+//AND seq NOT IN (185, 5) 
 $result_shopadlist = mysqli_query($conn, $select_query);
 $shopadcount = mysqli_num_rows($result_shopadlist);
 
@@ -90,14 +91,14 @@ $result_shopadbeach = mysqli_query($conn, $select_query);
 
                     if($i == 1){
                 ?>
-                    <div class="swiper-slide">
+                    <!-- <div class="swiper-slide">
                         <a href="/surfview?seq=5">
                             <img src="https://surfenjoy.cdn3.cafe24.com/act_content/soleast/sol.east_thumbnail_200x200.jpg" alt="">
                             <p>대진</p>
                             <p>솔.동해서핑점</p>
                             <p>50,000원</p>
                         </a>
-                    </div>
+                    </div> -->
                 <?
                     }
                 ?>
