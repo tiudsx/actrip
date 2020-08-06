@@ -89,7 +89,6 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"><a href="https://actrip.co.kr/event/1494" target="_blank"><img src="images/banner/pkgbnr.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/377" target="_blank"><img src="images/banner/levelup.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
@@ -270,6 +269,7 @@
 						<a href="https://cafe.naver.com/actrip/379" target="_blank"><img src="images/mainImg/promobg.png" alt=""><span>서핑버스 할인쿠폰 <i class="fas fa-chevron-circle-right"></i><span class="subinst">비교불가! 빠르고 편리한 액트립 셔틀</span></span></a>
 						<a href="/eatlist"><img src="images/mainImg/promobg.png" alt=""><span>양양 맛도락 여행 <i class="fas fa-chevron-circle-right"></i><span class="subinst">서핑 후엔 맛집에서 체력충전!</span></span></a>
 					</div>
+					<div style="padding-top:20px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="images/mainImg/kakaochat.jpg" alt="액트립 카카오채널" style="width:100%;"></a></div>
 				</div>
 			</section>
 
