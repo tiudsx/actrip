@@ -73,4 +73,4 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script src="../js/surfview_bus.js"></script>
 <script src="../js/surfview.js"></script>
 <script src="../js/jquery-ui.js"></script>
-<script src="../js/surfview_busday.js"></script>
+<script src="../js/surfview_busday.js?v=1"></script>

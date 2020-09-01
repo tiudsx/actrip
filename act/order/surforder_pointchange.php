@@ -17,7 +17,7 @@ $count = mysqli_num_rows($result_setlist);
 ?>
 
 <script src="../js/surfordersearch.js"></script>
-<script src="../js/surfview_busday.js"></script>
+<script src="../js/surfview_busday.js?v=1"></script>
 
 <div id="wrap">
     <? include  __DIR__.'/../_layout_top.php'; ?>
