@@ -3,8 +3,7 @@ $reqDate = $_REQUEST["selDate"];
 if($reqDate != ""){
 	include __DIR__.'/../../db.php';
 }
-
-include __DIR__.'/../../common/fun.php';
+include __DIR__.'/../../common/funcalendar.php';
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
 $selDay = $_REQUEST["selDay"];
@@ -17,6 +16,7 @@ $NextDate = date("Y-m-d", strtotime($datDate." +1 month"));
 $PreDate = date("Y-m-d", strtotime($datDate." -1 month"));
 $now = date("Y-m-d A h:i:s");
 
+//휴일 체크
 $holidays = fnholidays();
 
 $x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
@@ -40,7 +40,6 @@ $p_m= date("Ym",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 이전달
 $n_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y+1)); // 내년
 $p_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y-1)); // 작년
 
-// 변수 $s 에 새로운 값을 넣고 새문서를 만들면, $s 가 들어와 원하는 값을 표시해 줍니다.
 
 echo ("
 <div class='tour_calendar_box'>
@@ -51,7 +50,7 @@ if($selMonth > 202003){
 }
 
 //if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
-// if($selMonth < 202112){
+// if($selMonth < 202012){
 	echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, -1);' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 // }
 
@@ -115,13 +114,7 @@ for($r=0;$r<=$ra;$r++){
 			$weeknum = $z - 1;
 
 			$calMD = explode("-",$s)[1].explode("-",$s)[2];
-			
-			$holidayChk = "";
-			if(array_key_exists($calMD, $holidays)){
-				if($holidays[$calMD]["year"] == "" || $Year == $holidays[$calMD]["year"]){
-					$holidayChk = " style='color:red;'";
-				}
-			}
+			$holidayChk = (array_key_exists($calMD, $holidays)) ? " style='color:red;'" : "";
 			
 			$adminText = "";
 			$gubunChk = "";
@@ -182,7 +175,7 @@ for($r=0;$r<=$ra;$r++){
 			if($gubunChk == "99"){
 				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
 			}else{
-				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -1);'><span class='tour_cal_day' $holidayChk>$ru.</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -1);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}
 		}
 	}

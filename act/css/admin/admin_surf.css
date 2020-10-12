@@ -11,6 +11,7 @@
 .res_btn_color2 {	color: #fff;	background: #1973e1;	}
 
 .selTr td{background-color:#dfeeee;}
+.tdcenter td{text-align: center;}
 
 #containerTab .tab_content {
 	padding:5px;
