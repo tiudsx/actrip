@@ -204,6 +204,9 @@ function fnCalMoveAdminList(selDate, day, seq) {
 		// $j("input[id=chkResConfirm]:eq(8)").prop("checked", true);
 
 		//fnSearchAdmin("act_admin/res_surflist_search.php");
+	}else if(seq == -2){ //솔 목록
+		var url = "sol/res_sollist_search.php";
+		var calurl = "sol/res_calendar.php";
 	}else{ //입점샵 일반
 		var url = "shop/res_surflist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
