@@ -141,7 +141,7 @@ function fnBusSearchDate(selectedDate, gubun){
 jQuery(function () {
 	jQuery('input[cal=busdate]').datepicker({
 		minDate : new Date(busDateinit),
-		maxDate : new Date('2020-09-30'),
+		//maxDate : new Date('2020-09-30'),
 		// onClose: function (selectedDate) {
 		// 	if(selectedDate != ""){
 		// 		fnBusSearchDate(selectedDate, $j(this).attr("gubun"));

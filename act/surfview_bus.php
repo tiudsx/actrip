@@ -137,6 +137,15 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
             </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">
+                <div class="noticeline" style="background-color:#fafafa;margin:0px;">
+                    <article>
+                        <p class="noticesub">셔틀버스 왕복 예약안내</p>
+                        <ul>
+                            <li class="litxt" style="font-size:14px;">행선지&nbsp;<label style="color:#059bc0;">[양양행]</label>&nbsp;이용일 선택 후 좌석, 정류장 선택</li>
+                            <li class="litxt" style="font-size:14px;">상단 행선지에서&nbsp;<label style="color:#059bc0;">[서울행]</label>&nbsp;이용일 선택 후 좌석 및 정류장 선택</li>
+                        </ul>
+                    </article>
+                </div>
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
@@ -246,9 +255,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </li>
                     <?}?>
                     </ul>
-                </div>
-                <div class="bd" style="padding:0 4px;font-size:16px;font-family:Tahoma,Geneva,sans-serif;color:red;">
-                    <strong>※ 서핑버스 왕복 예약하실 경우 상단 행선지를 변경 후 추가 예약진행하시면 됩니다.</strong>
                 </div>
 
                 <div class="bd" style="padding:0 4px;" id="divConfirm">

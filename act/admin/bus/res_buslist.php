@@ -33,7 +33,79 @@ $shopseq = 0;
         <li rel="tab2">예약관리</li>
         <li rel="tab3">정산관리</li>
     </ul>
+<script>
+function fnChkAll(obj, objid){
+    if($j(obj).is(":checked")){
+        $j('input[id=' + objid + ']').prop('checked',true);
+    }else{
+        $j('input[id=' + objid + ']').prop('checked',false);
+    }
+}
 
+function fnChkBusAll(obj, gubun){
+    if($j(obj).is(":checked")){
+        if(gubun == "Y"){
+            $j('input[id=chkbusNum][value=Y1]').prop('checked',true);
+            $j('input[id=chkbusNum][value=Y2]').prop('checked',true);
+            $j('input[id=chkbusNum][value=Y3]').prop('checked',true);
+            $j('input[id=chkbusNum][value=Y4]').prop('checked',true);
+            $j('input[id=chkbusNum][value=Y5]').prop('checked',true);
+            $j('input[id=chkbusNum][value=Y6]').prop('checked',true);
+            
+            $j('input[id=chkbusNum][value=S21]').prop('checked',true);
+            $j('input[id=chkbusNum][value=S22]').prop('checked',true);
+            $j('input[id=chkbusNum][value=S23]').prop('checked',true);
+            $j('input[id=chkbusNum][value=S51]').prop('checked',true);
+            $j('input[id=chkbusNum][value=S52]').prop('checked',true);
+            $j('input[id=chkbusNum][value=S53]').prop('checked',true);
+        }else{
+            $j('input[id=chkbusNum][value=E1]').prop('checked',true);
+            $j('input[id=chkbusNum][value=E2]').prop('checked',true);
+            $j('input[id=chkbusNum][value=E3]').prop('checked',true);
+            $j('input[id=chkbusNum][value=E4]').prop('checked',true);
+            $j('input[id=chkbusNum][value=E5]').prop('checked',true);
+            $j('input[id=chkbusNum][value=E6]').prop('checked',true);
+            
+            $j('input[id=chkbusNum][value=A21]').prop('checked',true);
+            $j('input[id=chkbusNum][value=A22]').prop('checked',true);
+            $j('input[id=chkbusNum][value=A23]').prop('checked',true);
+            $j('input[id=chkbusNum][value=A51]').prop('checked',true);
+            $j('input[id=chkbusNum][value=A52]').prop('checked',true);
+            $j('input[id=chkbusNum][value=A53]').prop('checked',true);
+        }
+    }else{
+        if(gubun == "Y"){
+            $j('input[id=chkbusNum][value=Y1]').prop('checked',false);
+            $j('input[id=chkbusNum][value=Y2]').prop('checked',false);
+            $j('input[id=chkbusNum][value=Y3]').prop('checked',false);
+            $j('input[id=chkbusNum][value=Y4]').prop('checked',false);
+            $j('input[id=chkbusNum][value=Y5]').prop('checked',false);
+            $j('input[id=chkbusNum][value=Y6]').prop('checked',false);
+            
+            $j('input[id=chkbusNum][value=S21]').prop('checked',false);
+            $j('input[id=chkbusNum][value=S22]').prop('checked',false);
+            $j('input[id=chkbusNum][value=S23]').prop('checked',false);
+            $j('input[id=chkbusNum][value=S51]').prop('checked',false);
+            $j('input[id=chkbusNum][value=S52]').prop('checked',false);
+            $j('input[id=chkbusNum][value=S53]').prop('checked',false);
+        }else{
+            $j('input[id=chkbusNum][value=E1]').prop('checked',false);
+            $j('input[id=chkbusNum][value=E2]').prop('checked',false);
+            $j('input[id=chkbusNum][value=E3]').prop('checked',false);
+            $j('input[id=chkbusNum][value=E4]').prop('checked',false);
+            $j('input[id=chkbusNum][value=E5]').prop('checked',false);
+            $j('input[id=chkbusNum][value=E6]').prop('checked',false);
+            
+            $j('input[id=chkbusNum][value=A21]').prop('checked',false);
+            $j('input[id=chkbusNum][value=A22]').prop('checked',false);
+            $j('input[id=chkbusNum][value=A23]').prop('checked',false);
+            $j('input[id=chkbusNum][value=A51]').prop('checked',false);
+            $j('input[id=chkbusNum][value=A52]').prop('checked',false);
+            $j('input[id=chkbusNum][value=A53]').prop('checked',false);
+        }
+    }
+}
+</script>
 	<!-- #container -->
     <div class="tab_container">
         <!-- #tab1 -->
@@ -49,7 +121,7 @@ $shopseq = 0;
 					<col style="width:*;">
 				</colgroup>
 				<tr>
-					<th>구분</th>
+					<th><label><input type="checkbox" onclick="fnChkAll(this, 'chkResConfirm')">구분</label></th>
 					<td colspan="5">
                         <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="0" style="vertical-align:-3px;" />미입금</label>
                         <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="1" style="vertical-align:-3px;" />예약대기</label>
@@ -62,7 +134,7 @@ $shopseq = 0;
 				</tr>
                 <tr>
                     <td colspan="6">
-						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" />양양행</label>
+						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y')" />양양행</label>
 					</td>
 				</tr>
 				<tr>
@@ -97,7 +169,7 @@ $shopseq = 0;
 				</tr>
                 <tr>
 					<td colspan="6">
-						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" />동해행</label>
+						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D')" />동해행</label>
 					</td>
 				</tr>
 				<tr>
@@ -133,7 +205,7 @@ $shopseq = 0;
 					<th>검색기간</th>
 					<td colspan="5">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2020-10-31" class="itx2" maxlength="7" >
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" >
 						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 					</td>
 					

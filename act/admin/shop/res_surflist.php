@@ -130,7 +130,7 @@ if($Shopcnt > 1){
 					<th>검색기간</th>
 					<td>
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="<?=$datDate?>" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="<?=$Year?>-<?=$Mon?>-<?=$s_t?>" class="itx2" maxlength="7" style="width:66px;" >
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" style="width:66px;" >
 						<input type="hidden" id="seq" name="seq" size="10" value="<?=$shopseq?>" class="itx">
 					</td>
 					

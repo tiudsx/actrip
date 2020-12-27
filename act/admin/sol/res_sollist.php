@@ -217,7 +217,7 @@ include __DIR__.'/../../common/logininfo.php';
 						<td><input type="text" id="schText" name="schText" value="" class="itx2" style="width:140px;"></td>
 					</tr>
 					<tr>
-						<td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('sol/res_solflist_search.php', 'mngSearch');" /></td>
+						<td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdminSol('sol/res_solflist_search.php', 'mngSearch');" /></td>
 					</tr>
 				</table>
 				</form>
