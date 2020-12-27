@@ -80,7 +80,7 @@ include __DIR__.'/../../common/logininfo.php';
 						<th>검색기간</th>
 						<td>
 							<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="<?=$datDate?>" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
-							<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="2020-10-31" class="itx2" maxlength="7" style="width:66px;" >
+							<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" style="width:66px;" >
 							<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 						</td>
 						

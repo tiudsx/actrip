@@ -83,11 +83,11 @@ function fnConfirmUpdate(obj, num){
 				}else if(num == 0){
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
 				}else if(num == 2){
-					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
-					// fnSearchAdmin("shop/res_surflist_search.php");
+					//fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
+					fnSearchAdmin("shop/res_surflist_search.php");
 				}else if(num == 3){
-					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
-					// fnSearchAdmin("act_admin/res_surflist_search.php");
+					//fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
+					fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
 				
 			}else{
@@ -129,8 +129,8 @@ function fnConfirmUpdateBus(obj){
 		   if(data == 0){
 				alert("정상적으로 처리되었습니다.");
 				
-				fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
-				//fnSearchAdmin("bus/" + mobileuse + "res_buslist_search.php");
+				//fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
+				fnSearchAdmin("bus/" + mobileuse + "res_buslist_search.php");
 			}else{
 				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
 			}
@@ -176,7 +176,7 @@ function fnPassengerAdmin(obj, seq) {
 function fnCalMoveAdminList(selDate, day, seq) {
 	var nowDate = new Date();
 
-	$j("input[id=chkResConfirm]").prop("checked", false);
+	//$j("input[id=chkResConfirm]").prop("checked", false);
 	if(seq == 0){ //서핑버스
 		$j("#divResList").html("");
 		$j("#initText2").css("display", "");
@@ -188,22 +188,25 @@ function fnCalMoveAdminList(selDate, day, seq) {
 			var calurl = "shop/res_surfcalendar.php";
 		}
 		
-		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(5)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(5)").prop("checked", true);
 	}else if(seq == -1){ //입점샵 전체
 		var url = "act_admin/res_surflist_search.php";
 		var calurl = "act_admin/res_surfcalendar.php";
 		
-		$j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(4)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(6)").prop("checked", true);
-		$j("input[id=chkResConfirm]:eq(8)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(0)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(2)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(4)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(6)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(8)").prop("checked", true);
 
-		fnSearchAdmin("act_admin/res_surflist_search.php");
+		//fnSearchAdmin("act_admin/res_surflist_search.php");
+	}else if(seq == -2){ //솔 목록
+		var url = "sol/res_sollist_search.php";
+		var calurl = "sol/res_calendar.php";
 	}else{ //입점샵 일반
 		var url = "shop/res_surflist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
@@ -241,7 +244,7 @@ function fnSearchAdmin(url){
 	});
 }
 
-function fnSearchAdmin(url, objid){
+function fnSearchAdminSol(url, objid){
 	var formData = $j("#" + objid).prev().serializeArray();
 	$j.post("/act/admin/" + url, formData,
 		function(data, textStatus, jqXHR){

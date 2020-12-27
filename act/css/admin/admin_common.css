@@ -44,3 +44,7 @@ i, em, address {font-style: normal; }
 .itx2{width:80px;}
 .itx3{width:30px;}
 .center{text-align:center;}
+.tbcenter th{text-align:center;}
+.tbcenter td{text-align:center;}
+.tbsolstay th{height:20px;}
+.tbsolstay td{height:18px;text-align:left;color:#c0c0c0;}

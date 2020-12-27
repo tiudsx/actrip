@@ -133,7 +133,7 @@ $shopseq = 0;
 					<th>검색기간</th>
 					<td colspan="2">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2020-10-31" class="itx2" maxlength="7" >
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" >
 						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 					</td>
 					
