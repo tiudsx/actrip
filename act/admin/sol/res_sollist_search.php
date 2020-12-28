@@ -221,7 +221,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 $stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
 
                 if($res_confirm == "확정"){
-                    $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay'";
+                    $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq'";
                 }
             }
         }

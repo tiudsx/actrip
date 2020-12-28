@@ -163,6 +163,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	mysqli_query($conn, "COMMIT");
 
 }else if($param == "soladd"){
+	$resseq = $_REQUEST["resseq"];
 	$res_adminname = $_REQUEST["res_adminname"];
 	$user_name = $_REQUEST["user_name"];
 	$user_tel = $_REQUEST["user_tel1"]."-".$_REQUEST["user_tel2"]."-".$_REQUEST["user_tel3"];
@@ -197,12 +198,36 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$kakaocnt ++;
 	}
 
-	//메인 정보 등록
-    $select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$res_adminname', '$res_confirm', $kakaocnt, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
-	$result_set = mysqli_query($conn, $select_query);
-	$seq = mysqli_insert_id($conn);
-	if(!$result_set) goto errGo;
-	
+
+	if($resseq == ""){
+		//메인 정보 등록
+		$select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$res_adminname', '$res_confirm', $kakaocnt, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
+		$result_set = mysqli_query($conn, $select_query);
+		$seq = mysqli_insert_id($conn);
+		if(!$result_set) goto errGo;
+	}else{
+		//메인 정보 수정
+		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET 
+			`admin_user`='$res_adminname'
+			,`res_confirm`='$res_confirm'
+			,`res_company`='$res_company'
+			,`user_name`='$user_name'
+			,`user_tel`='$user_tel'
+			,`memo`='$memo'
+			,`memo2`='$memo2'
+			,`history`= CONCAT(history,'$res_adminname:".date("Y-m-d A h:i:s")."@')
+		WHERE resseq = $resseq";
+		$result_set = mysqli_query($conn, $select_query);
+		if(!$result_set) goto errGo;
+
+		$select_query = "DELETE FROM AT_SOL_RES_SUB WHERE resseq = $resseq";
+		$result_set = mysqli_query($conn, $select_query);
+		// $errmsg = $select_query;
+		// goto errGo;
+		if(!$result_set) goto errGo;
+
+		$seq = $resseq;
+	}
 
 	//숙박 & 바베큐 정보 등록
 	for($i = 1; $i < count($res_stayshop); $i++){
@@ -290,6 +315,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	//알림톡 발송 (확정일경우)
 	if($res_kakao == "Y"){
 	}
+
 }
 
 if(!$success){

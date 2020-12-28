@@ -10,7 +10,7 @@ function fnSolInsert(){
     $j.blockUI({
         message: $j('#res_modify'), 
         focusInput: false,
-        css: { width: '90%', textAlign:'left', left:'5%', top:'15%'} 
+        css: { width: '90%', textAlign:'left', left:'5%', top:'7%'} 
     }); 
 }
 
@@ -47,6 +47,7 @@ function fnSolModify(resseq){
 
             for (let i = 0; i < data.length; i++) {
                 if(i == 0){
+                    $j("#resseq").val(data[i].resseq);
                     $j("#res_adminname").val(data[i].admin_user);
                     $j("#user_name").val(data[i].user_name);
                     var arrTel = data[i].user_tel.split("-");
@@ -109,9 +110,6 @@ function fnSolModify(resseq){
 }
 
 function fnSolDataAdd(gubun){
-    //frmModify
-    var formData = $j("#frmModify").serializeArray();
-
     //공백 제거
     fnFormTrim("#frmModify");
 
@@ -178,19 +176,23 @@ function fnSolDataAdd(gubun){
         }
     }
 
-    $j("#resparam").val(gubun);
-
+    //$j("#resparam").val(gubun);
+    
     var text1 = "예약등록을 하시겠습니까?";
     var text2 = "예약등록이 완료되었습니다.";
     if(gubun == "modify"){
         text1 = "수정을 하시겠습니까?";
         text2 = "수정이 완료되었습니다.";
+    }else{
+        $j("#resseq").val("");
     }
 
 	if(!confirm(text1)){
 		return;
 	}
 
+    //frmModify
+    var formData = $j("#frmModify").serializeArray();
 	$j.post("/act/admin/sol/res_sollist_save.php", formData,
 		function(data, textStatus, jqXHR){
 			if(data == 0){
@@ -198,13 +200,14 @@ function fnSolDataAdd(gubun){
                 //location.reload();
 
                 var selDate = $j("#listdate").text(); //달력 선택 날짜
-                // fnSearchAdminSolList(selDate);
-                // fnModifyClose();
-                // fnSolpopupReset();
+                fnSearchAdminSolList(selDate);
+                fnModifyClose();
+                fnSolpopupReset();
 			}else{
                 var arrRtn = data.split('|');
                 if(arrRtn[0] == "err"){
                     alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+                    $j("#memo2").val(arrRtn[1]);
                 }else{
                     alert(arrRtn[1] + "호 " + arrRtn[2] + "번 침대는 예약되어있습니다.\n\n다른 침대 및 호실을 선택해주세요~");
                 }
@@ -379,20 +382,22 @@ function fnSearchAdminSolList(selDate){
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
                         }
-                    }else{
-                        nextrowCnt++;
                     }
+                    nextrowCnt++;
                 }
             }
+            //1|2|1|1|1|2|
 
            $j("td[room]").html("");
            $j("td[room]").prev().css("color", "#c0c0c0");
+           $j("td[room]").removeAttr("onclick");
+           $j("td[room]").css("cursor", "");
            
            if($j("td[stayinfo]").length > 0){
                for (let i = 0; i < $j("td[stayinfo]").length; i++) {
                     var arrInfo = $j("td[stayinfo]").eq(i).attr("stayinfo").split('|');
                     if(arrInfo[2] == "솔게하"){
-                        //$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']
+                        //$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq
                         var tbID = arrInfo[4];
                         // if(arrInfo[4] == "301"){
                         //     if(arrInfo[5] < 7){
@@ -406,8 +411,9 @@ function fnSearchAdminSolList(selDate){
 
                         //((arrInfo[6] > 1) ? "(" + arrInfo[6] + "박)" : "")
                         $j("#" + tbID + arrInfo[5]).prev().css("color", "black");
-                        $j("#" + tbID + arrInfo[5]).css("color", "black");
-
+                        $j("#" + tbID + arrInfo[5]).css("color", "black").css("cursor", "pointer");
+                        $j("#" + tbID + arrInfo[5]).attr("onclick", "fnSolModify(" + arrInfo[8] + ");");
+                        //
                         $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / " + arrInfo[7] + "일" + "(" + arrInfo[6] + "박)");
                     }
                }

@@ -147,7 +147,7 @@ include __DIR__.'/../../common/logininfo.php';
 	</div>
 </div> 
 
-<div id="res_modify" style="display:none;padding:5px;height: 800px;overflow-y: auto;"> 
+<div id="res_modify" style="display:none;padding:5px;height: 700px;overflow-y: auto;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
     <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약등록 (<?=date("Y-m-d A h:i:s")?>)</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
@@ -403,7 +403,7 @@ include __DIR__.'/../../common/logininfo.php';
             <tr>
 				<td class="col-02" style="text-align:center;" colspan="6">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="soladd" class="itx">
-                    <input type="hidden" id="ressubseq" name="ressubseq" size="10" value="" class="itx">
+                    <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="등록" onclick="fnSolDataAdd('soladd');" id="SolAdd"/>
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;display:none;" value="수정" onclick="fnSolDataAdd('modify');" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnSolpopupReset();" />
