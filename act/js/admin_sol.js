@@ -468,9 +468,10 @@ function fnExcelDown(){
     var selDate = $j("#listdate").text(); //달력 선택 날짜
 
     if(!confirm("선택날짜 : " + selDate + "\n\n해당날짜의 정보를 엑셀다운로드 하시겠습니까?")){
-       
         return;
     }
+    
+    location.href = "/act/admin/sol/exceldown.php?selDate=" + selDate;
 }
 
 function fnRentYN(obj, subseq) {
