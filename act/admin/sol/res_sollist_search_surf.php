@@ -284,7 +284,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sol_9 == 0) ? "" : $surfMCnt_sol_9."명"?></td>
                                 <td><?=($surfWCnt_sol_9 == 0) ? "" : $surfWCnt_sol_9."명"?></td>
-                                <td><?=($surfMCnt_sol_9+$surfWCnt_sol_9 == 0) ? "" : $surfMCnt_sol_9+$surfWCnt_sol_9."명"?></td>
+                                <th><?=($surfMCnt_sol_9+$surfWCnt_sol_9 == 0) ? "" : $surfMCnt_sol_9+$surfWCnt_sol_9."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -311,7 +311,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sol_11 == 0) ? "" : $surfMCnt_sol_11."명"?></td>
                                 <td><?=($surfWCnt_sol_11 == 0) ? "" : $surfWCnt_sol_11."명"?></td>
-                                <td><?=($surfMCnt_sol_11+$surfWCnt_sol_11 == 0) ? "" : $surfMCnt_sol_11+$surfWCnt_sol_11."명"?></td>
+                                <th><?=($surfMCnt_sol_11+$surfWCnt_sol_11 == 0) ? "" : $surfMCnt_sol_11+$surfWCnt_sol_11."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -338,7 +338,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sol_13 == 0) ? "" : $surfMCnt_sol_13."명"?></td>
                                 <td><?=($surfWCnt_sol_13 == 0) ? "" : $surfWCnt_sol_13."명"?></td>
-                                <td><?=($surfMCnt_sol_13+$surfWCnt_sol_13 == 0) ? "" : $surfMCnt_sol_13+$surfWCnt_sol_13."명"?></td>
+                                <th><?=($surfMCnt_sol_13+$surfWCnt_sol_13 == 0) ? "" : $surfMCnt_sol_13+$surfWCnt_sol_13."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -365,7 +365,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sol_15 == 0) ? "" : $surfMCnt_sol_15."명"?></td>
                                 <td><?=($surfWCnt_sol_15 == 0) ? "" : $surfWCnt_sol_15."명"?></td>
-                                <td><?=($surfMCnt_sol_15+$surfWCnt_sol_15 == 0) ? "" : $surfMCnt_sol_15+$surfWCnt_sol_15."명"?></td>
+                                <th><?=($surfMCnt_sol_15+$surfWCnt_sol_15 == 0) ? "" : $surfMCnt_sol_15+$surfWCnt_sol_15."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -413,7 +413,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sp_9 == 0) ? "" : $surfMCnt_sp_9."명"?></td>
                                 <td><?=($surfWCnt_sp_9 == 0) ? "" : $surfWCnt_sp_9."명"?></td>
-                                <td><?=($surfMCnt_sp_9+$surfWCnt_sp_9 == 0) ? "" : $surfMCnt_sp_9+$surfWCnt_sp_9."명"?></td>
+                                <th><?=($surfMCnt_sp_9+$surfWCnt_sp_9 == 0) ? "" : $surfMCnt_sp_9+$surfWCnt_sp_9."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -440,7 +440,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sp_11 == 0) ? "" : $surfMCnt_sp_11."명"?></td>
                                 <td><?=($surfWCnt_sp_11 == 0) ? "" : $surfWCnt_sp_11."명"?></td>
-                                <td><?=($surfMCnt_sp_11+$surfWCnt_sp_11 == 0) ? "" : $surfMCnt_sp_11+$surfWCnt_sp_11."명"?></td>
+                                <th><?=($surfMCnt_sp_11+$surfWCnt_sp_11 == 0) ? "" : $surfMCnt_sp_11+$surfWCnt_sp_11."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -467,7 +467,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sp_13 == 0) ? "" : $surfMCnt_sp_13."명"?></td>
                                 <td><?=($surfWCnt_sp_13 == 0) ? "" : $surfWCnt_sp_13."명"?></td>
-                                <td><?=($surfMCnt_sp_13+$surfWCnt_sp_13 == 0) ? "" : $surfMCnt_sp_13+$surfWCnt_sp_13."명"?></td>
+                                <th><?=($surfMCnt_sp_13+$surfWCnt_sp_13 == 0) ? "" : $surfMCnt_sp_13+$surfWCnt_sp_13."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -494,136 +494,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_sp_15 == 0) ? "" : $surfMCnt_sp_15."명"?></td>
                                 <td><?=($surfWCnt_sp_15 == 0) ? "" : $surfWCnt_sp_15."명"?></td>
-                                <td><?=($surfMCnt_sp_15+$surfWCnt_sp_15 == 0) ? "" : $surfMCnt_sp_15+$surfWCnt_sp_15."명"?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="et_vars exForm bd_tb tbcenter" style="margin-top:10px;margin-bottom:1px;width:100%;display:<?=$tblala?>;" id="tblala">
-    <colgroup>
-            <col width="25%" />
-            <col width="25%" />
-            <col width="25%" />
-            <col width="25%" />
-        </colgroup>
-        <tbody>
-            <tr>
-                <th colspan="4">라라서프</th>
-            </tr>
-            <tr>
-                <th>9시 서핑강습</th>
-                <th>11시 서핑강습</th>
-                <th>13시 서핑강습</th>
-                <th>15시 서핑강습</th>
-            </tr>
-            <tr>
-                <td style="vertical-align: top;">
-                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_9 == ""){ echo "display:none;"; }?>">
-                        <colgroup>
-                            <col width="*" />
-                            <col width="35%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th>이름</th>
-                                <th>연락처</th>
-                                <th>남</th>
-                                <th>여</th>
-                                <th>메모</th>
-                            </tr>
-                            <?=$surflist_lala_9?>
-                            <tr>
-                                <th colspan="2">총 인원</th>
-                                <td><?=($surfMCnt_lala_9 == 0) ? "" : $surfMCnt_lala_9."명"?></td>
-                                <td><?=($surfWCnt_lala_9 == 0) ? "" : $surfWCnt_lala_9."명"?></td>
-                                <td><?=($surfMCnt_lala_9+$surfWCnt_lala_9 == 0) ? "" : $surfMCnt_lala_9+$surfWCnt_lala_9."명"?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="vertical-align: top;">
-                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_11 == ""){ echo "display:none;"; }?>">
-                        <colgroup>
-                            <col width="*" />
-                            <col width="35%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th>이름</th>
-                                <th>연락처</th>
-                                <th>남</th>
-                                <th>여</th>
-                                <th>메모</th>
-                            </tr>
-                            <?=$surflist_lala_11?>
-                            <tr>
-                                <th colspan="2">총 인원</th>
-                                <td><?=($surfMCnt_lala_11 == 0) ? "" : $surfMCnt_lala_11."명"?></td>
-                                <td><?=($surfWCnt_lala_11 == 0) ? "" : $surfWCnt_lala_11."명"?></td>
-                                <td><?=($surfMCnt_lala_11+$surfWCnt_lala_11 == 0) ? "" : $surfMCnt_lala_11+$surfWCnt_lala_11."명"?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="vertical-align: top;">
-                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_13 == ""){ echo "display:none;"; }?>">
-                        <colgroup>
-                            <col width="*" />
-                            <col width="35%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th>이름</th>
-                                <th>연락처</th>
-                                <th>남</th>
-                                <th>여</th>
-                                <th>메모</th>
-                            </tr>
-                            <?=$surflist_lala_13?>
-                            <tr>
-                                <th colspan="2">총 인원</th>
-                                <td><?=($surfMCnt_lala_13 == 0) ? "" : $surfMCnt_lala_13."명"?></td>
-                                <td><?=($surfWCnt_lala_13 == 0) ? "" : $surfWCnt_lala_13."명"?></td>
-                                <td><?=($surfMCnt_lala_13+$surfWCnt_lala_13 == 0) ? "" : $surfMCnt_lala_13+$surfWCnt_lala_13."명"?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td style="vertical-align: top;">
-                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_15 == ""){ echo "display:none;"; }?>">                        
-                        <colgroup>
-                            <col width="*" />
-                            <col width="35%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                            <col width="13%" />
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th>이름</th>
-                                <th>연락처</th>
-                                <th>남</th>
-                                <th>여</th>
-                                <th>메모</th>
-                            </tr>
-                            <?=$surflist_lala_15?>
-                            <tr>
-                                <th colspan="2">총 인원</th>
-                                <td><?=($surfMCnt_lala_15 == 0) ? "" : $surfMCnt_lala_15."명"?></td>
-                                <td><?=($surfWCnt_lala_15 == 0) ? "" : $surfWCnt_lala_15."명"?></td>
-                                <td><?=($surfMCnt_lala_15+$surfWCnt_lala_15 == 0) ? "" : $surfMCnt_lala_15+$surfWCnt_lala_15."명"?></td>
+                                <th><?=($surfMCnt_sp_15+$surfWCnt_sp_15 == 0) ? "" : $surfMCnt_sp_15+$surfWCnt_sp_15."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -671,7 +542,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_rang_9 == 0) ? "" : $surfMCnt_rang_9."명"?></td>
                                 <td><?=($surfWCnt_rang_9 == 0) ? "" : $surfWCnt_rang_9."명"?></td>
-                                <td><?=($surfMCnt_rang_9+$surfWCnt_rang_9 == 0) ? "" : $surfMCnt_rang_9+$surfWCnt_rang_9."명"?></td>
+                                <th><?=($surfMCnt_rang_9+$surfWCnt_rang_9 == 0) ? "" : $surfMCnt_rang_9+$surfWCnt_rang_9."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -698,7 +569,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_rang_11 == 0) ? "" : $surfMCnt_rang_11."명"?></td>
                                 <td><?=($surfWCnt_rang_11 == 0) ? "" : $surfWCnt_rang_11."명"?></td>
-                                <td><?=($surfMCnt_rang_11+$surfWCnt_rang_11 == 0) ? "" : $surfMCnt_rang_11+$surfWCnt_rang_11."명"?></td>
+                                <th><?=($surfMCnt_rang_11+$surfWCnt_rang_11 == 0) ? "" : $surfMCnt_rang_11+$surfWCnt_rang_11."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -725,7 +596,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_rang_13 == 0) ? "" : $surfMCnt_rang_13."명"?></td>
                                 <td><?=($surfWCnt_rang_13 == 0) ? "" : $surfWCnt_rang_13."명"?></td>
-                                <td><?=($surfMCnt_rang_13+$surfWCnt_rang_13 == 0) ? "" : $surfMCnt_rang_13+$surfWCnt_rang_13."명"?></td>
+                                <th><?=($surfMCnt_rang_13+$surfWCnt_rang_13 == 0) ? "" : $surfMCnt_rang_13+$surfWCnt_rang_13."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -752,7 +623,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                                 <th colspan="2">총 인원</th>
                                 <td><?=($surfMCnt_rang_15 == 0) ? "" : $surfMCnt_rang_15."명"?></td>
                                 <td><?=($surfWCnt_rang_15 == 0) ? "" : $surfWCnt_rang_15."명"?></td>
-                                <td><?=($surfMCnt_rang_15+$surfWCnt_rang_15 == 0) ? "" : $surfMCnt_rang_15+$surfWCnt_rang_15."명"?></td>
+                                <th><?=($surfMCnt_rang_15+$surfWCnt_rang_15 == 0) ? "" : $surfMCnt_rang_15+$surfWCnt_rang_15."명"?></th>
                             </tr>
                         </tbody>
                     </table>
@@ -760,4 +631,133 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
             </tr>
         </tbody>
     </table>
+    <table class="et_vars exForm bd_tb tbcenter" style="margin-top:10px;margin-bottom:1px;width:100%;display:<?=$tblala?>;" id="tblala">
+    <colgroup>
+            <col width="25%" />
+            <col width="25%" />
+            <col width="25%" />
+            <col width="25%" />
+        </colgroup>
+        <tbody>
+            <tr>
+                <th colspan="4">라라서프</th>
+            </tr>
+            <tr>
+                <th>9시 서핑강습</th>
+                <th>11시 서핑강습</th>
+                <th>13시 서핑강습</th>
+                <th>15시 서핑강습</th>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_9 == ""){ echo "display:none;"; }?>">
+                        <colgroup>
+                            <col width="*" />
+                            <col width="35%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>남</th>
+                                <th>여</th>
+                                <th>메모</th>
+                            </tr>
+                            <?=$surflist_lala_9?>
+                            <tr>
+                                <th colspan="2">총 인원</th>
+                                <td><?=($surfMCnt_lala_9 == 0) ? "" : $surfMCnt_lala_9."명"?></td>
+                                <td><?=($surfWCnt_lala_9 == 0) ? "" : $surfWCnt_lala_9."명"?></td>
+                                <th><?=($surfMCnt_lala_9+$surfWCnt_lala_9 == 0) ? "" : $surfMCnt_lala_9+$surfWCnt_lala_9."명"?></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: top;">
+                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_11 == ""){ echo "display:none;"; }?>">
+                        <colgroup>
+                            <col width="*" />
+                            <col width="35%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>남</th>
+                                <th>여</th>
+                                <th>메모</th>
+                            </tr>
+                            <?=$surflist_lala_11?>
+                            <tr>
+                                <th colspan="2">총 인원</th>
+                                <td><?=($surfMCnt_lala_11 == 0) ? "" : $surfMCnt_lala_11."명"?></td>
+                                <td><?=($surfWCnt_lala_11 == 0) ? "" : $surfWCnt_lala_11."명"?></td>
+                                <th><?=($surfMCnt_lala_11+$surfWCnt_lala_11 == 0) ? "" : $surfMCnt_lala_11+$surfWCnt_lala_11."명"?></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: top;">
+                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_13 == ""){ echo "display:none;"; }?>">
+                        <colgroup>
+                            <col width="*" />
+                            <col width="35%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>남</th>
+                                <th>여</th>
+                                <th>메모</th>
+                            </tr>
+                            <?=$surflist_lala_13?>
+                            <tr>
+                                <th colspan="2">총 인원</th>
+                                <td><?=($surfMCnt_lala_13 == 0) ? "" : $surfMCnt_lala_13."명"?></td>
+                                <td><?=($surfWCnt_lala_13 == 0) ? "" : $surfWCnt_lala_13."명"?></td>
+                                <th><?=($surfMCnt_lala_13+$surfWCnt_lala_13 == 0) ? "" : $surfMCnt_lala_13+$surfWCnt_lala_13."명"?></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: top;">
+                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;<?if($surflist_lala_15 == ""){ echo "display:none;"; }?>">                        
+                        <colgroup>
+                            <col width="*" />
+                            <col width="35%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                            <col width="13%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>이름</th>
+                                <th>연락처</th>
+                                <th>남</th>
+                                <th>여</th>
+                                <th>메모</th>
+                            </tr>
+                            <?=$surflist_lala_15?>
+                            <tr>
+                                <th colspan="2">총 인원</th>
+                                <td><?=($surfMCnt_lala_15 == 0) ? "" : $surfMCnt_lala_15."명"?></td>
+                                <td><?=($surfWCnt_lala_15 == 0) ? "" : $surfWCnt_lala_15."명"?></td>
+                                <th><?=($surfMCnt_lala_15+$surfWCnt_lala_15 == 0) ? "" : $surfMCnt_lala_15+$surfWCnt_lala_15."명"?></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>    
 </form>

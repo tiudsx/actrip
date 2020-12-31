@@ -135,4 +135,37 @@ echo "<br>솔:".$surfsolcnt;
 echo "<br>서프팩토리:".$surfspcnt;
 echo "<br>라라서프:".$surflalacnt;
 echo "<br>서퍼랑:".$surfrangcnt;
+echo "<br><br><br>";
+foreach ($arrsurf as $key => $value) {
+    if($key == "솔게스트하우스"){
+        $baseRow = $surfsolcnt;
+    }else if($key == "서프팩토리"){
+        $baseRow = $surfspcnt;
+    }else if($key == "라라서프"){
+        $baseRow = $surflalacnt;
+    }else if($key == "서퍼랑"){
+        $baseRow = $surfrangcnt;
+    }
+
+    echo "<br>".$baseRow;
+    foreach ($value as $key2 => $value2) {
+        $i = 0;
+        foreach ($value2 as $key3 => $value3) {
+            $cellnum = $baseRow + $i;
+            $i++;
+
+            $arrVlu = explode("/", $value3);
+            echo "<br>$key : $key2 : ".$value3;
+            if($key2 == 9){
+                
+            }else if($key2 == 11){
+                
+            }else if($key2 == 13){
+                
+            }else if($key2 == 15){
+                
+            }
+        }
+    }
+}
 ?>

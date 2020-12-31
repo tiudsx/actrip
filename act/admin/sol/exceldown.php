@@ -270,7 +270,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }
 
     if($surfrent != "N"){
-		$arrrent[$rentcnt] = "$user_name/$user_tel/$surfrent/".(($surfM == 0) ? "" : $surfM)."/".(($surfW == 0) ? "" : $surfW)."/$memoYN";
+		$arrrent[$rentcnt] = "$user_name/$user_tel/$surfrent/".(($surfrentM == 0) ? "" : $surfrentM)."/".(($surfrentW == 0) ? "" : $surfrentW)."/$memoYN";
 		$rentcnt++;
     }
 //while end
@@ -369,85 +369,154 @@ if($count > 0){
 			$cellnum = $baseRow + $r;
 		}
 
+		$totalsol = 1;
+		$totalsp = 1;
+		$totalrang = 1;
+		$totallala = 1;
 		if($surflalacnt > 1){
-			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 26,$surflalacnt);
+			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 26,$surflalacnt - 1);
+			$totallala = $surflalacnt;
 		}else if($surflalacnt == 0){
 			//$objPHPExcel->getActiveSheet()->removeRow($cellnum + 21, 7);
 		}
 		
 		if($surfrangcnt > 1){
-			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 19,$surfrangcnt);
+			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 19,$surfrangcnt - 1);
+			$totalrang = $surfrangcnt;
 		}else if($surfrangcnt == 0){
 			//$objPHPExcel->getActiveSheet()->removeRow($cellnum + 14, 7);
 		}
 
 		if($surfspcnt > 1){
-			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 12,$surfspcnt);
+			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 12,$surfspcnt - 1);
+			$totalsp = $surfspcnt;
 		}else if($surfspcnt == 0){
 			//$objPHPExcel->getActiveSheet()->removeRow($cellnum + 7, 7);
 		}
 
 		if($surfsolcnt > 1){
-			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 5,$surfsolcnt);
-			$surfsolcnt = $cellnum + 5;
+			$objPHPExcel->getActiveSheet()->insertNewRowBefore($cellnum + 5,$surfsolcnt - 1);
+			$totalsol = $surfsolcnt;
 		}else if($surfsolcnt == 0){
-			$surfsolcnt = $cellnum;
 			//$objPHPExcel->getActiveSheet()->removeRow($cellnum + 1, 6);
 		}
+		$surflalacnt = $cellnum + 25 + (($surfrangcnt < 2) ? 0 : $surfrangcnt - 1) + (($surfspcnt < 2) ? 0 : $surfspcnt - 1) + (($surfsolcnt < 2) ? 0 : $surfsolcnt - 1);
+		$surfrangcnt = $cellnum + 18 + (($surfspcnt < 2) ? 0 : $surfspcnt - 1) + (($surfsolcnt < 2) ? 0 : $surfsolcnt - 1);
+		$surfspcnt = $cellnum + 11 + (($surfsolcnt < 2) ? 0 : $surfsolcnt - 1);
+		$surfsolcnt = $cellnum + 4;
 		
-		// foreach ($arrsurf as $key => $value) {
-		// 	if($key == "솔게스트하우스"){
-		// 		$baseRow = $surfsolcnt;
-		// 	}else if($key == "서프팩토리"){
-		// 		$surfsp = "Y";
-		// 	}else if($key == "라라서프"){
-		// 		$surflala = "Y";
-		// 	}else if($key == "서퍼랑"){
-		// 		$surfrang = "Y";
-		// 	}
+		foreach ($arrsurf as $key => $value) {
+			if($key == "솔게스트하우스"){
+				$baseRow = $surfsolcnt;
+				$baseRowTotal = $baseRow + $totalsol;
+			}else if($key == "서프팩토리"){
+				$baseRow = $surfspcnt;
+				$baseRowTotal = $baseRow + $totalsp;
+			}else if($key == "라라서프"){
+				$baseRow = $surflalacnt;
+				$baseRowTotal = $baseRow + $totalrang;
+			}else if($key == "서퍼랑"){
+				$baseRow = $surfrangcnt;
+				$baseRowTotal = $baseRow + $totallala;
+			}
 
-		// 	foreach ($value as $key2 => $value2) {
-		// 		foreach ($value2 as $key3 => $value3) {
-		// 			$cellnum = $cellnum;
+			foreach ($value as $key2 => $value2) {
+				$i = 0;
+				$totalM9 = 0;
+				$totalM11 = 0;
+				$totalM13 = 0;
+				$totalM15 = 0;
+				$totalW9 = 0;
+				$totalW11 = 0;
+				$totalW13 = 0;
+				$totalW15 = 0;
+				foreach ($value2 as $key3 => $value3) {
+					$cellnum = $baseRow + $i;
+					$i++;
 
-		// 			$arrVlu = explode("/", $value3);
+					$arrVlu = explode("/", $value3);
+					if($key2 == 9){
+						$objPHPExcel->getActiveSheet()
+							->setCellValue("A".$cellnum, $arrVlu[0])
+							->setCellValue("B".$cellnum, $arrVlu[1])
+							->setCellValue("C".$cellnum, $arrVlu[2])
+							->setCellValue("D".$cellnum, $arrVlu[3])
+							->setCellValue("E".$cellnum, $arrVlu[4]);
 
-		// 			if($key2 == 9){
-		// 				$objPHPExcel->getActiveSheet()
-		// 					->setCellValue("A".$cellnum, $arrVlu[0])
-		// 					->setCellValue("B".$cellnum, $arrVlu[1])
-		// 					->setCellValue("C".$cellnum, $arrVlu[2])
-		// 					->setCellValue("D".$cellnum, $arrVlu[3])
-		// 					->setCellValue("E".$cellnum, $arrVlu[4]);
-		// 			}else if($key2 == 11){
-		// 				$objPHPExcel->getActiveSheet()
-		// 					->setCellValue("F".$cellnum, $arrVlu[0])
-		// 					->setCellValue("G".$cellnum, $arrVlu[1])
-		// 					->setCellValue("H".$cellnum, $arrVlu[2])
-		// 					->setCellValue("I".$cellnum, $arrVlu[3])
-		// 					->setCellValue("J".$cellnum, $arrVlu[4]);
-		// 			}else if($key2 == 13){
-		// 				$objPHPExcel->getActiveSheet()
-		// 					->setCellValue("K".$cellnum, $arrVlu[0])
-		// 					->setCellValue("L".$cellnum, $arrVlu[1])
-		// 					->setCellValue("M".$cellnum, $arrVlu[2])
-		// 					->setCellValue("N".$cellnum, $arrVlu[3])
-		// 					->setCellValue("O".$cellnum, $arrVlu[4]);
-		// 			}else if($key2 == 15){
-		// 				$objPHPExcel->getActiveSheet()
-		// 					->setCellValue("P".$cellnum, $arrVlu[0])
-		// 					->setCellValue("Q".$cellnum, $arrVlu[1])
-		// 					->setCellValue("R".$cellnum, $arrVlu[2])
-		// 					->setCellValue("S".$cellnum, $arrVlu[3])
-		// 					->setCellValue("T".$cellnum, $arrVlu[4]);
-		// 			}
+							if($arrVlu[2] != ""){
+								$totalM9 += $arrVlu[2];
+							}
+							if($arrVlu[3] != ""){
+								$totalW9 += $arrVlu[3];
+							}
+					}else if($key2 == 11){
+						$objPHPExcel->getActiveSheet()
+							->setCellValue("F".$cellnum, $arrVlu[0])
+							->setCellValue("G".$cellnum, $arrVlu[1])
+							->setCellValue("H".$cellnum, $arrVlu[2])
+							->setCellValue("I".$cellnum, $arrVlu[3])
+							->setCellValue("J".$cellnum, $arrVlu[4]);
 
-		// 			$r++;
-					
-		// 			echo "<Br>$key3/$value3";
-		// 		}
-		// 	}
-		// }
+							if($arrVlu[2] != ""){
+								$totalM11 += $arrVlu[2];
+							}
+							if($arrVlu[3] != ""){
+								$totalW11 += $arrVlu[3];
+							}
+					}else if($key2 == 13){
+						$objPHPExcel->getActiveSheet()
+							->setCellValue("K".$cellnum, $arrVlu[0])
+							->setCellValue("L".$cellnum, $arrVlu[1])
+							->setCellValue("M".$cellnum, $arrVlu[2])
+							->setCellValue("N".$cellnum, $arrVlu[3])
+							->setCellValue("O".$cellnum, $arrVlu[4]);
+
+							if($arrVlu[2] != ""){
+								$totalM13 += $arrVlu[2];
+							}
+							if($arrVlu[3] != ""){
+								$totalW13 += $arrVlu[3];
+							}
+					}else if($key2 == 15){
+						$objPHPExcel->getActiveSheet()
+							->setCellValue("P".$cellnum, $arrVlu[0])
+							->setCellValue("Q".$cellnum, $arrVlu[1])
+							->setCellValue("R".$cellnum, $arrVlu[2])
+							->setCellValue("S".$cellnum, $arrVlu[3])
+							->setCellValue("T".$cellnum, $arrVlu[4]);
+
+							if($arrVlu[2] != ""){
+								$totalM15 += $arrVlu[2];
+							}
+							if($arrVlu[3] != ""){
+								$totalW15 += $arrVlu[3];
+							}
+					}
+				}
+				
+				if($key2 == 9){
+					$objPHPExcel->getActiveSheet()
+						->setCellValue("C".($baseRowTotal), $totalM9)
+						->setCellValue("D".($baseRowTotal), $totalW9)
+						->setCellValue("E".($baseRowTotal), ($totalM9+$totalW9));
+				}else if($key2 == 11){
+					$objPHPExcel->getActiveSheet()
+						->setCellValue("H".($baseRowTotal), $totalM11)
+						->setCellValue("I".($baseRowTotal), $totalW11)
+						->setCellValue("J".($baseRowTotal), ($totalM11+$totalW11));
+				}else if($key2 == 13){
+					$objPHPExcel->getActiveSheet()
+						->setCellValue("M".($baseRowTotal), $totalM13)
+						->setCellValue("N".($baseRowTotal), $totalW13)
+						->setCellValue("O".($baseRowTotal), ($totalM13+$totalW13));
+				}else if($key2 == 15){
+					$objPHPExcel->getActiveSheet()
+						->setCellValue("R".($baseRowTotal), $totalM15)
+						->setCellValue("S".($baseRowTotal), $totalW15)
+						->setCellValue("T".($baseRowTotal), ($totalM13+$totalW13));
+				}
+			}
+		}
 	}
 
 	$objPHPExcel -> setActiveSheetIndex(0); //엑셀 sheet 선택

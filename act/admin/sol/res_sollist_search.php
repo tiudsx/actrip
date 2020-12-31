@@ -259,6 +259,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $fontcolor = "";
     if($res_confirm == "대기"){
         $fontcolor = "color:#c0c0c0;";
+    }else if($res_confirm == "취소"){
+        $fontcolor = "color:#c0c0c0;";
     }else{
         if($row['res_type'] == "stay" && $prod_name != "N" && $prod_name != "솔게하"){
             $fontcolor = "color:#8080ff;";
