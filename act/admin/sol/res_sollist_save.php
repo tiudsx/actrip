@@ -200,8 +200,10 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
 
 	if($resseq == ""){
+		$ResNumber = '4'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
+
 		//메인 정보 등록
-		$select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$res_adminname', '$res_confirm', $kakaocnt, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
+		$select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`resnum`, `admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$ResNumber', '$res_adminname', '$res_confirm', $kakaocnt, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
 		$result_set = mysqli_query($conn, $select_query);
 		$seq = mysqli_insert_id($conn);
 		if(!$result_set) goto errGo;
@@ -313,7 +315,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	mysqli_query($conn, "COMMIT");
 
 	//알림톡 발송 (확정일경우)
-	if($res_kakao == "Y"){
+	if($res_kakao == "Y" && $res_confirm == "확정"){
+
 	}
 
 }

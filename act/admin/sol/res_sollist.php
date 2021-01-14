@@ -17,7 +17,7 @@ include __DIR__.'/../../common/logininfo.php';
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/admin_sol.js"></script>
+<script type="text/javascript" src="/act/js/admin_sol.js?v=1"></script>
 <script type="text/javascript" src="/act/js/common.js"></script>
 
 <div class="container" id="contenttop" style="padding-top:35px;">
