@@ -134,7 +134,7 @@ if($count == 1){
 			, "tempName"=> "at_res_bus1"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
 			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
 			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
 			, "link4"=>"eatlist" //제휴업체 목록
@@ -258,7 +258,7 @@ if($count == 1){
 			, "tempName"=> "at_res_step1"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
 			, "link2"=>"eatlist" //제휴업체 목록
 			, "link3"=>"event" //공지사항
 			, "link4"=>""

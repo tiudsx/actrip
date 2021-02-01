@@ -19,6 +19,7 @@ if($reqCode == "busday"){
 
     $now = date("Y-m-d");
     $select_query = "SELECT *, REPLACE(RIGHT(busdate, 5), '-', '') as busjson FROM `AT_PROD_BUS` WHERE use_yn = 'Y' AND seq = '$seq' AND busgubun IN ('".$_REQUEST["bus"]."', '".$busgubun."') AND busdate >= '$now' ORDER BY busnum";
+    //$select_query = "SELECT *, REPLACE(RIGHT(busdate, 5), '-', '') as busjson FROM `AT_PROD_BUS` WHERE use_yn = 'Y' AND seq = '$seq' AND busgubun IN ('".$_REQUEST["bus"]."', '".$busgubun."')  ORDER BY busnum";
     $result_buslist = mysqli_query($conn, $select_query);
     while ($row = mysqli_fetch_assoc($result_buslist)){
         $arrBusInfo = array("busnum" => $row["busgubun"].$row["busnum"], "busname" => $row["busname"], "busseat" => $row["busseat"]);
@@ -40,6 +41,12 @@ if($reqCode == "busday"){
         //echo 'arrySeat['.$row['busSeat'].'] = "ok";';
         
         $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
+    }
+}else if($reqCode == "busseatcnt"){
+    $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6) AND res_bus = "'.$_REQUEST["busNum"].'"';
+    $result_setlist = mysqli_query($conn, $select_query);
+    while ($row = mysqli_fetch_assoc($result_setlist)){
+        $groupData[] = array("seatcnt" => $row['cnt'],);
     }
 }
 

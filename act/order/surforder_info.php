@@ -20,10 +20,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			$chkView = 1;
 		} else if($res_confirm == 3){
 			$cancelDate = date("Y-m-d", strtotime($datDate." -1 day"));
-			if($row['timeM'] <= 120 || $cancelDate > $now){
+			if($row['timeM2'] <= 120 || $cancelDate > $now){
 				$chkView = 1;
 			}
 		}
+	}
+	
+	if($chkView == 1){
+		$cancelChk = "";
 	}
 /*
 예약상태
@@ -241,7 +245,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		?>
 	
 	<div class="write_table" style="text-align:center;">
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:120px; height:28px;color: #fff !important; background: #008000;" value="정류장 변경 신청" onclick="fnPointChange(<?=$row['res_num']?>);" />
+	<input type="button" class="gg_btn gg_btn_grid large" style="width:150px; height:28px;color: #fff !important; background: #3195db;display:<?=$cancelChk?>;" value="좌석/정류장 변경 신청" onclick="fnPointChange(<?=$row['res_num']?>);" />
 	</div>
 	
 		<?

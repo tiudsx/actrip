@@ -9,7 +9,7 @@ $gubun = substr($resNumber, 0, 1);
 
 $select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
 ON a.resnum = b.resnum 
-where a.resnum = "'.$resNumber.'"
+where a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
 ORDER BY a.resnum, b.ressubseq';
 
 $result_setlist = mysqli_query($conn, $select_query);
@@ -202,8 +202,8 @@ $j("#endLocation<?=$busType.$i?>").html(ePoint);
                 ?>
 
                 <div class="write_table" style="padding-top:15px; padding-bottom:15px;text-align:center;display:;">
-                    <input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;" value="정류장 변경 신청" onclick="fnPointChangeSave();" />&nbsp;
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href='/ordersearch?resNumber=<?=$resNumber?>'" />
+                    <input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;" value="변경 신청하기" onclick="fnPointChangeSave();" />&nbsp;
+                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="history.back();" />
                 </div>
                 <input type="hidden" id="resparam" name="resparam" value="PointChange">
                 <input type="hidden" id="shopseq" name="shopseq" value="<?=$shopseq?>">

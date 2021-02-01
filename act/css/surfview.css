@@ -187,7 +187,8 @@
 /* bus view css ===================================== */
 /*#view_tab3*/
 /* busOption01 */
-.busOption01{width: 100%; height: auto; padding: 18px 10px; background-color: #fafafa; box-sizing: border-box;}
+/* .busOption01{width: 100%; height: auto; padding: 18px 10px; background-color: #fafafa; box-sizing: border-box;} */
+.busOption01{width: 100%; height: auto; padding: 18px 10px; box-sizing: border-box;}
 .busOption01 ul{clear: both; overflow: hidden; margin-bottom: 10px;}
 .busOption01 ul li{float: left; width: 95px; height: 35px;  line-height: 35px; font-size: 1.2em; text-align: center; margin: 0 3px 10px 0}
 /* .busOption01 li i{font-size: 1em; color: #a3a3a3; margin-right:2px;} */
@@ -210,12 +211,16 @@
 .busOption01 .busLine{width:440px;}
 .busOption01 .busLine li{width: 110px; background-color:#efefef; box-shadow: 1px 1px 2px rgba(0,0,0,.2); border-radius: 6px; color:#555555; margin: 0 5px 5px 0}
 .busOption01 .busLine .on{background-color: #52c9a3;color:#fff;}
-.busOption01 .busLine li:first-child{width: 80px; text-align: left; background: #fafafa; color: #333; box-shadow: none;}
+.busOption01 .busLine li:first-child{width: 80px; text-align: left; background: #fff; color: #333; box-shadow: none;}
 .busOption01 .busLine li:nth-child(3n+5){margin-left:85px;}
 
 .busOption01 .busStop{margin-left: 90px; font-size: .9em;}
 .busOption01 .busStop li{width: 100%; height: auto; text-align: left; line-height: 20px; margin:0; word-break: keep-all;}
 
+.busOption01 .busLineTab{width:440px;}
+.busOption01 .busLineTab li{width: 150px; background-color:#efefef; box-shadow: 1px 1px 2px rgba(0,0,0,.2); border-radius: 6px; color:#555555; margin: 0 5px 5px 0}
+.busOption01 .busLineTab .on{background-color: #52c9a3;color:#fff;}
+.busOption01 .busLineTab li:nth-child(3n+5){margin-left:85px;}
 
 /* busOption02 */
 .busOption02{margin-top: 10px;}

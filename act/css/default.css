@@ -43,7 +43,8 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
     
 /*풋터*/
 	/*유틸메뉴*/
-	.footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; margin-top: 10px;}
+	/* .footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; margin-top: 10px;} */
+	.footer_Util_wrap00{position:relative; clear:both; background-color:#efefef; }
 	.footer_Util_wrap0{position:relative; margin:0 auto; width:100% !important; padding:18px 0 18px 0;}/*wrap0*/
 	.footer_Util_wrap0 ul{list-style:none; margin:0; padding:0;}
 	/*└[유틸메뉴]*/

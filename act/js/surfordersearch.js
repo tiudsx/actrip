@@ -1,9 +1,11 @@
-function fnOrderSearch() {
+function fnOrderSearch(num) {
     if ($j.trim($j("#resNumber").val()) == "") {
         alert("예약번호를 입력하세요.");
         return;
 	}
-    $j("#surfSelOk").load("/act/order/surforder_ok.php?resNumber=" + $j.trim($j("#resNumber").val().replace(/ /g, '')));
+
+	location.href = "/orderview?resNumber=" + $j.trim($j("#resNumber").val().replace(/ /g, ''));
+    //$j("#surfSelOk").load("/act/order/surforder_ok.php?num=" + num + "&resNumber=" + $j.trim($j("#resNumber").val().replace(/ /g, '')));
 }
 
 function fnOrderDisplay(gubun) {
@@ -38,12 +40,12 @@ function fnRefund(gubun) {
 	var msg = "신청 하시겠습니까?";
     if (confirm(msg)) {
 		//$j("#frmCancel").attr("action", "/act/surf/surf_return.php").submit();
-		$j('.top_area_zone').block({ message: "환불신청 접수 중입니다." }); 
+		$j('.top_area_zone').block({ message: "취소 및 환불신청 접수 중입니다." }); 
 		var formData = $j("#frmCancel").serializeArray();
 
 		$j.post("/act/surf/surf_return.php", formData,
 			function(data, textStatus, jqXHR){
-				setTimeout("fnRtnMove('" + data + "');", 700);
+				setTimeout("fnRtnMove('" + data + "', " + gubun + ");", 700);
 			}
 		)
 		.fail(function() {
@@ -55,9 +57,15 @@ function fnRefund(gubun) {
     }
 }
 
-function fnRtnMove(data){
+function fnRtnMove(data, num){
 	if(fnRtnText(data, 0)){
-		window.location.href = "/";
+		//fnOrderSearch(num);
+		location.reload();
+		if(gubun == 1){
+			//window.location.href = "/";
+		}else{
+			//location.reload();
+		}
 	}
 }
 

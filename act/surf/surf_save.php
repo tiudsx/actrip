@@ -219,7 +219,7 @@ if($param == "BusI"){
                 , "tempName"=> "at_res_bus1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> "010-9509-9994"
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
                 , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
                 , "link4"=>"eatlist" //제휴업체 목록
@@ -237,7 +237,7 @@ if($param == "BusI"){
                 , "tempName"=> "at_res_bus1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
                 , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
                 , "link4"=>"eatlist" //제휴업체 목록
@@ -259,7 +259,7 @@ if($param == "BusI"){
                 , "tempName"=> "at_res_bus1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
                 , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
                 , "link4"=>"eatlist" //제휴업체 목록
@@ -281,7 +281,7 @@ if($param == "BusI"){
                 , "tempName"=> "at_res_bus1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
                 , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
                 , "link4"=>"eatlist" //제휴업체 목록
@@ -300,7 +300,7 @@ if($param == "BusI"){
                 , "tempName"=> "at_res_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                 , "link2"=>"eatlist" //제휴업체 목록
                 , "link3"=>"event" //공지사항
                 , "link4"=>""
@@ -665,7 +665,7 @@ if($param == "BusI"){
             , "tempName"=> "at_res_step1"
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
-            , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+            , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
             , "link2"=>"eatlist" //제휴업체 목록
             , "link3"=>"event" //공지사항
             , "link4"=>""
@@ -709,7 +709,7 @@ if($param == "BusI"){
         sendMail($arrMail); //메일 발송
 		//==================== 이메일 발송 End ====================
 
-        echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/orderview?num=1&resNumber='.$ResNumber.'";</script>';
         //echo '<script>alert("예약이 완료되었습니다.");parent.fnSaveErr("divConfirm");</script>';
 	}
 }

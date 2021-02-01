@@ -349,8 +349,16 @@ if($param == "RtnPrice"){
         $select_query = "SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* 
                             FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
                                 ON a.resnum = b.resnum 
-                            WHERE b.ressubseq IN ($subseq)
+                            WHERE a.resnum = $ResNumber
+                                AND b.res_confirm IN (0,3,8)
                             ORDER BY b.ressubseq";
+                            
+        // $select_query = "SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* 
+        //                     FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
+        //                         ON a.resnum = b.resnum 
+        //                     WHERE b.ressubseq IN ($subseq)
+        //                         AND b.res_confirm IN (0,3,8)
+        //                     ORDER BY b.ressubseq";
         $result_setlist = mysqli_query($conn, $select_query);
         $count = mysqli_num_rows($result_setlist);
 
@@ -370,21 +378,21 @@ if($param == "RtnPrice"){
         
                 if($code == "bus"){
                     if($res_confirm == 0){
-                        if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
-                            $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번\n';
+                        if(array_key_exists($sDate.$rowTime['res_busnum'], $arrSeatInfo)){
+                            $arrSeatInfo[$sDate.$rowTime['res_busnum']] .= '     - '.$rowTime['res_seat'].'번\n';
                         }else{
-                            $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
+                            $arrSeatInfo[$sDate.$rowTime['res_busnum']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_busnum']).'\n     - '.$rowTime['res_seat'].'번\n';
                         }
                     }else{
-                        if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
-                            $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
+                        if(array_key_exists($sDate.$rowTime['res_busnum'], $arrSeatInfo)){
+                            $arrSeatInfo[$sDate.$rowTime['res_busnum']] .= '     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
                         }else{
-                            $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
+                            $arrSeatInfo[$sDate.$rowTime['res_busnum']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_busnum']).'\n     - '.$rowTime['res_seat'].'번 ('.$rowTime['res_spointname'].' -> '.$rowTime['res_epointname'].')\n';
                         }
                     }
 
-                    $arrData = explode("|", fnBusPoint($rowTime['res_spoint'], $rowTime['res_bus']));
-                    $arrStopInfo[$rowTime['res_spoint']] = '    ['.$rowTime['res_spoint'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
+                    $arrData = explode("|", fnBusPoint($rowTime['res_spointname'], $rowTime['res_busnum']));
+                    $arrStopInfo[$rowTime['res_spointname']] = '    ['.$rowTime['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
                 }else{
                    
                 }
@@ -424,7 +432,7 @@ if($param == "RtnPrice"){
                     , "tempName"=> "at_res_step1"
                     , "kakaoMsg"=>$kakaoMsg
                     , "userPhone"=> $userPhone
-                    , "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+                    , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
                     , "link2"=>"eatlist" //제휴업체 목록
                     , "link3"=>"event" //공지사항
                     , "link4"=>""
@@ -465,7 +473,7 @@ if($param == "RtnPrice"){
             sendMail($arrMail); //메일 발송
         }
         
-        echo '<script>alert("셔틀버스 정류장 변경이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("셔틀버스 정류장 변경이 완료되었습니다.");parent.location.href="/orderview?num='.$num.'&resNumber='.$ResNumber.'";</script>';
     }
 }
 ?>

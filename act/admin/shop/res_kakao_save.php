@@ -267,7 +267,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "tempName"=> "at_res_step5"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"ordersearch?resNumber=".$ResNumber //예약조회/취소
+			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
 			, "link2"=>$navilink //지도로 위치보기
 			, "link3"=>"eatlist" //제휴업체 목록
 			, "link4"=>"event" //공지사항

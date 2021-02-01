@@ -290,7 +290,7 @@ function mailMsg($arrMail){
 													<td style=\"font-size:14px;color:#696969;line-height:24px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다. </td>
 												</tr>
 												<tr style=\"$info5_display\">
-													<td style=\"height:34px;font-size:14px;color:#696969;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;text-align:center;\"> <a href=\"https://actrip.co.kr/ordersearch?resNumber=$ResNumber\" style=\"display:inline-block;padding:10px 30px 10px; margin-top:10px; background-color:#08a600; color:#fff;text-align: center; text-decoration: none;\" target=\"_blank\" rel=\"noreferrer noopener\">예약조회</a></td>
+													<td style=\"height:34px;font-size:14px;color:#696969;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;text-align:center;\"> <a href=\"https://actrip.co.kr/orderview?num=1&resNumber=$ResNumber\" style=\"display:inline-block;padding:10px 30px 10px; margin-top:10px; background-color:#08a600; color:#fff;text-align: center; text-decoration: none;\" target=\"_blank\" rel=\"noreferrer noopener\">예약조회</a></td>
 												</tr>
 												
 											</tbody>

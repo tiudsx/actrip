@@ -2,11 +2,15 @@
 include 'db.php';
 
 $resNumber = $_REQUEST["resNumber"];
+
+if($resNumber != ""){ 
+    echo "<script>location.href = '/orderview?num=1&resNumber=$resNumber';</script>";
+    return;
+}
 ?>
 
 <script>
 $j(document).ready(function(){
-    
 });
 </script>
 
@@ -39,7 +43,7 @@ $j(document).ready(function(){
                 </table>
                 <div class="write_table" style="padding-top:15px; text-align:center;" id="divBtnRes">
                     <div>
-                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:50%; height:40px;" value="예약조회" onclick="fnOrderSearch();" />
+                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:50%; height:40px;" value="예약조회" onclick="fnOrderSearch(0);" />
                     </div>
                 </div>
             </div>

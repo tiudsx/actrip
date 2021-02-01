@@ -48,7 +48,7 @@ function sendMailContentBus($arrMail){
                             <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 예약번호</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
-                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
+                            <td style='color: rgb(222, 119, 118); padding-left: 15px; font-weight: bold; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>".$arrMail['ResNumber']." <a href='https://actrip.co.kr/orderview?num=1&resNumber=".$arrMail['ResNumber']."' target='_blank'>[예약조회]</a>
                             </td>
                         </tr>
                         <tr>
@@ -162,7 +162,7 @@ $contents .= "<tr>
 }
 
 $contents .= "<tr>
-            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='https://actrip.co.kr/ordersearch?resNumber=".$arrMail['ResNumber']."' target='_blank'>
+            <td height='30' align='center' style='padding: 10px 0px 30px;'><a href='https://actrip.co.kr/orderview?num=1&resNumber=".$arrMail['ResNumber']."' target='_blank'>
                 <img src='http://www.smartix.co.kr/joinmail_img/03.png' border='0'></a>
             </td>
         </tr>
