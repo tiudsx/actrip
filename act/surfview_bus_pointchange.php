@@ -14,7 +14,8 @@ $count = mysqli_num_rows($result_setlist);
 $i = 0;
 $busgubun0 = 0;
 $busgubun1 = 0;
-$arrResInfo = array();
+$arrResInfoS = array();
+$arrResInfoE = array();
 while ($row = mysqli_fetch_assoc($result_setlist)){
     if($i == 0){
         $user_name = $row["user_name"];
@@ -34,17 +35,23 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $busgubun0 = 1;
         $res_date0 = $row["res_date"];
         $res_busnum0 = $row["res_busnum"];
+
+        $arrResInfoS[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
+                                                , "res_busnum" => $row["res_busnum"]
+                                                , "res_seat" => $row["res_seat"]
+                                                , "res_spointname" => $row["res_spointname"]
+                                                , "res_epointname" => $row["res_epointname"]);
     }else{ //서울행
         $busgubun1 = 1;
         $res_date1 = $row["res_date"];
         $res_busnum1 = $row["res_busnum"];
-    }
 
-    $arrResInfo[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
-                                            , "res_busnum" => $row["res_busnum"]
-                                            , "res_seat" => $row["res_seat"]
-                                            , "res_spointname" => $row["res_spointname"]
-                                            , "res_epointname" => $row["res_epointname"]);
+        $arrResInfoE[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
+                                                , "res_busnum" => $row["res_busnum"]
+                                                , "res_seat" => $row["res_seat"]
+                                                , "res_spointname" => $row["res_spointname"]
+                                                , "res_epointname" => $row["res_epointname"]);
+    }
 
     $i++;    
 }
@@ -73,11 +80,11 @@ if($daytype == 0){
     $bustypeview0 = "";
     $bustypeview1 = "none";
 
-    $res_busnum = $res_busnum0;
+    $res_busnum0 = $res_busnum0;
     if($busgubun1 == 1){
         $res_date0 = $res_date1;
         $calbusgubun = $bustype1;
-        $res_busnum = $res_busnum1;
+        $res_busnum0 = $res_busnum1;
     }
 }else{
     $bustypeview0 = "none";
@@ -266,9 +273,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
                     <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
-                    <?foreach ($arrResInfo as $key => $value) {
-                        echo $value["res_busnum"].'/'.$value["res_seat"].'/'.$value["res_spointname"].'/'.$value["res_epointname"].'<br>';
-                    }?>
+                    
                         <div>
                             <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="노선 변경하기" onclick="fnBusPrev(1);" />&nbsp;&nbsp;
                             <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
@@ -297,14 +302,19 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script src="js/jquery-ui.js"></script>
 <script src="js/surfview_busday.js?v=1"></script>
 <script>
+    var businit = 0;
     var busrestype = "change";
     var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     var busResData = {};
     
-    <?foreach ($arrResInfo as $key => $value) {?>
+    <?foreach ($arrResInfoS as $key => $value) {?>
     busResData["<?=$value["res_busnum"]?>_<?=$value["res_seat"]?>"] = "<?=$value["res_busnum"].'/'.$value["res_seat"].'/'.$value["res_spointname"].'/'.$value["res_epointname"]?>";
     <?}?>
+    <?foreach ($arrResInfoE as $key => $value) {?>
+    busResData["<?=$value["res_busnum"]?>_<?=$value["res_seat"]?>"] = "<?=$value["res_busnum"].'/'.$value["res_seat"].'/'.$value["res_spointname"].'/'.$value["res_epointname"]?>";
+    <?}?>
+
     var objParam = {
         "code":"busday",
         "bus":"<?=$busgubun?>",
@@ -319,7 +329,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <?if($daytype == 0){?>
         $j('#ulroute li').eq(1).click();
     
-        $j("li[busnum=<?=$res_busnum?>]").click();
+        $j("li[busnum=<?=$res_busnum0?>]").click();
     <?}else{?>
         fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
         fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));

@@ -381,7 +381,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script src="js/jquery-ui.js"></script>
 <script src="js/surfview_busday.js?v=1"></script>
 <script>    
-    //$j('.busSeat').block({ message: null });     
+    //$j('.busSeat').block({ message: null });
+    var businit = 0;
     var busrestype = "none";
     var busDateinit = "<?=$sbusDate?>";
     var busData = {};

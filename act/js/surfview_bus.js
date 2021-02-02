@@ -132,10 +132,20 @@ function fnBusSeatInit(busnum, busseat, obj, busname){
 			$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
 		}else if(el.seatYN == "N" && busrestype == "change"){
 			if(busResData[busNum + "_" + el.seatnum] != null){
-
-				// $j("#" + $j("#SurfBus").val()  + "_" + busNum + "_" + el.seatnum).remove();
-				$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListC");
-				// $j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
+				$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
+				if(businit == 1){
+				}else{
+					$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
+				}
+				// if($j("#" + selDate + "_" + busNum + "_" + el.seatnum).length == 0){
+				// 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
+				// 	// $j("#" + $j("#SurfBus").val()  + "_" + busNum + "_" + el.seatnum).remove();
+				// 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
+				// 	//$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListC");
+				// 	//$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeAttr("onclick");
+				// }else{
+				// 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListC");
+				// }
 			}
 		}
 	});
@@ -146,6 +156,8 @@ function fnBusSeatInit(busnum, busseat, obj, busname){
 			$j("#tbSeat .busSeatList[busSeat=" + forObj.eq(i).val() + "]").removeClass("busSeatListY").addClass("busSeatListC");
 		}
 	}
+	
+	businit = 1;
 }
 
 //달력 날짜 선택시 노선 바인딩
@@ -592,7 +604,7 @@ function fnSeatSelected(obj) {
 			bindObj = "#selBus" + busType;
 		}
 
-		insHtml += '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '">' +
+		insHtml +=  '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '">' +
 					'					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
 					'					<td style="line-height:2;">' +
 					'						<select id="startLocation' + busType + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busNum + '\', -1);">' +
@@ -608,6 +620,10 @@ function fnSeatSelected(obj) {
 					'					</td>' +
 					'					<td style="text-align:center;" onclick="fnSeatDel(this, ' + objVlu + ');"><img src="act/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
 					'				</tr>';
+		if (tbCnt == 0) {
+			insHtml +=  '			</tbody>' +
+						'		</table>';
+		}
 
 		$j(bindObj).append(insHtml);            
 	}
