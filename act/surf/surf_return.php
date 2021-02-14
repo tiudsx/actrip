@@ -307,6 +307,7 @@ if($param == "RtnPrice"){
     $shopseq = $_REQUEST["shopseq"];
     $ressubseqs = $_REQUEST["ressubseqs"]; //셔틀버스 예약 시퀀스
     $ressubseqe = $_REQUEST["ressubseqe"]; //셔틀버스 예약 시퀀스
+    $daytype = $_REQUEST["daytype"]; //편도 : 0, 왕복 : 1
     
     if($shopseq == 7){
         $busTypeY = "Y";

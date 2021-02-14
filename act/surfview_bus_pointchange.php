@@ -149,7 +149,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <?=$resseq?>
                 </span>
 
-                <div id="resStep1">
+                <div id="resStep1" style="display:none;">
                     <div class="busOption01" style="padding-bottom: 0px;">
                         <ul class="destination" id="ulDaytype" style="margin-bottom: 0px;">
                             <li><img src="images/viewicon/sign.svg" alt="">일정</li>
@@ -206,7 +206,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </div>                
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
-                        <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusChangeNext();">
+                        <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기">
                     </div>
                 </div>
 
@@ -281,7 +281,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
                     
                         <div>
-                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="노선 변경하기" onclick="fnBusPrev(1);" />&nbsp;&nbsp;
+                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />&nbsp;&nbsp;
                             <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
                         </div>
                     </div>
