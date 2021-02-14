@@ -149,7 +149,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <?=$resseq?>
                 </span>
 
-                <div id="resStep1" style="display:none;">
+                <div id="resStep1">
                     <div class="busOption01" style="padding-bottom: 0px;">
                         <ul class="destination" id="ulDaytype" style="margin-bottom: 0px;">
                             <li><img src="images/viewicon/sign.svg" alt="">일정</li>
@@ -205,7 +205,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li id="buspointtext"></li>
                         </ul>
                     </div>                
-                    <div id="nextbtn" class="busOption01" style="text-align:center;">
+                    <div id="nextbtn" class="busOption01" style="text-align:center;display:none;">
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기">
                     </div>
                 </div>

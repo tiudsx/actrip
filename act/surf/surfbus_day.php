@@ -46,7 +46,7 @@ if($reqCode == "busday"){
     $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6) AND res_bus = "'.$_REQUEST["busNum"].'"';
     $result_setlist = mysqli_query($conn, $select_query);
     while ($row = mysqli_fetch_assoc($result_setlist)){
-        $groupData[] = array("seatcnt" => $row['cnt'],);
+        $groupData[] = array("seatcnt" => 45);
     }
 }
 

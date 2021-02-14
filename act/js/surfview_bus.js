@@ -209,7 +209,11 @@ function fnBusSearchDate(selectedDate, gubun, objid){
 		$j.getJSON("/act/surf/surfbus_day.php", objParam,
 			function (data, textStatus, jqXHR) {
 				if(data[0].seatcnt == el.busseat){
-					$j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + el.busname + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
+					if(busrestype == "change"){
+						$j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
+					}else{
+						$j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + el.busname + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
+					}
 				}else{
 					$j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;">' + el.busname + '</li>');
 				}
@@ -496,16 +500,16 @@ function fnBusNext() {
 
 function fnBusChangeNext() {
 	if($j("#daytype").val() == 0){ //편도
-		if($j("#SurfBus").val() == ""){
-			alert("이용일을 선택해주세요.");
-			return;
-		}
+		// if($j("#SurfBus").val() == ""){
+		// 	alert("이용일을 선택해주세요.");
+		// 	return;
+		// }
 
-		var busstop = $j("ul[class=busLine]:eq(0) li[class=on]").length;
-		if(busstop == 0){
-			alert("노선을 선택해주세요.");
-			return;
-		}
+		// var busstop = $j("ul[class=busLine]:eq(0) li[class=on]").length;
+		// if(busstop == 0){
+		// 	alert("노선을 선택해주세요.");
+		// 	return;
+		// }
 
 		var btnonclick = $j("ul[class=busLine]:eq(0) li[class=on]").attr("onclick");
 		var btntext = "";
@@ -525,25 +529,25 @@ function fnBusChangeNext() {
 		var busname = $j("ul[class=busLine]:eq(0) li[class=on]").text();
 		$j(".busLineTab").append('<li class="on" caldate="'  + $j("#SurfBus").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext + busname + '</li>');
 	}else{
-		if($j("#SurfBusS").val() == ""){
-			alert("출발일을 선택해주세요.");
-			return;
-		}
-		var busstop = $j("ul[class=busLine]:eq(1) li[class=on]").length;
-		if(busstop == 0){
-			alert("출발노선을 선택해주세요.\n\n모든 노선이 매진된 경우 편도로 예약해주세요~");
-			return;
-		}
+		// if($j("#SurfBusS").val() == ""){
+		// 	alert("출발일을 선택해주세요.");
+		// 	return;
+		// }
+		// var busstop = $j("ul[class=busLine]:eq(1) li[class=on]").length;
+		// if(busstop == 0){
+		// 	alert("출발노선을 선택해주세요.\n\n모든 노선이 매진된 경우 편도로 예약해주세요~");
+		// 	return;
+		// }
 
-		if($j("#SurfBusE").val() == ""){
-			alert("복귀일을 선택해주세요.");
-			return;
-		}
-		var busstop = $j("ul[class=busLine]:eq(2) li[class=on]").length;
-		if(busstop == 0){
-			alert("복귀노선을 선택해주세요.\n\n모든 노선이 매진된 경우 편도로 예약해주세요~");
-			return;
-		}
+		// if($j("#SurfBusE").val() == ""){
+		// 	alert("복귀일을 선택해주세요.");
+		// 	return;
+		// }
+		// var busstop = $j("ul[class=busLine]:eq(2) li[class=on]").length;
+		// if(busstop == 0){
+		// 	alert("복귀노선을 선택해주세요.\n\n모든 노선이 매진된 경우 편도로 예약해주세요~");
+		// 	return;
+		// }
 		
 		$j(".selectStop li").eq(0).css("display", "");
 		$j(".selectStop li").eq(1).css("display", "");
