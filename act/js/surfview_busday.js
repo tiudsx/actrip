@@ -42,7 +42,7 @@ var busPoint = {}
 
     busPoint.ePointE = [];
     busPoint.ePointE.push({ "code": "N", "codename": "도착" });
-    busPoint.ePointE.push({ "code": "솔서프", "codename": "솔서프" });
+    busPoint.ePointE.push({ "code": "솔.동해점", "codename": "솔.동해점" });
     busPoint.ePointE.push({ "code": "대진항", "codename": "대진항" });
     busPoint.ePointE.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -75,7 +75,7 @@ var busPoint = {}
     
     busPoint.sPointA21 = [];
     busPoint.sPointA21.push({ "code": "N", "codename": "출발" });
-    busPoint.sPointA21.push({ "code": "솔서프", "codename": "솔서프" });
+    busPoint.sPointA21.push({ "code": "솔.동해점", "codename": "솔.동해점" });
     busPoint.sPointA21.push({ "code": "대진항", "codename": "대진항" });
     busPoint.sPointA21.push({ "code": "금진해변", "codename": "금진해변" });
 
@@ -88,7 +88,7 @@ var busPoint = {}
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 봉천역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "당산역 &gt; 합정역 &gt; 종로3가역 &gt; 왕십리역 &gt; 건대입구 &gt; 종합운동장역";
 var busPoint_3 = "청시행비치 &gt; 남애3리 &gt; 인구 &gt; 죽도 &gt; 동산항 &gt; 기사문 &gt; 서피비치";
-var busPoint_4 = "솔서프 &gt; 대진항 &gt; 금진해변";
+var busPoint_4 = "솔.동해점 &gt; 대진항 &gt; 금진해변";
 var busPointList = {
     "Y1" : {li:busPoint_1},
     "Y2" : {li:busPoint_2},
@@ -144,7 +144,7 @@ var busPointListS1 = {
     "서피비치": [MARKER_SPRITE_X_OFFSET*6, 0, '38.0268271', '128.7169575', '서피비치 회전교차로 횡단보도 앞', '탑승시간 : <font color="red">15시 00분 / 18시 00분</font>', 6]
 }
 var busPointListA1 = {
-    "솔서프"	: [0, 0, '37.5782382', '129.1156248', '솔서프 입구', '탑승시간 : <font color="red">14시 00분 / 17시 00분</font>', 0],
+    "솔.동해점"	: [0, 0, '37.5782382', '129.1156248', '솔.동해점 입구', '탑승시간 : <font color="red">14시 00분 / 17시 00분</font>', 0],
     "대진항"	: [MARKER_SPRITE_X_OFFSET*1, 0, '37.5807657', '129.111344', '대진항 공영주차장 입구', '탑승시간 : <font color="red">14시 05분 / 17시 05분</font>', 1],
     "금진해변"	: [MARKER_SPRITE_X_OFFSET*2, 0, '37.6347202', '129.0450586', '금진해변 공영주차장 입구', '탑승시간 : <font color="red">14시 20분 / 17시 20분</font>', 2]
 }

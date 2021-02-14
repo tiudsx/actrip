@@ -144,7 +144,3 @@ function fnPointChangeSave() {
 		$j("#frmPoint").attr("action", "/act/surf/surf_return.php").submit();
     }
 }
-
-function fnPointChangeErr(){
-	$j('.top_area_zone').unblock();
-}

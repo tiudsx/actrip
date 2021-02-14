@@ -41,6 +41,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                                 , "res_seat" => $row["res_seat"]
                                                 , "res_spointname" => $row["res_spointname"]
                                                 , "res_epointname" => $row["res_epointname"]);
+
+         $resseq .= "<input type='hidden' id='ressubseqs' name='ressubseqs[]' value='".$row["ressubseq"]."'>";
     }else{ //서울행
         $busgubun1 = 1;
         $res_date1 = $row["res_date"];
@@ -51,6 +53,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                                 , "res_seat" => $row["res_seat"]
                                                 , "res_spointname" => $row["res_spointname"]
                                                 , "res_epointname" => $row["res_epointname"]);
+
+         $resseq .= "<input type='hidden' id='ressubseqe' name='ressubseqe[]' value='".$row["ressubseq"]."'>";
     }
 
     $i++;    
@@ -136,11 +140,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:;">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
-                    <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
+                    <br>resparam<input type="text" id="resparam" name="resparam" value="PointChange" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                     <br>편도/왕복<input type="text" id="daytype" name="daytype" value="<?=$daytype?>">
                     <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
+                    <br>MainNumber<input type="hidden" id="MainNumber" name="MainNumber" value="<?=$resNumber?>">
+                    <?=$resseq?>
                 </span>
 
                 <div id="resStep1">
@@ -259,12 +265,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="images/button/btn061.png" alt="<?=$bustypeText0?> 서핑버스"></li>
+                        <li style="display:none;"><img src="images/button/<?if($bustype1 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype0?>" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="images/button/btn062.png" alt="<?=$bustypeText1?> 서핑버스"></li>
+                        <li style="display:none;"><img src="images/button/<?if($bustype1 == "S"){ echo "btn062.png"; }else{ echo "btn063.png"; }?>" alt="<?=$bustypeText1?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype1?>" class="bd" style="padding-top:2px;">
                             </div>
@@ -285,7 +291,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         </section>
     </div>
 </div>
-<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:;"></iframe>
 <? include '_layout_bottom.php'; ?>
 
 <script>    

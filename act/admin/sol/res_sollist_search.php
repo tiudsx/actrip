@@ -244,7 +244,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         if($Day == $row['resDay']){
             if($prod_name != "N"){
                 $resText = "강습";
-                $stayText = str_replace("솔게스트하우스", "솔서프", $row['prod_name']);
+                $stayText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
             }
 
             if($surfrent != "N"){            

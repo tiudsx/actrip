@@ -89,7 +89,6 @@ function fnPointList(busnum, busseat, obj){
 }
 
 function fnBusSeatInit(busnum, busseat, obj, busname){
-	//alert(busrestype);busResData
 	$j(".busLineTab li").removeClass("on");
 	$j(obj).addClass("on");
 
@@ -149,11 +148,25 @@ function fnBusSeatInit(busnum, busseat, obj, busname){
 			}
 		}
 	});
-
+	
 	if($j("#tb" + selDate + '_' + busnum).length > 0){
 		var forObj = $j("#tb" + selDate + '_' + busnum + ' [id=hidbusSeat' + busType + ']');
 		for (var i = 0; i < forObj.length; i++) {
 			$j("#tbSeat .busSeatList[busSeat=" + forObj.eq(i).val() + "]").removeClass("busSeatListY").addClass("busSeatListC");
+		}
+	}
+
+	if(busrestype == "change" && businit == 0){
+		//2021-02-21_S22_37
+		var forObj = $j("select[id=startLocation" + busType + "]"); //$j("#tb" + selDate + '_' + busnum + ' select');
+		for (var i = 0; i < forObj.length; i++) {	
+			var arrBus = busResData[busNum + "_" + forObj.eq(i).attr("seatnum")].split("/");
+
+			forObj.eq(i).val(arrBus[2]).change();
+			forObj.eq(i).next().val(arrBus[3]);
+			//busResData["S22_37"] = "S22/37/인구/강남역";
+			//busResData["S22_38"] = "S22/38/남애3리/사당역";
+			//$j("#tbSeat .busSeatList[busSeat=" + forObj.eq(i).val() + "]").removeClass("busSeatListY").addClass("busSeatListC");
 		}
 	}
 	
@@ -410,7 +423,7 @@ function fnBusNext() {
 			btntext = "[양양행] ";
 			$j(".selectStop li").eq(0).css("display", "");
 			$j(".selectStop li").eq(1).css("display", "");
-		}else if($j("#busgubun") == "E"){
+		}else if($j("#busgubun").val() == "E"){
 			btntext = "[동해행] ";
 			$j(".selectStop li").eq(0).css("display", "");
 			$j(".selectStop li").eq(1).css("display", "");
@@ -486,7 +499,7 @@ function fnBusChangeNext() {
 			btntext = "[양양행] ";
 			$j(".selectStop li").eq(0).css("display", "");
 			$j(".selectStop li").eq(1).css("display", "");
-		}else if($j("#busgubun") == "E"){
+		}else if($j("#busgubun").val() == "E"){
 			btntext = "[동해행] ";
 			$j(".selectStop li").eq(0).css("display", "");
 			$j(".selectStop li").eq(1).css("display", "");
@@ -573,6 +586,14 @@ function fnSeatSelected(obj) {
 			$j("#" + selDate + '_' + busNum + '_' + objVlu).remove();
 		}       
 	}else{
+		if(busrestype == "change"){
+			var defaultCnt = Object.keys(busResData).length;
+			var selCnt = $j("tr[trseat]").length + 1;//$j("select[id=startLocation" + busType + "]").length + 1;
+			if(defaultCnt < selCnt){
+				alert("선택된 좌석을 취소 후 해당 좌석을 선택해주세요~");
+				return;
+			}
+		}
 		$j(obj).addClass("busSeatListC").removeClass("busSeatListY");
 
 		var sPoint = "";
@@ -604,13 +625,13 @@ function fnSeatSelected(obj) {
 			bindObj = "#selBus" + busType;
 		}
 
-		insHtml +=  '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '">' +
+		insHtml +=  '				<tr id="' + selDate + '_' + busNum + '_' + objVlu + '" trseat="' + objVlu + '">' +
 					'					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
 					'					<td style="line-height:2;">' +
-					'						<select id="startLocation' + busType + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busNum + '\', -1);">' +
+					'						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busNum + '\', -1);">' +
 					'							' + sPoint +
 					'						</select> →' +
-					'						<select id="endLocation' + busType + '" name="endLocation' + busType + '[]" class="select">' +
+					'						<select id="endLocation' + busType + '" seatnum="' + objVlu + '" name="endLocation' + busType + '[]" class="select">' +
 					'							' + ePoint +
 					'						</select><br>' +
 					'						<span id="stopLocation"></span>' +
@@ -629,6 +650,7 @@ function fnSeatSelected(obj) {
 	}
 	
 	if(busrestype == "change"){
+		//2021-02-21_S22_37
 		//$j("#" + $j("#SurfBus").val()  + "_" + busNum + "_" + el.seatnum)
 	}else{
 		fnPriceSum('', 1);
@@ -700,7 +722,7 @@ function fnBusPoint(obj) {
 		tbBus = 3;
 		gubun = "A";
 		busnum = 1;
-		pointname = "솔서프";
+		pointname = "솔.동해점";
 	}else{
 		mapviewid = 12;
 		tbBus = 3;
@@ -781,34 +803,54 @@ function fnBusSave() {
 		return;
 	}
 
-    if ($j("#userName").val() == "") {
-        alert("이름을 입력하세요.");
-        return;
-    }
+	var submiturl = "/act/surf/surf_save.php";
+	if(busrestype == "change"){
+		var defaultCnt = Object.keys(busResData).length;
+		var selCnt = $j("tr[trseat]").length;
+		if(defaultCnt != selCnt){
+			// alert("예약된 좌석수(" + defaultCnt + "자리)와 동일한 개수로 선택해주세요~");
+			// return;
+		}
 
-    if ($j("#userPhone1").val() == "" || $j("#userPhone2").val() == "" || $j("#userPhone3").val() == "") {
-        alert("연락처를 입력하세요.");
-        return;
-    }
+		submiturl = "/act/surf/surf_return.php";
 
-    if (!$j("#chk8").is(':checked')) {
-        alert("이용안내 및 취소/환불 규정에 대한 동의를 해주세요.");
-        return;
-    }
+		if (!confirm("액트립 셔틀버스를 예약건 수정하시겠습니까?")) {
+			return;
+		}
+	}else{
+		if ($j("#userName").val() == "") {
+			alert("이름을 입력하세요.");
+			return;
+		}
 
-    if (!$j("#chk9").is(':checked')) {
-        alert("개인정보 취급방침에 동의를 해주세요.");
-        return;
-    }
+		if ($j("#userPhone1").val() == "" || $j("#userPhone2").val() == "" || $j("#userPhone3").val() == "") {
+			alert("연락처를 입력하세요.");
+			return;
+		}
 
-    if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
-        return;
-	}	
+		if (!$j("#chk8").is(':checked')) {
+			alert("이용안내 및 취소/환불 규정에 대한 동의를 해주세요.");
+			return;
+		}
+
+		if (!$j("#chk9").is(':checked')) {
+			alert("개인정보 취급방침에 동의를 해주세요.");
+			return;
+		}
+
+		if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
+			return;
+		}	
+	}
 
 	$j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
 
-	setTimeout('$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();', 500);
+	setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
 	//$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
+}
+
+function fnUnblock(objId){
+	$j(objId).unblock();
 }
 
 function fnCouponCheck(obj){
