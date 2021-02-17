@@ -19,225 +19,171 @@ $shopseq = 0;
 <script>
     var busDateinit = "2020-04-01";
     var mobileuse = "";
+        
+    function fnChkAll(obj, objid){
+        if($j(obj).is(":checked")){
+            $j('input[id=' + objid + ']').prop('checked',true);
+        }else{
+            $j('input[id=' + objid + ']').prop('checked',false);
+        }
+    }
+
+    function fnChkBusAll(obj, gubun){
+        $j('input[id=chkbusNum' + gubun + ']').prop('checked',$j(obj).is(":checked"));
+    }
 </script>
 
 <div class="container" id="contenttop">
 <!-- .tab_container -->
 <div id="containerTab" class="areaRight">
-    <div id="right_article3" class="right_article4">
-		<?include __DIR__.'/../shop/res_surfcalendar.php'?>
+    <section>
+        <aside id="right_article3" class="left_article5">
+            <?include __DIR__.'/../shop/res_surfcalendar.php'?>
+        </aside>
+        <article class="right_article5">
+            <ul class="tabs" style="margin-left:5px;">
+                <li class="active" rel="tab1">검색관리</li>
+                <li rel="tab2">예약관리</li>
+                <li rel="tab3">정산관리</li>
+            </ul>
+
+            <!-- #container -->
+            <div class="tab_container" style="margin-left:5px;">
+                <!-- #tab1 -->
+                <div id="tab1" class="tab_content">
+                    <form name="frmSearch" id="frmSearch" autocomplete="off">
+                    <table class='et_vars exForm bd_tb' style="width:100%">
+                        <colgroup>
+                            <col style="width:100px;">
+                            <col style="width:80px;">
+                            <col style="width:*;">
+                            <col style="width:100px;">
+                            <col style="width:80px;">
+                            <col style="width:*;">
+                        </colgroup>
+                        <tr>
+                            <th><label><input type="checkbox" onclick="fnChkAll(this, 'chkResConfirm')">구분</label></th>
+                            <td colspan="5">
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="0" style="vertical-align:-3px;" />미입금</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="1" style="vertical-align:-3px;" />예약대기</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="8" style="vertical-align:-3px;" />입금완료</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="4" style="vertical-align:-3px;" />환불요청</label>
+                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="5" style="vertical-align:-3px;" />환불완료</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                양양행
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울-양양행</label></th>
+                            <th>사당선</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y5" style="vertical-align:-3px;" />5호차</label>
+                            </td>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />양양-서울행</label></th>
+                            <th>오후 2시</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S21" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S22" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S23" style="vertical-align:-3px;" />3호차</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>종로선</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
+                            </td>
+                            <th>오후 5시</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S51" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S52" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S53" style="vertical-align:-3px;" />3호차</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                               동해행
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-동해행</label></th>
+                            <th rowspan="2">사당선</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
+                            </td>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />서울-동해행</label></th>
+                            <th>오후 2시</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
+                            </td>
+                            <th>오후 5시</th>
+                            <td>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>검색기간</th>
+                            <td colspan="5">
+                                <input type="hidden" id="hidsearch" name="hidsearch" value="init">
+                                <input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >&nbsp;~
+                                <input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+                                <input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <th>검색어</th>
+                            <td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
+                        </tr>
+                    </table>
+                    </form>                
+                </div>
+
+                <!-- #tab2 -->
+                <div id="tab2" class="tab_content" style="display:none;">
+                    <div style="text-align:center;font-size:14px;padding:50px;" id="initText2">
+                        <b>날짜를 선택하세요.</b>
+                    </div>
+                    <div id="divResList"></div>
+                </div>
+
+                
+                <!-- #tab3 -->
+                <div id="tab3" class="tab_content" style="display:none;">
+                    <?include 'res_bus_cal.php'?>
+                </div>
+            </div>
+            <!-- .tab_container -->
+        </article>
+    </section>
+    
+    <div>
+        <div id="mngSearch" style="display:inline-block;width:100%"><?include 'res_buslist_search.php'?></div>
     </div>
-
-    <ul class="tabs">
-        <li class="active" rel="tab1">검색관리</li>
-        <li rel="tab2">예약관리</li>
-        <li rel="tab3">정산관리</li>
-    </ul>
-<script>
-function fnChkAll(obj, objid){
-    if($j(obj).is(":checked")){
-        $j('input[id=' + objid + ']').prop('checked',true);
-    }else{
-        $j('input[id=' + objid + ']').prop('checked',false);
-    }
-}
-
-function fnChkBusAll(obj, gubun){
-    if($j(obj).is(":checked")){
-        if(gubun == "Y"){
-            $j('input[id=chkbusNum][value=Y1]').prop('checked',true);
-            $j('input[id=chkbusNum][value=Y2]').prop('checked',true);
-            $j('input[id=chkbusNum][value=Y3]').prop('checked',true);
-            $j('input[id=chkbusNum][value=Y4]').prop('checked',true);
-            $j('input[id=chkbusNum][value=Y5]').prop('checked',true);
-            $j('input[id=chkbusNum][value=Y6]').prop('checked',true);
-            
-            $j('input[id=chkbusNum][value=S21]').prop('checked',true);
-            $j('input[id=chkbusNum][value=S22]').prop('checked',true);
-            $j('input[id=chkbusNum][value=S23]').prop('checked',true);
-            $j('input[id=chkbusNum][value=S51]').prop('checked',true);
-            $j('input[id=chkbusNum][value=S52]').prop('checked',true);
-            $j('input[id=chkbusNum][value=S53]').prop('checked',true);
-        }else{
-            $j('input[id=chkbusNum][value=E1]').prop('checked',true);
-            $j('input[id=chkbusNum][value=E2]').prop('checked',true);
-            $j('input[id=chkbusNum][value=E3]').prop('checked',true);
-            $j('input[id=chkbusNum][value=E4]').prop('checked',true);
-            $j('input[id=chkbusNum][value=E5]').prop('checked',true);
-            $j('input[id=chkbusNum][value=E6]').prop('checked',true);
-            
-            $j('input[id=chkbusNum][value=A21]').prop('checked',true);
-            $j('input[id=chkbusNum][value=A22]').prop('checked',true);
-            $j('input[id=chkbusNum][value=A23]').prop('checked',true);
-            $j('input[id=chkbusNum][value=A51]').prop('checked',true);
-            $j('input[id=chkbusNum][value=A52]').prop('checked',true);
-            $j('input[id=chkbusNum][value=A53]').prop('checked',true);
-        }
-    }else{
-        if(gubun == "Y"){
-            $j('input[id=chkbusNum][value=Y1]').prop('checked',false);
-            $j('input[id=chkbusNum][value=Y2]').prop('checked',false);
-            $j('input[id=chkbusNum][value=Y3]').prop('checked',false);
-            $j('input[id=chkbusNum][value=Y4]').prop('checked',false);
-            $j('input[id=chkbusNum][value=Y5]').prop('checked',false);
-            $j('input[id=chkbusNum][value=Y6]').prop('checked',false);
-            
-            $j('input[id=chkbusNum][value=S21]').prop('checked',false);
-            $j('input[id=chkbusNum][value=S22]').prop('checked',false);
-            $j('input[id=chkbusNum][value=S23]').prop('checked',false);
-            $j('input[id=chkbusNum][value=S51]').prop('checked',false);
-            $j('input[id=chkbusNum][value=S52]').prop('checked',false);
-            $j('input[id=chkbusNum][value=S53]').prop('checked',false);
-        }else{
-            $j('input[id=chkbusNum][value=E1]').prop('checked',false);
-            $j('input[id=chkbusNum][value=E2]').prop('checked',false);
-            $j('input[id=chkbusNum][value=E3]').prop('checked',false);
-            $j('input[id=chkbusNum][value=E4]').prop('checked',false);
-            $j('input[id=chkbusNum][value=E5]').prop('checked',false);
-            $j('input[id=chkbusNum][value=E6]').prop('checked',false);
-            
-            $j('input[id=chkbusNum][value=A21]').prop('checked',false);
-            $j('input[id=chkbusNum][value=A22]').prop('checked',false);
-            $j('input[id=chkbusNum][value=A23]').prop('checked',false);
-            $j('input[id=chkbusNum][value=A51]').prop('checked',false);
-            $j('input[id=chkbusNum][value=A52]').prop('checked',false);
-            $j('input[id=chkbusNum][value=A53]').prop('checked',false);
-        }
-    }
-}
-</script>
-	<!-- #container -->
-    <div class="tab_container">
-        <!-- #tab1 -->
-        <div id="tab1" class="tab_content">
-		<form name="frmSearch" id="frmSearch" autocomplete="off">
-			<table class='et_vars exForm bd_tb' style="width:100%">
-				<colgroup>
-					<col style="width:100px;">
-					<col style="width:80px;">
-					<col style="width:*;">
-					<col style="width:100px;">
-					<col style="width:80px;">
-					<col style="width:*;">
-				</colgroup>
-				<tr>
-					<th><label><input type="checkbox" onclick="fnChkAll(this, 'chkResConfirm')">구분</label></th>
-					<td colspan="5">
-                        <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="0" style="vertical-align:-3px;" />미입금</label>
-                        <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="1" style="vertical-align:-3px;" />예약대기</label>
-                        <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="8" style="vertical-align:-3px;" />입금완료</label>
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label>
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="4" style="vertical-align:-3px;" />환불요청</label>
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="5" style="vertical-align:-3px;" />환불완료</label>
-					</td>
-				</tr>
-                <tr>
-                    <td colspan="6">
-						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y')" />양양행</label>
-					</td>
-				</tr>
-				<tr>
-					<th rowspan="2">서울-양양행</th>
-					<th>사당선</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y3" style="vertical-align:-3px;" />3호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y5" style="vertical-align:-3px;" />5호차</label>
-                    </td>
-                    <th rowspan="2">양양-서울행</th>
-                    <th>오후 2시</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S21" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S22" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S23" style="vertical-align:-3px;" />3호차</label>
-					</td>
-				</tr>
-				<tr>
-					<th>종로선</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
-                    </td>
-                    <th>오후 5시</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S51" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S52" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="S53" style="vertical-align:-3px;" />3호차</label>
-					</td>
-				</tr>
-                <tr>
-					<td colspan="6">
-						<label><input type="checkbox" id="chkBus" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D')" />동해행</label>
-					</td>
-				</tr>
-				<tr>
-                    <th rowspan="2">서울-동해행</th>
-					<th rowspan="2">사당선</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E1" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E2" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
-                    </td>
-                    <th rowspan="2">서울-동해행</th>
-                    <th>오후 2시</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
-					</td>
-                </tr>
-                <tr>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
-                    </td>
-                    <th>오후 5시</th>
-					<td>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
-						<label><input type="checkbox" id="chkbusNum" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
-					</td>
-				</tr>
-				<tr>
-					<th>검색기간</th>
-					<td colspan="5">
-						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="<?=$datDate?>" class="itx2" maxlength="7" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" >
-						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
-					</td>
-					
-				</tr>
-				<tr>
-					<th>검색어</th>
-					<td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
-				</tr>
-			</table>
-		</form>
-
-        <div id="mngSearch"><?include 'res_buslist_search.php'?></div>
-		</div>
-
-        <!-- #tab2 -->
-        <div id="tab2" class="tab_content" style="display:none;">
-			<div style="text-align:center;font-size:14px;padding:50px;" id="initText2">
-				<b>날짜를 선택하세요.</b>
-			</div>
-			<div id="divResList"></div>
-		</div>
-
-		
-        <!-- #tab3 -->
-        <div id="tab3" class="tab_content" style="display:none;">
-			<?include 'res_bus_cal.php'?>
-		</div>
-    </div>
-    <!-- .tab_container -->
 </div>
 <!-- #container -->
 </div>

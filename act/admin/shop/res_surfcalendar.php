@@ -5,6 +5,9 @@ if($reqDate != ""){
 	$shopseq = $_REQUEST["seq"];
 }
 
+include __DIR__.'/../../common/funcalendar.php';
+$holidays = fnholidays();
+
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
 $selDay = $_REQUEST["selDay"];
 
@@ -15,27 +18,6 @@ $datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
 $NextDate = date("Y-m-d", strtotime($datDate." +1 month"));
 $PreDate = date("Y-m-d", strtotime($datDate." -1 month"));
 $now = date("Y-m-d A h:i:s");
-
-$holidays = array(
-	"0101"=> array( "type"=> 0, "title"=> "신정", "year"=> "" ),
-	"0301"=> array( "type"=> 0, "title"=> "삼일절", "year"=> "" ),
-	"0415"=> array( "type"=> 0, "title"=> "선거", "year"=> "" ),
-	"0430"=> array( "type"=> 0, "title"=> "석가탄신일", "year"=> "" ),
-	"0505"=> array( "type"=> 0, "title"=> "어린이날", "year"=> "" ),
-	"0606"=> array( "type"=> 0, "title"=> "현충일", "year"=> "" ),
-	"0815"=> array( "type"=> 0, "title"=> "광복절", "year"=> "" ),
-	"1003"=> array( "type"=> 0, "title"=> "개천절", "year"=> "" ),
-	"1009"=> array( "type"=> 0, "title"=> "한글날", "year"=> "" ),
-	"1225"=> array( "type"=> 0, "title"=> "크리스마스", "year"=> "" ),
-
-	"0930"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-	"1001"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-	"1002"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-
-	"0211"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" ),
-	"0212"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" ),
-	"0213"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" )
-);
 
 $x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
 $s_Y=$x[0]; // 지정된 년도 
@@ -141,7 +123,12 @@ for($r=0;$r<=$ra;$r++){
 			$weeknum = $z - 1;
 
 			$calMD = explode("-",$s)[1].explode("-",$s)[2];
-			$holidayChk = (array_key_exists($calMD, $holidays)) ? " style='color:red;'" : "";
+			$holidayChk = "";
+			if(array_key_exists($calMD, $holidays)){
+				if($holidays[$calMD]["year"] == "" || $Year == $holidays[$calMD]["year"]){
+					$holidayChk = " style='color:red;'";
+				}
+			}
 			
 			$adminText = "";
 			$gubunChk = "";
@@ -204,7 +191,7 @@ for($r=0;$r<=$ra;$r++){
 			}
 			
 			if($gubunChk == "99"){
-				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>$ru</span></span></td>";
+				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
 			}else{
 				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, $shopseq);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}

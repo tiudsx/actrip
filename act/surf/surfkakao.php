@@ -42,6 +42,10 @@ function kakaoMsg($arrKakao){
 		$btnList = '"button1":{"type":"WL","name":"전체 예약목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"현재 예약건 보기","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},';
 	}else if($arrKakao["tempName"] == "at_res_bus1"){ //셔틀버스 예약확정 정보
         $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"셔틀버스 탑승 위치확인","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link4"].'"},"button5":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link5"].'"},';
+	}else if($arrKakao["tempName"] == "at_bus_step1"){ //셔틀버스 입금대기/예약확정
+        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"셔틀버스 정류장 확인","url_mobile":"https://actrip.co.kr/'.$arrKakao["link4"].'"},"button5":{"type":"WL","name":"이벤트&공지사항","url_mobile":"https://actrip.co.kr/'.$arrKakao["link5"].'"},';
+	}else if($arrKakao["tempName"] == "at_surf_step1"){ //서핑샵 입금대기
+        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},';
 	}
 
 	$arryKakao = '';

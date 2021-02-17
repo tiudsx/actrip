@@ -31,10 +31,12 @@ if($param == "BusI"){
         $busTypeY = "Y";
         $busTypeS = "S";
         $busTitleName = "양양";
+        $resparam = "surfbus_yy";
     }else{
         $busTypeY = "E";
         $busTypeS = "A";    
         $busTitleName = "동해";    
+        $resparam = "surfbus_dh";	
     }
 
 	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜
@@ -216,13 +218,13 @@ if($param == "BusI"){
                 , "admin"=> "N"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_bus1"
+                , "tempName"=> "at_bus_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> "010-9509-9994"
                 , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
-                , "link4"=>"eatlist" //제휴업체 목록
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
@@ -234,13 +236,13 @@ if($param == "BusI"){
                 , "admin"=> "N"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_bus1"
+                , "tempName"=> "at_bus_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
-                , "link4"=>"eatlist" //제휴업체 목록
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
@@ -256,13 +258,13 @@ if($param == "BusI"){
                 , "admin"=> "N"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_bus1"
+                , "tempName"=> "at_bus_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
-                , "link4"=>"eatlist" //제휴업체 목록
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
@@ -278,13 +280,13 @@ if($param == "BusI"){
                 , "admin"=> "N"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_bus1"
+                , "tempName"=> "at_bus_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-                , "link3"=>"pointlist?resparam=surfbus_yy" //셔틀버스 탑승 위치확인
-                , "link4"=>"eatlist" //제휴업체 목록
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
@@ -297,14 +299,14 @@ if($param == "BusI"){
                 , "admin"=> "N"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_step1"
+                , "tempName"=> "at_bus_step1"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-                , "link2"=>"eatlist" //제휴업체 목록
-                , "link3"=>"event" //공지사항
-                , "link4"=>""
-                , "link5"=>""
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
+                , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
         }
@@ -414,7 +416,7 @@ if($param == "BusI"){
         }
         sendMail($arrMail); //메일 발송
         
-        echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/ordersearch?resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
 	}
 }else if($param == "SurfShopI"){
     $ResNumber = '1'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
@@ -662,11 +664,11 @@ if($param == "BusI"){
             , "admin"=> "N"
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
-            , "tempName"=> "at_res_step1"
+            , "tempName"=> "at_surf_step1"
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
             , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-            , "link2"=>"eatlist" //제휴업체 목록
+            , "link2"=>"surflocation?seq=".$shopseq //위치안내
             , "link3"=>"event" //공지사항
             , "link4"=>""
             , "link5"=>""
@@ -709,7 +711,7 @@ if($param == "BusI"){
         sendMail($arrMail); //메일 발송
 		//==================== 이메일 발송 End ====================
 
-        echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/orderview?num=1&resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
         //echo '<script>alert("예약이 완료되었습니다.");parent.fnSaveErr("divConfirm");</script>';
 	}
 }

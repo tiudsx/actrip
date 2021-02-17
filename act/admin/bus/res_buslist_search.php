@@ -1,22 +1,16 @@
 <?php
 include __DIR__.'/../../surf/surffunc.php';
 
-$reqDate = $_REQUEST["selDate"];
-if($reqDate == ""){
-    $selDate = str_replace("-", "", date("Y-m-d"));
-}else{
-	include __DIR__.'/../../db.php';
-    $shopseq = $_REQUEST["seq"];
-    $selDate = $reqDate;
-}
-$Year = substr($selDate,0,4);
-$Mon = substr($selDate,4,2);
+$hidsearch = $_REQUEST["hidsearch"];
 
-if($_REQUEST["chkResConfirm"] == ""){
-    $res_confirm = "0, 1, 8, 4";
+if($hidsearch == ""){ //초기화면 조회
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                        WHERE b.seq IN (7, 14)
+                            AND b.res_confirm IN (0, 1, 8, 4)
+                            ORDER BY b.resnum, b.ressubseq';
 }else{
 	include __DIR__.'/../../db.php';
-    $res_confirm = "";
 
     $chkResConfirm = $_REQUEST["chkResConfirm"];
     $chkbusNum = $_REQUEST["chkbusNum"];
@@ -33,16 +27,8 @@ if($_REQUEST["chkResConfirm"] == ""){
     for($b = 0; $b < count($chkbusNum); $b++){
         $inResType .= '"'.$chkbusNum[$b].'",';
     }
-    $inResType .= '99';
-}
+    $inResType .= '"99"';
 
-if($sDate == ""){
-    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-                        ON a.resnum = b.resnum 
-                        WHERE b.seq IN (7, 14)
-                            AND b.res_confirm IN ('.$res_confirm.')
-                            ORDER BY b.resnum, b.ressubseq';
-}else{
     $busDate = "";
     if($sDate == "" && $eDate == ""){
     }else{
@@ -64,9 +50,10 @@ if($sDate == ""){
                         WHERE b.res_confirm IN ('.$res_confirm.')
                             AND res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
                             ORDER BY b.resnum, b.res_date, b.ressubseq';
+
 }
 
-//echo $select_query;
+// echo $select_query;
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 

@@ -4,7 +4,8 @@ if($reqDate != ""){
 	include __DIR__.'/../../db.php';
 }
 
-include __DIR__.'/../../common/fun.php';
+include __DIR__.'/../../common/funcalendar.php';
+$holidays = fnholidays();
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
 $selDay = $_REQUEST["selDay"];
@@ -16,8 +17,6 @@ $datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
 $NextDate = date("Y-m-d", strtotime($datDate." +1 month"));
 $PreDate = date("Y-m-d", strtotime($datDate." -1 month"));
 $now = date("Y-m-d A h:i:s");
-
-$holidays = fnholidays();
 
 $x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
 $s_Y=$x[0]; // 지정된 년도 

@@ -6,6 +6,7 @@ include __DIR__.'/../surf/surffunc.php';
 
 $param = $_REQUEST["resparam"];
 $gubun = $_REQUEST["gubun"];
+$num = $_REQUEST["num"];
 $to = "lud1@naver.com,ttenill@naver.com";
 
 /*
@@ -473,9 +474,6 @@ if($param == "RtnPrice"){
             $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
             $info2_title = "탑승시간/위치 안내";
             $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
-            $kakastep = "at_res_bus1";
-        }else{
-            $kakastep = "at_res_step1";
         }
     
         // 카카오톡 알림톡 발송
@@ -487,14 +485,14 @@ if($param == "RtnPrice"){
             , "admin"=> "N"
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
-            , "tempName"=> "at_res_step1"
+            , "tempName"=> "at_bus_step1"
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
             , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-            , "link2"=>"eatlist" //제휴업체 목록
-            , "link3"=>"event" //공지사항
-            , "link4"=>""
-            , "link5"=>""
+            , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+            , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+            , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
+            , "link5"=>"event" //공지사항
             , "smsOnly"=>"N"
         );
         
@@ -527,8 +525,8 @@ if($param == "RtnPrice"){
 
         sendMail($arrMail); //메일 발송
         
-        //echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.location.href="/orderview?num='.$num.'&resNumber='.$ResNumber.'";</script>';
-        echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.fnUnblock("#divConfirm");</script>';
+        echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.location.href="/orderview?num=0&resNumber='.$ResNumber.'";</script>';
+        //echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.fnUnblock("#divConfirm");</script>';
     }
 }
 ?>

@@ -250,7 +250,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
 		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 에약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 	
-		$navilink = "/surfview?view=1&seq=".$shopseq;
+		$navilink = "/surflocation?seq=".$shopseq;
 		if($shopseq == 13){
 			$navilink = "/bbq_yy?view=1";
 		}else if($shopseq == 15){

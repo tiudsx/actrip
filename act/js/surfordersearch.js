@@ -117,12 +117,6 @@ function fnCancelSum(obj, gubun, MainNumber){
 	}
 }
 
-
-
-function fnPointChange(resnum){
-	window.location.href = "/pointchange?resNumber=" + resnum;
-}
-
 function fnPointChangeSave() {
 	var msg = "정류장 변경 신청을 하시겠습니까?";
     if (confirm(msg)) {

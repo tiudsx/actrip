@@ -9,6 +9,9 @@ if($seqCal == 0){
 	$selDate = "20200901";
 }
 
+include __DIR__.'/../common/funcalendar.php';
+$holidays = fnholidays();
+
 $iDay;
 $iMonLastDay;
 $iWeekCnt;
@@ -19,27 +22,6 @@ $datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
 $NextDate = date("Y-m-d", strtotime($datDate." +1 month"));
 $PreDate = date("Y-m-d", strtotime($datDate." -1 month"));
 $now = date("Y-m-d A h:i:s");
-
-$holidays = array(
-	"0101"=> array( "type"=> 0, "title"=> "신정", "year"=> "" ),
-	"0301"=> array( "type"=> 0, "title"=> "삼일절", "year"=> "" ),
-	"0415"=> array( "type"=> 0, "title"=> "선거", "year"=> "" ),
-	"0430"=> array( "type"=> 0, "title"=> "석가탄신일", "year"=> "" ),
-	"0505"=> array( "type"=> 0, "title"=> "어린이날", "year"=> "" ),
-	"0606"=> array( "type"=> 0, "title"=> "현충일", "year"=> "" ),
-	"0815"=> array( "type"=> 0, "title"=> "광복절", "year"=> "" ),
-	"1003"=> array( "type"=> 0, "title"=> "개천절", "year"=> "" ),
-	"1009"=> array( "type"=> 0, "title"=> "한글날", "year"=> "" ),
-	"1225"=> array( "type"=> 0, "title"=> "크리스마스", "year"=> "" ),
-
-	"0930"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-	"1001"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-	"1002"=> array( "type"=> 0, "title"=> "추석", "year"=> "2020" ),
-
-	"0211"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" ),
-	"0212"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" ),
-	"0213"=> array( "type"=> 0, "title"=> "설날", "year"=> "2021" )
-);
 
 $x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
 $s_Y=$x[0]; // 지정된 년도 
@@ -77,8 +59,8 @@ if($selMonth > date("Ym", strtotime($nowMonth." -0 month"))){
 	echo "<a href='javascript:fnCalMove(\"$p_m\", \"$seqCal\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
-//if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
-if($selMonth < 202012){
+if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
+// if($selMonth < 202112){
 	echo "<a href='javascript:fnCalMove(\"$n_m\", \"$seqCal\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 }
 
@@ -227,7 +209,12 @@ for($r=0;$r<=$ra;$r++){
 			$weeknum = $z - 1;
 
 			$calMD = explode("-",$s)[1].explode("-",$s)[2];
-			$holidayChk = (array_key_exists($calMD, $holidays)) ? " style='color:red;font-weight:bold;'" : "";
+			$holidayChk = "";
+			if(array_key_exists($calMD, $holidays)){
+				if($holidays[$calMD]["year"] == "" || $Year == $holidays[$calMD]["year"]){
+					$holidayChk = " style='color:red;'";
+				}
+			}
 
 			$onOff = 0;
 			if(array_key_exists($ru, $calDay)){
@@ -236,7 +223,8 @@ for($r=0;$r<=$ra;$r++){
 
 			if($onOff == 0)
 			{
-				echo "<td class='cal_type2'><span class='tour_td_block'><span class='tour_cal_day' $holidayChk'>$ru</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>";
+				//echo "<td class='cal_type2'><span class='tour_td_block'><span class='tour_cal_day' $holidayChk'>$ru</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>";
+				echo "<td class='cal_type2' style='padding-bottom:2px;'><span class='tour_td_block'><span class='tour_cal_day' style='color:#c2c2c2;'>$ru</span><span class='tour_cal_pay' style='color:#d0d0d0;'></span></span></td>"; //종료
 			}
 			else
 			{

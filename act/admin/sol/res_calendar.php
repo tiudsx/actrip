@@ -124,7 +124,12 @@ for($r=0;$r<=$ra;$r++){
 			$weeknum = $z - 1;
 
 			$calMD = explode("-",$s)[1].explode("-",$s)[2];
-			$holidayChk = (array_key_exists($calMD, $holidays)) ? " style='color:red;'" : "";
+			$holidayChk = "";
+			if(array_key_exists($calMD, $holidays)){
+				if($holidays[$calMD]["year"] == "" || $Year == $holidays[$calMD]["year"]){
+					$holidayChk = " style='color:red;'";
+				}
+			}
 			
 			$adminText = "";
 			if($arrResCount["대기"][$ru] != ""){

@@ -235,12 +235,15 @@ function fnCalMoveAdmin(selDate, day, seq) {
 }
 
 function fnSearchAdmin(url){
+	$j.blockUI({message: "<br><br><br><h1>데이터 검색 중...</h1>", focusInput: false,css: { width: '650px', height:"350px", textAlign:'center', left:'23%', top:'20%'} }); 
+
 	var formData = $j("#frmSearch").serializeArray();
 	$j.post("/act/admin/" + url, formData,
 		function(data, textStatus, jqXHR){
-		   $j("#mngSearch").html(data);
+			$j("#mngSearch").html(data);
+			setTimeout('fnModifyClose();', 500);
 		}).fail(function(jqXHR, textStatus, errorThrown){
-	 
+			setTimeout('fnModifyClose();', 500);
 	});
 }
 
@@ -349,8 +352,8 @@ function fnCalSearch(url){
 }
 
 function fnDateReset(){
-	$j("#sDate").val('2020-04-01');
-	$j("#eDate").val('2020-10-31');
+	$j("#sDate").val('');
+	$j("#eDate").val('');
 }
 
 function fnModifyInfo(type, seq, gubun, obj){

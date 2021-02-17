@@ -2,6 +2,7 @@
 
 <?
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
+$num = $_REQUEST["num"];
 
 $select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
 ON a.resnum = b.resnum 
@@ -10,6 +11,11 @@ ORDER BY a.resnum, b.ressubseq';
 
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
+
+if($count == 0){
+    echo "<script>alert('예약된 정보가 없습니다.');location.href='/ordersearch';</script>";
+	return;
+}
 
 $i = 0;
 $busgubun0 = 0;
@@ -146,6 +152,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <br>편도/왕복<input type="text" id="daytype" name="daytype" value="<?=$daytype?>">
                     <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
                     <br>MainNumber<input type="hidden" id="MainNumber" name="MainNumber" value="<?=$resNumber?>">
+                    <br>num<input type="hidden" id="num" name="num" value="<?=$num?>">
                     <?=$resseq?>
                 </span>
 
@@ -265,7 +272,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="images/button/<?if($bustype1 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
+                        <li style="display:none;"><img src="images/button/<?if($bustype0 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype0?>" class="bd" style="padding-top:2px;">
                             </div>
@@ -281,7 +288,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
                     
                         <div>
-                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />&nbsp;&nbsp;
+                            <?
+                            if($num == 1){
+                                echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="메인으로" onclick="location.href=\'/\';" />';
+                            }else{
+                                echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />';
+                            }?>
+                            &nbsp;&nbsp;
                             <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
                         </div>
                     </div>
@@ -291,7 +304,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         </section>
     </div>
 </div>
-<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:;"></iframe>
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <? include '_layout_bottom.php'; ?>
 
 <script>    

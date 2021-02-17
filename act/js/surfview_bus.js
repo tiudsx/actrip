@@ -8,12 +8,11 @@ var holidays = {
 	"1009": { type: 0, title: "한글날", year: "" },
 	"1225": { type: 0, title: "크리스마스", year: "" },
 
-    "0415": { type: 0, title: "선거", year: "2020" },
-    "0430": { type: 0, title: "석가탄신일", year: "2020" },
+    "0519": { type: 0, title: "석가탄신일", year: "2021" },
     
-	"0930": { type: 0, title: "추석", year: "2020" },
-	"1001": { type: 0, title: "추석", year: "2020" },
-    "1002": { type: 0, title: "추석", year: "2020" },
+	"0920": { type: 0, title: "추석", year: "2021" },
+	"0921": { type: 0, title: "추석", year: "2021" },
+    "0922": { type: 0, title: "추석", year: "2021" },
     
 	"0211": { type: 0, title: "설날", year: "2021" },
 	"0212": { type: 0, title: "설날", year: "2021" },
@@ -39,9 +38,9 @@ var rtnBusDate = function(day, getDay, json, bus){
     if(getDay == 0){
         cssRes = "date-sunday";
     }else if(getDay == 6){
-        if(cssRes == "") cssRes = "date-saturday";
+        cssRes = "date-saturday";
     }else{
-        cssRes == "";
+        cssRes = "";
     }
 
 	if(json == "init"){
@@ -238,9 +237,9 @@ function fnBusDateGubun(gubun, objid){
 }
 
 jQuery(function () {
-	jQuery('input[cal=busdate]').datepicker({
-		minDate : new Date(busDateinit),
-		//maxDate : new Date('2020-09-30'),
+	jQuery('input[cal=busdate]').datepicker({		
+		minDate : new Date((new Date()).getFullYear() + '-01-01'),
+		maxDate : new Date((new Date()).getFullYear() + '-12-31'),
 		// onClose: function (selectedDate) {
 		// 	if(selectedDate != ""){
 		// 		fnBusSearchDate(selectedDate, $j(this).attr("gubun"));
@@ -251,37 +250,39 @@ jQuery(function () {
 		},
 		beforeShowDay: function(date) {
 			var gubun = fnBusDateGubun($j(this).attr("gubun"), $j(this).attr("id"));
-
             return rtnBusDate(date, date.getDay(), busData, gubun);
 		}
 	});
 	
 	jQuery('input[cal=sdate]').datepicker({
-		minDate : new Date("2020-04-01"),
 		beforeShow : function(date) {
 			var date = jQuery(this).next().datepicker('getDate');
 
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery(this).datepicker("option", "maxDate", date);
+			if(!(date == null)){
+				date.setDate(date.getDate()); // Add 7 days
+				jQuery(this).datepicker("option", "maxDate", date);
+			}
 		},
 		onClose: function (selectedDate) {
 			// 시작일(fromDate) datepicker가 닫힐때
 			// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
 			var date = jQuery(this).datepicker('getDate');
-
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery(this).next().datepicker("option", "minDate", date);
+			if(!(date == null)){
+				date.setDate(date.getDate()); // Add 7 days
+				jQuery(this).next().datepicker("option", "minDate", date);
+			}
 		}
 	});
 	
 
 	jQuery('input[cal=edate]').datepicker({
-		minDate : new Date("2020-05-01"),
 		beforeShow : function(date) {
 			var date = jQuery(this).prev().datepicker('getDate');
 
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery(this).datepicker("option", "minDate", date);
+			if(!(date == null)){
+				date.setDate(date.getDate()); // Add 7 days
+				jQuery(this).datepicker("option", "minDate", date);
+			}
 		},
 		onClose: function (selectedDate) {
 			
@@ -289,8 +290,10 @@ jQuery(function () {
 			// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
 			var date = jQuery(this).datepicker('getDate');
 
-			date.setDate(date.getDate()); // Add 7 days
-			jQuery(this).prev().datepicker("option", "maxDate", date);
+			if(!(date == null)){
+				date.setDate(date.getDate()); // Add 7 days
+				jQuery(this).prev().datepicker("option", "maxDate", date);
+			}
 		}
 	});
 
@@ -329,7 +332,9 @@ jQuery(function ($) {
 			if (holiday) {
 				if (thisYear == holiday.year || holiday.year == "") {
 					result = [true, "date-sunday", holiday.title];
-                }
+                }else{
+					result = [true, ""];
+				}
             }else{            
 				switch (day.getDay()) {
 					case 0: // is sunday?
@@ -983,7 +988,7 @@ function fnBusSave() {
 
 		submiturl = "/act/surf/surf_return.php";
 
-		if (!confirm("액트립 셔틀버스를 예약건 수정하시겠습니까?")) {
+		if (!confirm("액트립 셔틀버스 예약건을 수정하시겠습니까?")) {
 			return;
 		}
 	}else{

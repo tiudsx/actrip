@@ -1,10 +1,14 @@
 <?php
 if($_REQUEST["selDate"]  == ""){
+	include __DIR__.'/../common/funcalendar.php';
     $selDate = str_replace("-", "", date("Y-m-d"));
 }else{
+	include __DIR__.'/../../common/funcalendar.php';
 	include __DIR__.'/../../db.php';
     $selDate = $_REQUEST["selDate"];
 }
+
+$holidays = fnholidays();
 
 $selDay = $_REQUEST["selDay"];
 $iDay;
@@ -17,29 +21,6 @@ $datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
 $NextDate = date("Y-m-d", strtotime($datDate." +1 month"));
 $PreDate = date("Y-m-d", strtotime($datDate." -1 month"));
 $now = date("Y-m-d A h:i:s");
-
-$holidays = array(
-	"0101"=> array( "type"=> 0, "title"=> "신정", "year"=> "" ),
-	"0301"=> array( "type"=> 0, "title"=> "삼일절", "year"=> "" ),
-	"0505"=> array( "type"=> 0, "title"=> "어린이날", "year"=> "" ),
-	"0606"=> array( "type"=> 0, "title"=> "현충일", "year"=> "" ),
-	"0815"=> array( "type"=> 0, "title"=> "광복절", "year"=> "" ),
-	"1003"=> array( "type"=> 0, "title"=> "개천절", "year"=> "" ),
-	"1009"=> array( "type"=> 0, "title"=> "한글날", "year"=> "" ),
-	"1225"=> array( "type"=> 0, "title"=> "크리스마스", "year"=> "" ),
-
-
-	"0215"=> array( "type"=> 0, "title"=> "설날", "year"=> "2018" ),
-	"0216"=> array( "type"=> 0, "title"=> "설날", "year"=> "2018" ),
-	"0217"=> array( "type"=> 0, "title"=> "설날", "year"=> "2018" ),
-	"0505"=> array( "type"=> 0, "title"=> "어린이날", "year"=> "2018" ),
-	"0507"=> array( "type"=> 0, "title"=> "대체휴일", "year"=> "2018" ),
-	//"0522"=> array( "type"=> 0, "title"=> "석가탄신일", "year"=> "2018" ),
-	//"0613"=> array( "type"=> 0, "title"=> "지방선거", "year"=> "2018" ),
-	"0924"=> array( "type"=> 0, "title"=> "추석", "year"=> "2018" ),
-	"0925"=> array( "type"=> 0, "title"=> "추석", "year"=> "2018" ),
-	"0926"=> array( "type"=> 0, "title"=> "대체휴일", "year"=> "2018" )
-);
 
 	$x=explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
 	$s_Y=$x[0]; // 지정된 년도 
@@ -185,7 +166,12 @@ $holidays = array(
 				$weeknum = $z - 1;
 
 				$calMD = explode("-",$s)[1].explode("-",$s)[2];
-				$holidayChk = (array_key_exists($calMD, $holidays)) ? " style='color:red;'" : "";
+				$holidayChk = "";
+				if(array_key_exists($calMD, $holidays)){
+					if($holidays[$calMD]["year"] == "" || $Year == $holidays[$calMD]["year"]){
+						$holidayChk = " style='color:red;'";
+					}
+				}
 				
 
 				$adminText = "";
