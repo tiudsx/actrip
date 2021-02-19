@@ -26,7 +26,7 @@ if($count == 0){
 		<tbody>
 			<tr>
 				<td colspan="5" style="text-align:center;height:50px;">
-				<b>예약된 목록이 없습니다.</b>
+				<b>확정 예약된 목록이 없습니다.</b>
 				</td>
 			</tr>
 		</tbody>
@@ -75,7 +75,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		<th>서울-양양행</th>
 		<td>
 			<?foreach($arrBusY as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
 	</tr>
@@ -83,7 +83,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		<th>양양-서울행</th>
 		<td>
 			<?foreach($arrBusS as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
 	</tr>
@@ -92,7 +92,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		<th>서울-동해행</th>
 		<td>
 			<?foreach($arrBusE as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
 	</tr>
@@ -100,7 +100,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		<th>동해-서울행</th>
 		<td>
 			<?foreach($arrBusA as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
 	</tr>
@@ -115,10 +115,14 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 
 <script>
 function fnDayList(vlu, obj){
+	$j("input[name=buspoint]").removeClass("buson");
 	$j("input[name=buspoint]").css("background", "white");
 	if(vlu == "ALL"){
 		$j("#dayList").html('<div style="text-align:center;font-size:14px;padding:50px;"><b>버스종류를 선택하세요.</b></div>');
 	}else{
+		$j('#dayList').block({ message: "<br><h1>셔틀버스 좌석 조회 중...</h1><br><br>" }); 
+
+		$j(obj).addClass("buson");
 		$j(obj).css("background", "#2dc15e");
 		$j("#busNum").val(vlu);
 
@@ -127,6 +131,7 @@ function fnDayList(vlu, obj){
 		$j.post("/act/admin/bus/res_busmnglist.php", formData,
 			function(data, textStatus, jqXHR){
 			   $j("#dayList").html(data);
+			   $j('#dayList').unblock();
 			}).fail(function(jqXHR, textStatus, errorThrown){
 		 
 		});

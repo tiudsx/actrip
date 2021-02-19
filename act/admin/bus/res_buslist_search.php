@@ -137,7 +137,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <tbody>
                             <tr>
                                 <th style="text-align:center;" rowspan="2">이용일</th>
-                                <th style="text-align:center;" colspan="3">예약항목</th>
+                                <th style="text-align:center;" colspan="3">예약항목 (<?=$PreMainNumber?> / <?=$user_name?> / <?=$user_tel?>)</th>
                                 <th style="text-align:center;" rowspan="2">현재상태</th>
                                 <th style="text-align:center;" rowspan="2">상태</th>
                                 <th style="text-align:center;" rowspan="2"></th>

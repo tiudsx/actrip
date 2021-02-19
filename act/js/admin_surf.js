@@ -153,7 +153,17 @@ function fnPassengerAdmin(obj, seq) {
 
 	$j("#schText").val('');
 
-	if(seq == 0){
+	if(seq == 0){ //서핑버스 관리자
+		$j('input[id=chkbusNumY1]').prop('checked',true);
+		$j('input[id=chkbusNumY2]').prop('checked',true);
+		$j('input[id=chkbusNumD1]').prop('checked',true);
+		$j('input[id=chkbusNumD2]').prop('checked',true);
+		$j('#chkBusY1').prop('checked',true);
+		$j('#chkBusY2').prop('checked',true);
+		$j('#chkBusD1').prop('checked',true);
+		$j('#chkBusD2').prop('checked',true);
+		$j('#chkGubun').prop('checked',false);
+
     	$j("#divResList").load("/act/admin/bus/" + mobileuse + "res_busmng.php?selDate=" + selDate);
 		$j("#initText2").css("display", "none");
 		var url = "bus/" + mobileuse + "res_buslist_search.php";
@@ -221,11 +231,11 @@ function fnCalMoveAdminList(selDate, day, seq) {
 	var nowMon = selDate.substring(4, 6);
 	var lastDate = new Date(nowYear, nowMon, "");
 
-	$j("#sDate").val(nowYear + '-' + nowMon + '-01');
-	$j("#eDate").val(nowYear + '-' + nowMon + '-' + lastDate.getDate());
-	$j("#schText").val('');
+	//$j("#sDate").val(nowYear + '-' + nowMon + '-01');
+	//$j("#eDate").val(nowYear + '-' + nowMon + '-' + lastDate.getDate());
+	//$j("#schText").val('');
 	
-	fnSearchAdmin(url);
+	//fnSearchAdmin(url);
 }
 
 //카카오톡 예약관리 목록
@@ -235,7 +245,7 @@ function fnCalMoveAdmin(selDate, day, seq) {
 }
 
 function fnSearchAdmin(url){
-	$j.blockUI({message: "<br><br><br><h1>데이터 검색 중...</h1>", focusInput: false,css: { width: '650px', height:"350px", textAlign:'center', left:'23%', top:'20%'} }); 
+	$j.blockUI({message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false,css: { width: '650px', height:"150px", textAlign:'center', left:'23%', top:'20%'} }); 
 
 	var formData = $j("#frmSearch").serializeArray();
 	$j.post("/act/admin/" + url, formData,
@@ -392,12 +402,12 @@ function fnModifyInfo(type, seq, gubun, obj){
 					$j("#user_email").val(data.user_email);
 					$j("#rtn_charge_yn").val(data.rtn_charge_yn);
 					$j("#res_price_coupon").val(data.res_price_coupon); //쿠폰
-					$j("#res_totalprice").val(data.res_totalprice); //최종가격
 					$j("#res_price").val(data.res_price); //기본가격
 					$j("#res_busnum").val(data.res_busnum); //호차
+					fnBusPointSel(data.res_busnum, data.res_spointname, data.res_epointname);
 					$j("#res_seat").val(data.res_seat);
-					$j("#res_spointname").val(data.res_seat); //출발 정류장
-					$j("#res_epointname").val(data.res_seat); //도착 정류장
+					$j("#res_spointname").val(data.res_spointname); //출발 정류장
+					$j("#res_epointname").val(data.res_epointname); //도착 정류장
 
 					if(mobileuse == ""){
 						$j.blockUI({ message: $j('#res_busmodify'), css: { width: '650px', textAlign:'left', left:'23%', top:'20%'} }); 
@@ -408,10 +418,33 @@ function fnModifyInfo(type, seq, gubun, obj){
 					}
 				}
 			}
-		});
-
-		
+		});		
 	}
+}
+
+function fnBusPointSel(objVlu, sname, ename){
+	var sPoint = "";
+	var ePoint = "";
+	
+	var arrObjs = eval("busPoint.sPoint" + objVlu);
+	var arrObje = eval("busPoint.ePoint" + objVlu.substring(0, 1));
+	arrObjs.forEach(function(el){
+		if(sname == ""){
+			sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+		}else{
+			sPoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";
+		}
+	});
+	arrObje.forEach(function (el) {
+		if(sname == ""){
+			ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+		}else{
+			ePoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";
+		}
+	});
+	
+	$j("#res_spointname").html(sPoint);
+	$j("#res_epointname").html(ePoint);
 }
 
 function fnModifyClose(){
@@ -419,6 +452,30 @@ function fnModifyClose(){
 }
 
 function fnDataModify(){
+	if($j("#insdate").val() == ""){
+		alert("신청일을 입력하세요~");
+		return;
+	}
+	if($j("#confirmdate").val() == ""){
+		alert("확정일을 입력하세요~");
+		return;
+	}
+	if($j("#res_date").val() == ""){
+		alert("이용일을 입력하세요~");
+		return;
+	}
+	if($j("#user_name").val() == ""){
+		alert("이름을 입력하세요~");
+		return;
+	}
+	if($j("#res_spointname").val() == "N"){
+		alert("출발 정류장을 선택하세요~");
+		return;
+	}
+	if($j("#res_epointname").val() == "N"){
+		alert("도착 정류장을 선택하세요~");
+		return;
+	}
 	if(!confirm("정보수정을 하시겠습니까?")){
 		return;
 	}
@@ -431,14 +488,21 @@ function fnDataModify(){
 		function(data, textStatus, jqXHR){
 			if(data == 0){
 				alert("정상적으로 처리되었습니다.");
-				$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + $j("#hidselDate").val());
-
+				//$j("#divResList").load("/act/admin/bus/res_busmng.php?selDate=" + $j("#hidselDate").val());
 
 				if(calObj.attr("value") == null){
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 99);
 				}else{
 					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2]);
 				}
+
+				if($j("input[name=buspoint]").length > 0){
+					if($j("input[name=buspoint]").filter(".buson").length > 0){
+						$j("input[name=buspoint]").filter(".buson").click();
+					}
+				}
+
+				fnSearchAdmin('bus/res_buslist_search.php');
 			}else{
 				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
 			}
@@ -505,3 +569,15 @@ $j(function () {
 	});
 	
 });
+
+function fnChkAll(obj, objid){
+	if($j(obj).is(":checked")){
+		$j('input[id=' + objid + ']').prop('checked',true);
+	}else{
+		$j('input[id=' + objid + ']').prop('checked',false);
+	}
+}
+
+function fnChkBusAll(obj, gubun){
+	$j('input[id=chkbusNum' + gubun + ']').prop('checked',$j(obj).is(":checked"));
+}

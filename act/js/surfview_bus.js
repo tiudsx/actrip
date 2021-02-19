@@ -298,7 +298,6 @@ jQuery(function () {
 	});
 
 	jQuery('input[cal=date]').datepicker({
-		minDate : new Date("2020-04-01")
 	});
 });
 

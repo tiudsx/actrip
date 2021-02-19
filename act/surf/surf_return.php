@@ -45,6 +45,7 @@ if($param == "RtnPrice"){
 			$boolConfirm = false;
             $ResConfirm = $rowSub['res_confirm'];
             $ResPrice = $rowSub['res_totalprice'];
+            $rtn_charge_yn = $rowSub['rtn_charge_yn'];
 
             if(!($ResConfirm == "0" || $ResConfirm == "1" || $ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6" || $ResConfirm == "8")){
                 echo 'err';
@@ -56,7 +57,7 @@ if($param == "RtnPrice"){
                 $boolConfirm = true;
             }
             
-            $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);
+            $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice, $rtn_charge_yn);
 
 			if($boolConfirm){
                 $totalPrice += $ResPrice;
@@ -125,6 +126,8 @@ if($param == "RtnPrice"){
             $shopname = $rowSub['shopname'];
             $shopSeq = $rowSub['seq']; //입점샵 seq
             $code = $rowSub['code'];
+            $rtn_charge_yn = $rowSub['rtn_charge_yn'];
+
 
             if($ResConfirm == "2" || $ResConfirm == "3" || $ResConfirm == "6" || $ResConfirm == "8"){
                 $boolConfirm = true;
@@ -139,7 +142,7 @@ if($param == "RtnPrice"){
                 $result_set = mysqli_query($conn, $select_query);
                 if(!$result_set) $success = false;
             }else if($boolConfirm){ //확정 상태 환불요청
-                $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice);                
+                $rtnFee = cancelPrice($sDate, $rowSub['timeM'], $ResConfirm, $ResPrice, $rtn_charge_yn);                
 
                 $select_query = "UPDATE AT_RES_SUB  
                                 SET res_confirm = 4

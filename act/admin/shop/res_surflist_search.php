@@ -137,12 +137,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <tbody>
                             <tr>
                                 <th>연락처</th>
-                                <td><?=$user_tel?></td>
+                                <td style="text-align:left;"><b><?=$user_tel?></b></td>
                             </tr>
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>
-                                <td><?=number_format($TotalPrice).'원'?></td>
+                                <td style="text-align:left;"><b><?=number_format($TotalPrice).'원'?></b></td>
                             </tr>
                         <?}?>
                         <?if($etc != ""){?>
@@ -382,12 +382,12 @@ $reslist .= "
                         <tbody>
                             <tr>
                                 <th>연락처</th>
-                                <td><?=$user_tel?></td>
+                                <td style="text-align:left;"><b><?=$user_tel?></b></td>
                             </tr>
                         <?if($TotalPrice > 0){?>
                             <tr>
                                 <th>결제금액</th>
-                                <td><?=number_format($TotalPrice).'원'?></td>
+                                <td style="text-align:left;"><b><?=number_format($TotalPrice).'원'?></b></td>
                             </tr>
                         <?}?>
                         <?if($etc != ""){?>

@@ -154,41 +154,50 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     }
     //==========================카카오 메시지 발송 End ==========================
 }else if($param == "busmodify"){ //셔틀버스 정보 업데이트
-	$insdate = $_REQUEST["insdate"];
-	$confirmdate = $_REQUEST["confirmdate"];
-	$res_confirm = $_REQUEST["res_confirm"];
-	$user_name = $_REQUEST["user_name"];
-	$uesr_tel = $_REQUEST["uesr_tel"];
-	$user_email = $_REQUEST["user_email"];
-	$rtn_chargeprice = $_REQUEST["rtn_chargeprice"];
-	$res_price_coupon = $_REQUEST["res_price_coupon"];
-	$res_price = $_REQUEST["res_price"];
+	$res_date = $_REQUEST["res_date"];
 	$res_busnum = $_REQUEST["res_busnum"];
 	$res_seat = $_REQUEST["res_seat"];
 	$res_spointname = $_REQUEST["res_spointname"];
 	$res_epointname = $_REQUEST["res_epointname"];
-	$res_date = $_REQUEST["res_date"];
+	$res_confirm = $_REQUEST["res_confirm"];
+	$res_price = $_REQUEST["res_price"];
+	$res_price_coupon = $_REQUEST["res_price_coupon"];
+	$rtn_charge_yn = $_REQUEST["rtn_charge_yn"];
+	$insdate = $_REQUEST["insdate"];
+	$confirmdate = $_REQUEST["confirmdate"];
 
-	$msgYN = $_REQUEST["msgYN"];
-	$InsUserID = $_REQUEST["userid"];
+	$user_name = $_REQUEST["user_name"];
+	$user_tel = $_REQUEST["user_tel"];
+	$user_email = $_REQUEST["user_email"];
+	$memo = $_REQUEST["memo"];
+
+	//$msgYN = $_REQUEST["msgYN"];
 	$ressubseq = $_REQUEST["ressubseq"];
 	$resnum = $_REQUEST["resnum"];
 
+	if($res_price_coupon <= 100){ //퍼센트 할인
+		$res_totalprice = $res_price * (1 - ($res_price_coupon / 100));
+	}else{ //금액할인
+		$res_totalprice = $res_price - $res_price_coupon;
+	}
+	
     $select_query = "UPDATE AT_RES_SUB 
-                    SET insdate = '".$insdate."'
-                        ,confirmdate = '".$confirmdate."'
-                        ,res_confirm = '".$res_confirm."'
-                        ,rtn_chargeprice = '".$rtn_chargeprice."'
-                        ,res_price_coupon = '".$res_price_coupon."'
-                        ,res_price = '".$res_price."'
+                    SET res_date = '".$res_date."'
+                        ,res_bus = '".$res_busnum."'
                         ,res_busnum = '".$res_busnum."'
-                        ,res_seat = '".$res_seat."'
+                        ,res_seat = ".$res_seat."
+                        ,res_spoint = '".$res_spointname."'
                         ,res_spointname = '".$res_spointname."'
+                        ,res_epoint = '".$res_epointname."'
                         ,res_epointname = '".$res_epointname."'
-                        ,res_date = '".$res_date."'
-                        ,ResConfirm = ".$res_confirm."
+                        ,res_confirm = '".$res_confirm."'
+                        ,res_price = '".$res_price."'
+                        ,res_price_coupon = '".$res_price_coupon."'
+                        ,res_totalprice = '".$res_totalprice."'
+                        ,rtn_charge_yn = '".$rtn_charge_yn."'
+                        ,insdate = '".$insdate."'
                         ,upddate = now()
-                        ,upduserid = '".$InsUserID."'
+                        ,upduserid = 'admin'
                         ,confirmdate = '".$confirmdate."'
                 WHERE ressubseq = ".$ressubseq." AND resnum = '".$resnum."';";
     $result_set = mysqli_query($conn, $select_query);
@@ -196,11 +205,9 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
     $select_query = "UPDATE `AT_RES_MAIN` 
                     SET user_name = '".$user_name."'
-                        ,ResConfirm = 1
-                        ,uesr_tel = '".$uesr_tel."'
+                        ,memo = '".$memo."'
+                        ,user_tel = '".$user_tel."'
                         ,user_email = '".$user_email."'
-                        ,upddate = now()
-                        ,upduserid = '".$InsUserID."'
                 WHERE resnum = '".$resnum."';";
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGo;

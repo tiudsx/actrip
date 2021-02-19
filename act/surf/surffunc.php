@@ -95,7 +95,7 @@ function fnBusPoint($vlu, $busNumber){
 	}
 }
 
-function cancelPrice($regDate, $timeM, $ResConfirm, $ResPrice){
+function cancelPrice($regDate, $timeM, $ResConfirm, $ResPrice, $rtn_charge_yn){
 	$now = date("Y-m-d");
 	$resDate = date("Y-m-d", strtotime(substr($regDate, 0, 10)));
 	$resNow = (strtotime($resDate)-strtotime($now)) / (60*60*24);
@@ -103,7 +103,7 @@ function cancelPrice($regDate, $timeM, $ResConfirm, $ResPrice){
 	$cancelPrcie = 0;
 
 	//2시간 이내 또는 미입금 상태
-	if($timeM <= 130 || $ResConfirm == 0){
+	if($timeM <= 130 || $ResConfirm == 0 || $rtn_charge_yn == "N"){
 
 	}else{
 		if($ResConfirm == 3){

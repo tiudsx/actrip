@@ -19,7 +19,6 @@ if($Shopcnt > 0){
 	$select_query = "SELECT * FROM `AT_PROD_MAIN` WHERE seq IN ($surftype) ORDER BY categoryname, code, shopname";
 	$result_setlist = mysqli_query($conn, $select_query);
 	$countAdmin = mysqli_num_rows($result_setlist);
-
 	// if($countAdmin == 0){
 	// 	echo '<script>alert("관리자 권한이 없습니다.");location.href="/";</script>';
 	// 	exit;
@@ -130,8 +129,8 @@ if($Shopcnt > 1){
 				<tr>
 					<th>검색기간</th>
 					<td>
-						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="<?=$datDate?>" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
-						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" style="width:66px;" >
+						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
+						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >
 						<input type="hidden" id="seq" name="seq" size="10" value="<?=$shopseq?>" class="itx">
 					</td>
 					
