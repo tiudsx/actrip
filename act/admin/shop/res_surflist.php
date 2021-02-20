@@ -129,9 +129,11 @@ if($Shopcnt > 1){
 				<tr>
 					<th>검색기간</th>
 					<td>
+						<input type="hidden" id="hidsearch" name="hidsearch" value="init">
 						<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
 						<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >
 						<input type="hidden" id="seq" name="seq" size="10" value="<?=$shopseq?>" class="itx">
+						<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 					</td>
 					
 				</tr>
@@ -144,7 +146,6 @@ if($Shopcnt > 1){
 				</tr>
 			</table>
 		</form>
-		<div id="mngSearch"><?include 'res_surflist_search.php'?></div>
 		</div>
 
 		<div id="tab2" class="tab_content" style="display:none;">
@@ -168,7 +169,8 @@ $result_opt = mysqli_query($conn, $select_query);
 					<tr>
 						<th>날짜</th>
 						<td>
-							<input type="text" id="strDate" name="strDate" readonly="readonly" value="" class="itx2" cal="date" style="width:66px;">
+							<input type="text" id="strDate" name="strDate" readonly="readonly" value="" class="itx2" cal="sdate" style="width:66px;"> ~ 
+							<input type="text" id="strDateE" name="strDateE" readonly="readonly" value="" class="itx2" cal="edate" style="width:66px;">
 							<input type="hidden" id="resparam" name="resparam" size="10" value="soldout" class="itx">
 							<input type="hidden" id="userid" name="userid" size="10" value="<?=$user_id?>" class="itx">
 						</td>
@@ -210,6 +212,7 @@ $result_opt = mysqli_query($conn, $select_query);
 </div>
 <!-- #container -->
 
-	</aside>
-  </section>
+		</aside>
+	</section>
+	<div id="mngSearch" style="display:inline-block;width:100%"><?include 'res_surflist_search.php'?></div>
 </div>
