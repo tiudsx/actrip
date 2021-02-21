@@ -172,7 +172,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($ChangeChk > 0){?>
-                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;" value="상태변경" onclick="fnConfirmUpdateSurf(this, 2, <?=$PreMainNumber?>);" />  
+                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;" value="상태변경" onclick="fnConfirmUpdateList(this, 2, <?=$PreMainNumber?>);" />  
                     <?}?>
                 </td>
                 <!-- <td style="text-align: center;" <?=$rowspan?>><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td> -->
@@ -440,7 +440,7 @@ if(($i % 2) == 0 && $i > 0){
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($ChangeChk > 0){?>
-                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;" value="상태변경" onclick="fnConfirmUpdateSurf(this, 2, <?=$PreMainNumber?>);" />  
+                        <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;" value="상태변경" onclick="fnConfirmUpdateList(this, 2, <?=$PreMainNumber?>);" />  
                     <?}?>
                 </td>
                 <!-- <td style="text-align: center;" <?=$rowspan?>><?if($ChangeChk > 0){ echo "승인필요"; }else{ echo "O"; }?></td> -->

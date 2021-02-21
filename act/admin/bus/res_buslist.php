@@ -307,3 +307,9 @@ $shopseq = 0;
     </table>
     </form>
 </div> 
+
+<style type="text/css">
+	/*레이어(말풍선) 스타일 적용 */
+ 	.btn_view {font-weight:normal !important; }
+	.box_layer{position:absolute; width:350px; height:80px; overflow:auto; text-align:left; background:#eaeaea;right:0px;top:0px; z-index:999;border:2px solid #0084dc;-webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px;padding:5px;}
+ </style>

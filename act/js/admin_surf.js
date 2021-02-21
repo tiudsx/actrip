@@ -112,7 +112,7 @@ function fnConfirmUpdate(obj, num){
 	});
 }
 
-function fnConfirmUpdateSurf(obj, num, resnum){
+function fnConfirmUpdateList(obj, num, resnum){
 	$j("#frmConfirmSel").html($j("#hidInitParam").html());
 
 	var tbObj = $j("select[resnum=" + resnum + "]");
@@ -125,7 +125,6 @@ function fnConfirmUpdateSurf(obj, num, resnum){
 	var scancel_cnt = tbObj.find("option:selected[value=6]").length;
 
 	if(num < 3){
-		//if(chk_cnt > 0){
 		if(sel_cnt > 0){
 			alert("승인처리 변경이 안된 항목이 있습니다.");
 			return;
@@ -173,19 +172,22 @@ function fnConfirmUpdateSurf(obj, num, resnum){
 	// $j("#frmConfirmSel").attr("action", "/act/admin/shop/res_kakao_save.php").submit();
 	var formData = $j("#frmConfirmSel").serializeArray();
 
-	$j.post("/act/admin/shop/res_kakao_save.php", formData,
+	if(num == 2){ //서핑샵
+		$postUrl = "/act/admin/shop/res_kakao_save.php";
+	}else if(num == 1){ //서핑버스
+		$postUrl = "/act/admin/bus/res_bus_save.php";
+	}
+
+	$j.post($postUrl, formData,
 		function(data, textStatus, jqXHR){
 		   if(data == 0){
 				alert("정상적으로 처리되었습니다.");
 				if(num == 1){
-					setTimeout('location.reload();', 500);
-				}else if(num == 0){
-					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
+					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, 0);
+					fnSearchAdmin("bus/" + mobileuse + "res_buslist_search.php");
 				}else if(num == 2){
 					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val()); //달력갱신
 					fnSearchAdmin("shop/res_surflist_search.php"); //예약목록 갱신
-				}else if(num == 3){
-					fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
 				
 			}else{
@@ -281,6 +283,30 @@ function fnPassengerAdmin(obj, seq) {
 	fnSearchAdmin(url);
 }
 
+//달력 날짜 클릭 - 카카오
+function fnPassengerAdminKakao(obj, seq) {
+	var selDate = obj.attributes.value.value;
+    $j("#right_article3 calBox").css("background", "white");
+    $j("calBox[sel=yes]").attr("sel", "no");
+	$j(obj).css("background", "#efefef");
+	$j(obj).attr("sel", "yes");
+
+	$j("#sDate").val(selDate);
+	$j("#eDate").val(selDate);
+	$j("#hidselDate").val(selDate);
+
+	$j("#schText").val('');
+	var url = "shop/res_kakao_all.php";
+	$j("input[id=chkResConfirm]").prop("checked", false);
+
+	var arrGubun = $j(obj).attr("gubunchk").split(',');
+	for (var i = 0; i < arrGubun.length; i++) {
+		$j("input[id=chkResConfirm][value=" + arrGubun[i] + "]").prop('checked', true);
+	}
+
+	fnSearchAdminKakao(url);
+}
+
 function fnCalMoveAdminList(selDate, day, seq) {
 	var nowDate = new Date();
 
@@ -319,7 +345,7 @@ function fnCalMoveAdminList(selDate, day, seq) {
 		var url = "shop/res_surflist_search.php";
 		var calurl = "shop/res_surfcalendar.php";
 	
-		$j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
+		// $j("input[id=chkResConfirm]:eq(1)").prop("checked", true);
 	}
 	
 	$j("#right_article3").load("/act/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
@@ -334,6 +360,11 @@ function fnCalMoveAdminList(selDate, day, seq) {
 	//$j("#schText").val('');
 	
 	//fnSearchAdmin(url);
+}
+
+function fnCalMoveAdminListKakao(selDate, day, seq) {
+	var nowDate = new Date();
+	$j("#right_article3").load("/act/admin/shop/res_kakaocalendar.php?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 }
 
 //카카오톡 예약관리 목록
@@ -356,7 +387,7 @@ function fnSearchAdmin(url){
 }
 
 function fnSearchAdminKakao(url){
-	$j.blockUI({message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false,css: { width: '650px', height:"150px", textAlign:'center', left:'23%', top:'20%'} }); 
+	$j.blockUI({message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false,css: { width: '300px', height:"150px", textAlign:'center', left:'13%', top:'30%'} }); 
 
 	var formData = $j("#frmSearch").serializeArray();
 	$j.post("/act/admin/" + url, formData,
