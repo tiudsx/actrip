@@ -352,26 +352,42 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$InsUserID = $_SESSION['userid'];
 
 	$strDate = $_REQUEST["strDate"];
+	$strDateE = $_REQUEST["strDateE"];
 	$selItem = $_REQUEST["selItem"];
-
+	
 	$chkSexM = "N";
 	$chkSexW = "N";
 	if($_REQUEST["chkSexM"] == 1) $chkSexM = "Y";
 	if($_REQUEST["chkSexW"] == 1) $chkSexW = "Y";
 
-	$select_query = 'SELECT * FROM `AT_PROD_OPT_SOLDOUT` WHERE seq = '.$shopseq.' AND soldout_date = "'.$strDate.'" AND optseq = '.$selItem;
-	$result = mysqli_query($conn, $select_query);
-	$count = mysqli_num_rows($result);
+	$diff = date_diff(new DateTime($strDate), new DateTime($strDateE)); 
+	$daycnt = $diff->days;
 
-	if($count != 0){
-		echo '1';
-		exit;
+	for ($x=0; $x <= $daycnt; $x++) { 
+		$nextdate = date("Y-m-d", strtotime($strDate." +".$x." day"));
+
+		for($i = 0; $i < count($selItem); $i++){
+			$select_query = 'SELECT * FROM `AT_PROD_OPT_SOLDOUT` WHERE seq = '.$shopseq.' AND soldout_date = "'.$nextdate.'" AND optseq = '.$selItem[$i];
+			$result = mysqli_query($conn, $select_query);
+			$count = mysqli_num_rows($result);
+
+			if($count > 0){
+				$rowMain = mysqli_fetch_array($result);
+				$soldoutseq = $rowMain["soldoutseq"];
+
+				$select_query = "UPDATE `AT_PROD_OPT_SOLDOUT` 
+									SET opt_sexM = '".$chkSexM."'
+										,opt_sexW = '".$chkSexW."'
+									WHERE soldoutseq = ".$soldoutseq.";";
+			}else{
+				$select_query = "INSERT INTO `AT_PROD_OPT_SOLDOUT`(`seq`, `soldout_date`, `optseq`, `opt_sexM`, `opt_sexW`, `insuserid`, `insdate`) VALUES ($shopseq, '$nextdate', $selItem[$i], '$chkSexM', '$chkSexW', '$InsUserID', now())";
+			}
+
+			$result_set = mysqli_query($conn, $select_query);
+			if(!$result_set) goto errGo;
+		}
+
 	}
-
-
-	$select_query = "INSERT INTO `AT_PROD_OPT_SOLDOUT`(`seq`, `soldout_date`, `optseq`, `opt_sexM`, `opt_sexW`, `insuserid`, `insdate`) VALUES ($shopseq, '$strDate', $selItem, '$chkSexM', '$chkSexW', '$InsUserID', now())";
-	$result_set = mysqli_query($conn, $select_query);
-	if(!$result_set) goto errGo;
 	
 	mysqli_query($conn, "COMMIT");
 }
@@ -379,7 +395,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 if(!$success){
 	errGo:
 	mysqli_query($conn, "ROLLBACK");
-	echo 'err';
+	echo $select_query;
 }else{
 	echo '0';
 }

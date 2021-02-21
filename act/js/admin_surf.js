@@ -10,6 +10,13 @@ function fnChangeModify(obj, confirmVlu){
 	}else{
 		trObj.find("#chkCancel").prop("checked", true);
 	}
+
+	var MainNumber = $j(obj).attr("resnum");
+	if($j("select[resnum=" + MainNumber + "] option:selected[value=6]").length == 0){
+		$j("#tr" + MainNumber).css("display", "none");
+	}else{
+		$j("#tr" + MainNumber).css("display", "");
+	}
 }
 
 //상태 변경처리 - 건당
@@ -30,6 +37,7 @@ function fnConfirmUpdate(obj, num){
 	var chk_cnt = tbObj.find("input[id=chkCancel]:not(:checked)").length;
 	var res_cnt = tbObj.find("select[id=selConfirm] option:selected[value=3]").length;
 	var sel_cnt = tbObj.find("select[id=selConfirm] option:selected[value=8]").length;
+	var scancel_cnt = tbObj.find("select[id=selConfirm] option:selected[value=6]").length;
 
 	if(num < 3){
 		//if(chk_cnt > 0){
@@ -39,10 +47,16 @@ function fnConfirmUpdate(obj, num){
 		}
 	}
 
+	if(scancel_cnt > 0){
+		if($j("#tr" + tbObj.find("input[id=MainNumber]").val()).find("#memo").val() == ""){
+			alert("취소사유를 작성해주세요~");
+			return;
+		}
+	}
+
 	if(!confirm("상태변경 하시겠습니까?")){
 		return;
 	}
-	
 
 	if(res_cnt == tbObj.find("input[id=chkCancel]:checked").length){ // 전체 확정 처리
 		var res_confirm = 3;
@@ -87,6 +101,90 @@ function fnConfirmUpdate(obj, num){
 					fnSearchAdmin("shop/res_surflist_search.php");
 				}else if(num == 3){
 					//fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
+					fnSearchAdmin("act_admin/res_surflist_search.php");
+				}
+				
+			}else{
+				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	 
+	});
+}
+
+function fnConfirmUpdateSurf(obj, num, resnum){
+	$j("#frmConfirmSel").html($j("#hidInitParam").html());
+
+	var tbObj = $j("select[resnum=" + resnum + "]");
+	var chkObj = $j("input[resnum=" + resnum + "]");
+	//var chkObj = tbObj.find("input[id=chkCancel]");
+	
+	//var chk_cnt = tbObj.find("input[id=chkCancel]:not(:checked)").length;
+	var res_cnt = tbObj.find("option:selected[value=3]").length;
+	var sel_cnt = tbObj.find("option:selected[value=8]").length;
+	var scancel_cnt = tbObj.find("option:selected[value=6]").length;
+
+	if(num < 3){
+		//if(chk_cnt > 0){
+		if(sel_cnt > 0){
+			alert("승인처리 변경이 안된 항목이 있습니다.");
+			return;
+		}
+	}
+
+	if(scancel_cnt > 0){
+		if($j("#tr" + resnum).find("#memo").val() == ""){
+			alert("취소사유를 작성해주세요~");
+			return;
+		}
+	}
+
+	if(!confirm("상태변경 하시겠습니까?")){
+		return;
+	}
+	
+	if(res_cnt == chkObj.filter(":checked").length){ // 전체 확정 처리
+		var res_confirm = 3;
+	}else{ //부분 확정처리
+		var res_confirm = 2;
+	}
+	
+	var chkBox = '';
+	for (var i = 0; i < chkObj.length; i++) {
+		if(chkObj.eq(i).is(":checked")){
+			chkBox += '<input type="checkbox" id="chkCancel" name="chkCancel[]" checked="checked" value="' + chkObj.eq(i).val() + '" />';
+
+			if(tbObj.eq(i).val() == 3){
+				selres_confirm = res_confirm;
+			}else{
+				selres_confirm = tbObj.eq(i).val();
+			}
+			chkBox += '<input type="text" id="selConfirm" name="selConfirm[]" value="' + selres_confirm + '" />';
+		}
+	}
+	chkBox += '<input type="text" id="MainNumber" name="MainNumber" value="' + resnum + '" />';
+	chkBox += '<textarea id="memo" name="memo">' + $j("#tr" + resnum).find("#memo").val() + '</textarea>';
+	if(num == 3){
+		chkBox += '<input type="text" id="shopseq" name="shopseq" value="' + $j("#shopseq").val() + '" />';
+	}
+
+	$j("#frmConfirmSel").append(chkBox);
+	
+	// $j("#frmConfirmSel").attr("action", "/act/admin/shop/res_kakao_save.php").submit();
+	var formData = $j("#frmConfirmSel").serializeArray();
+
+	$j.post("/act/admin/shop/res_kakao_save.php", formData,
+		function(data, textStatus, jqXHR){
+		   if(data == 0){
+				alert("정상적으로 처리되었습니다.");
+				if(num == 1){
+					setTimeout('location.reload();', 500);
+				}else if(num == 0){
+					fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val());
+				}else if(num == 2){
+					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val()); //달력갱신
+					fnSearchAdmin("shop/res_surflist_search.php"); //예약목록 갱신
+				}else if(num == 3){
 					fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
 				
@@ -257,6 +355,19 @@ function fnSearchAdmin(url){
 	});
 }
 
+function fnSearchAdminKakao(url){
+	$j.blockUI({message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false,css: { width: '650px', height:"150px", textAlign:'center', left:'23%', top:'20%'} }); 
+
+	var formData = $j("#frmSearch").serializeArray();
+	$j.post("/act/admin/" + url, formData,
+		function(data, textStatus, jqXHR){
+			$j("#rescontent").html(data);
+			setTimeout('fnModifyClose();', 500);
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			setTimeout('fnModifyClose();', 500);
+	});
+}
+
 function fnSearchAdminSol(url, objid){
 	var formData = $j("#" + objid).prev().serializeArray();
 	$j.post("/act/admin/" + url, formData,
@@ -301,11 +412,22 @@ function fnListViewKakao(obj){
 function fnSoldout(){
 	var formData = $j("#frmSold").serializeArray();
 
-	if ($j("#strDate").val() == "") {
-        alert("날짜를 선택하세요.");
+	if($j("#strDate").val() == "") {
+        alert("시작날짜를 선택하세요.");
         return;
     }
-	if (!($j("#chkSexM").is(':checked') || $j("#chkSexW").is(':checked'))) {
+
+	if($j("#strDateE").val() == "") {
+        alert("종료날짜를 선택하세요.");
+        return;
+    }
+
+	if($j("#selItem:checked").length == 0){
+		alert("항목을 하나이상 선택하세요.");
+		return;
+	}
+
+	if(!($j("#chkSexM").is(':checked') || $j("#chkSexW").is(':checked'))) {
         alert("성별 중 하나이상 선택하세요.");
         return;
     }

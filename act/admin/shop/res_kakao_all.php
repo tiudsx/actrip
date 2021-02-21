@@ -1,50 +1,93 @@
 <?
-$reqDate = $_REQUEST["selDate"];
-$selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
+$hidsearch = $_REQUEST["hidsearch"];
+if($hidsearch == ""){ //초기화면 조회
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                    INNER JOIN `AT_PROD_OPT` c
+                        ON b.optseq = c.optseq
+                        WHERE b.seq = '.$shopseq.'
+                            AND b.res_confirm = 8
+                            ORDER BY b.resnum, b.ressubseq';
 
-$Year = substr($selDate,0,4);
-$Mon = substr($selDate,4,2);
-if($reqDate != ""){
-	include __DIR__.'/../../db.php';
-	$shopseq = $_REQUEST["seq"];
+    $titleText = "전체";
+    $listText = "입금완료";
+}else{
+    include __DIR__.'/../../db.php';
+    $shopseq = $_REQUEST["seq"];
+    $res_confirm = "";
+    
+    $chkResConfirm = $_REQUEST["chkResConfirm"];
+    $sDate = $_REQUEST["sDate"];
+    $eDate = $_REQUEST["eDate"];
+    $schText = trim($_REQUEST["schText"]);
+    $shopseq = $_REQUEST["seq"];
+    
+    $chkscript = "";
+    for($i = 0; $i < count($chkResConfirm); $i++){
+        $res_confirm .= $chkResConfirm[$i].',';
+        $chkscript .= '$j("input[id=chkResConfirm][value='.$chkResConfirm[$i].']").prop("checked", true);';
+
+        if($chkResConfirm[$i] == 0){
+            $listText .= "미입금,";
+        }else if($chkResConfirm[$i] == 3){
+            $listText .= "확정,";
+        }else if($chkResConfirm[$i] == 8){
+            $listText .= "입금완료,";
+        }else if($chkResConfirm[$i] == 2){
+            $res_confirm .= '6,';
+            $listText .= "임시확정/취소,";
+        }else if($chkResConfirm[$i] == 6){
+            $listText .= "임시취소,";
+        }
+    }
+    $res_confirm .= '99';
+    if($listText != ""){
+        $listText = substr($listText, 0, strlen($listText) - 1);
+    }
+
+    $shopDate = "";
+    if($sDate == "" && $eDate == ""){
+        $titleText = "전체";
+    }else{
+        if($sDate != "" && $eDate != ""){
+            $shopDate = ' AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
+        }else if($sDate != ""){
+            $busDshopDateate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
+        }else if($eDate != ""){
+            $shopDate = ' AND b.res_date <= CAST("'.$eDate.'" AS DATE)';
+        }
+        $titleText = "[$sDate ~ $eDate]";
+    }
+
+    if($schText != ""){
+        $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
+    }
+
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                    INNER JOIN `AT_PROD_OPT` c
+                        ON b.optseq = c.optseq
+                        WHERE b.seq = '.$shopseq.'
+                            AND b.res_confirm IN ('.$res_confirm.')'.$shopDate.$schText.'
+                            ORDER BY b.resnum, b.ressubseq';
+
 }
-
-$datDate = date("Y-m-d", mktime(0, 0, 0, $Mon, 1, $Year));
-$x = explode("-",$datDate); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
-$s_Y=$x[0]; // 지정된 년도 
-$s_m=$x[1]; // 지정된 월
-$s_d=$x[2]; // 지정된 요일
-
-$selMonth = date("Ym",mktime(0,0,0,$s_m,$s_d,$s_Y));
-$n_m= date("Ym",mktime(0,0,0,$s_m+1,$s_d,$s_Y)); // 다음달 (빠뜨린 부분 추가분이에요)
-$p_m= date("Ym",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 이전달
-
-$select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-					ON a.resnum = b.resnum 
-                INNER JOIN `AT_PROD_OPT` c
-                    ON b.optseq = c.optseq
-                    WHERE Month(b.res_date) = '.$Mon.'
-                        AND b.seq = '.$shopseq.'
-                        AND b.res_confirm IN (2, 3, 5, 6, 8)
-                        ORDER BY b.resnum, b.ressubseq';
                         
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
 if($count == 0){
-
     $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
 
+    $shopname = $rowMain["shopname"];
+}
 ?>
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1><?=$rowMain["shopname"]?></h1>
-                <a class="reviewlink">
-                    <span class="reviewcnt">예약상태가 [입금완료], [확정] 예약건만 목록에 표시됩니다. </span>
-                </a>
+                <h1><?=$shopname?></h1>
                 <div class="shopsubtitle">월별 예약목록 보기</div>
             </div>
         </section>
@@ -59,73 +102,84 @@ if($count == 0){
                     </div>
                 </div>
             </div>
-            <div id="view_tab1">
-                <div class="noticeline" id="content_tab1">
+            <div id="view_tab1" class="container">
 
-<?
-echo ("
-<div class='tour_calendar_box'>
-	<div class='tour_calendar_header'>
-");
-
-if($selMonth > 202004){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
-}
-
-if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
-}
-
-echo ("
-		<div class='tour_calendar_title'>
-			<span class='tour_calendar_month'>$s_Y.$s_m</span>
-		</div>
-    </div>
-</div>");
-?>
-
-
-                </div>
-                <div class="contentimg bd">
-
-<form name="frmConfirm" id="frmConfirm" autocomplete="off">
-<div class="gg_first"><?=$Mon?>월 예약목록</div>
-    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-		<colgroup>
-			<col width="auto" />
-			<col width="22%" />
-			<col width="16%" />
-			<col width="16%" />
-			<col width="16%" />
-		</colgroup>
-        <tbody>
-            <tr>
-                <th>예약번호</th>
-                <th>이용일</th>
-                <th>이름</th>
-                <th>승인여부</th>
-                <th>특이사항</th>
-            </tr>
-            <tr>
-                <td colspan="5" style="text-align:center;height:50px;">
-                <b>예약된 목록이 없습니다. 달력 월을 변경해보세요.</b>
-                </td>
-            </tr>
-		</tbody>
-	</table>
-
-                </div>
-                <div>
-                    <div style="padding:10px 0 5px 0;font-size:12px;">
-                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a>
+            <section>
+                <article id="right_article3" class="right_article4">
+                    <?include 'res_surfcalendar.php'?>
+                </article>
+                <aside id="left_article3" class="right_article4">
+                    <div id="tab1" class="tab_content bd">
+                    <form name="frmSearch" id="frmSearch" autocomplete="off">
+                        <div class="gg_first" style="margin-top:0px;">예약검색</div>
+                        <table class='et_vars exForm bd_tb' style="width:100%">
+                            <colgroup>
+                                <col style="width:65px;">
+                                <col style="width:*;">
+                                <col style="width:100px;">
+                            </colgroup>
+                            <tr>
+                                <th>구분</th>
+                                <td>
+                                <?if($user_id == "surfenjoy"){?>
+                                    <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="0" style="vertical-align:-3px;" />미입금</label>
+                                <?}?>
+                                    <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="8" checked="checked" style="vertical-align:-3px;" />입금완료</label>
+                                    <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
+                                    <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="2" style="vertical-align:-3px;" />임시확정/취소</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>검색기간</th>
+                                <td>
+                                    <input type="hidden" id="hidsearch" name="hidsearch" value="init">
+                                    <input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
+                                    <input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >
+                                    <input type="hidden" id="seq" name="seq" size="10" value="<?=$shopseq?>" class="itx">
+                                    <input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <th>검색어</th>
+                                <td><input type="text" id="schText" name="schText" value="" class="itx2" style="width:140px;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdminKakao('shop/res_kakao_all.php');" /></td>
+                            </tr>
+                        </table>
+                    </form>
                     </div>
-                </div>
+                </aside>
+	        </section>
+<?if($count == 0){?>
+            <div class="contentimg bd" style="display:inline-block;width:100%">
+                <div class="gg_first"><?=$titleText?> 예약목록</div>
+                <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
+                    <colgroup>
+                        <col width="auto" />
+                        <col width="22%" />
+                        <col width="16%" />
+                        <col width="16%" />
+                        <col width="16%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>예약번호</th>
+                            <th>이용일</th>
+                            <th>이름</th>
+                            <th>승인여부</th>
+                            <th>특이사항</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align:center;height:50px;">
+                            <b>[<?=$listText?>] 건으로 예약된 목록이 없습니다.</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
-    </div>
-
 <?
-	return;
 }
 
 $b = 0;
@@ -140,7 +194,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
 	if($MainNumber != $PreMainNumber && $c > 0){
     ?>
-
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
@@ -226,53 +279,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     
     if($c == 0){
 ?>
-
-    <div class="top_area_zone">
-        <section class="shoptitle">
-            <div style="padding:6px;">
-                <h1><?=$shopname?></h1>
-                <div class="shopsubtitle">월별 예약목록 보기</div>
-            </div>
-        </section>
-
-        <section class="notice">
-            <div class="vip-tabwrap">
-                <div id="tabnavi" class="fixed1" style="top: 49px;">
-                    <div class="vip-tabnavi">
-                        <ul>
-                            <li class="on"><a>예약건 안내</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="view_tab1">
-                <div class="noticeline" id="content_tab1">
-<?
-echo ("
-<div class='tour_calendar_box'>
-	<div class='tour_calendar_header'>
-");
-
-if($selMonth > 202004){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
-}
-
-if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdmin(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
-}
-
-echo ("
-		<div class='tour_calendar_title'>
-			<span class='tour_calendar_month'>$s_Y.$s_m</span>
-		</div>
-    </div>
-</div>");
-?>
-                </div>
-                <div class="contentimg bd">
+                <div class="contentimg bd" style="display:inline-block;width:100%">
 
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-<div class="gg_first"><?=$Mon?>월 예약목록</div>
+<div class="gg_first"><?=$titleText?> 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
 		<colgroup>
 			<col width="auto" />
@@ -424,9 +434,9 @@ $reslist .= "
 			</tr>";
 //while end
 }
+
+if($count > 0){
 ?>
-
-
             <tr name="btnTrList" style="text-align:center;cursor:pointer;" onclick="fnListViewKakao(this);">
                 <td style="text-align: center;"><?=$PreMainNumber?></td>
                 <td style="text-align: center;"><?=$res_date?></td>
@@ -500,6 +510,7 @@ $reslist .= "
 <form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
 
                 </div>
+<?}?>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
                         <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a>
@@ -509,3 +520,7 @@ $reslist .= "
         </section>
     </div>
 </div>
+
+<script>
+<?=$chkscript?>
+</script>

@@ -93,6 +93,12 @@ if($Shopcnt > 1){
     <aside id="left_article3" class="left_article3">
 <!-- .tab_container -->
 <div id="containerTab" class="areaRight">
+
+<?
+include __DIR__.'/../../surf/surffunc.php';
+// echo "surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|5'));
+?>
+
     <ul class="tabs">
         <li class="active" rel="tab1">예약관리</li>
         <li rel="tab2">매진처리</li>
@@ -120,8 +126,8 @@ if($Shopcnt > 1){
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="8" checked="checked" style="vertical-align:-3px;" />입금완료</label>
 						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />확정</label>
 						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label><br> -->
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="2" style="vertical-align:-3px;" />임시확정</label>
-						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="6" style="vertical-align:-3px;" />임시취소</label>
+						<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="2" style="vertical-align:-3px;" />임시확정/취소</label>
+						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="6" style="vertical-align:-3px;" />임시취소</label> -->
 						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="4" checked="checked" style="vertical-align:-3px;" />환불요청</label> -->
 						<!-- <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="5" style="vertical-align:-3px;" />취소</label> -->
 					</td>
@@ -178,11 +184,9 @@ $result_opt = mysqli_query($conn, $select_query);
 					<tr>
 						<th>항목</th>
 						<td>
-							<select id="selItem" name="selItem" class="select">
 							<?while ($rowOpt = mysqli_fetch_assoc($result_opt)){?>
-								<option value="<?=$rowOpt["optseq"]?>">[<?=$rowOpt["codename"]?>] <?=$rowOpt["optname"]?></option>
+								<label><input type="checkbox" id="selItem" name="selItem[]" value="<?=$rowOpt["optseq"]?>" style="vertical-align:-3px;" />[<?=$rowOpt["codename"]?>] <?=$rowOpt["optname"]?></label><br>
 							<?}?>
-							</select>
 						</td>
 					</tr>
 					<tr>
@@ -216,3 +220,9 @@ $result_opt = mysqli_query($conn, $select_query);
 	</section>
 	<div id="mngSearch" style="display:inline-block;width:100%"><?include 'res_surflist_search.php'?></div>
 </div>
+
+<style type="text/css">
+	/*레이어(말풍선) 스타일 적용 */
+ 	.btn_view {font-weight:normal !important; }
+	.box_layer{position:absolute; width:350px; height:80px; overflow:auto; text-align:left; background:#eaeaea;right:0px;top:0px; z-index:999;border:2px solid #0084dc;-webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px;padding:5px;}
+ </style>

@@ -217,7 +217,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 				</td>
                 <td style="text-align:center;">
                     <?if($ResConfirm == 8){?>
-                        <select id="selConfirm" name="selConfirm[]" class="select" style="padding:1px 2px 4px 2px;" onchange="fnChangeModify(this, <?=$ResConfirm?>);">
+                        <select id="selConfirm" name="selConfirm[]" resnum='<?=$MainNumber?>' class="select" style="padding:1px 2px 4px 2px;" onchange="fnChangeModify(this, <?=$ResConfirm?>);">
                             <option value="<?=$ResConfirm?>">승인처리</option>
                             <option value="3">확정</option>
                             <option value="6">취소</option>
@@ -246,12 +246,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$etc?></textarea></td>
             </tr>
 		<?}?>
-            <tr>
-                <th>사유 및<br>메모</th>
+        <?if($ChangeChk > 0 || $memo != ""){?>
+            <tr id="tr<?=$MainNumber?>" style="display:none;">
+                <th>취소사유</th>
                 <td>                
                     <textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea>
                 </td>
             </tr>
+        <?}?>
 		</tbody>
 	</table>
 <?if($ChangeChk > 0){?>

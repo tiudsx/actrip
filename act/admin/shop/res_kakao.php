@@ -22,6 +22,7 @@ if(plusDate($dateChk, 2) <= date("Y-m-d")){
 
     <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
+    <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
     <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
     
 <?
@@ -44,5 +45,7 @@ if(count($arrChk) == 3){ //현재 예약건만 보기
 <iframe id="ifrmResize" name="ifrmResize" style="width:800px;height:400px;display:none;"></iframe>
 
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
+<script type="text/javascript" src="/act/js/surfview_bus.js"></script>
+<script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 
 <? include __DIR__.'/../../_layout_bottom.php'; ?>
