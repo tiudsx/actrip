@@ -66,7 +66,7 @@ if($hidsearch == ""){ //초기화면 조회
         if($sDate != "" && $eDate != ""){
             $shopDate = ' AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
         }else if($sDate != ""){
-            $busDshopDateate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
+            $shopDate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
         }else if($eDate != ""){
             $shopDate = ' AND b.res_date <= CAST("'.$eDate.'" AS DATE)';
         }
@@ -132,7 +132,7 @@ if($count == 0){
             </tr>
             <tr>
                 <td colspan="11" style="text-align:center;height:50px;">
-                <b>[<?=$listText?>] 건으로 예약된 목록이 없습니다.</b>
+                <b>[<?=$listText?>] 건으로 조회된 데이터가 없습니다.</b>
                 </td>
             </tr>
         </tbody>
@@ -368,8 +368,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                             $optname
                         </td>
                         <td>
-                            <span class='resoption'>$TimeDate ($ResNum)</span>
-                            <span class='resoption'>$ResOptInfo</span>
+                            <span class='resoption' style='color:black;'>$TimeDate ($ResNum)</span>
+                            <span class='resoption' style='color:black;'>$ResOptInfo</span>
                         </td>
                         <td style='text-align:center;'>";                
                             if($ResConfirm == 8 || $ResConfirm == 0){
@@ -398,8 +398,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                             $optname
                         </td>
                         <td>
-                            <span class='resoption'>$TimeDate ($ResNum)</span>
-                            <span class='resoption'>$ResOptInfo</span>
+                            <span class='resoption' style='color:black;'>$TimeDate ($ResNum)</span>
+                            <span class='resoption' style='color:black;'>$ResOptInfo</span>
                         </td>
                         <td style='text-align:center;'>";                
                             if($ResConfirm == 8 || $ResConfirm == 0){

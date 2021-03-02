@@ -172,7 +172,7 @@ function fnConfirmUpdateList(obj, num, resnum){
 	// $j("#frmConfirmSel").attr("action", "/act/admin/shop/res_kakao_save.php").submit();
 	var formData = $j("#frmConfirmSel").serializeArray();
 
-	if(num == 2){ //서핑샵
+	if(num == 2 || num == 3){ //서핑샵
 		$postUrl = "/act/admin/shop/res_kakao_save.php";
 	}else if(num == 1){ //서핑버스
 		$postUrl = "/act/admin/bus/res_bus_save.php";
@@ -188,8 +188,10 @@ function fnConfirmUpdateList(obj, num, resnum){
 				}else if(num == 2){
 					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, $j("#shopseq").val()); //달력갱신
 					fnSearchAdmin("shop/res_surflist_search.php"); //예약목록 갱신
+				}else if(num == 3){
+					fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
+					fnSearchAdmin("act_admin/res_surflist_search.php");
 				}
-				
 			}else{
 				alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
 			}

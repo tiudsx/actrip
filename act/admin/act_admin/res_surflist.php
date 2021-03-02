@@ -80,8 +80,9 @@ include __DIR__.'/../../common/logininfo.php';
 					<tr>
 						<th>검색기간</th>
 						<td>
-							<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="<?=$datDate?>" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
-							<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="<?=substr($datDate, 0, 8).$s_t?>" class="itx2" maxlength="7" style="width:66px;" >
+							<input type="hidden" id="hidsearch" name="hidsearch" value="init">
+							<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >&nbsp;~
+							<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" value="" class="itx2" maxlength="7" style="width:66px;" >
 							<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 						</td>
 						
@@ -210,3 +211,9 @@ $j(function () {
 	<?=$shoplist3?>
 });
 </script>
+
+<style type="text/css">
+	/*레이어(말풍선) 스타일 적용 */
+ 	.btn_view {font-weight:normal !important; }
+	.box_layer{position:absolute; width:350px; height:80px; overflow:auto; text-align:left; background:#eaeaea;right:0px;top:0px; z-index:999;border:2px solid #0084dc;-webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px;padding:5px;}
+ </style>

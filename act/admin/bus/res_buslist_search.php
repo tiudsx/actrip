@@ -9,6 +9,9 @@ if($hidsearch == ""){ //초기화면 조회
                         WHERE b.seq IN (7, 14)
                             AND b.res_confirm IN (0, 1, 8, 4)
                             ORDER BY b.resnum, b.ressubseq';
+
+    $titleText = "전체";
+    $listText = "미입금,예약대기,입금완료,환불요청";    
 }else{
 	include __DIR__.'/../../db.php';
 
@@ -20,8 +23,27 @@ if($hidsearch == ""){ //초기화면 조회
     
     for($b = 0; $b < count($chkResConfirm); $b++){
         $res_confirm .= $chkResConfirm[$b].',';
+
+        if($chkResConfirm[$b] == 0){
+            $listText .= "미입금,";
+        }else if($chkResConfirm[$b] == 1){
+            $listText .= "예약대기,";
+        }else if($chkResConfirm[$b] == 3){
+            $listText .= "확정,";
+        }else if($chkResConfirm[$b] == 8){
+            $listText .= "입금완료,";
+        }else if($chkResConfirm[$b] == 7){
+            $listText .= "취소,";
+        }else if($chkResConfirm[$b] == 4){
+            $listText .= "환불요청,";
+        }else if($chkResConfirm[$b] == 4){
+            $listText .= "환불완료,";
+        }
     }
     $res_confirm .= '99';
+    if($listText != ""){
+        $listText = substr($listText, 0, strlen($listText) - 1);
+    }
 
     $inResType = "";
     for($b = 0; $b < count($chkbusNum); $b++){
@@ -31,6 +53,7 @@ if($hidsearch == ""){ //초기화면 조회
 
     $busDate = "";
     if($sDate == "" && $eDate == ""){
+        $titleText = "전체";
     }else{
         if($sDate != "" && $eDate != ""){
             $busDate = ' AND (res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
@@ -39,6 +62,7 @@ if($hidsearch == ""){ //초기화면 조회
         }else if($eDate != ""){
             $busDate = ' AND res_date <= CAST("'.$eDate.'" AS DATE)';
         }
+        $titleText = "[$sDate ~ $eDate]";
     }
 
     if($schText != ""){
@@ -60,30 +84,45 @@ $count = mysqli_num_rows($result_setlist);
 if($count == 0){
 ?>
  <div class="contentimg bd">
- <div class="gg_first">셔틀버스 예약정보</div>
+ <div class="gg_first"><?=$titleText?> 예약정보</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
-            <col width="16%" />
-            <col width="*" />
+            <col width="8%" />
+            <col width="auto" />
+            <col width="9%" />
+            <col width="9%" />
+            <col width="9%" />
+            <col width="5%" />
             <col width="14%" />
-            <col width="20%" />
-            <col width="10%" />
             <col width="8%" />
+            <col width="4%" />
+            <col width="6%" />
             <col width="8%" />
+            <col width="6%" />
+            <col width="5%" />
         </colgroup>
         <tbody>
             <tr>
-                <th>예약번호</th>
-                <th>행선지</th>
-                <th>이용일</th>
-                <th>이름</th>
-                <th>상태</th>
-                <th>승인여부</th>
-                <th>특이사항</th>
+                <th rowspan="2">예약번호</th>
+                <th rowspan="2">행선지명</th>
+                <th rowspan="2">이름/연락처</th>
+                <th colspan="6">예약항목</th>
+                <th rowspan="2">승인처리</th>
+                <th rowspan="2">결제금액</th>
+                <th rowspan="2">환불금액</th>
+                <th rowspan="2">특이사항</th>
             </tr>
             <tr>
-                <td colspan="7" style="text-align:center;height:50px;">
-                <b>예약된 목록이 없습니다.</b>
+                <th>이용일</th>
+                <th>행선지</th>
+                <th>좌석번호</th>
+                <th>정류장</th>
+                <th>예약상태</th>
+                <th>환불</th>
+            </tr>
+            <tr>
+                <td colspan="13" style="text-align:center;height:50px;">
+                    <b>[<?=$listText?>] 건으로 조회된 데이터가 없습니다.</b>
                 </td>
             </tr>
         </tbody>
@@ -183,7 +222,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
         <div class="contentimg bd">
         <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-        <div class="gg_first">셔틀버스 예약정보</div>
+        <div class="gg_first"><?=$titleText?> 예약정보</div>
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
                 <colgroup>
                     <col width="8%" />
@@ -192,7 +231,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <col width="9%" />
                     <col width="9%" />
                     <col width="5%" />
-                    <col width="12%" />
+                    <col width="14%" />
                     <col width="8%" />
                     <col width="4%" />
                     <col width="6%" />
