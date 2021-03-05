@@ -2,7 +2,7 @@ jQuery(function () {
     var date = (new Date()).yyyymmdd(); //오늘 날짜
 
 	jQuery('input[cal=date]').datepicker({
-        minDate : plusDate(date, -1)
+        // minDate : plusDate(date, -1)
 	});
 
 	jQuery('input[cal=sdate]').datepicker({

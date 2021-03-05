@@ -124,17 +124,17 @@ function fnConfirmUpdateList(obj, num, resnum){
 	var sel_cnt = tbObj.find("option:selected[value=8]").length;
 	var scancel_cnt = tbObj.find("option:selected[value=6]").length;
 
-	if(num < 3){
+	if(num > 1){
 		if(sel_cnt > 0){
 			alert("승인처리 변경이 안된 항목이 있습니다.");
 			return;
 		}
-	}
 
-	if(scancel_cnt > 0){
-		if($j("#tr" + resnum).find("#memo").val() == ""){
-			alert("취소사유를 작성해주세요~");
-			return;
+		if(scancel_cnt > 0){
+			if($j("#tr" + resnum).find("#memo").val() == ""){
+				alert("취소사유를 작성해주세요~");
+				return;
+			}
 		}
 	}
 
@@ -177,7 +177,7 @@ function fnConfirmUpdateList(obj, num, resnum){
 	}else if(num == 1){ //서핑버스
 		$postUrl = "/act/admin/bus/res_bus_save.php";
 	}
-
+	
 	$j.post($postUrl, formData,
 		function(data, textStatus, jqXHR){
 		   if(data == 0){
@@ -735,4 +735,239 @@ function fnChkAll(obj, objid){
 
 function fnChkBusAll(obj, gubun){
 	$j('input[id=chkbusNum' + gubun + ']').prop('checked',$j(obj).is(":checked"));
+}
+
+function fnSurfInsert(){
+    $j.blockUI({
+        message: $j('#res_modify'), 
+        focusInput: false,
+        css: { width: '90%', textAlign:'left', left:'5%', top:'14%'} 
+    }); 
+}
+
+function fnSurfModify(resseq){
+    var params = "resparam=surfview&resseq=" + resseq;
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/sol/res_sollist_info.php",
+        data: params,
+        success: function (data) {
+            // fnSolpopupReset();
+
+            fnSurfInsert();
+
+			//row 초기화
+			$j("tr[rowadd=1]").remove();
+
+			var RtnTotalPrice = 0, RtnTotalPrice2 = 0;
+            for (let i = 0; i < data.length; i++) {
+                if(i == 0){
+                    $j("#resseq").val(data[i].resnum);
+                    $j("#shopseq2").val(data[i].seq);
+                    // $j("#res_adminname").val(data[i].admin_user);
+                    $j("#user_name").val(data[i].user_name);
+                    var arrTel = data[i].user_tel.split("-");
+                    $j("#user_tel1").val(arrTel[0]);
+                    $j("#user_tel2").val(arrTel[1]);
+                    $j("#user_tel3").val(arrTel[2]);
+                    $j("#shopname").val(data[i].shopname);
+                    $j("#etc").val(data[i].etc);
+                    $j("#memo2").val(data[i].memo);
+                }
+
+				var TimeDate = "";
+				if((data[i].sub_title == "lesson" || data[i].sub_title == "pkg") && data[i].sub_title != ""){
+					TimeDate = '강습시간 : ' + data[i].res_time;
+				}
+
+				var ResNum = "";
+				if(data[i].res_m > 0){
+					ResNum = "남:" + data[i].res_m + "명";
+				}
+				if(data[i].res_m > 0 && data[i].res_w > 0){
+					ResNum += ",";
+				}
+				if(data[i].res_w > 0){
+					ResNum += "여:" + data[i].res_w + "명";
+				}
+
+				var ResOptInfo = "";
+				var optinfo = data[i].optsubname;
+				if(data[i].sub_title == "lesson"){
+					var arrdate = data[i].res_date.split("-"); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+					var s_Y = arrdate[0]; // 지정된 년도 
+					var s_m = arrdate[1]; // 지정된 월
+					var s_d = arrdate[2]; // 지정된 요일
+
+					var stayPlus = data[i].stay_day; //숙박 여부
+					//이전일 요일구하기
+					// $preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
+					// $nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
+					if(stayPlus == 0){
+						ResOptInfo = "숙박일 : " + data[i].res_date + "(1박)";
+					}else if(stayPlus == 1){
+						ResOptInfo = "숙박일 : " + plusDate(data[i].res_date, -1) + "(1박)";
+					}else if(stayPlus == 2){
+						ResOptInfo = "숙박일 : " + plusDate(data[i].res_date, -1) + "(2박)";
+					}else{
+
+					}
+				}else if(data[i].sub_title == "rent"){
+
+				}else if(data[i].sub_title == "pkg"){
+					ResOptInfo = optinfo;
+				}else if(data[i].sub_title == "bbq"){
+
+				}
+
+				var rtn_totalprice = parseInt(data[i].rtn_totalprice, 10);
+				var RtnBank = '';
+				if(data[i].res_confirm == 4){ //환불요청금액
+					RtnTotalPrice += rtn_totalprice;				
+				}else if(data[i].res_confirm == 5){ //환불완료금액
+					RtnTotalPrice2 += rtn_totalprice;
+				}
+
+				if(data[i].res_confirm == 4 || data[i].res_confirm == 5){
+					var RtnPrice = commify(rtn_totalprice) + '원';
+					RtnBank = '<span>' + data[i].rtn_bankinfo.replace(/\|/g, "&nbsp;") + '<br>환불액 : ' + RtnPrice + '</span></td>';
+				}
+
+				var ResConfirm0 = '';
+				var ResConfirm1 = '';
+				var ResConfirm2 = '';
+				var ResConfirm3 = '';
+				var ResConfirm4 = '';
+				var ResConfirm5 = '';
+				var ResConfirm6 = '';
+				var ResConfirm7 = '';
+				var ResConfirm8 = '';
+	
+				if(data[i].res_confirm == 0) ResConfirm0 = 'selected';
+				if(data[i].res_confirm == 1) ResConfirm1 = 'selected';
+				if(data[i].res_confirm == 2) ResConfirm2 = 'selected';
+				if(data[i].res_confirm == 3) ResConfirm3 = 'selected';
+				if(data[i].res_confirm == 4) ResConfirm4 = 'selected';
+				if(data[i].res_confirm == 5) ResConfirm5 = 'selected';
+				if(data[i].res_confirm == 6) ResConfirm6 = 'selected';
+				if(data[i].res_confirm == 7) ResConfirm7 = 'selected';
+				if(data[i].res_confirm == 8) ResConfirm8 = 'selected';
+				
+				var statehtml = "" + 
+				"<select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>" +
+				"	<option value='0' " + ResConfirm0 + ">미입금</option>" +
+				"	<option value='1' " + ResConfirm1 + ">예약대기</option>" +
+				"	<option value='2' " + ResConfirm2 + ">임시확정</option>" +
+				"	<option value='3' " + ResConfirm3 + ">확정</option>" +
+				"	<option value='4' " + ResConfirm4 + ">환불요청</option>" +
+				"	<option value='5' " + ResConfirm5 + ">환불완료</option>" +
+				"	<option value='6' " + ResConfirm6 + ">임시취소</option>" +
+				"	<option value='7' " + ResConfirm7 + ">취소</option>" +
+				"	<option value='8' " + ResConfirm8 + ">입금완료</option>" +
+				"</select>";
+				
+				var rowhtml = "" + 
+				"<tr rowadd='1'>" + 
+				"	<td><input type='hidden' id='MainNumber' name='MainNumber' value='" + data[i].res_date + "'>" +
+				"		<label>" +
+				"		<input type='checkbox' id='chkCancel' name='chkCancel[]' checked='true' value='" + data[i].ressubseq + "' style='vertical-align:-3px;display:none;' />" + data[i].res_date + "</label>" + 
+				"	</td>" + 
+				"	<td>" + data[i].optname + "</td>" + 
+				"	<td><span class='resoption' style='color:black;'>" + TimeDate + " (" + ResNum + ")</span>" + 
+				"		<span class='resoption' style='color:black;'>" + ResOptInfo + "</span></td>" + 
+				"	<td>" + statehtml + "</td>" + 
+				"	<td>" + RtnBank + "</td>" + 
+				"</tr>";
+
+				$j("#trlist").append(rowhtml);
+            }
+
+			if(RtnTotalPrice > 0 || RtnTotalPrice2 > 0){
+				var rtn1 = "<span style='color:red;'>환불요청 : <b>" + commify(RtnTotalPrice) + "</b>원</span><br>";
+				var rtn2 = "<span style='color:#808080;'>환불완료 : <b>" + commify(RtnTotalPrice2) + "</b>원</span>";
+
+				var rowhtml = "" + 
+				"<tr rowadd='1'>" + 
+				"	<td colspan='3'></td>" + 
+				"	<th>총 환불금액</th>" + 
+				"	<td>" + rtn1 + rtn2 + "</td>" + 
+				"</tr>";
+				$j("#trlist").append(rowhtml);
+			}
+        }
+    });
+}
+
+
+function fnSurfDataAdd(gubun){
+    //공백 제거
+    // fnFormTrim("#frmModify");
+
+    if($j("#user_name").val() == ""){
+        alert("예약자이름을 입력하세요~");
+        return;
+    }
+
+    if($j("#user_tel1").val() == "" || $j("#user_tel2").val() == "" || $j("#user_tel3").val() == ""){
+        alert("연락처를 입력하세요~");
+        return;
+    }
+
+    //$j("#resparam").val(gubun);
+    
+    var text1 = "예약상태 변경처리 하시겠습니까?";
+    var text2 = "변경처리가 완료되었습니다.";
+
+	if(!confirm(text1)){
+		return;
+	}
+
+    //frmModify
+    var formData = $j("#frmModify").serializeArray();
+	$j.post("/act/admin/shop/res_kakao_save.php", formData,
+		function(data, textStatus, jqXHR){
+			if(data == 0){
+				alert(text2);
+
+                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 0, -1);
+				fnSearchAdmin("act_admin/res_surflist_search.php");
+                fnModifyClose();
+			}else{
+                var arrRtn = data.split('|');
+                if(arrRtn[0] == "err"){
+                    alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");
+                }else{
+                }
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+	});
+}
+
+// 천단위마다 쉼표 넣기
+function commify(n) {
+    var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+    n += '';                          // 숫자를 문자열로 변환
+
+    while (reg.test(n)) {
+        n = n.replace(reg, '$1' + ',' + '$2');
+    }
+
+    return n;
+}
+
+function plusDate(date, count) {
+	var dateArr = date.split("-");
+	var changeDay = new Date(dateArr[0], (dateArr[1] - 1), dateArr[2]);
+
+	// count만큼의 미래 날짜 계산
+	changeDay.setDate(changeDay.getDate() + count);
+	return dateToYYYYMMDD(changeDay);
+}
+
+function dateToYYYYMMDD(date){
+    function pad(num) {
+        num = num + '';
+        return num.length < 2 ? '0' + num : num;
+    }
+    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate());
 }

@@ -22,7 +22,7 @@ function fnSolAdd(obj, id){
     $j("tr[id=" + id + "]:last").after(objTr.clone());
     $j("tr[id=" + id + "]:last").css("display", "")
     $j("tr[id=" + id + "]:last").find('input[cal=date]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-        minDate : plusDate(date, -1)
+        //minDate : plusDate(date, -1)
     });
     $j("tr[id=" + id + "]:last").attr("rowadd", "1");
 }
@@ -111,7 +111,7 @@ function fnSolModify(resseq){
 
 function fnSolDataAdd(gubun){
     //공백 제거
-    fnFormTrim("#frmModify");
+    // fnFormTrim("#frmModify");
 
     if($j("#user_name").val() == ""){
         alert("예약자이름을 입력하세요~");
@@ -435,8 +435,20 @@ function fnSearchAdminSolListTab(selDate, url){
 	});
 }
 
-function fnKakaoSend(seq){
+function fnKakaoSend(resseq){
+    if(!confirm("알림톡 발송을 하시겠습니까?")){
+        return;
+    }
 
+    var formData = {"resparam":"solkakao1","resseq": resseq};
+	$j.post("/act/admin/sol/res_sollist_save.php", formData,
+		function(data, textStatus, jqXHR){
+           alert("알림톡 발송이 완료되었습니다.");
+           $j("calbox[sel='yes']").click();
+		}).fail(function(jqXHR, textStatus, errorThrown){
+            alert(textStatus);
+	 
+	});
 }
 
 function fnListTab(gubun, obj){

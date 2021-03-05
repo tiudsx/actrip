@@ -16,141 +16,131 @@ $to = "lud1@naver.com,ttenill@naver.com";
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-if($param == "changeConfirm"){ //상태 정보 업데이트
-    $chkCancel = $_REQUEST["chkCancel"];
-    $selConfirm = $_REQUEST["selConfirm"];
-    $resnum = $_REQUEST["MainNumber"];
-    $memo = $_REQUEST["memo"];
+if($param == "solkakao1"){ //상태 정보 업데이트
+    $resseq = $_REQUEST["resseq"];
 
-	//================= 예약상태 및 메모 저장 =================
-	$select_query = "UPDATE AT_RES_MAIN SET memo = '$memo' WHERE resnum = $resnum";
-	$result_set = mysqli_query($conn, $select_query);
- 	if(!$result_set) goto errGo;
-
-	for($i = 0; $i < count($chkCancel); $i++){
-		$insdate1 = "";
-		if($selConfirm[$i] == 3){
-			$insdate1 = ",confirmdate = now()";
-			$intseq3 .= $chkCancel[$i].",";
-		}
-
-		$select_query = "UPDATE `AT_RES_SUB` 
-					   SET res_confirm = ".$selConfirm[$i]."
-						".$insdate1."
-						  ,upddate = now()
-						  ,upduserid = '".$InsUserID."'
-					WHERE ressubseq = ".$chkCancel[$i].";";
-		$result_set = mysqli_query($conn, $select_query);
-		if(!$result_set) goto errGo;
-	}
-
-    $intseq3 .= '0';
-    mysqli_query($conn, "COMMIT");
-
-    $arrSeatInfo = array();
-    $arrStopInfo = array();
-
-    $select_query = "SELECT user_name, user_tel, user_email, etc, memo FROM `AT_RES_MAIN` WHERE resnum = $resnum";
-
+    $select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq";
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
 
     $ResNumber = $resnum;
 	$userName = $rowMain["user_name"];
-	$etc = $rowMain["etc"];
 	$userPhone = $rowMain["user_tel"];
-	$usermail = $rowMain["user_email"];
 
     //==========================카카오 메시지 발송 ==========================
-    if($intseq3 != "0"){ //예약 확정처리 : 고객발송
-        $select_query_sub = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
-        $resultSite = mysqli_query($conn, $select_query_sub);
+	$select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
+	$resultSite = mysqli_query($conn, $select_query_sub);
 
-        while ($rowSub = mysqli_fetch_assoc($resultSite)){
-            $shopSeq = $rowSub['seq'];
-			$shopname = $rowSub['shopname'];
+	$resList = "";
+	$resInfo = "";
+	while ($rowSub = mysqli_fetch_assoc($resultSite)){
 
-            if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfo)){
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
-            }else{
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
-            }
+		$res_type = $rowSub['res_type'];
+		if($res_type == "stay"){ //숙박,바베큐,펍파티
+			if($rowSub['prod_name'] != "N"){ //숙박미신청
+				$resList1 = "게스트하우스,";
+				$resInfo1 = "   * 게스트하우스\n     - 입실:16시, 퇴실:익일 11시\n     - 방/침대 배정은 이용일 14시 이후로 하단에 있는 [필독]예약 상세안내 버튼에서 확인가능합니다\n\n";
+			}
 
-            $arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_busnum'], 0));
-            $arrStopInfo[$rowSub['res_spointname']] = '    ['.$rowSub['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
-        }
-        
-        foreach($arrSeatInfo as $x) {
-            $busSeatInfo .= $x;
-        }
+			if($rowSub['bbq'] != "N"){ 
+				if(!(strpos($rowSub['bbq'], "바베큐") === false))
+				{
+					$resList2 = "바베큐파티,";
+					$resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 15분전에 1층으로 와주세요~\n\n";
+				}
 
-        foreach($arrStopInfo as $x) {
-            $busStopInfo .= $x;
-        }
+				if(!(strpos($rowSub['bbq'], "펍파티") === false))
+				{
+					$resList3 = "펍파티,";
+					$resInfo3 = "   * 펍파티\n     - 파티시간 : 22시 ~ 24시\n\n";
+				}
+			}
+		}else{ //강습,렌탈
+			if($rowSub['prod_name'] != "N"){ //숙박미신청
+				$resList4 = "서핑강습,";
+				$resInfo4 = "   * 서핑강습\n     - 강습시작 10분전에 서핑샵으로 방문해주세요~\n\n";
+			}
 
-        $busSeatInfo = $busSeatInfo;
-        $pointMsg = '  ▶ 탑승시간/위치 안내\n'.$busStopInfo;
-
-        if($etc != ''){
-            $etcMsg = '  ▶ 특이사항\n      '.$etc.'\n';
-        }
-
-        $msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
-
-		if($shopSeq == 7){
-			$resparam = "surfbus_yy";
-		}else{
-			$resparam = "surfbus_dh";			
-        }
-        $arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "tempName"=> "at_res_bus1"
-			, "kakaoMsg"=>$kakaoMsg
-			, "userPhone"=> $userPhone
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
-			, "link4"=>"eatlist" //제휴업체 목록
-			, "link5"=>"event" //공지사항
-			, "smsOnly"=>"N"
-		);
-		sendKakao($arrKakao); //알림톡 발송
-
-        if(strrpos($usermail, "@") > 0){
-            $to .= ','.$usermail;
+			if($rowSub['surfrent'] != "N"){ //숙박미신청
+				$resList5 = "장비렌탈,";
+				$resInfo5 = "   * 장비렌탈\n     - 솔.동해서핑점 1층 카운터로 오셔서 안내받으시면 됩니다.\n\n";
+			}
 		}
+	}
 
-		$info1_title = "좌석안내";
-        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "탑승시간/위치 안내";
-        $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+	$resList = $resList1.$resList2.$resList3.$resList4.$resList5;
+	$resList = substr($resList, 0, strlen($resList) - 1);
+	
+	$resInfo = $resInfo1.$resInfo2.$resInfo3.$resInfo4.$resInfo5;
+	$resInfo = substr($resInfo, 0, strlen($resInfo) - 1);
+	
+	$msgTitle = '액트립 솔.동해서핑점 예약안내';
+	$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 하단에 있는 [필독]예약 상세안내 버튼을 클릭하셔서 내용을 꼭 확인해주세요.\n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
 
-		$arrMail = array(
-			"gubun"=> "bus"
-			, "gubun_step" => 3
-			, "gubun_title" => $shopname
-            , "mailto"=> $to
-			, "mailfrom"=> "surfbus_res@actrip.co.kr"
-			, "mailname"=> "actrip"
-			, "userName"=> $userName
-			, "ResNumber"=> $ResNumber
-			, "userPhone" => $userPhone
-			, "etc" => $etc
-			, "totalPrice1" => ""
-			, "totalPrice2" => ""
-			, "banknum" => ""
-			, "info1_title"=> $info1_title
-			, "info1"=> $info1
-			, "info2_title"=> $info2_title
-			, "info2"=> $info2
-		);
-		sendMail($arrMail); //메일 발송
-    }
+	$arrKakao = array(
+		"gubun"=> $code
+		, "admin"=> "N"
+		, "smsTitle"=> $msgTitle
+		, "userName"=> $userName
+		, "tempName"=> "at_surf_step3"
+		, "kakaoMsg"=>$kakaoMsg
+		, "userPhone"=> $userPhone
+		, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+		, "link2"=>"surflocation?seq=5" //지도로 위치보기
+		, "link3"=>"event" //공지사항
+		, "link4"=>""
+		, "link5"=>""
+		, "smsOnly"=>"N"
+	);
+
+	sendKakao($arrKakao); //알림톡 발송
+
+	$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1 WHERE resseq = $resseq";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+	
+	mysqli_query($conn, "COMMIT");
 	//==========================카카오 메시지 발송 End ==========================
+}else if($param == "solkakaoAll"){
+    $selDate = $_REQUEST["selDate"];
+	$select_query = "SELECT a.resseq FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+							ON a.resseq = b.resseq 
+						WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')	OR	b.resdate = '$selDate')
+							AND a.res_kakao = 0
+							GROUP BY a.resseq";
+		
+	$result_setlist = mysqli_query($conn, $select_query);
+	$count = mysqli_num_rows($result_setlist);
+
+	if($count > 0){
+
+	}
+
+	// $curl = curl_init();
+
+    // $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/'.$arrKakao["link4"].'"},';
+
+	// $arryKakao = '';
+    // $arryKakao .= '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$arrKakao["kakaoMsg"].'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"},{"message_type":"at","phn":"82'.substr(str_replace('-', '',"01033086080"), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$arrKakao["kakaoMsg"].'","smsSender":"'.str_replace('-', '',"01033086080").'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
+    
+    
+	// curl_setopt_array($curl, array(
+	//   CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
+	//   CURLOPT_RETURNTRANSFER => true,
+	//   CURLOPT_ENCODING => "",
+	//   CURLOPT_MAXREDIRS => 10,
+	//   CURLOPT_TIMEOUT => 30,
+	//   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	//   CURLOPT_CUSTOMREQUEST => "POST",
+	//   CURLOPT_POSTFIELDS => $arryKakao,
+	//   CURLOPT_HTTPHEADER => array(
+	// 	"content-type: application/json", "userId: surfenjoy"
+	//   ),
+	// ));
+
+	// $response = curl_exec($curl);
+	// $err = curl_error($curl);
+	// curl_close($curl);
 }else if($param == "solrentyn"){ //렌탈 상태여부 변경
 	$subseq = $_REQUEST["subseq"];
 	$rentyn = $_REQUEST["rentyn"];

@@ -163,7 +163,7 @@ for($r=0;$r<=$ra;$r++){
 
 			if($arrResCount[5][$ru] != ""){
 				$adminText .= "<br><font color='919191'>환불완료</font>";
-				//$gubunChk .= "5,";
+				$gubunChk .= "95,";
 			}
 
 			if($arrResCount[6][$ru] != ""){
@@ -173,7 +173,7 @@ for($r=0;$r<=$ra;$r++){
 
 			if($arrResCount[7][$ru] != ""){
 				$adminText .= "<br><font color='black'>취소</font>";
-				//$gubunChk .= "7,";
+				$gubunChk .= "97,";
 			}
 
 			if($arrResCount[8][$ru] != ""){

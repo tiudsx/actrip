@@ -26,8 +26,34 @@ if($hidsearch == ""){ //초기화면 조회
     
     for($i = 0; $i < count($chkResConfirm); $i++){
         $res_confirm .= $chkResConfirm[$i].',';
+
+        if($chkResConfirm[$i] == 0){
+            $listText .= "미입금,";
+        }else if($chkResConfirm[$i] == 1){
+            $listText .= "입금대기,";
+        }else if($chkResConfirm[$i] == 2){
+            $listText .= "임시확정/취소,";
+            $res_confirm .= '6,';
+        }else if($chkResConfirm[$i] == 3){
+            $listText .= "확정,";
+        }else if($chkResConfirm[$i] == 4){
+            $listText .= "환불요청,";
+        }else if($chkResConfirm[$i] == 5){
+            $listText .= "환불완료,";
+        }else if($chkResConfirm[$i] == 7){
+            $listText .= "취소,";
+        }else if($chkResConfirm[$i] == 8){
+            $listText .= "입금완료,";
+        }
+        // else if($chkResConfirm[$i] == 6){
+        //     $listText .= "임시취소,";
+        // }
     }
     $res_confirm .= '99';
+    
+    if($listText != ""){
+        $listText = substr($listText, 0, strlen($listText) - 1);
+    }
 
 /*
 SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a 
@@ -57,7 +83,7 @@ SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a
         if($sDate != "" && $eDate != ""){
             $shopDate = ' AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
         }else if($sDate != ""){
-            $busDshopDateate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
+            $shopDate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
         }else if($eDate != ""){
             $shopDate = ' AND b.res_date <= CAST("'.$eDate.'" AS DATE)';
         }
@@ -92,37 +118,37 @@ if($count == 0){
  <div class="contentimg bd">
     <div class="gg_first"><?=$titleText?> 예약목록</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-        <colgroup>
-			<col width="10%" />
-			<col width="7%" />
-			<col width="7%" />
-			<col width="9%" />
-			<col width="10%" />
-			<col width="15%" />
+    <colgroup>
 			<col width="auto" />
+			<col width="9%" />
+			<col width="9%" />
 			<col width="8%" />
-			<col width="7%" />
-			<col width="6%" />
-			<col width="6%" />
-			<col width="6%" />
+			<col width="13%" />
+			<col width="15%" />
+			<col width="8%" />
+			<col width="3%" />
+			<col width="5%" />
+			<col width="8%" />
+			<col width="5%" />
+			<col width="5%" />
 		</colgroup>
         <tbody>
             <tr>
                 <th rowspan="2">입점샵</th>
                 <th rowspan="2">예약번호</th>
-                <th rowspan="2">이름</th>
-                <th rowspan="2">연락처</th>
-                <th rowspan="2">이용일</th>
-                <th colspan="3">예약항목</th>
+                <th rowspan="2">이름/연락처</th>
+                <th colspan="5">예약항목</th>
                 <th rowspan="2">승인처리</th>
                 <th rowspan="2">결제금액</th>
                 <th rowspan="2">특이사항</th>
                 <th rowspan="2">취소사유</th>
             </tr>
             <tr>
+                <th style="text-align:center;">이용일</th>
                 <th style="text-align:center;">예약항목</th>
                 <th style="text-align:center;">예약내용</th>
                 <th style="text-align:center;">예약상태</th>
+                <th style="text-align:center;">환불</th>
             </tr>
             <tr>
                 <td colspan="12" style="text-align:center;height:50px;">
@@ -167,7 +193,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;" <?=$rowspan?>><?=$user_name?><br><?=$user_tel?></td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;background:green;" value="상태변경" onclick="fnConfirmUpdateList(this, 3, <?=$PreMainNumber?>);" />  
+                    <!-- <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:30px;background:green;" value="변경" onclick="fnConfirmUpdateList(this, 3, <?=$PreMainNumber?>);" />   -->
+                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:30px;background:green;" value="변경" onclick="fnSurfModify(<?=$PreMainNumber?>);" />  
                 </td>
                 <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
@@ -190,7 +217,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td colspan="4"></td>
                 <td>취소사유를 작성해주세요~</td>
                 <td colspan="3"><textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea></td>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
             </tr>
 
     <?
@@ -234,7 +261,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			<col width="13%" />
 			<col width="15%" />
 			<col width="8%" />
-			<col width="7%" />
+			<col width="3%" />
+			<col width="5%" />
 			<col width="8%" />
 			<col width="5%" />
 			<col width="5%" />
@@ -244,7 +272,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th rowspan="2">입점샵</th>
                 <th rowspan="2">예약번호</th>
                 <th rowspan="2">이름/연락처</th>
-                <th colspan="4">예약항목</th>
+                <th colspan="5">예약항목</th>
                 <th rowspan="2">승인처리</th>
                 <th rowspan="2">결제금액</th>
                 <th rowspan="2">특이사항</th>
@@ -255,6 +283,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th style="text-align:center;">예약항목</th>
                 <th style="text-align:center;">예약내용</th>
                 <th style="text-align:center;">예약상태</th>
+                <th style="text-align:center;">환불</th>
             </tr>
 <?
     }
@@ -313,6 +342,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else if($ResConfirm == 5){
         $ResConfirmText = "환불완료";
         $ResCss = "rescss";
+        $ResColor = "canceltext";
         $TotalPrice += $row['res_price'];
         $TotalDisPrice += $row['res_totalprice'];
         $RtnTotalPrice += $row['rtn_totalprice'];
@@ -329,7 +359,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
     if ($datDate < date("Y-m-d", strtotime($now." 0 day")))
     {
-        $ResCss = "predate";
+        //$ResCss = "predate";
     }
 
     $TimeDate = "";
@@ -390,6 +420,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		// 				<td style="text-align:center;" colspan="4">'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).' | 환불액 : '.$RtnPrice.'</td>
         //             </tr>';
         // $RtnBankRow = 'rowspan="2"';
+        $RtnPrice = ''.number_format($row['rtn_totalprice']).'원';
+		$RtnBank = '<span class="btn_view '.$ResCss.'" seq="3'.$ressubseq.'">계좌</span><span style="display:none;"><b>환불계좌</b><br>'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).'<br>환불액 : '.$RtnPrice.'</span></td>';
     }
 
     if($b == 0){
@@ -398,7 +430,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                             <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
                             <input type='hidden' id='shopseq' name='shopseq' value='$shopseq'>
                             <label>
-                            <input type='checkbox' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;display:;' /> 
+                            <input type='hidden' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;display:;' /> 
                             $res_date
                             </label>
                         </td>
@@ -429,20 +461,22 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         if($ResConfirm == 6) $ResConfirm6 = 'selected';
         if($ResConfirm == 7) $ResConfirm7 = 'selected';
         if($ResConfirm == 8) $ResConfirm8 = 'selected';
-        $reslist .= "
-                            <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
-                                <option value='0' ".$ResConfirm0.">미입금</option>
-                                <option value='1' ".$ResConfirm1.">예약대기</option>
-                                <option value='2' ".$ResConfirm2.">임시확정</option>
-                                <option value='3' ".$ResConfirm3.">확정</option>
-                                <option value='4' ".$ResConfirm4.">환불요청</option>
-                                <option value='5' ".$ResConfirm5.">환불완료</option>
-                                <option value='6' ".$ResConfirm6.">임시취소</option>
-                                <option value='7' ".$ResConfirm7.">취소</option>
-                                <option value='8' ".$ResConfirm8.">입금완료</option>
-                            </select>";
-        $reslist .= "
-                        </td>";
+        // $reslist .= "
+        //                     <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
+        //                         <option value='0' ".$ResConfirm0.">미입금</option>
+        //                         <option value='1' ".$ResConfirm1.">예약대기</option>
+        //                         <option value='2' ".$ResConfirm2.">임시확정</option>
+        //                         <option value='3' ".$ResConfirm3.">확정</option>
+        //                         <option value='4' ".$ResConfirm4.">환불요청</option>
+        //                         <option value='5' ".$ResConfirm5.">환불완료</option>
+        //                         <option value='6' ".$ResConfirm6.">임시취소</option>
+        //                         <option value='7' ".$ResConfirm7.">취소</option>
+        //                         <option value='8' ".$ResConfirm8.">입금완료</option>
+        //                     </select>";
+
+        $reslist .= $ResConfirmText."
+                        </td>
+                        <td style='text-align:center;'>$RtnBank</td>";
     }else{
         $trcolor = "";
         if(($i % 2) == 1 && $i > 0){
@@ -455,7 +489,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                             <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
                             <input type='hidden' id='shopseq' name='shopseq' value='$shopseq'>
                             <label>
-                            <input type='checkbox' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;display:;' /> 
+                            <input type='hidden' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;display:;' /> 
                             $res_date
                             </label>
                         </td>
@@ -486,20 +520,21 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         if($ResConfirm == 6) $ResConfirm6 = 'selected';
         if($ResConfirm == 7) $ResConfirm7 = 'selected';
         if($ResConfirm == 8) $ResConfirm8 = 'selected';
-        $reslist1 .= "
-                            <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
-                                <option value='0' ".$ResConfirm0.">미입금</option>
-                                <option value='1' ".$ResConfirm1.">예약대기</option>
-                                <option value='2' ".$ResConfirm2.">임시확정</option>
-                                <option value='3' ".$ResConfirm3.">확정</option>
-                                <option value='4' ".$ResConfirm4.">환불요청</option>
-                                <option value='5' ".$ResConfirm5.">환불완료</option>
-                                <option value='6' ".$ResConfirm6.">임시취소</option>
-                                <option value='7' ".$ResConfirm7.">취소</option>
-                                <option value='8' ".$ResConfirm8.">입금완료</option>
-                            </select>";
-        $reslist1 .= "
+        // $reslist1 .= "
+        //                     <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
+        //                         <option value='0' ".$ResConfirm0.">미입금</option>
+        //                         <option value='1' ".$ResConfirm1.">예약대기</option>
+        //                         <option value='2' ".$ResConfirm2.">임시확정</option>
+        //                         <option value='3' ".$ResConfirm3.">확정</option>
+        //                         <option value='4' ".$ResConfirm4.">환불요청</option>
+        //                         <option value='5' ".$ResConfirm5.">환불완료</option>
+        //                         <option value='6' ".$ResConfirm6.">임시취소</option>
+        //                         <option value='7' ".$ResConfirm7.">취소</option>
+        //                         <option value='8' ".$ResConfirm8.">입금완료</option>
+        //                     </select>";
+        $reslist1 .= $ResConfirmText."
                         </td>
+                        <td style='text-align:center;'>$RtnBank</td>
                     </tr>";
     }
 
@@ -508,6 +543,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $rowspan = "rowspan='".($b + 1)."'";
     }
 //while end
+}
+
+$i++;
+$trcolor = "";
+if(($i % 2) == 0 && $i > 0){
+    $trcolor = "class='selTr2'";
 }
 ?>
 
@@ -518,7 +559,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;" <?=$rowspan?>><?=$user_name?><br><?=$user_tel?></td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:70px; height:30px;background:green;" value="상태변경" onclick="fnConfirmUpdateList(this, 3, <?=$PreMainNumber?>);" />  
+                    <!-- <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:30px;background:green;" value="변경" onclick="fnConfirmUpdateList(this, 3, <?=$PreMainNumber?>);" />   -->
+                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:30px;background:green;" value="변경" onclick="fnSurfModify(<?=$PreMainNumber?>);" />  
                 </td>
                 <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
@@ -541,7 +583,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td colspan="4"></td>
                 <td>취소사유를 작성해주세요~</td>
                 <td colspan="3"><textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea></td>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
             </tr>
 		</tbody>
 	</table>

@@ -84,7 +84,7 @@ if($count > 0){
                 , "link5"=>""
                 , "smsOnly"=>"N"
             );
-            sendKakao($arrKakao);
+            // sendKakao($arrKakao);
 
             $surfshopMsg = "";
 			$busSeatInfo = "";
@@ -161,7 +161,7 @@ if($count > 0){
         , "link5"=>""
         , "smsOnly"=>"N"
     );
-    sendKakao($arrKakao);
+    // sendKakao($arrKakao);
 
 	$k++;
 //============================ 실행 단계 ============================
@@ -173,7 +173,8 @@ if($count > 0){
                             ,upduserid = 'timeover'
                         WHERE ressubseq IN (".$ressubseq.")";
 
-	$query_log .= '자동취소 AT_RES_SUB : '.$select_query;
+	$query_log .= '
+                    자동취소 AT_RES_SUB : '.str_replace("'", '"',$select_query);
 
 	$result_set = mysqli_query($conn, $select_query);
 
@@ -184,6 +185,7 @@ if($count > 0){
 }
 
 $select_query = "UPDATE AT_CALL_TIMEOVER SET success = '".$success."', stats = '".$errChk."', gubuncount = '".$countChk."', sqlquery = '".$query_log."' WHERE seq = ".$seq;
+// echo $success.'<br><br>'.$query_log.'<br><br>'.$select_query;
 $result_set = mysqli_query($conn, $select_query);
 
 if(!$success){
@@ -193,7 +195,6 @@ if(!$success){
 	mysqli_query($conn, "COMMIT");
 	$success = 'ok';
 }
-
 // $query_log = '';
 
 //mysqli_query($conn, "COMMIT");

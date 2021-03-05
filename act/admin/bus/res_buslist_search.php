@@ -284,8 +284,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $res_coupon = $row['res_coupon'];    
     if($ResConfirm == 0){
         $ResConfirmText = "미입금";
-		$TotalPrice += $row['res_price'];
-        $TotalDisPrice += $row['res_totalprice'];
+		// $TotalPrice += $row['res_price'];
+        // $TotalDisPrice += $row['res_totalprice'];
         $ChangeChk++;
     }else if($ResConfirm == 1){
         $ResConfirmText = "예약대기";
@@ -359,7 +359,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <td style='text-align:center;'>
                         <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
                         <label>
-                        <input type='checkbox' id='chkCancel' name='chkCancel[]' value='$ressubseq' style='vertical-align:-3px;' />
+                        <input type='checkbox' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;' />
                         $res_date
                         </label>
                     </td>
@@ -397,7 +397,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         if($ResConfirm == 7) $ResConfirm7 = 'selected';
         if($ResConfirm == 8) $ResConfirm8 = 'selected';
         $reslist .= "
-                        <select id='selConfirm' name='selConfirm[]' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
+                        <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
                             <option value='0' ".$ResConfirm0.">미입금</option>
                             <option value='1' ".$ResConfirm1.">예약대기</option>
                             <option value='3' ".$ResConfirm3.">확정</option>
@@ -420,7 +420,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                             <td style='text-align:center;'>
                                 <input type='hidden' id='MainNumber' name='MainNumber' value='$MainNumber'>
                                 <label>
-                                <input type='checkbox' id='chkCancel' name='chkCancel[]' value='$ressubseq' style='vertical-align:-3px;' />
+                                <input type='checkbox' id='chkCancel' name='chkCancel[]' resnum='$MainNumber' value='$ressubseq' style='vertical-align:-3px;' />
                                 $res_date
                                 </label>
                             </td>
@@ -458,7 +458,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         if($ResConfirm == 7) $ResConfirm7 = 'selected';
         if($ResConfirm == 8) $ResConfirm8 = 'selected';
         $reslist1 .= "
-                        <select id='selConfirm' name='selConfirm[]' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
+                        <select id='selConfirm' name='selConfirm[]' resnum='$MainNumber' class='select' style='padding:1px 2px 4px 2px;' onchange='fnChangeModify(this, $ResConfirm);'>
                             <option value='0' ".$ResConfirm0.">미입금</option>
                             <option value='1' ".$ResConfirm1.">예약대기</option>
                             <option value='3' ".$ResConfirm3.">확정</option>

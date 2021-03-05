@@ -18,7 +18,7 @@ $select_query = "SELECT *, DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.res
                     ON a.resseq = b.resseq 
                     WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
                         OR	b.resdate = '$selDate')
-                        ORDER BY ressubseq";
+                        ORDER BY a.resseq, b.ressubseq";
                         //DATE_ADD(b.edate, INTERVAL -1 DAY) >= '2021-01-02'
 //echo $select_query;
 $result_setlist = mysqli_query($conn, $select_query);
@@ -283,8 +283,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?=$bbqText?></td>
         <td style="<?=$fontcolor?>"><?=$stayMText?></td>
         <td style="<?=$fontcolor?>"><?=$stayWText?></td>
-        <td style="<?=$fontcolor?>"><?=$memoYN?></td>
-        <td style="<?=$fontcolor?>"><?=$memo2YN?></td>
+        <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>요청사항</b><br><?=$memo?></td>
+        <td style="<?=$fontcolor?>"><span class="btn_view" seq="20<?=$c?>"><?=$memo2YN?></span><span style='display:none;'><b>직원메모</b><br><?=$memo2?></td>
         <td style="<?=$fontcolor?>"><?=$res_room_chk?></td>
         <td style="<?=$fontcolor?>"><?=$res_confirm?></td>
         <td style="<?=$fontcolor?>"><?=$res_kakao_chk?>/<?=$res_kakao?>회
@@ -305,3 +305,37 @@ $rowlist .= $b."|";
 </form>
 <form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
 </div>
+
+<script type="text/javascript">
+$j(document).ready(function(){
+	$j(".btn_view[seq]").mouseover(function(e){ //조회 버튼 마우스 오버시
+		var seq = $j(this).attr("seq");
+		var obj = $j(".btn_view[seq="+seq+"]");
+		var tX = (obj.position().left)-354; //조회 버튼의 X 위치 - 레이어팝업의 크기만 큼 빼서 위치 조절
+		var tY = (obj.position().top - 20);  //조회 버튼의 Y 위치
+		
+
+		if($j(this).find(".box_layer").length > 0){
+			if($j(this).find(".box_layer").css("display") == "none"){
+				$j(this).find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+			}
+		}else{
+				$j(".btn_view[seq="+seq+"]").append('<div class="box_layer"></div>');
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").html($j(".btn_view[seq="+seq+"]").next().html());
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+		}		
+	});
+	
+	$j(".btn_view[seq]").mouseout(function(e){
+			$j(this).find(".box_layer").css("display","none");
+	});				 
+}); 
+</script>
