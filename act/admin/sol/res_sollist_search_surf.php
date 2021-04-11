@@ -34,6 +34,7 @@ $count = mysqli_num_rows($result_setlist);
     </div>
     
 <?
+$c = 0;
 $surflist_rent = "";
 $surflist_sol_9 = "";
 $surflist_sol_11 = "";
@@ -52,6 +53,8 @@ $surflist_rang_11 = "";
 $surflist_rang_13 = "";
 $surflist_rang_15 = "";
 while ($row = mysqli_fetch_assoc($result_setlist)){
+    $c++;
+
 	$now = date("Y-m-d");
 
     $resseq = $row['resseq'];
@@ -74,8 +77,17 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $surfrentYN = $row['surfrentYN'];
 
     $memoYN = "";
+    $memoText = "";
     if($memo != "" || $memo2 != ""){
         $memoYN = "O";
+    }
+
+    if($memo != ""){
+        $memoText .= "<b>요청사항</b><br>$memo<br><br>";
+    }
+
+    if($memo2 != ""){
+        $memoText .= "<b>직원메모</b><br>".$memo2;
     }
 
     //강습&렌탈
@@ -86,7 +98,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style='cursor:pointer;' onclick='fnSolModify($resseq);'>$user_tel</td>
                 <td>".(($surfM == 0) ? "" : $surfM."명")."</td>
                 <td>".(($surfW == 0) ? "" : $surfW."명")."</td>
-                <td>$memoYN</td>
+                <td><span class='btn_view' seq='1$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
             </tr>
         ";
         if($prod_name == "솔게스트하우스"){
@@ -178,7 +190,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <td>$sDel$surfrent$eDel</td>
             <td>$sDel".(($surfrentM == 0) ? "" : $surfrentM."명")."$eDel</td>
             <td>$sDel".(($surfrentW == 0) ? "" : $surfrentW."명")."$eDel</td>
-            <td>$sDel$memoYN$eDel</td>
+            <td>$sDel<span class='btn_view' seq='2$c'>$memoYN</span><span style='display:none;'>$memoText</span>$eDel</td>
             <td>
                 <select class='select' onchange='fnRentYN(this, $ressubseq);'>
                     <option value='N'>N</option>
@@ -761,3 +773,37 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
         </tbody>
     </table>    
 </form>
+
+<script type="text/javascript">
+$j(document).ready(function(){
+	$j(".btn_view[seq]").mouseover(function(e){ //조회 버튼 마우스 오버시
+		var seq = $j(this).attr("seq");
+		var obj = $j(".btn_view[seq="+seq+"]");
+		var tX = (obj.position().left)-254; //조회 버튼의 X 위치 - 레이어팝업의 크기만 큼 빼서 위치 조절
+		var tY = (obj.position().top - 20);  //조회 버튼의 Y 위치
+		
+
+		if($j(this).find(".box_layer").length > 0){
+			if($j(this).find(".box_layer").css("display") == "none"){
+				$j(this).find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+			}
+		}else{
+				$j(".btn_view[seq="+seq+"]").append('<div class="box_layer" style="width:240px;"></div>');
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").html($j(".btn_view[seq="+seq+"]").next().html());
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+		}		
+	});
+	
+	$j(".btn_view[seq]").mouseout(function(e){
+			$j(this).find(".box_layer").css("display","none");
+	});				 
+}); 
+</script>

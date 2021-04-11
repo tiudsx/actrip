@@ -48,7 +48,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
 ?>
             <section id="taste">
                 <h2><img src="https://surfenjoy.cdn3.cafe24.com/act_title/accommodation.png" alt="액트립 숙소"></h2>
-                <span class="coupon"><a href="https://cafe.naver.com/actrip/375" target="_blank"><img src="images/icon/coupon.svg" alt="">액트립 제휴쿠폰 모음<i class="fas fa-angle-right"></i></a></span>
+                <span class="coupon"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/icon/coupon.svg" alt="">액트립 제휴쿠폰 모음<i class="fas fa-angle-right"></i></a></span>
             </section>
             <section id="popAcm">
                 <h2># 펜션 정보</h2>

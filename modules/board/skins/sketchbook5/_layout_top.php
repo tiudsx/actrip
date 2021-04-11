@@ -28,8 +28,9 @@
 						<ul class="menu02">
 							<li><a href="/surf"><img src="/act/images/icon/isurf.png" alt=""></a></li>
 							<li><a href="/surfbus"><img src="/act/images/icon/ibus.png" alt=""></a></li>
-							<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
-							<li><a href="/event"><img src="/act/images/icon/ievent.png" alt=""></a></li>
+							<!-- <li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li> -->
+							<li><a href="javascript:alert('서비스 준비중입니다.');"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
+							<li><a href="https://cafe.naver.com/actrip?iframe_url=/ArticleList.nhn%3Fsearch.clubid=29998302%26search.menuid=7%26search.boardtype=L" target="_blank"><img src="/act/images/icon/ievent.png" alt=""></a></li>
 							<li><a href="/staylist"><img src="/act/images/icon/ibed.png" alt=""></a></li>
 							<li><a href="/eatlist"><img src="/act/images/icon/ifood.png" alt=""></a></li>
 						</ul>

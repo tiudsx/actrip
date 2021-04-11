@@ -100,7 +100,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                <img src="https://surfenjoy.cdn3.cafe24.com/act_notice/bus_notice.jpg" class="placeholder">
+                <!-- <img src="https://surfenjoy.cdn3.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
                     <?include 'surfview_content.php';?>
                     
                     <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step1.jpg" class="placeholder">

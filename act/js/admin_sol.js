@@ -201,6 +201,7 @@ function fnSolDataAdd(gubun){
 
                 var selDate = $j("#listdate").text(); //달력 선택 날짜
                 fnSearchAdminSolList(selDate);
+                fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));
                 fnModifyClose();
                 fnSolpopupReset();
 			}else{

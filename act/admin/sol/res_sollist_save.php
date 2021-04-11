@@ -46,7 +46,7 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 				if(!(strpos($rowSub['bbq'], "바베큐") === false))
 				{
 					$resList2 = "바베큐파티,";
-					$resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 15분전에 1층으로 와주세요~\n\n";
+					$resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 10분전에 1층으로 와주세요~\n\n";
 				}
 
 				if(!(strpos($rowSub['bbq'], "펍파티") === false))
@@ -302,13 +302,90 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		}
 	}
 
-	mysqli_query($conn, "COMMIT");
-
 	//알림톡 발송 (확정일경우)
 	if($res_kakao == "Y" && $res_confirm == "확정"){
-
+		$select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
+		$result = mysqli_query($conn, $select_query);
+		$rowMain = mysqli_fetch_array($result);
+	
+		$ResNumber = $resnum;
+		$userName = $rowMain["user_name"];
+		$userPhone = $rowMain["user_tel"];
+	
+		//==========================카카오 메시지 발송 ==========================
+		$select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $seq ORDER BY ressubseq";
+		$resultSite = mysqli_query($conn, $select_query_sub);
+	
+		$resList = "";
+		$resInfo = "";
+		while ($rowSub = mysqli_fetch_assoc($resultSite)){
+	
+			$res_type = $rowSub['res_type'];
+			if($res_type == "stay"){ //숙박,바베큐,펍파티
+				if($rowSub['prod_name'] != "N"){ //숙박미신청
+					$resList1 = "게스트하우스,";
+					$resInfo1 = "   * 게스트하우스\n     - 입실:16시, 퇴실:익일 11시\n     - 방/침대 배정은 이용일 14시 이후로 하단에 있는 [필독]예약 상세안내 버튼에서 확인가능합니다\n\n";
+				}
+	
+				if($rowSub['bbq'] != "N"){ 
+					if(!(strpos($rowSub['bbq'], "바베큐") === false))
+					{
+						$resList2 = "바베큐파티,";
+						$resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 10분전에 1층으로 와주세요~\n\n";
+					}
+	
+					if(!(strpos($rowSub['bbq'], "펍파티") === false))
+					{
+						$resList3 = "펍파티,";
+						$resInfo3 = "   * 펍파티\n     - 파티시간 : 22시 ~ 24시\n\n";
+					}
+				}
+			}else{ //강습,렌탈
+				if($rowSub['prod_name'] != "N"){ //숙박미신청
+					$resList4 = "서핑강습,";
+					$resInfo4 = "   * 서핑강습\n     - 강습시작 10분전에 서핑샵으로 방문해주세요~\n\n";
+				}
+	
+				if($rowSub['surfrent'] != "N"){ //숙박미신청
+					$resList5 = "장비렌탈,";
+					$resInfo5 = "   * 장비렌탈\n     - 솔.동해서핑점 1층 카운터로 오셔서 안내받으시면 됩니다.\n\n";
+				}
+			}
+		}
+	
+		$resList = $resList1.$resList2.$resList3.$resList4.$resList5;
+		$resList = substr($resList, 0, strlen($resList) - 1);
+		
+		$resInfo = $resInfo1.$resInfo2.$resInfo3.$resInfo4.$resInfo5;
+		$resInfo = substr($resInfo, 0, strlen($resInfo) - 1);
+		
+		$msgTitle = '액트립 솔.동해서핑점 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 하단에 있는 [필독]예약 상세안내 버튼을 클릭하셔서 내용을 꼭 확인해주세요.\n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
+	
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_surf_step3"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+			, "link2"=>"surflocation?seq=5" //지도로 위치보기
+			, "link3"=>"event" //공지사항
+			, "link4"=>""
+			, "link5"=>""
+			, "smsOnly"=>"N"
+		);
+	
+		sendKakao($arrKakao); //알림톡 발송
+	
+		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1 WHERE resseq = $seq";
+		$result_set = mysqli_query($conn, $select_query);
+		if(!$result_set) goto errGo;
 	}
-
+		
+	mysqli_query($conn, "COMMIT");
 }
 
 if(!$success){

@@ -34,10 +34,12 @@ $count = mysqli_num_rows($result_setlist);
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
     </div>
 <?
+$c = 0;
 $stayinfo = "";
 $staybbqinfo = "";
 $staypubinfo = "";
 while ($row = mysqli_fetch_assoc($result_setlist)){
+    $c++;
 	$now = date("Y-m-d");
 
     $resseq = $row['resseq'];
@@ -63,9 +65,18 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $staynum = $row['staynum'];
     $bbq = $row['bbq'];
 
+    $memoText = "";
     $memoYN = "";
     if($memo != "" || $memo2 != ""){
         $memoYN = "O";
+    }
+
+    if($memo != ""){
+        $memoText .= "<b>요청사항</b><br>$memo<br><br>";
+    }
+
+    if($memo2 != ""){
+        $memoText .= "<b>직원메모</b><br>".$memo2;
     }
 
     $stayMText = "";
@@ -97,7 +108,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <td style='$fontcolor'>$staynum</td>
                     <td style='$fontcolor'>$stayMText</td>
                     <td style='$fontcolor'>$stayWText</td>
-                    <td style='$fontcolor'>$memoYN</td>
+                    <td style='$fontcolor'><span class='btn_view' seq='1$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
                 </tr>
             ";
 
@@ -112,21 +123,50 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }
 
     if($bbq != "N" && $Day == $row['resDay']){
-        $staylist_text = "
-            <tr onmouseover=\"this.style.background='#ff9';\" onmouseout=\"this.style.background='#fff';\">
-                <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_name</td>
-                <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_tel</td>
-                <td style='$fontcolor'>$stayMText</td>
-                <td style='$fontcolor'>$stayWText</td>
-                <td style='$fontcolor'>$memoYN</td>
-            </tr>
-        ";
         if($bbq == "바베큐"){
+            $staylist_text = "
+                <tr onmouseover=\"this.style.background='#ff9';\" onmouseout=\"this.style.background='#fff';\">
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_name</td>
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_tel</td>
+                    <td style='$fontcolor'>$stayMText</td>
+                    <td style='$fontcolor'>$stayWText</td>
+                    <td style='$fontcolor'><span class='btn_view' seq='2$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
+                </tr>
+            ";
+
             $staybbqinfo .= $staylist_text;
         }else if($bbq == "펍파티"){
+            $staylist_text = "
+                <tr onmouseover=\"this.style.background='#ff9';\" onmouseout=\"this.style.background='#fff';\">
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_name</td>
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_tel</td>
+                    <td style='$fontcolor'>$stayMText</td>
+                    <td style='$fontcolor'>$stayWText</td>
+                    <td style='$fontcolor'><span class='btn_view' seq='3$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
+                </tr>
+            ";
             $staypubinfo .= $staylist_text;
-        }else{
+        }else{            
+            $staylist_text = "
+                <tr onmouseover=\"this.style.background='#ff9';\" onmouseout=\"this.style.background='#fff';\">
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_name</td>
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_tel</td>
+                    <td style='$fontcolor'>$stayMText</td>
+                    <td style='$fontcolor'>$stayWText</td>
+                    <td style='$fontcolor'><span class='btn_view' seq='2$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
+                </tr>
+            ";
             $staybbqinfo .= $staylist_text;
+
+            $staylist_text = "
+                <tr onmouseover=\"this.style.background='#ff9';\" onmouseout=\"this.style.background='#fff';\">
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_name</td>
+                    <td style='cursor:pointer;$fontcolor' onclick='fnSolModify($resseq);'>$user_tel</td>
+                    <td style='$fontcolor'>$stayMText</td>
+                    <td style='$fontcolor'>$stayWText</td>
+                    <td style='$fontcolor'><span class='btn_view' seq='3$c'>$memoYN</span><span style='display:none;'>$memoText</span></td>
+                </tr>
+            ";
             $staypubinfo .= $staylist_text;
         }
 
@@ -262,3 +302,37 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         </tr>
     </tbody>
 </table>
+
+<script type="text/javascript">
+$j(document).ready(function(){
+	$j(".btn_view[seq]").mouseover(function(e){ //조회 버튼 마우스 오버시
+		var seq = $j(this).attr("seq");
+		var obj = $j(".btn_view[seq="+seq+"]");
+		var tX = (obj.position().left)-254; //조회 버튼의 X 위치 - 레이어팝업의 크기만 큼 빼서 위치 조절
+		var tY = (obj.position().top - 20);  //조회 버튼의 Y 위치
+		
+
+		if($j(this).find(".box_layer").length > 0){
+			if($j(this).find(".box_layer").css("display") == "none"){
+				$j(this).find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+			}
+		}else{
+				$j(".btn_view[seq="+seq+"]").append('<div class="box_layer" style="width:240px;"></div>');
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").html($j(".btn_view[seq="+seq+"]").next().html());
+				$j(".btn_view[seq="+seq+"]").find(".box_layer").css({
+					"top" : tY
+					,"left" : tX
+					,"position" : "absolute"
+				}).show();
+		}		
+	});
+	
+	$j(".btn_view[seq]").mouseout(function(e){
+			$j(this).find(".box_layer").css("display","none");
+	});				 
+}); 
+</script>

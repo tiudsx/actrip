@@ -140,7 +140,15 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="on" onclick="fnResView(true, '#content_tab1', 69, this);"><a>상세설명</a></li>
                             <li onclick="fnResView(true, '#shopmap', 500, this);"><a>위치안내</a></li>
                             <li onclick="fnResView(true, '#cancelinfo', 69, this);"><a>취소/환불</a></li>
+                            <!-- <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li> -->
+                            <?if($reqSeq == 5){
+                            ?>
+                            <li><a href="https://booking.naver.com/booking/5/bizes/501593" target="_blank">예약하기</a></li>
+                            <?
+                            }else{?>
                             <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li>
+                            <?}?>
+                            
                         </ul>
                     </div>
                 </div>
@@ -641,7 +649,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> 
+        <?if($reqSeq == 5){
+        ?>
+            <a href="https://booking.naver.com/booking/5/bizes/501593" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png"></a>
+        <?}else{?>
+            <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> 
+        <?}?>
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">
     </div>
