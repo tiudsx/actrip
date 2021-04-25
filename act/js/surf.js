@@ -1,10 +1,12 @@
 $j(document).ready(function() {
     //지역 카테고리 - 토글
     $j(".btnArea").toggle(function() {
-        $j(".listArea").css("display", 'block');
+        // $j(".listArea").css("display", 'block');
+        $j(".listArea").slideDown("100");
     },
     function() {
-        $j(".listArea").css("display", "none");
+        // $j(".listArea").css("display", "none");
+        $j(".listArea").slideUp("100");
     });
     
 });

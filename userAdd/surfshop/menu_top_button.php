@@ -35,6 +35,8 @@ if($param == "surfres"){
 		$areaname = '고성';	
 	}else if($param == "surfeast3"){
 		$areaname = '동해,강릉';
+	}else if($param == "surfsouth"){
+		$areaname = '부산';
 	}else if($param == "surfjeju"){
 		$areaname = '제주';
 	}else if($param == "surfsouth"){
@@ -51,6 +53,9 @@ if($param == "surfres"){
 		$areaCodeNone = "78";
 	}else if($param == "surfeast3"){
 		$areaname = '강릉,동해';
+		$areaCodeNone = "84";
+	}else if($param == "surfsouth"){
+		$areaname = '부산';
 		$areaCodeNone = "84";
 	}else if($param == "surfjeju"){
 		$areaname = '제주';
@@ -175,9 +180,10 @@ a {
 						<div class="input-radio <?=(($param == 'surfevent') ? 'input-radio_active' : '')?>"><input type="checkbox" id="basic" name="sortFilter" value="on"><label for="basic" onclick="location.href='/surfevent';">추천샵</label></div>
 						<div class="input-radio <?=(($param == 'surfeast') ? 'input-radio_active' : '')?>"><input type="checkbox" id="like" name="sortFilter" value="on"><label for="like" onclick="location.href='/surfeast';">양양</label></div>
 						<div class="input-radio <?=(($param == 'surfeast3') ? 'input-radio_active' : '')?>"><input type="checkbox" id="like" name="sortFilter" value="on"><label for="like" onclick="location.href='/surfeast3';">강릉,동해</label></div>
+						<div class="input-radio <?=(($param == 'surfsouth') ? 'input-radio_active' : '')?>"><input type="checkbox" id="hot" name="sortFilter" value="on"><label for="hot" onclick="location.href='/surfsouth';">부산</label></div>
 						<!--div class="input-radio <?=(($param == 'surfeast2') ? 'input-radio_active' : '')?>"><input type="checkbox" id="like" name="sortFilter" value="on"><label for="like" onclick="location.href='/surfeast2';">고성</label></div>
 						<div class="input-radio <?=(($param == 'surfjeju') ? 'input-radio_active' : '')?>"><input type="checkbox" id="hot" name="sortFilter" value="on"><label for="hot" onclick="location.href='/surfjeju';">제주</label></div>
-						<div class="input-radio <?=(($param == 'surfsouth') ? 'input-radio_active' : '')?>"><input type="checkbox" id="hot" name="sortFilter" value="on"><label for="hot" onclick="location.href='/surfsouth';">부산</label></div>
+						
 						<div class="input-radio <?=(($param == 'surfwest') ? 'input-radio_active' : '')?>"><input type="checkbox" id="hot" name="sortFilter" value="on"><label for="hot" onclick="location.href='/surfwest';">서해</label></div-->
 					</div>
 				</div>

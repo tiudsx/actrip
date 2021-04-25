@@ -255,11 +255,11 @@ if($count == 1){
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_res_step1"
+			, "tempName"=> "at_surf_step1"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"eatlist" //제휴업체 목록
+			, "link2"=>"surflocation?seq=".$shopseq //위치안내
 			, "link3"=>"event" //공지사항
 			, "link4"=>""
 			, "link5"=>""

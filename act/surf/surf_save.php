@@ -499,6 +499,8 @@ if($param == "BusI"){
 			$area = "[고성]";
 		}else if($areagubun == "surfeast3"){
 			$area = "[강릉,동해]";
+		}else if($areagubun == "surfsouth"){
+			$area = "[부산]";
 		}else if($areagubun == "surfjeju"){
 			$area = "[제주]";
 		}else if($areagubun == "surfsouth"){

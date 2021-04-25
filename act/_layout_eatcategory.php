@@ -29,7 +29,8 @@ $select_query = "SELECT a.code AS areacode, a.codename as areaname, b.code
 $result_setlist = mysqli_query($conn, $select_query);
 
 while ($row = mysqli_fetch_assoc($result_setlist)){
-    $arealist .= "<li><a href='/eatlist?code=".$row["code"]."'>".$row["areaname"]."</a></li>";
+    // $arealist .= "<li><a href='/eatlist?code=".$row["code"]."'>".$row["areaname"]."</a></li>";
+    $arealist .= "<a style='float:left;padding-right:30px;' href='/eatlist?code=".$row["code"]."'>".$row["areaname"]."</a>";
 
     if($areacodesel == $row["areacode"]){
         $areasel = "<span class='btnContent'>".$row["areaname"]." <i class='fas fa-angle-down'></i></span>";
@@ -46,7 +47,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <?=$areasel?>
     </button>
     <ul class="listArea">
-        <?=$arealist?>
+        <li>
+            <?=$arealist?>
+        </li>
     </ul>
     <ul class="listBeach">
         <?=$pointFirsthtml?>

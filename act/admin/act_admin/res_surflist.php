@@ -51,6 +51,7 @@ include __DIR__.'/../../common/logininfo.php';
 								<option value="surfeast1">양양</option>
 								<option value="surfeast2">고성</option>
 								<option value="surfeast3">강릉,동해</option>
+								<option value="surfsouth">부산</option>
 								<option value="bbqparty">바베큐파티</option>
 								<option value="etc">기타</option>
 							</select>

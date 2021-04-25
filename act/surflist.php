@@ -120,7 +120,7 @@ $notSeq = "";
                                     </p>
                                     <p><?=number_format($arrrental[3])?>원</p>
                                 </span>
-                                <?}else{?>
+                                <?}else if($arrrental[0] == "장비렌탈"){?>
                                 <span class="rental">
                                     <p><span><?=$arrrental[0]?></span></p>
                                     <p>
@@ -213,7 +213,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                     </p>
                                     <p><?=number_format($arrrental[3])?>원</p>
                                 </span>
-                                <?}else{?>
+                                <?}else if($arrrental[0] == "장비렌탈"){?>
                                 <span class="rental">
                                     <p><span><?=$arrrental[0]?></span></p>
                                     <p>

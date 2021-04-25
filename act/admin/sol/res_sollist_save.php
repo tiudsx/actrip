@@ -2,6 +2,7 @@
 include __DIR__.'/../../db.php';
 include __DIR__.'/../../surf/surfkakao.php';
 include __DIR__.'/../../surf/surfmail.php';
+include __DIR__.'/../../surf/surffunc.php';
 
 $success = true;
 $datetime = date('Y/m/d H:i'); 
@@ -23,7 +24,6 @@ if($param == "solkakao1"){ //상태 정보 업데이트
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
 
-    $ResNumber = $resnum;
 	$userName = $rowMain["user_name"];
 	$userPhone = $rowMain["user_tel"];
 
@@ -58,12 +58,12 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		}else{ //강습,렌탈
 			if($rowSub['prod_name'] != "N"){ //숙박미신청
 				$resList4 = "서핑강습,";
-				$resInfo4 = "   * 서핑강습\n     - 강습시작 10분전에 서핑샵으로 방문해주세요~\n\n";
+				$resInfo4 = "   * 서핑강습\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
 			}
 
 			if($rowSub['surfrent'] != "N"){ //숙박미신청
 				$resList5 = "장비렌탈,";
-				$resInfo5 = "   * 장비렌탈\n     - 솔.동해서핑점 1층 카운터로 오셔서 안내받으시면 됩니다.\n\n";
+				$resInfo5 = "   * 장비렌탈\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
 			}
 		}
 	}
@@ -85,7 +85,7 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		, "tempName"=> "at_surf_step3"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+		, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
 		, "link2"=>"surflocation?seq=5" //지도로 위치보기
 		, "link3"=>"event" //공지사항
 		, "link4"=>""
@@ -193,7 +193,7 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		$ResNumber = '4'.time().substr(mt_rand(0, 99) + 100, 1, 2); //예약번호 랜덤생성
 
 		//메인 정보 등록
-		$select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`resnum`, `admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$ResNumber', '$res_adminname', '$res_confirm', $kakaocnt, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
+		$select_query = "INSERT INTO `AT_SOL_RES_MAIN`(`resnum`, `admin_user`, `res_confirm`, `res_kakao`, `res_kakao_chk`, `res_room_chk`, `res_company`, `user_name`, `user_tel`, `memo`, `memo2`, `history`, `insdate`) VALUES ('$ResNumber', '$res_adminname', '$res_confirm', 0, 'N', 'N', '$res_company', '$user_name', '$user_tel', '$memo', '$memo2', '', now())";
 		$result_set = mysqli_query($conn, $select_query);
 		$seq = mysqli_insert_id($conn);
 		if(!$result_set) goto errGo;
@@ -308,7 +308,6 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		$result = mysqli_query($conn, $select_query);
 		$rowMain = mysqli_fetch_array($result);
 	
-		$ResNumber = $resnum;
 		$userName = $rowMain["user_name"];
 		$userPhone = $rowMain["user_tel"];
 	
@@ -343,12 +342,12 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 			}else{ //강습,렌탈
 				if($rowSub['prod_name'] != "N"){ //숙박미신청
 					$resList4 = "서핑강습,";
-					$resInfo4 = "   * 서핑강습\n     - 강습시작 10분전에 서핑샵으로 방문해주세요~\n\n";
+					$resInfo4 = "   * 서핑강습\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
 				}
 	
 				if($rowSub['surfrent'] != "N"){ //숙박미신청
 					$resList5 = "장비렌탈,";
-					$resInfo5 = "   * 장비렌탈\n     - 솔.동해서핑점 1층 카운터로 오셔서 안내받으시면 됩니다.\n\n";
+					$resInfo5 = "   * 장비렌탈\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
 				}
 			}
 		}
@@ -370,7 +369,7 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 			, "tempName"=> "at_surf_step3"
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+			, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($seq)) //예약조회/취소
 			, "link2"=>"surflocation?seq=5" //지도로 위치보기
 			, "link3"=>"event" //공지사항
 			, "link4"=>""

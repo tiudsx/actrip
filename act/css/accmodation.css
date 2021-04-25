@@ -37,9 +37,9 @@ height: 25px;
 line-height: 25px;}
 
 #listMenu .listArea{width: 100%; overflow: hidden; text-align: center; font-size: 16px; font-weight: 500; color: #3195db!important; background-color: rgba(255,255,255,.9); position: absolute; top: 55px; z-index: 1; display: none;} 
-#listMenu .listArea li{width: 100%; height: 34px; line-height: 30px; margin: 0 auto; cursor: pointer; background-color: #fff;}
+#listMenu .listArea li{width: 100%; height: 64px; line-height: 60px; margin: 0 auto; background-color: #fff; padding-left:30px;}
 #listMenu .listArea li:nth-child(2n-1){background-color: #edf8ff;}
-#listMenu .listArea li:last-child{border-radius: 0 0 15px 15px ; padding-bottom: 2px; border-bottom: 2px solid rgba(0,0,0,.2)}
+/* #listMenu .listArea li:last-child{border-radius: 0 0 15px 15px ; padding-bottom: 2px; border-bottom: 2px solid rgba(0,0,0,.2)} */
 
 #listMenu .listBeach{width: 95%; height: auto; margin-left: 2.5%; overflow: hidden; font-size: 1.1em; line-height: 2.5em;border-bottom: 1px solid #3195db;}
 #listMenu .listBeach li{float: left; min-width: auto; height: 38px; margin-left: 3%; text-align: center;}
