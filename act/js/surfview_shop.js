@@ -16,9 +16,17 @@ function fnCouponCheck(obj){
 			$j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 "+ commify(cp) + "원 할인");
 		}
 	}else{
-		$j("#coupondis").css("display", "none");
-		$j("#coupondis").html("");
-		$j("#couponcode").val("")
+		if($j("#coupon").val() == "ATBLOG"){
+			$j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>체험단 할인코드");
+
+			$j("#coupondis").css("display", "");
+			$j("#couponcode").val($j("#coupon").val())
+		}else{
+			$j("#coupondis").css("display", "none");
+			$j("#coupondis").html("");
+			$j("#couponcode").val("")
+		}
+
 		$j("#couponprice").val(0);
 	}
 	$j("#coupon").val("");

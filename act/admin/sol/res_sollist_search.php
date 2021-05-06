@@ -112,9 +112,9 @@ if($count == 0){
             <col width="3%" />
             <col width="5%" />
             <col width="5%" />
+            <col width="3%" />
             <col width="4%" />
-            <col width="4%" />
-            <col width="8%" />
+            <col width="10%" />
             <col width="7%" />
         </colgroup>
         <tbody>
@@ -220,8 +220,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 $resText = "숙박";
                 $stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
 
-                if($res_confirm == "확정"){
-                    $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq'";
+                if($res_confirm == "확정" || $res_confirm == "대기"){
+                    $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
                 }
             }
         }
@@ -285,9 +285,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?=$stayWText?></td>
         <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>요청사항</b><br><?=$memo?></td>
         <td style="<?=$fontcolor?>"><span class="btn_view" seq="20<?=$c?>"><?=$memo2YN?></span><span style='display:none;'><b>직원메모</b><br><?=$memo2?></td>
-        <td style="<?=$fontcolor?>"><?=$res_room_chk?></td>
+        <td style="<?=$fontcolor?>"><?if($res_room_chk == "Y"){echo "입실";}?></td>
         <td style="<?=$fontcolor?>"><?=$res_confirm?></td>
-        <td style="<?=$fontcolor?>"><?=$res_kakao_chk?>/<?=$res_kakao?>회
+        <td style="<?=$fontcolor?>"><?if($res_kakao_chk == "Y"){echo "읽음";}?>/<?=$res_kakao?>회
             <?if($res_confirm == "확정"){?>
             <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>);" />
             <?}?>

@@ -587,7 +587,17 @@ if($param == "BusI"){
         }
 		$TotalPrice += $sumPrice;
 
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'surf', $shopseq, $optseq, '$shopname', '$resGubun[$i]', '$optname', '$arrOptInfo[$optseq]', '$resDate[$i]', '$resTime[$i]', '$arrStayDay[$optseq]', '', '', '', '', '', '', 0, $sumMemPrice, $res_price_coupon, '$coupon', $sumPrice, $sumMem, $resM[$i], $resW[$i], 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        if($coupon == "ATBLOG"){
+            $res_confirm = 3;
+            $InsUserID = "BLOG";
+        }else if($coupon == "KLOOK11"){
+            $res_confirm = 3;
+            $InsUserID = "KLOOK";
+        }else{
+            $res_confirm = 0;
+        }
+
+        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'surf', $shopseq, $optseq, '$shopname', '$resGubun[$i]', '$optname', '$arrOptInfo[$optseq]', '$resDate[$i]', '$resTime[$i]', '$arrStayDay[$optseq]', '', '', '', '', '', '', $res_confirm, $sumMemPrice, $res_price_coupon, '$coupon', $sumPrice, $sumMem, $resM[$i], $resW[$i], 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         if(!$result_set) goto errGoSurf;
 
@@ -658,33 +668,56 @@ if($param == "BusI"){
         }
         $totalPrice = " ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
         
-        $msgTitle = "액트립 [$shopname] 예약안내";
-        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n'.$shopname.' 예약정보 [예약대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+        if($coupon == "ATBLOG"){
+            $msgTitle = '액트립 ['.$shopname.'] 예약안내';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+        
+            $arrKakao = array(
+                "gubun"=> $code
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_surf_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surflocation?seq=".$shopseq //위치안내
+                , "link3"=>"event" //공지사항
+                , "link4"=>""
+                , "link5"=>""
+                , "smsOnly"=>"N"
+            );
 
-		$arrKakao = array(
-            "gubun"=> "surf"
-            , "admin"=> "N"
-            , "smsTitle"=> $msgTitle
-            , "userName"=> $userName
-            , "tempName"=> "at_surf_step1"
-            , "kakaoMsg"=>$kakaoMsg
-            , "userPhone"=> $userPhone
-            , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-            , "link2"=>"surflocation?seq=".$shopseq //위치안내
-            , "link3"=>"event" //공지사항
-            , "link4"=>""
-            , "link5"=>""
-            , "smsOnly"=>"N"
-        );
-        sendKakao($arrKakao); //알림톡 발송
-		//==================== 카카오톡 발송 End ====================
+            sendKakao($arrKakao); //알림톡 발송
+        }else{
+            $msgTitle = "액트립 [$shopname] 예약안내";
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n'.$shopname.' 예약정보 [예약대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
-		//==================== 이메일 발송 Start ====================
-		// 이메일 발송
-		$to = "lud1@naver.com,ttenill@naver.com";
-		if(strrpos($usermail, "@") > 0){
+            $arrKakao = array(
+                "gubun"=> "surf"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_surf_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"surflocation?seq=".$shopseq //위치안내
+                , "link3"=>"event" //공지사항
+                , "link4"=>""
+                , "link5"=>""
+                , "smsOnly"=>"N"
+            );
+            sendKakao($arrKakao); //알림톡 발송
+            //==================== 카카오톡 발송 End ====================
+        }
+        
+        //==================== 이메일 발송 Start ====================
+        // 이메일 발송
+        $to = "lud1@naver.com,ttenill@naver.com";
+        if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
-		}
+        }
 
         $info1_title = "신청목록";
         $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));
@@ -693,7 +726,7 @@ if($param == "BusI"){
 
         $arrMail = array(
             "gubun"=> "surf"
-            , "gubun_step" => 0
+            , "gubun_step" => $res_confirm
             , "gubun_title" => $shopname
             , "mailto"=> $to
             , "mailfrom"=> "surfshop_res@actrip.co.kr"
@@ -711,8 +744,8 @@ if($param == "BusI"){
             , "info2"=> $info2
         );
         sendMail($arrMail); //메일 발송
-		//==================== 이메일 발송 End ====================
-
+        //==================== 이메일 발송 End ====================
+        
         echo '<script>alert("예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
         //echo '<script>alert("예약이 완료되었습니다.");parent.fnSaveErr("divConfirm");</script>';
 	}

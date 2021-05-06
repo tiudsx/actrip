@@ -6,13 +6,12 @@ include __DIR__.'/../db.php';
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 20";
+$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
 $result_set = mysqli_query($conn, $select_query);
 
 mysqli_query($conn, "COMMIT");
 
 ?>
-
 <div id="wrap">
     <? include __DIR__.'/../_layout_top.php'; ?>
 
@@ -24,7 +23,7 @@ mysqli_query($conn, "COMMIT");
         <section class="shoptitle">
             <div style="padding:6px;">
                 <h1> 서핑버스 실시간 위치조회</h1>
-                <div class="reviewcnt">※ 서핑버스 현재위치를 1분마다 조회하여 표시됩니다.</div>
+                <div class="reviewcnt">※ 서핑버스 현재위치를 1분마다 수집하여 표시됩니다.</div>
                 <div class="shopsubtitle">※ 실제위치와 오차가 있을 수 있으니 참고부탁드립니다.</div>
             </div>
         </section>
@@ -35,6 +34,7 @@ mysqli_query($conn, "COMMIT");
                     <div class="vip-tabnavi">
                         <ul>
                             <li class="on"><a>현재위치 조회</a></li>
+                            <li><a id="counttimer" style="font-size:0.9em;font-weight:200;"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,65 +48,36 @@ $now = date("Y-m-d H:i:s");
 $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
-if($nowTime < 1400){
+$count = 1;
+if($nowTime > 0500 && $nowTime < 1300){
     $busList = "'Y','E'";
-}else{
+}else if($nowTime > 1400 && $nowTime < 2300){
     $busList = "'S','A'";
+}else{
+    $count = 0;
 }
 
-$arrMapList = array();
-$select_query = 'SELECT * FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS b
-                    ON a.user_name = b.gpsname
-                        AND a.gpsdate = b.busdate
-                    WHERE b.busgubun IN ('.$busList.')
-                        AND b.use_yn = "Y"
-                    ORDER BY b.busgubun DESC, b.busnum';
-$result_setlist = mysqli_query($conn, $select_query);
-$count = mysqli_num_rows($result_setlist);
+if($count == 1){
+    $arrMapList = array();
+    $select_query = 'SELECT * FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS b
+                        ON a.user_name = b.gpsname
+                            AND a.gpsdate = b.busdate
+                        WHERE b.busgubun IN ('.$busList.')
+                            AND b.use_yn = "Y"
+                        ORDER BY b.busgubun DESC, b.busnum';
+    $result_setlist = mysqli_query($conn, $select_query);
+    $count = mysqli_num_rows($result_setlist);
 
-$busNumBtn = "";
-$busGPS = "";
-$mapNum = 0;
-while ($row = mysqli_fetch_assoc($result_setlist)){
-    $busNum = $row['busgubun'].$row['busnum'];
-    $busgubun = $row["busgubun"];
-	$busName = $row['busname'];
-	$user_name = $row['user_name'];
-	$lat = $row['lat'];
-    $lng = $row['lng'];
-    $insdate = $row['insdate'];
-
-    $busNumBtn .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus="'.$busNum.'" onclick="fnBusGPSPoint(this);">&nbsp;';
-
-    $arrMapList[$row['busgubun']] .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus="'.$busNum.'" onclick="fnBusGPSPoint(this);">&nbsp;';
-
-    $todayTime = date("h시 i분", strtotime($insdate));
-
-    $todayDate = date("Y-m-d H:i:s", strtotime($insdate));
-    $toNow = (strtotime($now)-strtotime($todayDate));
-    
-    $gpsTime = $toNow."초 전";
-    if($toNow > 60){
-		$toNowMin = (int)((strtotime($now)-strtotime($todayDate)) / 60);
-		$toNowS = $toNow - ($toNowMin * 60);
-		
-		$gpsTime = $toNowMin."분 ".$toNowS."초 전";
-	}
-
-    if($busgubun == "Y"){
-        $locationname = "서울 → 양양행";
-    }else if($busgubun == "S"){
-        $locationname = "양양 → 서울행";
-    }else if($busgubun == "E"){
-        $locationname = "서울 → 동해행";
-    }else if($busgubun == "A"){
-        $locationname = "동해 → 서울행";
+    while ($row = mysqli_fetch_assoc($result_setlist)){
+        $busNum = $row['busgubun'].$row['busnum'];
+        $busgubun = $row["busgubun"];
+        $busName = $row['busname'];
+        $user_name = $row['user_name'];
+        $lat = $row['lat'];
+        $lng = $row['lng'];
+        $insdate = $row['insdate'];
+        $arrMapList[$row['busgubun']] .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus="'.$busNum.'" onclick="fnBusGPSPoint(this);">&nbsp;';
     }
-
-    $busImg = "https://surfenjoy.cdn3.cafe24.com/act_bus/surfbus_".$busNum.".jpg?v=0|";
-    $busGPS .= "if(busGPSList.".$busNum." == null) busGPSList.".$busNum." = []; \n busGPSList.".$busNum.".push({ '$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*3, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']});\n";
-
-    $mapNum++;
 }
 ?>
 
@@ -115,30 +86,40 @@ var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50;
 
 var busGPSList = {}
-    busGPSList.Y1 = [];
-<?=$busGPS?>
-
 var MARKER_POINT = "", MARKER_ZOOM = 16;
 var MARKER_SPRITE_POSITION2 = {};
 function fnBusGPSPoint(obj) {
-	$j("input[btnpoint='point']").css("background", "").css("color", "");
-	$j(obj).css("background", "#1973e1").css("color", "#fff");
-    
     var busnum = $j(obj).attr("bus");
-    var gubun = busnum.substring(0, 1);
-    MARKER_POINT = busnum;
+    var params = "resparam=mappoint&busgubun=" + busnum;
+    $j.ajax({
+        type: "POST",
+        url: "/act/surfbus/json_gps.php?",
+        data: params,
+        success: function (data) {
+            $j("input[btnpoint='point']").css("background", "").css("color", "");
+            $j("input[btnpoint='point']").removeAttr("on");
+            $j(obj).css("background", "#1973e1").css("color", "#fff");
+            $j(obj).attr("on", "Y");
+
+            if(data == 0){
+                alert("셔틀버스의 GPS정보가 조회되지 않습니다\n\n페이지가 새로고침 됩니다.");
+                setTimeout('window.location.reload();', 500);
+            }else{
+                var gubun = busnum.substring(0, 1);
+                MARKER_POINT = busnum;
+                if(gubun == "S" || gubun == "A"){
+                    MARKER_ZOOM = 17;
+                }else{
+                    MARKER_ZOOM = 17;
+                }
+                
+                MARKER_SPRITE_POSITION2 = eval(data);
+                
+                $j("#ifrmBusMap").css("display", "block").attr("src", "/act/surfbus/surfgpsmap.html");
+            }
+        }
+    });
     
-	if(gubun == "S" || gubun == "A"){
-		MARKER_ZOOM = 17;
-	}else{
-		MARKER_ZOOM = 17;
-    }
-    
-	if(MARKER_SPRITE_POSITION2[busnum] == null){
-		MARKER_SPRITE_POSITION2 = eval("busGPSList." + busnum)[0];
-	}
-	
-	$j("#ifrmBusMap").css("display", "block").attr("src", "/act/surfbus/surfgpsmap.html");
 }
 </script>
             
@@ -163,7 +144,7 @@ function fnBusGPSPoint(obj) {
                         <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 서핑버스는 운행중이지 않습니다.</h1>
                     </td>
                 </tr>
-                <?}else{?>
+            <?}else{?>
                 <?if($arrMapList["Y"]){?>
                 <tr>
                     <th>서울 → 양양행</th>

@@ -398,7 +398,7 @@ function fnSearchAdminSolList(selDate){
                for (let i = 0; i < $j("td[stayinfo]").length; i++) {
                     var arrInfo = $j("td[stayinfo]").eq(i).attr("stayinfo").split('|');
                     if(arrInfo[2] == "솔게하"){
-                        //$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq
+                        //stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'
                         var tbID = arrInfo[4];
                         // if(arrInfo[4] == "301"){
                         //     if(arrInfo[5] < 7){
@@ -411,11 +411,16 @@ function fnSearchAdminSolList(selDate){
                         // }
 
                         //((arrInfo[6] > 1) ? "(" + arrInfo[6] + "박)" : "")
-                        $j("#" + tbID + arrInfo[5]).prev().css("color", "black");
-                        $j("#" + tbID + arrInfo[5]).css("color", "black").css("cursor", "pointer");
                         $j("#" + tbID + arrInfo[5]).attr("onclick", "fnSolModify(" + arrInfo[8] + ");");
-                        //
-                        $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / " + arrInfo[7] + "일" + "(" + arrInfo[6] + "박)");
+
+                        if(arrInfo[9] == "확정"){
+                            $j("#" + tbID + arrInfo[5]).prev().css("color", "black");
+                            $j("#" + tbID + arrInfo[5]).css("color", "black").css("cursor", "pointer");
+                            $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / " + arrInfo[7] + "일" + "(" + arrInfo[6] + "박)");
+                        }else{
+                            $j("#" + tbID + arrInfo[5]).css("cursor", "pointer");
+                            $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / 대기");
+                        }
                     }
                }
            }

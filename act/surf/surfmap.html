@@ -71,31 +71,31 @@ function fnShopViewMove(param){
             zIndex: 100
         });
     
-    if(MARKER_SPRITE_POSITION[key][9] == ""){
-        textarea = "";
-    }else{
-        textarea = "[" + MARKER_SPRITE_POSITION[key][9] + "] ";
-    }
+        if(MARKER_SPRITE_POSITION[key][9] == ""){
+            textarea = "";
+        }else{
+            textarea = "[" + MARKER_SPRITE_POSITION[key][9] + "] ";
+        }
 
-    if(parent.mapView == 0){
-        viewtext = "<span class=\"title\" style=\"cursor:pointer;\" onclick=\"fnShopViewMove(" + MARKER_SPRITE_POSITION[key][7] + ");\">상세내용 보기</span>";
-    }else{
-        viewtext = "<span class=\"title\">" + MARKER_SPRITE_POSITION[key][5] + "</span>";
-    }
-    var shopbox2 = '<div class="overlaybox">' +
-        '    <div class="boxtitle">' + textarea + ''+ MARKER_SPRITE_POSITION[key][10] +'</div>' +
-        '    <div class="first" style="background: url(' + MARKER_SPRITE_POSITION[key][8] + ') no-repeat;background-size: 100%">' +
-        '        <!--div class="movietitle text">'+ key +'</div-->' +
-        '    </div>' +
-        '    <ul>' +
-        '        <li class="up">' +
-        '            <span class="title">' + MARKER_SPRITE_POSITION[key][4] + '</span>' + //MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "")
-        '        </li>' +
-        '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;">' +
-        '            ' + viewtext +
-        '        </li>' +
-        '    </ul>' +
-        '</div>';
+        if(parent.mapView == 0){
+            viewtext = "<span class=\"title\" style=\"cursor:pointer;\" onclick=\"fnShopViewMove(" + MARKER_SPRITE_POSITION[key][7] + ");\">상세내용 보기</span>";
+        }else{
+            viewtext = "<span class=\"title\">" + MARKER_SPRITE_POSITION[key][5] + "</span>";
+        }
+        var shopbox2 = '<div class="overlaybox">' +
+            '    <div class="boxtitle">' + textarea + ''+ MARKER_SPRITE_POSITION[key][10] +'</div>' +
+            '    <div class="first" style="background: url(' + MARKER_SPRITE_POSITION[key][8] + ') no-repeat;background-size: 100%">' +
+            '        <!--div class="movietitle text">'+ key +'</div-->' +
+            '    </div>' +
+            '    <ul>' +
+            '        <li class="up">' +
+            '            <span class="title">' + MARKER_SPRITE_POSITION[key][4] + '</span>' + //MARKER_SPRITE_POSITION[key][4].replace("강원 양양군", "")
+            '        </li>' +
+            '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;">' +
+            '            ' + viewtext +
+            '        </li>' +
+            '    </ul>' +
+            '</div>';
     
    
         var infoWindow = new naver.maps.InfoWindow({

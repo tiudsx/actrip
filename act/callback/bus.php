@@ -18,7 +18,7 @@ $stats = trim($_REQUEST["stats"]);
 $timestart = trim($_REQUEST["timestart"]);
 $timeend = trim($_REQUEST["timeend"]);
 
-if($stats == "ON"){
+ if($stats != "OFF"){
 	mysqli_query($conn, "SET AUTOCOMMIT=0");
 	mysqli_query($conn, "BEGIN");
 
@@ -28,8 +28,8 @@ if($stats == "ON"){
 	$seq = mysqli_insert_id($conn);
 	if(!$result_set) goto errGo;
 
-	// 셔틀버스 데이터 삭제 : 5일전
-	$select_query = "DELETE FROM AT_PROD_BUS_GPS WHERE TIMESTAMPDIFF(DAY, insdate, now()) > 5";
+	// 셔틀버스 데이터 삭제 : 2일전
+	$select_query = "DELETE FROM AT_PROD_BUS_GPS WHERE TIMESTAMPDIFF(DAY, insdate, now()) > 2";
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 
@@ -52,5 +52,5 @@ if($stats == "ON"){
 		mysqli_query($conn, "COMMIT");
 		echo '0';
 	}
-}
+ }
 ?>

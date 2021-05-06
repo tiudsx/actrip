@@ -154,6 +154,20 @@ function fnResView(bool, objid, topCnt, obj) {
     fnMapView(objid, topCnt);
 }
 
+function fnResViewSol(bool, objid, topCnt, obj) {
+    $j(".vip-tabnavi li").removeClass("on");
+    $j(obj).addClass("on");
+
+    if (bool) {
+       
+    } else {
+		$j("div[tabid='viewtab']").css("display", "none");
+        $j(objid).css("display", "");
+    }
+
+    fnMapView(objid, topCnt);
+}
+
 function fnMapView(objid, topCnt) {
     var divLoc = $j(objid).offset();
     $j('html, body').animate({
