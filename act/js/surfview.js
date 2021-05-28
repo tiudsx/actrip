@@ -752,7 +752,7 @@ function fnTotalPrice(){
 		if(cp <= 100){ //퍼센트 할인			
 			cp = (1 - (cp / 100));
 			$j("#lastPrice").html(commify(sum * cp) + "원");
-			$j("#lastcouponprice").html(" (" + commify(sum) + "원 - 할인쿠폰:" + commify(sum - ((cnt * 20000) * cp)) + "원)");
+			$j("#lastcouponprice").html(" (" + commify(sum) + "원 - 할인쿠폰:" + commify(sum - (sum * cp)) + "원)");
 		}else{ //금액할인
 			$j("#lastPrice").html(commify(sum - cp) + "원");
 			$j("#lastcouponprice").html(" (" + commify(sum) + "원 - 할인쿠폰:" + commify(cp) + "원)");

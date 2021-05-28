@@ -363,6 +363,10 @@ function fnSearchAdminSolList(selDate){
                 for (let i = 0; i < (arrRowCnt.length - 1); i++) {
                     var rowCnt = arrRowCnt[i];
 
+                    if((i % 2) == 1){
+                        $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
+                    }
+
                     if(rowCnt > 1){
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
@@ -372,6 +376,8 @@ function fnSearchAdminSolList(selDate){
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
+                        
+                        
                         for (let x = 1; x < rowCnt; x++) {
                             nextrowCnt++;
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
@@ -382,6 +388,10 @@ function fnSearchAdminSolList(selDate){
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(12).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
+                            
+                            if((i % 2) == 1){
+                                $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
+                            }
                         }
                     }
                     nextrowCnt++;

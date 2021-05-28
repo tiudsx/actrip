@@ -4,7 +4,13 @@ include __DIR__.'/../../db.php';
 include __DIR__.'/../../surf/surffunc.php';
 
 $schText = $_REQUEST["param"];
-$arrChk = explode("|", decrypt($schText));
+$chk = $_REQUEST["chk"];
+
+if($chk == 1){
+    $arrChk = explode("|", $schText);
+}else{
+    $arrChk = explode("|", decrypt($schText));
+}
 
 $dateChk = $arrChk[0];
 if(plusDate($dateChk, 2) <= date("Y-m-d")){

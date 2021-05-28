@@ -205,9 +205,8 @@ include __DIR__.'/../../common/logininfo.php';
 			<tr>
 				<th>입점샵</th>
                 <td><input type="text" id="shopname" name="shopname" size="20" readonly="readonly" class="itx"></td>
-				<th></th>
-				<td>
-				</td>
+				<th>쿠폰코드</th>
+				<td><input type="text" id="res_coupon" name="res_coupon" size="15" class="itx" maxlength="6"></td>
                 <th>알림톡</th>
 				<td>
 					<select id="res_kakao" name="res_kakao" class="select">

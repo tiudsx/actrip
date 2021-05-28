@@ -282,7 +282,7 @@ if($param == "RtnPrice"){
                 // $admin_tel = "010-4437-0009";
 
                 $msgTitle = '액트립 ['.$userName.']님 예약취소';
-                $kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 예약취소건 안내입니다.\n\n액트립 예약정보 [예약취소]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 예약취소내역 확인부탁드립니다.\n\n';
+                $kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 예약취소건 안내입니다.\n\n액트립 예약정보 [예약취소]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.'---------------------------------\n ▶ 안내사항\n      - 예약취소내역 확인부탁드립니다.\n\n';
 
                 $arrKakao = array(
                     "gubun"=> $code
@@ -317,10 +317,12 @@ if($param == "RtnPrice"){
         $busTypeY = "Y";
         $busTypeS = "S";
         $busTitleName = "양양";
+        $resparam = "surfbus_yy";
     }else{
         $busTypeY = "E";
-        $busTypeS = "A";    
-        $busTitleName = "동해";    
+        $busTypeS = "A";
+        $busTitleName = "동해"; 
+        $resparam = "surfbus_dh";
     }
 
 	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜

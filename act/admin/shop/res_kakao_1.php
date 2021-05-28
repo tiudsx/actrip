@@ -27,6 +27,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$MainNumber = $row['resnum'];
 	$etc = $row['etc'];
 	$memo = $row['memo'];
+	$res_coupon = $row['res_coupon'];
 
 	if($i == 0){
 ?>
@@ -66,6 +67,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                 </span>
                             </li> -->
                         </ul>
+                        
+                        <?if($res_coupon == "ATBLOG"){?>
+                        <p class="noticesub">네이버 블로그 체험단 예약건입니다.</p>
+                        <?}?>
                     </article>
                 </div>
                 <div class="contentimg bd">
@@ -247,7 +252,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             </tr>
 		<?}?>
         <?if($ChangeChk > 0 || $memo != ""){?>
-            <tr id="tr<?=$MainNumber?>" style="display:none;">
+            <tr id="tr<?=$MainNumber?>" style="display:;">
                 <th>취소사유</th>
                 <td>                
                     <textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea>

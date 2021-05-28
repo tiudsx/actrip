@@ -3,6 +3,7 @@ include __DIR__.'/../db.php';
 
 $param = $_REQUEST["resparam"];
 
+$param = "surfbus_yy"; //임시 고정
 if($param == "surfbus_yy"){ //양양 셔틀버스
     $shopseq = 7;
     $pointurl = __DIR__."/../surf/surfview_bus_tab3.html";

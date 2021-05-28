@@ -168,7 +168,8 @@ for($r=0;$r<=$ra;$r++){
 
 			if($arrResCount[6][$ru] != ""){
 				$adminText .= "<br><font color='black'>임시취소</font>";
-				$gubunChk .= "6,";
+				// $gubunChk .= "6,";
+				$gubunChk .= "2,";
 			}
 
 			if($arrResCount[7][$ru] != ""){

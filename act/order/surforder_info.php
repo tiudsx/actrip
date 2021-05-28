@@ -12,6 +12,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
 	$bankUserName = $row['user_name'];
 	$res_confirm = $row['res_confirm'];
+	$res_coupon = $row['res_coupon'];
 
 	$chkView = 0;
 	$datDate = $row['res_date'];
@@ -28,6 +29,11 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	
 	if($chkView == 1){
 		$cancelChk = "";
+	}
+
+	if($res_coupon == "NAVERA" || $res_coupon == "NABUSA" || $res_coupon == "NABUSB" || $res_coupon == "NABUSC"){
+		$chkView = 0;
+		$cancelChk = "NAVERA";
 	}
 /*
 예약상태
@@ -245,7 +251,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		?>
 	
 	<div class="write_table" style="text-align:center;">
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:150px; height:28px;color: #fff !important; background: #3195db;display:<?=$cancelChk?>;" value="좌석/정류장 변경 신청" onclick="location.href='/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
+	<input type="button" class="gg_btn gg_btn_grid large" style="width:150px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경 신청" onclick="location.href='/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
 	</div>
 	
 		<?

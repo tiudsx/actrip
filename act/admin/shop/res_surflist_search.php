@@ -87,7 +87,7 @@ if($hidsearch == ""){ //초기화면 조회
 
 }
 
-
+// echo $select_query;
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 

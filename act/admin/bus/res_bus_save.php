@@ -12,7 +12,8 @@ $InsUserID = $_REQUEST["userid"];
 
 $intseq = "";
 $intseq3 = "";
-$to = "lud1@naver.com,ttenill@naver.com";
+$to = "lud1@naver.com";
+// $to = "lud1@naver.com,ttenill@naver.com";
 
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
@@ -71,6 +72,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
         while ($rowSub = mysqli_fetch_assoc($resultSite)){
             $shopSeq = $rowSub['seq'];
 			$shopname = $rowSub['shopname'];
+			$coupon = $rowSub['res_coupon'];
 
             if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfo)){
                 $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
@@ -97,8 +99,15 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
             $etcMsg = '  ▶ 특이사항\n      '.$etc.'\n';
         }
 
+		$infomsg = "\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~";
+		if($coupon == "NABUSA" || $coupon == "NABUSB"){
+			$infomsg .= "\n      - 취소 및 환불신청은 네이버에서 해주세요~";
+		}else if($coupon == "NABUSC"){
+			$infomsg .= "\n      - 취소 및 환불신청은 프립에서 해주세요~";
+		}
+
         $msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
 		if($shopSeq == 7){
 			$resparam = "surfbus_yy";
@@ -123,34 +132,35 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		sendKakao($arrKakao); //알림톡 발송
 
         if(strrpos($usermail, "@") > 0){
-            $to .= ','.$usermail;
+            // $to .= ','.$usermail;
+			$to = $usermail;
+
+			$info1_title = "좌석안내";
+			$info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
+			$info2_title = "탑승시간/위치 안내";
+			$info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+
+			$arrMail = array(
+				"gubun"=> "bus"
+				, "gubun_step" => 3
+				, "gubun_title" => $shopname
+				, "mailto"=> $to
+				, "mailfrom"=> "surfbus_res@actrip.co.kr"
+				, "mailname"=> "actrip"
+				, "userName"=> $userName
+				, "ResNumber"=> $ResNumber
+				, "userPhone" => $userPhone
+				, "etc" => $etc
+				, "totalPrice1" => ""
+				, "totalPrice2" => ""
+				, "banknum" => ""
+				, "info1_title"=> $info1_title
+				, "info1"=> $info1
+				, "info2_title"=> $info2_title
+				, "info2"=> $info2
+			);
+			sendMail($arrMail); //메일 발송
 		}
-
-		$info1_title = "좌석안내";
-        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "탑승시간/위치 안내";
-        $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
-
-		$arrMail = array(
-			"gubun"=> "bus"
-			, "gubun_step" => 3
-			, "gubun_title" => $shopname
-            , "mailto"=> $to
-			, "mailfrom"=> "surfbus_res@actrip.co.kr"
-			, "mailname"=> "actrip"
-			, "userName"=> $userName
-			, "ResNumber"=> $ResNumber
-			, "userPhone" => $userPhone
-			, "etc" => $etc
-			, "totalPrice1" => ""
-			, "totalPrice2" => ""
-			, "banknum" => ""
-			, "info1_title"=> $info1_title
-			, "info1"=> $info1
-			, "info2_title"=> $info2_title
-			, "info2"=> $info2
-		);
-		sendMail($arrMail); //메일 발송
     }
     //==========================카카오 메시지 발송 End ==========================
 }else if($param == "busmodify"){ //셔틀버스 정보 업데이트
@@ -213,6 +223,71 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     if(!$result_set) goto errGo;
 
 	mysqli_query($conn, "COMMIT");
+}else if($param == "reskakao"){ //버스 예약안내 카톡 : 타채널예약건
+    $userName = $_REQUEST["username"];
+    $userPhone = $_REQUEST["userphone"];
+    $reschannel = $_REQUEST["reschannel"];
+
+	/*
+	7 : 네이버쇼핑
+	10 : 네이버예약
+	11 : 프립
+	*/
+	function RandString($len){
+		$return_str = "";
+	
+		for ( $i = 0; $i < $len; $i++ ) {
+			mt_srand((double)microtime()*1000000);
+			$return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
+		}
+	
+		return $return_str;
+	}
+
+	$coupon_code = RandString(5);
+	$user_ip = $_SERVER['REMOTE_ADDR'];
+    $add_date = date("Y-m-d");
+
+	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now());";
+	$result_set = mysqli_query($conn, $select_query);
+ 	if(!$result_set) goto errGo;
+
+	mysqli_query($conn, "COMMIT");
+
+
+	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석을 예약해주세요.";
+	$infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
+	$infomsg .= "\n\n      - 예약하신 건수보다 적거나 많을 경우 예약확정이 안되니 꼭 동일한 좌석수로 예약해주세요.";
+
+	if($reschannel == 7){
+
+	}else if($reschannel == 10){
+
+	}if($reschannel == 11){
+
+	}
+
+	$msgTitle = '액트립 셔틀버스 예약안내';
+	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 셔틀버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		
+	$arrKakao = array(
+		"gubun"=> "bus"
+		, "admin"=> "N"
+		, "smsTitle"=> $msgTitle
+		, "userName"=> $userName
+		, "tempName"=> "at_res_bus1"
+		, "kakaoMsg"=>$kakaoMsg
+		, "userPhone"=> $userPhone
+		, "link1"=>"surfbusgps"
+		, "link2"=>"surfbusgps"
+		, "link3"=>"surfbusgps"
+		, "link4"=>"eatlist" //제휴업체 목록
+		, "link5"=>"event" //공지사항
+		, "smsOnly"=>"N"
+	);
+	sendKakao($arrKakao); //알림톡 발송
+	 
+	echo $coupon_code." / ";
 }
 
 if(!$success){

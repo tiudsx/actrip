@@ -89,6 +89,7 @@
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
+						<div class="swiper-slide"><a href="https://smartstore.naver.com/actrip/products/5135333709" target="_blank"><img src="images/banner/main_banner1.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/377" target="_blank"><img src="images/banner/levelup.jpg?v=1" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>

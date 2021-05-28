@@ -81,6 +81,7 @@ $select_query_cal = 'SELECT COUNT(*) AS Cnt, a.res_date, DAY(a.res_date) AS sDay
 			GROUP BY a.res_date, a.res_confirm';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 
+// echo $select_query_cal;
 $arrResCount = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
 	$arrResCount[$rowCal['res_confirm']][$rowCal['sDay']] = $rowCal['Cnt'];
@@ -151,17 +152,18 @@ for($r=0;$r<=$ra;$r++){
 
 			if($arrResCount[5][$ru] != ""){
 				$adminText .= "<br><font color='919191'>환불완료</font>";
-				//$gubunChk .= "5,";
+				$gubunChk .= "5,";
 			}
 
 			if($arrResCount[6][$ru] != ""){
 				$adminText .= "<br><font color='black'>임시취소</font>";
-				$gubunChk .= "6,";
+				// $gubunChk .= "6,";
+				$gubunChk .= "2,";
 			}
 
 			if($arrResCount[7][$ru] != ""){
 				$adminText .= "<br><font color='black'>취소</font>";
-				// $gubunChk .= "7,";
+				$gubunChk .= "7,";
 			}
 
 			if($arrResCount[8][$ru] != ""){
@@ -181,6 +183,7 @@ for($r=0;$r<=$ra;$r++){
 			if($gubunChk == "99"){
 				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
 			}else{
+				// $gubunChk = str_replace("7,", "", $gubunChk);
 				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -1);'><span class='tour_cal_day' $holidayChk>$ru.</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}
 		}

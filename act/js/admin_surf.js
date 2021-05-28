@@ -773,6 +773,7 @@ function fnSurfModify(resseq){
                     $j("#shopname").val(data[i].shopname);
                     $j("#etc").val(data[i].etc);
                     $j("#memo2").val(data[i].memo);
+                    $j("#res_coupon").val(data[i].res_coupon);
                 }
 
 				var TimeDate = "";
@@ -830,7 +831,13 @@ function fnSurfModify(resseq){
 
 				if(data[i].res_confirm == 4 || data[i].res_confirm == 5){
 					var RtnPrice = commify(rtn_totalprice) + '원';
-					RtnBank = '<span>' + data[i].rtn_bankinfo.replace(/\|/g, "&nbsp;") + '<br>환불액 : ' + RtnPrice + '</span></td>';
+
+					if(data[i].rtn_bankinfo == null || data[i].rtn_bankinfo == ""){
+						data[i].rtn_bankinfo = "";
+					}else{
+						data[i].rtn_bankinfo = data[i].rtn_bankinfo.replace(/\|/g, "&nbsp;");
+					}
+					RtnBank = '<span>' + data[i].rtn_bankinfo + '<br>환불액 : ' + RtnPrice + '</span></td>';
 				}
 
 				var ResConfirm0 = '';

@@ -55,10 +55,14 @@ if($count == 0){
 			<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="off">
 				<?
 				include_once("surforder_info.php");
-
+				
 				if($cancelChk == "none"){
 					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:none;">
 					※ 이용 1일전에는 취소가 불가능합니다.
+					</div>';
+				}else if($cancelChk == "NAVERA"){
+					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
+					※ 취소/환불은 네이버를 통해서 해주세요~
 					</div>';
 				}
 				?>
@@ -122,7 +126,7 @@ if($count == 0){
 							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href=\'/ordersearch\';" />';
 						}?>
-						<?if($cancelChk == "none"){?>
+						<?if($cancelChk == "none" || $cancelChk == "NAVERA"){?>
 						<?}else{?>
 							&nbsp;<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;display:'.$cancelChk.';" value="취소/환불 신청" onclick="fnRefund(<?=$num?>);" />
 						<?}?>

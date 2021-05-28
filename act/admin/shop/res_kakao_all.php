@@ -170,6 +170,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                     <textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea>
                                 </td>
                             </tr>
+                        <?if($res_coupon == "ATBLOG"){?>
+                            <tr>
+                                <th>예약채널</th>
+                                <td>네이버 블로그 체험단 예약건입니다.</td>
+                            </tr>
+                        <?}?>
                         </tbody>
                     </table>
                     <?if($ChangeChk > 0){?>
@@ -199,6 +205,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$etc = $row['etc'];
     $memo = $row['memo'];
     $res_date = $row['res_date'];
+	$res_coupon = $row['res_coupon'];
     
     if($c == 0){
 ?>
@@ -413,6 +420,12 @@ if($count > 0){
                                     <textarea id="memo" name="memo" rows="3" style="width: 90%; resize:none;"><?=$memo?></textarea>
                                 </td>
                             </tr>
+                        <?if($res_coupon == "ATBLOG"){?>
+                            <tr>
+                                <th>예약채널</th>
+                                <td>네이버 블로그 체험단 예약건입니다.</td>
+                            </tr>
+                        <?}?>
                         </tbody>
                     </table>
                     <?if($ChangeChk > 0){?>

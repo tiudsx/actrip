@@ -14,13 +14,70 @@ $Year = $arrDate[0];
 $Mon = $arrDate[1];
 $Day = $arrDate[2];
 
+
 $select_query = "SELECT *, DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                     WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
                         OR	b.resdate = '$selDate')
+                        AND a.res_confirm IN ('대기', '확정')
                         ORDER BY a.resseq, b.ressubseq";
                         //DATE_ADD(b.edate, INTERVAL -1 DAY) >= '2021-01-02'
 //echo $select_query;
+
+// $chkResConfirm = $_REQUEST["chkResConfirm"];
+// $sDate = $_REQUEST["sDate"];
+// $eDate = $_REQUEST["eDate"];
+// $schText = trim($_REQUEST["schText"]);
+// $shopseq = $_REQUEST["seq"];
+
+// for($i = 0; $i < count($chkResConfirm); $i++){
+//     $res_confirm .= $chkResConfirm[$i].',';
+
+//     if($chkResConfirm[$i] == 0){
+//         $listText .= "미입금,";
+//     }else if($chkResConfirm[$i] == 3){
+//         $listText .= "확정,";
+//     }else if($chkResConfirm[$i] == 8){
+//         $listText .= "입금완료,";
+//     }else if($chkResConfirm[$i] == 2){
+//         $listText .= "임시확정/취소,";
+//         $res_confirm .= '6,';
+//     }else if($chkResConfirm[$i] == 6){
+//         $listText .= "임시취소,";
+//     }
+// }
+// $res_confirm .= '99';
+// if($listText != ""){
+//     $listText = substr($listText, 0, strlen($listText) - 1);
+// }
+
+// $shopDate = "";
+// if($sDate == "" && $eDate == ""){
+//     $titleText = "전체";
+// }else{
+//     if($sDate != "" && $eDate != ""){
+//         $shopDate = ' AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
+//     }else if($sDate != ""){
+//         $shopDate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
+//     }else if($eDate != ""){
+//         $shopDate = ' AND b.res_date <= CAST("'.$eDate.'" AS DATE)';
+//     }
+//     $titleText = "[$sDate ~ $eDate]";
+// }
+
+// if($schText != ""){
+//     $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
+// }
+
+// $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+//                     ON a.resnum = b.resnum 
+//                 INNER JOIN `AT_PROD_OPT` c
+//                     ON b.optseq = c.optseq
+//                     WHERE b.seq = '.$shopseq.'
+//                         AND b.res_confirm IN ('.$res_confirm.')'.$shopDate.$schText.'
+//                         ORDER BY b.resnum, b.ressubseq';
+
+
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -98,7 +155,7 @@ if($count == 0){
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
         <colgroup>
-            <col width="9%" />
+            <col width="4%" />
             <col width="9%" />
             <col width="6%" />
             <col width="*" />
@@ -119,32 +176,34 @@ if($count == 0){
         </colgroup>
         <tbody>
             <tr>
-                <th rowspan="2">이름</th>
-                <th rowspan="2">연락처</th>
-                <th rowspan="2">구분</th>
-                <th rowspan="2">예약정보</th>
-                <th colspan="3">강습</th>
-                <th colspan="2">렌탈</th>
-                <th colspan="3">숙박&파티</th>
-                <th rowspan="2">요청사항</th>
-                <th rowspan="2">직원메모</th>
-                <th rowspan="2">입실</th>
-                <th rowspan="2">상태</th>
-                <th rowspan="2">알림톡</th>
-                <th rowspan="2">예약업체</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2"></th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약자</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">구분</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약정보</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="3">강습</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="2">렌탈</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="3">숙박&파티</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">요청사항</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">직원메모</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">입실</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">상태</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">알림톡</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약업체</th>
             </tr>
             <tr>
-                <th>시간</th>
-                <th>남</th>
-                <th>여</th>
-                <th>남</th>
-                <th>여</th>
-                <th>파티</th>
-                <th>남</th>
-                <th>여</th>
+                <th style="background-color:#336600; color:#efefef;">시간</th>
+                <th style="background-color:#336600; color:#efefef;">남</th>
+                <th style="background-color:#336600; color:#efefef;">여</th>
+                <th style="background-color:#336600; color:#efefef;">남</th>
+                <th style="background-color:#336600; color:#efefef;">여</th>
+                <th style="background-color:#336600; color:#efefef;">파티</th>
+                <th style="background-color:#336600; color:#efefef;">남</th>
+                <th style="background-color:#336600; color:#efefef;">여</th>
             </tr>
 
 <?
+$i = 0;
+
 $b = 1;
 $c = 0;
 $PreSeq = "";
@@ -217,11 +276,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             $res_room_chk = "";
         }else{
             if($row['sMonth'] == $Mon || $row['eMonth'] == $Mon){
-                $resText = "숙박";
-                $stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
+                if(!((int)$Day == $eDay)){
+                    $resText = "숙박";
+                    $stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
 
-                if($res_confirm == "확정" || $res_confirm == "대기"){
-                    $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
+                    if($res_confirm == "확정" || $res_confirm == "대기"){
+                        $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
+                    }
                 }
             }
         }
@@ -270,9 +331,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     
 
 ?>
-    <tr onmouseover="this.style.background='#ff9';" onmouseout="this.style.background='#fff';">
-        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?></b></td>
-        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_tel?></b></td>
+    <tr>
+        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><?=$resseq?></td>
+        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?><br><?=$user_tel?></b></td>
         <td style="<?=$fontcolor?>"><?=$resText?></td>
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>

@@ -33,6 +33,7 @@ $shopseq = 0;
                 <li class="active" rel="tab1">검색관리</li>
                 <li rel="tab2">예약관리</li>
                 <li rel="tab3">정산관리</li>
+                <li rel="tab4">타채널예약</li>
             </ul>
 
             <!-- #container -->
@@ -158,17 +159,83 @@ $shopseq = 0;
                     </div>
                     <div id="divResList"></div>
                 </div>
-
                 
                 <!-- #tab3 -->
                 <div id="tab3" class="tab_content" style="display:none;">
                     <?include 'res_bus_cal.php'?>
                 </div>
+
+                <!-- #tab3 -->
+                <div id="tab4" class="tab_content" style="display:none;">
+                    <form name="frmResKakao" id="frmResKakao" autocomplete="off">
+                    <table class='et_vars exForm bd_tb'>
+                        <tr>
+                            <td colspan="3">
+                                알림톡 발송 번호
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>채널</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="reschannel">
+                                    <option value="7">네이버쇼핑</option>
+                                    <option value="10">네이버예약</option>
+                                    <option value="11">프립</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
+                            <td><input type="text" id="userphone" name="userphone" style="width:150px;" value="" class="itx2" maxlength="15"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
+                        </tr>
+                    </table>
+                    </form>
+                </div>
             </div>
             <!-- .tab_container -->
         </article>
     </section>
+
+<script>
+function fnResKakaoAdmin(){
+    if($j("#username").val() == ""){
+        alert("이름을 입력하세요.");
+        return;
+    }
     
+    if($j("#userphone").val() == ""){
+        alert("연락처를 입력하세요.");
+        return;
+    }
+
+    if(!confirm("알림톡 발송을 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val();
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/bus/res_bus_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
+                $j("#userphone").val("");
+                $j("#username").val("");
+                alert(data + "\n\n발송이 완료되었습니다.");
+            }
+        }
+    });
+}
+</script>
+
+
     <div>
         <div id="mngSearch" style="display:inline-block;width:100%"><?include 'res_buslist_search.php'?></div>
     </div>

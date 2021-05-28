@@ -147,7 +147,7 @@ include __DIR__.'/../../common/logininfo.php';
 	</div>
 </div> 
 
-<div id="res_modify" style="display:none;padding:5px;height: 700px;overflow-y: auto;"> 
+<div id="res_modify" style="display:none;padding:5px;height: 600px;overflow-y: auto;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
     <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약등록 (<?=date("Y-m-d A h:i:s")?>)</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">

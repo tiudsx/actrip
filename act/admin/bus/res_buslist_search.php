@@ -71,13 +71,18 @@ if($hidsearch == ""){ //초기화면 조회
 
     $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
+                        INNER JOIN `AT_PROD_MAIN` as c ON b.seq = c.seq 
                         WHERE b.res_confirm IN ('.$res_confirm.')
-                            AND res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
+                            AND b.code = "bus"
+                            AND b.res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
                             ORDER BY b.resnum, b.res_date, b.ressubseq';
 
 }
 
-// echo $select_query;
+// $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b ON a.resnum = b.resnum INNER JOIN `AT_PROD_MAIN` as c ON b.seq = c.seq WHERE b.res_confirm IN (0,1,8,7,4,99) AND b.code = "bus" AND b.res_busnum IN ("Y1","Y3","Y5","S21","S22","S23","Y2","Y4","Y6","S51","S52","S53","E1","E2","E3","A21","A22","A23","E4","E5","E6","A51","A52","A53") ORDER BY b.resnum, b.res_date, b.ressubseq';
+
+// $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, e.optcode, e.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b ON a.resnum = b.resnum INNER JOIN `AT_PROD_MAIN` as c ON b.seq = c.seq INNER JOIN `AT_CODE` as d ON d.code = c.category INNER JOIN `AT_PROD_OPT` e ON b.optseq = e.optseq WHERE b.res_confirm IN (0,1,2,6,5,7,8,99) AND b.code = "surf" ORDER BY c.seq, b.resnum, b.ressubseq';
+//  echo $select_query;
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -182,7 +187,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "NABUSC"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -510,7 +515,7 @@ if(($i % 2) == 0 && $i > 0){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "NABUSC"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>

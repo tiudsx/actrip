@@ -662,8 +662,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
 <? include '_layout_bottom.php'; ?>
 
-<script src="js/surfview.js"></script>
-<script src="js/surfview_shop.js"></script>
+<script src="js/surfview.js?v=1"></script>
+<script src="js/surfview_shop.js?v=1"></script>
 <script>
 $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=<?=str_replace("-", "", date("Y-m-d"))?>&seq=<?=$reqSeq?>");
 

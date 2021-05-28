@@ -105,7 +105,7 @@ SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a
                             AND b.code = "surf"'.$shopDate.$schText.$shopcate.'
                             ORDER BY c.seq, b.resnum, b.ressubseq';
 }
-
+// echo $select_query;
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -263,27 +263,27 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			<col width="8%" />
 			<col width="3%" />
 			<col width="5%" />
-			<col width="8%" />
+			<col width="9%" />
 			<col width="5%" />
 			<col width="5%" />
 		</colgroup>
         <tbody>
             <tr>
-                <th rowspan="2">입점샵</th>
-                <th rowspan="2">예약번호</th>
-                <th rowspan="2">이름/연락처</th>
-                <th colspan="5">예약항목</th>
-                <th rowspan="2">승인처리</th>
-                <th rowspan="2">결제금액</th>
-                <th rowspan="2">특이사항</th>
-                <th rowspan="2">취소사유</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">입점샵</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약번호</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">이름/연락처</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="5">예약항목</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">승인처리</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">결제금액</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">특이사항</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">취소사유</th>
             </tr>
             <tr>
-                <th style="text-align:center;">이용일</th>
-                <th style="text-align:center;">예약항목</th>
-                <th style="text-align:center;">예약내용</th>
-                <th style="text-align:center;">예약상태</th>
-                <th style="text-align:center;">환불</th>
+                <th style="background-color:#336600; color:#efefef;">이용일</th>
+                <th style="background-color:#336600; color:#efefef;">예약항목</th>
+                <th style="background-color:#336600; color:#efefef;">예약내용</th>
+                <th style="background-color:#336600; color:#efefef;">예약상태</th>
+                <th style="background-color:#336600; color:#efefef;">환불</th>
             </tr>
 <?
     }

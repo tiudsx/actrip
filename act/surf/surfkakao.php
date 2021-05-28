@@ -346,6 +346,8 @@ function sendMail($arrMail){
 			$state_title = "예약확정";
 		}else if($gubun_step == 4){ //환불요청
 			$state_title = "환불요청";
+		}else if($gubun_step == 8){ //입금완료
+			$state_title = "입금완료";
 		}else if($gubun_step == 9){ //정류장 변경
 			$state_title = "정류장 변경";
 		}

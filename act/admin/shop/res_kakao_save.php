@@ -191,6 +191,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	
 		while ($rowSub = mysqli_fetch_assoc($resultSite)){
 			$shopname = $rowSub['shopname'];
+			$coupon = $rowSub['res_coupon'];
 	
 			$TimeDate = '';
 			if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
@@ -246,9 +247,16 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		if($etc != ''){
 			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
 		}
-		
+
+		$infomsg = "";
+		$infomsg .= "\n      - 예약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.";
+		if($coupon == "NAVERA"){
+			$infomsg .= "\n      - 취소 및 환불신청은 네이버에서 해주세요~";
+		}
+		$infomsg .= "\n\n";
+
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg.' ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 	
 		$navilink = "surflocation?seq=".$shopseq;
 		if($shopseq == 13){
@@ -260,7 +268,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 	
 		$arrKakao = array(
-			"gubun"=> $code
+			"gubun"=> ""
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
@@ -284,11 +292,17 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$admin_tel = $rowshop["tel_kakao"];
 		// $admin_tel = "010-4437-0009";
 	
+		$infomsg = "";
+		if($coupon == "ATBLOG"){
+			$infomsg .= "\n      - 블로그 체험단 예약신청입니다.";
+		}
+		$infomsg .= "\n      - 예약확정이 완료되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n";
+
 		$msgTitle = '액트립 ['.$userName.']님 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 연락처 : '.$userPhone.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약확정이 완료되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 연락처 : '.$userPhone.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg;
 	
 		$arrKakao = array(
-			"gubun"=> $code
+			"gubun"=> ""
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
@@ -508,6 +522,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	
 		while ($rowSub = mysqli_fetch_assoc($resultSite)){
 			$shopname = $rowSub['shopname'];
+			$coupon = $rowSub['res_coupon'];
 	
 			$TimeDate = '';
 			if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
@@ -564,8 +579,15 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
 		}
 		
+		$infomsg = "";
+		$infomsg .= "\n      - 예약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.";
+		if($coupon == "NAVERA"){
+			$infomsg .= "\n      - 취소 및 환불신청은 네이버에서 해주세요~";
+		}
+		$infomsg .= "\n\n";
+		
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신 내역이 확정처리되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg.' ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 	
 		$navilink = "surflocation?seq=".$shopseq;
 		if($shopseq == 13){
@@ -577,7 +599,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 	
 		$arrKakao = array(
-			"gubun"=> $code
+			"gubun"=> ""
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
@@ -604,11 +626,17 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$admin_tel = $rowshop["tel_kakao"];
 		// $admin_tel = "010-4437-0009";
 	
+		$infomsg = "";
+		if($coupon == "ATBLOG"){
+			$infomsg .= "\n      - 블로그 체험단 예약신청입니다.";
+		}
+		$infomsg .= "\n      - 예약확정이 완료되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n";
+
 		$msgTitle = '액트립 ['.$userName.']님 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 연락처 : '.$userPhone.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약확정이 완료되었습니다.\n      - 이용일 및 신청정보 확인부탁드립니다.\n\n';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 연락처 : '.$userPhone.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg;
 	
 		$arrKakao = array(
-			"gubun"=> $code
+			"gubun"=> ""
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName

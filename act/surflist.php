@@ -58,7 +58,7 @@ $notSeq = "";
 
             <?if($shopadcount > 0){?>
             <section id="popShop">
-                <h2><img src="images/icon/moon.svg" alt=""> 인기 서핑샵 추천</h2>
+                <h2><img src="images/icon/moon.svg" alt=""> 액트립 추천</h2>
                 <ul class="listShop">
                     <li class="listShopbox">
 
@@ -71,13 +71,19 @@ $notSeq = "";
                         $shoplng = $row["shoplng"];
                         $categoryname = $row["categoryname"];
                         $shopname = $row["shopname"];
+                        $link_yn  = $row["link_yn"];
+                        $link_url  = $row["link_url"];
 
                         $shopLocation .= "MARKER_SPRITE_POSITION2.shop$seq = [0, 0, '$shoplat', '$shoplng', '$shop_addr', '', $i, $seq, '$shop_img[0]', '$categoryname', '$shopname'];\n";
                         $i++;
                         ?>
                         <ul class="listItem">
                             <li class="thumbnail">
+                                <?if($link_yn == "Y"){?>
+                                <a href="<?=$link_url?>" target="_blank"><img src="<?=$shop_img[0]?>" alt=""></a>
+                                <?}else{?>
                                 <a href="/surfview?seq=<?=$seq?>"><img src="<?=$shop_img[0]?>" alt=""></a>
+                                <?}?>
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
@@ -87,7 +93,11 @@ $notSeq = "";
                                 </span>
                             </li>
                             <li class="contents">
+                                <?if($link_yn == "Y"){?>
+                                <h3><a href="<?=$link_url?>"><?=$shopname?> <i class="fas fa-angle-right"></i></a></h3>
+                                <?}else{?>
                                 <h3><a href="/surfview?seq=<?=$seq?>"><?=$shopname?> <i class="fas fa-angle-right"></i></a></h3>
+                                <?}?>
                                 <span><a href="javascript:fnMapView('shop<?=$seq?>');"><img src="images/icon/map.svg" alt="">위치</a></span>
                                 <span>구매 <?=number_format($row["sell_cnt"])?>개</span>
                                 
@@ -164,13 +174,19 @@ $shopcount = mysqli_num_rows($result_shoplist);
                         $shoplng = $row["shoplng"];
                         $categoryname = $row["categoryname"];
                         $shopname = $row["shopname"];
+                        $link_yn  = $row["link_yn"];
+                        $link_url  = $row["link_url"];
 
                         $shopLocation .= "MARKER_SPRITE_POSITION2.shop$seq = [0, 0, '$shoplat', '$shoplng', '$shop_addr', '', $i, $seq, '$shop_img[0]', '$categoryname', '$shopname'];\n";
                         $i++;
                         ?>
                         <ul class="listItem">
                             <li class="thumbnail">
+                                <?if($link_yn == "Y"){?>
+                                <a href="<?=$link_url?>" target="_blank"><img src="<?=$shop_img[0]?>" alt=""></a>
+                                <?}else{?>
                                 <a href="/surfview?seq=<?=$seq?>"><img src="<?=$shop_img[0]?>" alt=""></a>
+                                <?}?>
                                 <span>
                                     <img src="images/icon/parking.svg" alt="">
                                     <img src="images/icon/wifi.svg" alt="">
@@ -180,7 +196,11 @@ $shopcount = mysqli_num_rows($result_shoplist);
                                 </span>
                             </li>
                             <li class="contents">
+                                <?if($link_yn == "Y"){?>
+                                <h3><a href="<?=$link_url?>"><?=$shopname?> <i class="fas fa-angle-right"></i></a></h3>
+                                <?}else{?>
                                 <h3><a href="/surfview?seq=<?=$seq?>"><?=$shopname?> <i class="fas fa-angle-right"></i></a></h3>
+                                <?}?>
                                 <span><a href="javascript:fnMapView('shop<?=$seq?>');"><img src="images/icon/map.svg" alt="">위치</a></span>
                                 <span>구매 <?=number_format($row["sell_cnt"])?>개</span>
                                 

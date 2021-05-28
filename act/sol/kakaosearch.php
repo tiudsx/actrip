@@ -7,17 +7,27 @@
 include __DIR__.'/../surf/surffunc.php';
 
 $resseq = $_REQUEST["seq"];
+$chk = $_REQUEST["chk"];
 if($resseq == ""){
     echo "<script>alert('예약된 정보가 없습니다.');location.href='https://actrip.co.kr';</script>";
     return;
 }
-$resseq = trim(decrypt($resseq));
+
+
+
 
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
-$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao_chk = 'Y' WHERE resseq = $resseq";
-$result_set = mysqli_query($conn, $select_query);
-mysqli_query($conn, "COMMIT");
+
+if($chk == 1){
+    
+}else{
+    $resseq = trim(decrypt($resseq));
+
+    $select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao_chk = 'Y' WHERE resseq = $resseq";
+    $result_set = mysqli_query($conn, $select_query);
+    mysqli_query($conn, "COMMIT");
+}
 
 $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
@@ -31,6 +41,8 @@ if($count_sub == 0){
 }else{
 
     $i = 0;
+    $stay_chk = 0;
+    $surfbbq_chk = 0;
     $tablist = "";
     $arrStay = array();
     $arrBbq = array();
@@ -76,6 +88,8 @@ if($count_sub == 0){
                 }
 
                 $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw";
+
+                $stay_chk = 1;
             }
 
             if($bbq != "N"){ //바베큐 신청
@@ -83,6 +97,8 @@ if($count_sub == 0){
                 $tablist2 = "<li tabid=\"viewli\" id=\"view_li3\" onclick=\"fnResViewSol(false, '#view_tab3', 70, this);\"><a>바베큐</a></li>";
 
                 $arrBbq[$row['ressubseq']] = $row['staysex']."|".$row['resdate']."|".$row['bbq'];
+
+                $surfbbq_chk = 1;
             }
         }else{ //강습&렌탈
             if($prod_name != "N"){ //강습 신청
@@ -90,6 +106,8 @@ if($count_sub == 0){
                 $tablist3 = "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 70, this);\"><a>강습</a></li>";
 
                 $arrSurf[$row['ressubseq']] = $row['prod_name']."|".$row['resdate']."|".$row['restime']."|".$row['surfM']."|".$row['surfW'];
+
+                $surfbbq_chk = 1;
             }
             if($surfrent != "N"){ //렌탈 신청
                 $renttext = "장비렌탈,";
@@ -143,9 +161,65 @@ $j(document).ready(function(){
             </div>
             <div tabid="viewtab" id="view_tab1">
                 <div class="contentimg">
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg" class="placeholder">
+                    <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg?v=1" class="placeholder"> -->
 
                     <?if($tablist1 != ""){?>
+                        <center>
+                        <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
+                        <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:90%;">
+                            <colgroup>
+                                <col width="13%" />
+                                <col width="*" />
+                                <col width="17%" />
+                                <col width="20%" />
+                                <col width="19%" />
+                            </colgroup>
+                            <tbody id="tbStay">
+                                <tr>
+                                    <th>성별</th>
+                                    <th>이용일</th>
+                                    <th>호실</th>
+                                    <th>침배번호</th>
+                                    <th>비밀번호</th>
+                                </tr>
+                            
+                            <?
+                            foreach ($arrStay as $key => $value) {
+                                $arrVlu = explode("|", $value);
+
+                                if($res_room_chk == "N"){
+                                    $arrVlu[3] = "";
+                                    $arrVlu[4] = "";
+                                    $arrVlu[5] = "";
+                                }else{
+                                    $arrVlu[3] = $arrVlu[3]."호";
+                                    $arrVlu[4] = $arrVlu[4]."번 침대";
+                                }
+                            ?>
+                            
+                            <tr trid="stay">
+                                <td><?=$arrVlu[0]?></td>
+                                <td><?=$arrVlu[1]?> ~ <br><?=$arrVlu[2]?></td>
+                                <td><?=$arrVlu[3]?></td>
+                                <td><?=$arrVlu[4]?></td>
+                                <td><?=$arrVlu[5]?></td>
+                            </tr>
+
+                            <?
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        <?if($res_room_chk == "N"){?>
+                        <p class="restitle">✔ 객실조회는 이용일 오후 2시 이후부터 가능합니다.</p>
+                        <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search_time.jpg" class="placeholder"> -->
+                        <br>
+                        <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/btn.jpg" onclick="fnStaySearch(<?=$resseq?>);" class="placeholder">
+                        </center>
+                        <?}else{?>
+                            <p class="restitle">✔ 객실조회가 완료되었습니다.<Br>배정된 객실 입실은 오후 4시 이후부터 가능합니다.</p>
+                        <?}?>
+                        <br>
                     <img src="https://actrip.co.kr/act/images/sol_kakao/sol_04.jpg" class="placeholder">
                     <?}?>
 
@@ -159,66 +233,16 @@ $j(document).ready(function(){
             <!-- 숙소 안내 -->
             <div tabid="viewtab" id="view_tab2" style="display: none;min-height: 800px;"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/02.jpg" class="placeholder">
-                <br>
-                <center>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
-                <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:90%;">
-                    <colgroup>
-                        <col width="13%" />
-                        <col width="*" />
-                        <col width="17%" />
-                        <col width="20%" />
-                        <col width="19%" />
-                    </colgroup>
-                    <tbody id="tbStay">
-                        <tr>
-                            <th>성별</th>
-                            <th>이용일</th>
-                            <th>호실</th>
-                            <th>침배번호</th>
-                            <th>비밀번호</th>
-                        </tr>
-                    
-                    <?
-                    foreach ($arrStay as $key => $value) {
-                        $arrVlu = explode("|", $value);
-
-                        if($res_room_chk == "N"){
-                            $arrVlu[3] = "";
-                            $arrVlu[4] = "";
-                            $arrVlu[5] = "";
-                        }else{
-                            $arrVlu[3] = $arrVlu[3]."호";
-                            $arrVlu[4] = $arrVlu[4]."번 침대";
-                        }
-                    ?>
-                    
-                    <tr trid="stay">
-                        <td><?=$arrVlu[0]?></td>
-                        <td><?=$arrVlu[1]?> ~ <br><?=$arrVlu[2]?></td>
-                        <td><?=$arrVlu[3]?></td>
-                        <td><?=$arrVlu[4]?></td>
-                        <td><?=$arrVlu[5]?></td>
-                    </tr>
-
-                    <?
-                    }
-                    ?>
-                    </tbody>
-                </table>
-                <?if($res_room_chk == "N"){?>
-                <p class="restitle">✔ 객실조회는 이용일 오후 2시 이후부터 가능합니다.</p>
-                <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search_time.jpg" class="placeholder"> -->
-                <br>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/btn.jpg" onclick="fnStaySearch(<?=$resseq?>);" class="placeholder">
-                </center>
-                <?}else{?>
-                    <p class="restitle">✔ 객실조회가 완료되었습니다.<Br>조회된 호실,침대를 이용하시면는 이용일 오후 2시 이후부터 가능합니다.</p>
-                <?}?>
-                <br>
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/07.jpg" class="placeholder">
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/03.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/04.jpg" class="placeholder">
+
+                <?if($surfbbq_chk == 1 && $stay_chk == 1){?>
+                    <center>
+                    <p class="restitle">✔ 조식이용은 네이버 방문자 리뷰 작성 후 이용가능합니다.</p>
+                    </center>
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/04.jpg" class="placeholder">
+                <?}?>
+
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/06.jpg" class="placeholder">
                 
             </div>
