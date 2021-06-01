@@ -238,7 +238,9 @@ $j(document).ready(function(){
 
                 <?if($surfbbq_chk == 1 && $stay_chk == 1){?>
                     <center>
-                    <p class="restitle">✔ 조식이용은 네이버 방문자 리뷰 작성 후 이용가능합니다.</p>
+                    <p class="restitle">✔ 조식이용은 일요일 오전에만 제공됩니다.</p>
+                    <p class="restitle">✔ 이용시 네이버 방문자 리뷰 작성 후 이용가능합니다.</p>
+                    <p class="restitle">✔ 일행이 있을 경우 네이버에서 추가 예약, 리뷰 작성해주세요~</p>
                     </center>
                     <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/04.jpg" class="placeholder">
                 <?}?>

@@ -17,7 +17,7 @@ include __DIR__.'/../../common/logininfo.php';
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/admin_sol.js?v=1"></script>
+<script type="text/javascript" src="/act/js/admin_sol.js?v=3"></script>
 <script type="text/javascript" src="/act/js/common.js"></script>
 
 <div class="container" id="contenttop" style="padding-top:35px;">
@@ -174,9 +174,10 @@ include __DIR__.'/../../common/logininfo.php';
                 <td><input type="text" id="user_name" name="user_name" size="15" value="" class="itx"></td>
                 <th>연락처</th>
 				<td>
-					<input type="text" id="user_tel1" name="user_tel1" size="4" maxlength="4" value="" class="itx"> -
+					<input type="text" id="user_tel" name="user_tel" size="15" value="" class="itx">
+					<!-- <input type="text" id="user_tel1" name="user_tel1" size="4" maxlength="4" value="" class="itx"> -
 					<input type="text" id="user_tel2" name="user_tel2" size="5" maxlength="4" value="" class="itx"> -
-					<input type="text" id="user_tel3" name="user_tel3" size="5" maxlength="4" value="" class="itx">
+					<input type="text" id="user_tel3" name="user_tel3" size="5" maxlength="4" value="" class="itx"> -->
 				</td>
 			</tr>
 			<tr>

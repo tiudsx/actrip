@@ -157,7 +157,8 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 	$resseq = $_REQUEST["resseq"];
 	$res_adminname = $_REQUEST["res_adminname"];
 	$user_name = $_REQUEST["user_name"];
-	$user_tel = $_REQUEST["user_tel1"]."-".$_REQUEST["user_tel2"]."-".$_REQUEST["user_tel3"];
+	// $user_tel = $_REQUEST["user_tel1"]."-".$_REQUEST["user_tel2"]."-".$_REQUEST["user_tel3"];
+	$user_tel = $_REQUEST["user_tel"];
 
 	$res_stayshop = $_REQUEST["res_stayshop"];
 	$res_staysdate = $_REQUEST["res_staysdate"];

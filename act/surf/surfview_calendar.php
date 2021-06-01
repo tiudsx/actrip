@@ -47,7 +47,7 @@ $p_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y-1)); // 작년
 if($seqCal == 13 || $seqCal == 15){
 	$nowDate = date("Y-m-d");
 }else{
-	$nowDate = date("Y-m-d", strtotime(date("Y-m-d")." +0 day"));
+	$nowDate = date("Y-m-d", strtotime(date("Y-m-d")." +1 day"));
 }
 // 변수 $s 에 새로운 값을 넣고 새문서를 만들면, $s 가 들어와 원하는 값을 표시해 줍니다.
 

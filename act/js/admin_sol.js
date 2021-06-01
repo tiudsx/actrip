@@ -50,10 +50,11 @@ function fnSolModify(resseq){
                     $j("#resseq").val(data[i].resseq);
                     $j("#res_adminname").val(data[i].admin_user);
                     $j("#user_name").val(data[i].user_name);
-                    var arrTel = data[i].user_tel.split("-");
-                    $j("#user_tel1").val(arrTel[0]);
-                    $j("#user_tel2").val(arrTel[1]);
-                    $j("#user_tel3").val(arrTel[2]);
+                    $j("#user_tel").val(data[i].user_tel);
+                    // var arrTel = data[i].user_tel.split("-");
+                    // $j("#user_tel1").val(arrTel[0]);
+                    // $j("#user_tel2").val(arrTel[1]);
+                    // $j("#user_tel3").val(arrTel[2]);
                     $j("#res_company").val(data[i].res_company);
                     $j("#res_confirm").val(data[i].res_confirm);
                     $j("#memo").val(data[i].memo);
@@ -118,7 +119,11 @@ function fnSolDataAdd(gubun){
         return;
     }
 
-    if($j("#user_tel1").val() == "" || $j("#user_tel2").val() == "" || $j("#user_tel3").val() == ""){
+    // if($j("#user_tel1").val() == "" || $j("#user_tel2").val() == "" || $j("#user_tel3").val() == ""){
+    //     alert("연락처를 입력하세요~");
+    //     return;
+    // }
+    if($j("#user_tel").val() == ""){
         alert("연락처를 입력하세요~");
         return;
     }
