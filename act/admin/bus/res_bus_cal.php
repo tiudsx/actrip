@@ -89,7 +89,7 @@ $now = date("Y-m-d A h:i:s");
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
-            SELECT "조아" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 15000) AS total_price, res_confirm FROM `AT_RES_SUB`
+            SELECT "조아" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 17500) AS total_price, res_confirm FROM `AT_RES_SUB`
 							WHERE res_confirm = 3
                                 AND code = "bus"
                                 AND res_coupon = "JOABUS"
@@ -103,9 +103,16 @@ $now = date("Y-m-d A h:i:s");
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
-			SELECT "망고" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 16000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
+			SELECT "FRIP" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 18000) AS total_price, res_confirm FROM `AT_RES_SUB`
+							WHERE res_confirm = 3
+								AND code = "bus"
+								AND res_coupon = "FRIP"
+								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
+							GROUP BY res_date
+			UNION ALL
+			SELECT "망고" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 15000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
 							ON a.resnum = b.resnum
-								AND b.etc like "%망고서프%"
+								AND res_coupon = "MANGO"
 							WHERE res_confirm = 3
 								AND code = "bus"
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
@@ -117,6 +124,7 @@ $now = date("Y-m-d A h:i:s");
 	$arrResCount = array();
 	$arrResJoaCount = array();
 	$arrResKlookCount = array();
+	$arrResFripCount = array();
 	$arrResMangCount = array();
 	$arrResMangPrice = array();
 	$arrResNaverCount = array();
@@ -125,6 +133,8 @@ $now = date("Y-m-d A h:i:s");
             $arrResJoaCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "KLOOK"){
             $arrResKlookCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
+        }else if($row['title'] == "FRIP"){
+            $arrResFripCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "네이버"){
             $arrResNaverCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "망고"){
@@ -193,6 +203,12 @@ $now = date("Y-m-d A h:i:s");
                 if($arrResJoaCount[3][$ru] != ""){
 					$daySum += $arrResJoaCount[3][$ru];
 					$adminText .= '<br><font color="black">조아:'.number_format($arrResJoaCount[3][$ru])."원</font>";
+				}
+
+				//FRIP
+                if($arrResFripCount[3][$ru] != ""){
+					$daySum += $arrResFripCount[3][$ru];
+					$adminText .= '<br><font color="black">FRIP:'.number_format($arrResFripCount[3][$ru])."원</font>";
 				}
 
 				//클룩

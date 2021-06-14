@@ -187,7 +187,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "NABUSC"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -515,7 +515,7 @@ if(($i % 2) == 0 && $i > 0){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "NABUSC"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>
