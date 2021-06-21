@@ -185,6 +185,7 @@ $shopseq = 0;
                                     <option value="7">네이버쇼핑</option>
                                     <option value="10">네이버예약</option>
                                     <option value="11">프립</option>
+                                    <option value="12">마이리얼트립</option>
                                 </select>
                             </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>

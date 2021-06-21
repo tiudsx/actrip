@@ -1,6 +1,8 @@
 <? include 'db.php'; ?>
 
 <?
+include __DIR__.'/surf/surffunc.php';
+
 $param_mid = $_REQUEST["mid"];
 
 if($param_mid == ""){
@@ -21,6 +23,13 @@ if($param == "surfbus_yy"){ //양양 셔틀버스
 }else{ //동해 셔틀버스
     $shopseq = 14;
     $pointurl = "surf/surfview_bus_tab3_2.html";
+}
+
+$coupon_code = $_REQUEST["param"];
+if($coupon_code != ""){
+    $arrChk = explode("|", decrypt($coupon_code));
+    $dateChk = $arrChk[0];
+    $codeChk = $arrChk[1];
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
@@ -310,7 +319,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
-                                    <input type="text" id="coupon" name="coupon" value="" size="10" class="itx" maxlength="10">
+                                    <input type="text" id="coupon" name="coupon" value="<?=$codeChk?>" size="10" class="itx" maxlength="10">
                                     <input type="hidden" id="couponcode" name="couponcode" value="">
                                     <input type="hidden" id="couponprice" name="couponprice" value="0">
                                     <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />

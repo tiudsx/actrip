@@ -257,7 +257,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
 	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석을 예약해주세요.";
 	$infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
-	$infomsg .= "\n\n      - 예약하신 건수보다 적거나 많을 경우 예약확정이 안되니 꼭 동일한 좌석수로 예약해주세요.";
+	$infomsg .= "\n\n      - 예약하신 건수와 동일한 좌석수로 예약해주세요.";
 
 	if($reschannel == 7){
 
@@ -275,14 +275,14 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		, "admin"=> "N"
 		, "smsTitle"=> $msgTitle
 		, "userName"=> $userName
-		, "tempName"=> "at_res_bus1"
+		, "tempName"=> "at_bus_kakao"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"surfbusgps"
-		, "link2"=>"surfbusgps"
-		, "link3"=>"surfbusgps"
-		, "link4"=>"eatlist" //제휴업체 목록
-		, "link5"=>"event" //공지사항
+		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code))
+		, "link2"=>""
+		, "link3"=>""
+		, "link4"=>"" //제휴업체 목록
+		, "link5"=>"" //공지사항
 		, "smsOnly"=>"N"
 	);
 	sendKakao($arrKakao); //알림톡 발송

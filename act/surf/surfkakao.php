@@ -50,6 +50,8 @@ function kakaoMsg($arrKakao){
         $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/event_cafe"},';
 	}else if($arrKakao["tempName"] == "at_surf_step3"){ //솔 확정
         $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/event_cafe"},';
+	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //셔틀버스 좌석예약 알림톡 발송
+		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
 	}
 
 	$arryKakao = '';

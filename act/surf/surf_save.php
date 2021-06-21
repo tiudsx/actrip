@@ -126,7 +126,7 @@ if($param == "BusI"){
     }
 
     //조아서프 패키지 예약확정 처리
-    if($coupon == "JOABUS" || $coupon == "KLOOK" || $coupon == "NAVER" || $coupon == "FRIP"){
+    if($coupon == "JOABUS" || $coupon == "KLOOK" || $coupon == "NAVER" || $coupon == "FRIP" || $coupon == "MYTRIP"){
         $res_confirm = 3;
         $InsUserID = $coupon;
     }else{
@@ -134,7 +134,7 @@ if($param == "BusI"){
     }
 
     //서핑버스 네이버예약, 네이버쇼핑, 프립
-    if($couponseq == 7 || $couponseq == 10 || $couponseq == 11){
+    if($couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 12){
         $InsUserID = $coupon;
         $res_confirm = 8;
     
@@ -144,6 +144,8 @@ if($param == "BusI"){
             $coupon = "NABUSB";
         }else if($couponseq == 11){
             $coupon = "NABUSC";
+        }else if($couponseq == 12){
+            $coupon = "NABUSD";
         }
     }
 
@@ -278,6 +280,28 @@ if($param == "BusI"){
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
+        }else if($coupon == "MYTRIP"){
+            $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+            $msgTitle = '액트립 서핑버스 예약안내';
+
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 좌석/정류장 변경은 하단 버튼에서 가능합니다.\n      - 예약취소는 마이리얼트립에서 접수가능합니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            // 고객 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_bus_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+            );
         }else if($coupon == "KLOOK"){
             $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
             $msgTitle = '액트립&KLOOK 서핑버스 예약안내';
@@ -390,6 +414,8 @@ if($param == "BusI"){
         }else if($coupon == "NAVER"){
             $gubun_title = "액트립 서핑버스";
         }else if($coupon == "FRIP"){
+            $gubun_title = "액트립 서핑버스";
+        }else if($coupon == "MYTRIP"){
             $gubun_title = "액트립 서핑버스";
         }else{
             $info2_title = "";

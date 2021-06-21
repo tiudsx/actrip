@@ -103,10 +103,17 @@ $now = date("Y-m-d A h:i:s");
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
-			SELECT "FRIP" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 18000) AS total_price, res_confirm FROM `AT_RES_SUB`
+			SELECT "FRIP" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 16000) AS total_price, res_confirm FROM `AT_RES_SUB`
 							WHERE res_confirm = 3
 								AND code = "bus"
 								AND res_coupon = "FRIP"
+								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
+							GROUP BY res_date
+			UNION ALL
+			SELECT "MYTRIP" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 16000) AS total_price, res_confirm FROM `AT_RES_SUB`
+							WHERE res_confirm = 3
+								AND code = "bus"
+								AND res_coupon = "MYTRIP"
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
@@ -125,6 +132,7 @@ $now = date("Y-m-d A h:i:s");
 	$arrResJoaCount = array();
 	$arrResKlookCount = array();
 	$arrResFripCount = array();
+	$arrResMyCount = array();
 	$arrResMangCount = array();
 	$arrResMangPrice = array();
 	$arrResNaverCount = array();
@@ -135,6 +143,8 @@ $now = date("Y-m-d A h:i:s");
             $arrResKlookCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "FRIP"){
             $arrResFripCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
+        }else if($row['title'] == "MYTRIP"){
+            $arrResMyCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "네이버"){
             $arrResNaverCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "망고"){
@@ -209,6 +219,12 @@ $now = date("Y-m-d A h:i:s");
                 if($arrResFripCount[3][$ru] != ""){
 					$daySum += $arrResFripCount[3][$ru];
 					$adminText .= '<br><font color="black">FRIP:'.number_format($arrResFripCount[3][$ru])."원</font>";
+				}
+
+				//마이리얼트립
+                if($arrResMyCount[3][$ru] != ""){
+					$daySum += $arrResMyCount[3][$ru];
+					$adminText .= '<br><font color="black">마이리얼:'.number_format($arrResMyCount[3][$ru])."원</font>";
 				}
 
 				//클룩
