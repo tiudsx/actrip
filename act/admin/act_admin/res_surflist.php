@@ -210,7 +210,9 @@ include __DIR__.'/../../common/logininfo.php';
                 <th>알림톡</th>
 				<td>
 					<select id="res_kakao" name="res_kakao" class="select">
-						<option value='Y'>발송</option>
+						<option value='A'>전체발송</option>
+						<option value='U'>고객만 발송</option>
+						<option value='Y'>업체만 발송</option>
 						<option value='N'>미발송</option>
 					</select> (확정일 경우만 발송)
 				</td>

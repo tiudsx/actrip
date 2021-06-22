@@ -194,8 +194,6 @@ if($param == "RtnPrice"){
         //echo '<script>alert("환불신청 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");</script>';
         echo 'err';
     }else{
-        mysqli_query($conn, "COMMIT");
-
         $rtnText = ' ▶ 환불요청 안내\n       - 결제금액 : '.number_format($TotalPrice).'원\n       - 환불수수료 : '.number_format($TotalFee).'원\n       - 환불금액 : '.number_format($TotalPrice-$TotalFee).'원\n  ▶환불계좌\n       - '.str_replace('|', ' / ', $FullBankText).'\n';
 
         if($ressubseqInfo != ""){
@@ -232,7 +230,25 @@ if($param == "RtnPrice"){
                 , "link5"=>""
                 , "smsOnly"=>"N"
             );
-            sendKakao($arrKakao);
+
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+            $PROD_NAME = $shopname." 환불요청";
+            $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
+            $USER_NAME = $arrKakao["userName"];
+            $USER_TEL = $arrKakao["userPhone"];
+            $PROD_TYPE = $arrKakao["gubun"];
+            $KAKAO_DATE = $datetime;
+            $RES_CONFIRM = $res_confirm;
+            $KAKAO_CONTENT = $kakaoMsg;
+            $KAKAO_BTN1 = $arrKakao["link1"];
+            $KAKAO_BTN2 = $arrKakao["link2"];
+            $KAKAO_BTN3 = $arrKakao["link3"];
+            $KAKAO_BTN4 = $arrKakao["link4"];
+            $KAKAO_BTN5 = $arrKakao["link5"];
+
+            // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+            // $result_set = mysqli_query($conn, $select_query);
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
@@ -299,9 +315,29 @@ if($param == "RtnPrice"){
                     , "link5"=>""
                     , "smsOnly"=>"N"
                 );
-                sendKakao($arrKakao);
+                
+                $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+                $PROD_NAME = $shopname." 예약취소";
+                $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
+                $USER_NAME = $arrKakao["userName"];
+                $USER_TEL = $arrKakao["userPhone"];
+                $PROD_TYPE = "surf_shop";
+                $KAKAO_DATE = $datetime;
+                $RES_CONFIRM = $res_confirm;
+                $KAKAO_CONTENT = $kakaoMsg;
+                $KAKAO_BTN1 = $arrKakao["link1"];
+                $KAKAO_BTN2 = $arrKakao["link2"];
+                $KAKAO_BTN3 = $arrKakao["link3"];
+                $KAKAO_BTN4 = $arrKakao["link4"];
+                $KAKAO_BTN5 = $arrKakao["link5"];
+
+                // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+                // $result_set = mysqli_query($conn, $select_query);
             }
         }
+        
+        mysqli_query($conn, "COMMIT");
 
         //echo '<script>alert("환불신청이 완료되었습니다.");parent.location.href="/";</script>';
         echo '0';
@@ -435,7 +471,6 @@ if($param == "RtnPrice"){
 		mysqli_query($conn, "ROLLBACK");
 		echo '<script>alert("좌석/정류장 수정 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
 	}else{
-		mysqli_query($conn, "COMMIT");
             
         // 예약좌석 정보
         foreach($arrSeatInfo as $bus) {
@@ -482,8 +517,9 @@ if($param == "RtnPrice"){
         }
     
         // 카카오톡 알림톡 발송
-        $msgTitle = '액트립 '.$shopname.' 변경 안내';
-        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 변경\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.$pointMsg.'---------------------------------\n ▶ 안내사항\n      - 예약정보 변경이 완료되었으니 확인해주세요.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+        // $msgTitle = '액트립 '.$shopname.' 변경 안내';
+        $msgTitle = '액트립 서핑버스 정보변경 안내';
+        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 변경\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.$pointMsg.'---------------------------------\n ▶ 안내사항\n      - 변경된 좌석/정류장 정보를 확인해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
     
         $arrKakao = array(
             "gubun"=> "bus"
@@ -526,9 +562,29 @@ if($param == "RtnPrice"){
             , "info2"=> $info2
         );
 
-        sendKakao($arrKakao); //알림톡 발송
+        $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+        $PROD_NAME = "서핑버스 정류장변경";
+        $PROD_URL = "https://actrip.co.kr/".$resparam;
+        $USER_NAME = $arrKakao["userName"];
+        $USER_TEL = $arrKakao["userPhone"];
+        $PROD_TYPE = $arrKakao["gubun"];
+        $KAKAO_DATE = $datetime;
+        $RES_CONFIRM = $res_confirm;
+        $KAKAO_CONTENT = $kakaoMsg;
+        $KAKAO_BTN1 = $arrKakao["link1"];
+        $KAKAO_BTN2 = $arrKakao["link2"];
+        $KAKAO_BTN3 = $arrKakao["link3"];
+        $KAKAO_BTN4 = $arrKakao["link4"];
+        $KAKAO_BTN5 = $arrKakao["link5"];
+
+        // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+        // $result_set = mysqli_query($conn, $select_query);
+        // if(!$result_set) goto errGo;
 
         sendMail($arrMail); //메일 발송
+        
+		mysqli_query($conn, "COMMIT");
         
         echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.location.href="/orderview?num=0&resNumber='.$ResNumber.'";</script>';
         //echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.fnUnblock("#divConfirm");</script>';

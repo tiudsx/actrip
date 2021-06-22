@@ -4,16 +4,18 @@
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 $num = $_REQUEST["num"];
 
+$now = date("Y-m-d");
 $select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
 ON a.resnum = b.resnum 
 where a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
+AND b.res_date >= "'.$now.'"
 ORDER BY a.resnum, b.ressubseq';
 
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
 if($count == 0){
-    echo "<script>alert('예약된 정보가 없습니다.');location.href='/ordersearch';</script>";
+    echo "<script>alert('예약된 정보가 없거나 이용일이 지났습니다.\\n\\n관리자에게 문의해주세요.');location.href='/ordersearch';</script>";
 	return;
 }
 
@@ -28,12 +30,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $res_num = $row["resnum"];
         $user_tel = $row["user_tel"];
         $shopseq = $row["seq"];
-    }
-
-    $now = date("Y-m-d");
-    if($row["res_date"] < $now){
-        echo "<script>alert('이용일이 지난 예약건입니다.\\n\\n관리자에게 문의해주세요.');location.href='/orderview?resNumber=$resNumber';</script>";
-        return;
     }
     
     $gubun = substr($row["res_bus"], 0, 1);

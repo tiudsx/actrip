@@ -25,10 +25,11 @@ function sendKakao($arrKakao){
 	$response = curl_exec($curl);
 	$err = curl_error($curl);
 
+	curl_close($curl);
+
+	return array($response, $err);
     // echo '<br>res : '.$response;
     // echo '<br>err : '.$err;
-
-	curl_close($curl);
 }
 
 function kakaoMsg($arrKakao){

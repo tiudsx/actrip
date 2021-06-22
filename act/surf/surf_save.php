@@ -125,27 +125,46 @@ if($param == "BusI"){
         }
     }
 
-    //조아서프 패키지 예약확정 처리
-    if($coupon == "JOABUS" || $coupon == "KLOOK" || $coupon == "NAVER" || $coupon == "FRIP" || $coupon == "MYTRIP"){
+    // //조아서프 패키지 예약확정 처리
+    // if($coupon == "JOABUS" || $coupon == "KLOOK" || $coupon == "NAVER" || $coupon == "FRIP" || $coupon == "MYTRIP"){
+    //     $res_confirm = 3;
+    //     $InsUserID = $coupon;
+    // }else{
+    //     $res_confirm = 0;
+    // }
+
+    // //서핑버스 네이버예약, 네이버쇼핑, 프립
+    // if($couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 12){
+    //     $InsUserID = $coupon;
+    //     $res_confirm = 8;
+    
+    //     if($couponseq == 7){
+    //         $coupon = "NABUSA";
+    //     }else if($couponseq == 10){
+    //         $coupon = "NABUSB";
+    //     }else if($couponseq == 11){
+    //         $coupon = "NABUSC";
+    //     }else if($couponseq == 12){
+    //         $coupon = "NABUSD";
+    //     }
+    // }
+
+    //예약채널 사이트 쿠폰 코드가 있으면 예약확정
+    $coupon_array = array("JOABUS", "KLOOK", "NAVER", "FRIP", "MYTRIP");
+    if(in_array($coupon, $coupon_array))
+    {
         $res_confirm = 3;
         $InsUserID = $coupon;
-    }else{
-        $res_confirm = 0;
     }
+    else
+    {
+        $res_confirm = 0;
 
-    //서핑버스 네이버예약, 네이버쇼핑, 프립
-    if($couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 12){
-        $InsUserID = $coupon;
-        $res_confirm = 8;
-    
-        if($couponseq == 7){
-            $coupon = "NABUSA";
-        }else if($couponseq == 10){
-            $coupon = "NABUSB";
-        }else if($couponseq == 11){
-            $coupon = "NABUSC";
-        }else if($couponseq == 12){
-            $coupon = "NABUSD";
+        //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12
+        if(in_array($couponseq, array(7, 10, 11, 12)))
+        {
+            $res_confirm = 8;
+            $InsUserID = $coupon;
         }
     }
 
@@ -199,8 +218,6 @@ if($param == "BusI"){
 		mysqli_query($conn, "ROLLBACK");
 		echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");</script>';
 	}else{
-		mysqli_query($conn, "COMMIT");
-
         // 예약좌석 정보
 		foreach($arrSeatInfo as $x) {
 			$busSeatInfo .= $x;
@@ -346,7 +363,7 @@ if($param == "BusI"){
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
             );
-        }else if($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC"){
+        }else if($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC" || $coupon == "NABUSD"){
             $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
             $msgTitle = '액트립 서핑버스 예약안내';
 
@@ -386,17 +403,43 @@ if($param == "BusI"){
                 , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
                 , "link5"=>"event" //공지사항
                 , "smsOnly"=>"N"
+                , "AT_KAKAO_HISTORY"=>""
             );
         }
 
         //네이버예약, 네이버쇼핑 알림톡 제외
         if(!($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC")){
-            sendKakao($arrKakao); //알림톡 발송
+            
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+            $PROD_NAME = "서핑버스";
+            $PROD_URL = "https://actrip.co.kr/".$resparam;
+            $USER_NAME = $arrKakao["userName"];
+            $USER_TEL = $arrKakao["userPhone"];
+            $PROD_TYPE = $arrKakao["gubun"];
+            $KAKAO_DATE = $datetime;
+            $RES_CONFIRM = $res_confirm;
+            $KAKAO_CONTENT = $kakaoMsg;
+            $KAKAO_BTN1 = $arrKakao["link1"];
+            $KAKAO_BTN2 = $arrKakao["link2"];
+            $KAKAO_BTN3 = $arrKakao["link3"];
+            $KAKAO_BTN4 = $arrKakao["link4"];
+            $KAKAO_BTN5 = $arrKakao["link5"];
+
+            $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGo;
+            
+            // $result = mysqli_query($conn, "select LAST_INSERT_ID() as identity");
+            // $rowMain = mysqli_fetch_array($result);
+            // $arrKakao["AT_KAKAO_HISTORY"] = $rowMain["identity"];
         }
 
+		mysqli_query($conn, "COMMIT");
+
         // 이메일 발송
-		// $to = "lud1@naver.com,ttenill@naver.com";
-        $to = "lud1@naver.com";
+		$to = "lud1@naver.com,ttenill@naver.com";
+        //$to = "lud1@naver.com";
         if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
         }
@@ -444,7 +487,7 @@ if($param == "BusI"){
         );
 
         //네이버예약, 네이버쇼핑 알림톡 제외
-        if(!($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC")){
+        if(!($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC" || $coupon == "NABUSD")){
             sendMail($arrMail); //메일 발송
         }
         
@@ -693,8 +736,6 @@ if($param == "BusI"){
 		mysqli_query($conn, "ROLLBACK");
 		echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnSaveErr("divConfirm");</script>';
 	}else{
-		mysqli_query($conn, "COMMIT");
-
 		//==================== 카카오톡 발송 Start ====================
 		if($etc != ''){
 			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
@@ -743,7 +784,25 @@ if($param == "BusI"){
                 , "smsOnly"=>"N"
             );
 
-            sendKakao($arrKakao); //알림톡 발송
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+            $PROD_NAME = $shopname;
+            $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
+            $USER_NAME = $arrKakao["userName"];
+            $USER_TEL = $arrKakao["userPhone"];
+            $PROD_TYPE = $arrKakao["gubun"];
+            $KAKAO_DATE = $datetime;
+            $RES_CONFIRM = $res_confirm;
+            $KAKAO_CONTENT = $kakaoMsg;
+            $KAKAO_BTN1 = $arrKakao["link1"];
+            $KAKAO_BTN2 = $arrKakao["link2"];
+            $KAKAO_BTN3 = $arrKakao["link3"];
+            $KAKAO_BTN4 = $arrKakao["link4"];
+            $KAKAO_BTN5 = $arrKakao["link5"];
+
+            $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGoSurf;
         }
 
         //==================== 카카오톡 발송 End ====================
@@ -781,15 +840,34 @@ if($param == "BusI"){
                 , "link5"=>""
                 , "smsOnly"=>"N"
             );
-            sendKakao($arrKakao);
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+            $PROD_NAME = $shopname;
+            $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
+            $USER_NAME = $arrKakao["userName"];
+            $USER_TEL = $arrKakao["userPhone"];
+            $PROD_TYPE = "surf_shop";
+            $KAKAO_DATE = $datetime;
+            $RES_CONFIRM = $res_confirm;
+            $KAKAO_CONTENT = $kakaoMsg;
+            $KAKAO_BTN1 = $arrKakao["link1"];
+            $KAKAO_BTN2 = $arrKakao["link2"];
+            $KAKAO_BTN3 = $arrKakao["link3"];
+            $KAKAO_BTN4 = $arrKakao["link4"];
+            $KAKAO_BTN5 = $arrKakao["link5"];
+
+            $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) goto errGoSurf;
         }
         
+        mysqli_query($conn, "COMMIT");
         //==================== 이메일 발송 Start ====================
         // 이메일 발송
-        // $to = "lud1@naver.com,ttenill@naver.com";
+        $to = "lud1@naver.com,ttenill@naver.com";
         if(strrpos($usermail, "@") > 0){
-            // $to .= ','.$usermail;
-            $to = $usermail;
+            $to .= ','.$usermail;
+            //$to = $usermail;
 
             $info1_title = "신청목록";
             $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));

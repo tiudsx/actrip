@@ -507,9 +507,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "info2"=> $info2
 		);
 
-		if($res_kakao == "Y"){
-			sendMail($arrMail); //메일 발송
-		}
+		sendMail($arrMail); //메일 발송
 	}
 
 	// echo "<br>확정 조회 : ".$intseq3;
@@ -614,7 +612,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "smsOnly"=>"N"
 		);
 
-		if($res_kakao == "Y"){
+		if($res_kakao == "A" || $res_kakao == "U"){
 			sendKakao($arrKakao); //알림톡 발송
 		}
 	
@@ -651,7 +649,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "smsOnly"=>"N"
 		);
 
-		if($res_kakao == "Y"){
+		if($res_kakao == "A" || $res_kakao == "Y"){
 			sendKakao($arrKakao);
 		}
 	
@@ -683,7 +681,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "info2"=> $info2
 		);
 
-		if($res_kakao == "Y"){
+		if($res_kakao == "A" || $res_kakao == "U"){
 			sendMail($arrMail); //메일 발송
 		}
 	}

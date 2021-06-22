@@ -84,7 +84,7 @@ if($count > 0){
                 , "link5"=>""
                 , "smsOnly"=>"N"
             );
-            // sendKakao($arrKakao);
+            sendKakao($arrKakao);
 
             $surfshopMsg = "";
 			$busSeatInfo = "";
@@ -161,7 +161,7 @@ if($count > 0){
         , "link5"=>""
         , "smsOnly"=>"N"
     );
-    // sendKakao($arrKakao);
+    sendKakao($arrKakao);
 
 	$k++;
 //============================ 실행 단계 ============================

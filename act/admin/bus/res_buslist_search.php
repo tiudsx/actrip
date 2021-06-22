@@ -36,10 +36,11 @@ if($hidsearch == ""){ //초기화면 조회
             $listText .= "취소,";
         }else if($chkResConfirm[$b] == 4){
             $listText .= "환불요청,";
-        }else if($chkResConfirm[$b] == 4){
+        }else if($chkResConfirm[$b] == 5){
             $listText .= "환불완료,";
         }
     }
+
     $res_confirm .= '99';
     if($listText != ""){
         $listText = substr($listText, 0, strlen($listText) - 1);
