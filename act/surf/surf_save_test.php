@@ -99,6 +99,10 @@ if($coupon == "JOABUS"){
         , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
         , "link5"=>"event" //공지사항
         , "smsOnly"=>"N"
+        , "PROD_NAME"=>"서핑버스"
+        , "PROD_URL"=>$shopseq
+        , "PROD_TYPE"=>"bus"
+        , "RES_CONFIRM"=>$res_confirm
     );
     sendKakao($arrKakao);
 }
@@ -118,6 +122,10 @@ $arrKakao = array(
     , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
     , "link5"=>"event" //공지사항
     , "smsOnly"=>"N"
+    , "PROD_NAME"=>"서핑버스"
+    , "PROD_URL"=>$shopseq
+    , "PROD_TYPE"=>"bus"
+    , "RES_CONFIRM"=>$res_confirm
 );
 
 //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12 알림톡 제외

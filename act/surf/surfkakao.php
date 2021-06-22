@@ -61,6 +61,34 @@ function kakaoMsg($arrKakao){
     return $arryKakao;
 }
 
+function kakaoDebug($arrKakao, $arrRtn){	
+	$datetime = date('Y/m/d H:i'); 
+	$shopseq = $arrKakao["PROD_URL"];
+	if($shopseq == 7){ //서핑버스 양양
+		$resparam = "surfbus_yy";
+	}else if($shopseq == 14){  //서핑버스 동해
+		$resparam = "surfbus_dh";
+	}else{ //서핑샵
+		$resparam = "surfview?seq=".$shopseq;
+	}
+
+	$PROD_NAME = $arrKakao["PROD_NAME"];
+	$PROD_URL = "https://actrip.co.kr/".$resparam;
+	$USER_NAME = $arrKakao["userName"];
+	$USER_TEL = $arrKakao["userPhone"];
+	$PROD_TYPE = $arrKakao["PROD_TYPE"];
+	$KAKAO_DATE = $datetime;
+	$RES_CONFIRM = $arrKakao["RES_CONFIRM"];
+	$KAKAO_CONTENT = $arrKakao["kakaoMsg"];
+	$KAKAO_BTN1 = $arrKakao["link1"];
+	$KAKAO_BTN2 = $arrKakao["link2"];
+	$KAKAO_BTN3 = $arrKakao["link3"];
+	$KAKAO_BTN4 = $arrKakao["link4"];
+	$KAKAO_BTN5 = $arrKakao["link5"];
+
+	return "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
+}
+
 function mailMsg($arrMail){
 	$gubun = $arrMail["gubun"];
 	$gubun_step = $arrMail["gubun_step"];
