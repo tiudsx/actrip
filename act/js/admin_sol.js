@@ -131,6 +131,7 @@ function fnSolModify(resseq) {
 
                         if (data[i].stayroom != "") {
                             objTr.find("#res_stayroom").val(data[i].stayroom);
+                            objTr.find("#res_stayroom").attr("sel", data[i].stayroom);
 
                             fnRoomNum2(objTr.find("#res_staynum"), data[i].staynum);
                         }
@@ -276,8 +277,13 @@ function fnSolDataAdd(gubun) {
 }
 
 function fnRoomNum(obj) {
+    var sdate = $j(obj).parent().parent().find("input[calid=res_staysdate]").val();
+    var edate = $j(obj).parent().parent().find("input[calid=res_staysdate]").val();
+
     var objNext = $j(obj).next();
     objNext.find("option").remove();
+
+    //alert(sdate + " / " + edate + " / " + $j(obj).val() + " / " + $j(obj).attr("sel") + " / " + objNext.attr("sel"))
 
     var roomnum = 0;
     switch ($j(obj).val()) {
@@ -357,10 +363,90 @@ function fnRoomNum2(obj, val) {
             var sel = "";
             if (i == val) {
                 sel = "selected";
+                obj.attr("sel", val);
             }
             obj.append("<option value='" + i + "' " + sel + ">" + i + roombad + "</optoin>");
         }
     }
+}
+
+function fnRommBed(sdate, edate, roomnum, selroomnum){
+    var params = "resparam=solroom&resseq=" + resseq;
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/sol/res_sollist_info.php",
+        data: params,
+        success: function(data) {
+            fnSolpopupReset();
+
+            fnSolInsert();
+
+            $j("#SolAdd").css("display", "none");
+            $j("#SolModify").css("display", "");
+
+            for (let i = 0; i < data.length; i++) {
+                if (i == 0) {
+                    $j("#resseq").val(data[i].resseq);
+                    $j("#res_adminname").val(data[i].admin_user);
+                    $j("#user_name").val(data[i].user_name);
+                    $j("#user_tel").val(data[i].user_tel);
+                    // var arrTel = data[i].user_tel.split("-");
+                    // $j("#user_tel1").val(arrTel[0]);
+                    // $j("#user_tel2").val(arrTel[1]);
+                    // $j("#user_tel3").val(arrTel[2]);
+                    $j("#res_company").val(data[i].res_company);
+                    $j("#res_confirm").val(data[i].res_confirm);
+                    $j("#memo").val(data[i].memo);
+                    $j("#memo2").val(data[i].memo2);
+                }
+
+                if (data[i].res_type == "stay") { //숙박&바베큐
+                    fnSolAdd(null, 'trstay');
+
+                    var objTr = $j("tr[id=trstay]:last");
+                    objTr.find("#stayseq").val(data[i].ressubseq);
+                    objTr.find("#staytype").val("U");
+                    objTr.find("#res_staysex").val(data[i].staysex);
+                    objTr.find("#res_stayM").val(data[i].stayM);
+
+                    if (data[i].prod_name != "N") {
+                        objTr.find("#res_stayshop").val(data[i].prod_name);
+                        objTr.find("input[calid=res_staysdate]").val(data[i].sdate);
+                        objTr.find("input[calid=res_stayedate]").val(data[i].edate);
+
+                        if (data[i].stayroom != "") {
+                            objTr.find("#res_stayroom").val(data[i].stayroom);
+
+                            fnRoomNum2(objTr.find("#res_staynum"), data[i].staynum);
+                        }
+                    }
+                    if (data[i].bbq != "N") {
+                        objTr.find("input[calid=res_bbqdate]").val(data[i].resdate);
+                        objTr.find("#res_bbq").val(data[i].bbq);
+                    }
+                } else { //강습&렌탈
+                    fnSolAdd(null, 'trsurf');
+
+                    var objTr = $j("tr[id=trsurf]:last");
+                    objTr.find("#surfseq").val(data[i].ressubseq);
+                    objTr.find("#surftype").val("U");
+                    objTr.find("input[calid=res_surfdate]").val(data[i].resdate);
+                    if (data[i].prod_name != "N") {
+                        objTr.find("#res_surfshop").val(data[i].prod_name);
+                        objTr.find("#res_surftime").val(data[i].restime);
+                        objTr.find("#res_surfM").val(data[i].surfM);
+                        objTr.find("#res_surfW").val(data[i].surfW);
+                    }
+                    if (data[i].surfrent != "N") {
+                        objTr.find("#res_rent").val(data[i].surfrent);
+                        objTr.find("#res_rentM").val(data[i].surfrentM);
+                        objTr.find("#res_rentW").val(data[i].surfrentW);
+                    }
+                }
+            }
+        }
+    });
+
 }
 
 //달력 날짜 클릭

@@ -265,7 +265,7 @@ include __DIR__.'/../../common/logininfo.php';
 									</select>명
 								</td>
 								<td>
-									<select id="res_stayroom" name="res_stayroom[]" class="select" onchange="fnRoomNum(this);">
+									<select id="res_stayroom" name="res_stayroom[]" class="select" onchange="fnRoomNum(this);" sel="">
 										<option value="201">201호</option>
 										<option value="202">202호</option>
 										<option value="203">203호</option>
@@ -275,7 +275,7 @@ include __DIR__.'/../../common/logininfo.php';
 										<option value="302">302호</option>
 										<option value="303">303호</option>
 									</select>
-									<select id="res_staynum" name="res_staynum[]" class="select">
+									<select id="res_staynum" name="res_staynum[]" class="select" sel="">
 										<option value="">-------</option>
 									</select>
 								</td>
