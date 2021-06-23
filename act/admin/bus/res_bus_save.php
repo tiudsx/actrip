@@ -227,6 +227,11 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     $userName = $_REQUEST["username"];
     $userPhone = $_REQUEST["userphone"];
     $reschannel = $_REQUEST["reschannel"];
+	
+    $resDate1 = $_REQUEST["resDate1"];
+    $resDate2 = $_REQUEST["resDate2"];
+    $resbusseat1 = $_REQUEST["resbusseat1"];
+    $resbusseat2 = $_REQUEST["resbusseat2"];
 
 	/*
 	7 : 네이버쇼핑
@@ -252,18 +257,19 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$result_set = mysqli_query($conn, $select_query);
  	if(!$result_set) goto errGo;
 
-	mysqli_query($conn, "COMMIT");
-
-
-	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석을 예약해주세요.";
+	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.";
 	$infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
 	$infomsg .= "\n\n      - 예약하신 건수와 동일한 좌석수로 예약해주세요.";
 
-	if($reschannel == 7){
+	if($reschannel == 7){ //네이버쇼핑
 
-	}else if($reschannel == 10){
+	}else if($reschannel == 10){ //네이버예약
 
-	}if($reschannel == 11){
+	}else if($reschannel == 11){ //프립
+
+	}else if($reschannel == 12){ //마이리얼트립
+
+	}else if($reschannel == 14){ //망고서프 패키지
 
 	}
 
@@ -278,16 +284,28 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		, "tempName"=> "at_bus_kakao"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code))
+		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
 		, "link2"=>""
 		, "link3"=>""
 		, "link4"=>"" //제휴업체 목록
 		, "link5"=>"" //공지사항
 		, "smsOnly"=>"N"
+		, "PROD_NAME"=>"타채널 알림톡발송"
+		, "PROD_URL"=>$reschannel
+		, "PROD_TYPE"=>"bus_kakao"
+		, "RES_CONFIRM"=>"-1"
 	);
-	sendKakao($arrKakao); //알림톡 발송
-	 
-	echo $coupon_code." / ";
+
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+	// 카카오 알림톡 DB 저장 START
+   $select_query = kakaoDebug($arrKakao, $arrRtn);            
+   $result_set = mysqli_query($conn, $select_query);
+   // 카카오 알림톡 DB 저장 END
+
+   mysqli_query($conn, "COMMIT");
+	
+	// echo $coupon_code." / ";
 }
 
 if(!$success){

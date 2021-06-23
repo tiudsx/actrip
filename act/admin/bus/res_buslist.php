@@ -170,7 +170,7 @@ $shopseq = 0;
                     <form name="frmResKakao" id="frmResKakao" autocomplete="off">
                     <table class='et_vars exForm bd_tb'>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="5">
                                 알림톡 발송 번호
                             </td>
                         </tr>
@@ -178,6 +178,8 @@ $shopseq = 0;
                             <th>채널</th>
                             <th>이름</th>
                             <th>연락처</th>
+                            <th>이용일 (서울>양양)</th>
+                            <th>이용일 (양양>서울)</th>
                         </tr>
                         <tr>
                             <td>
@@ -186,13 +188,30 @@ $shopseq = 0;
                                     <option value="10">네이버예약</option>
                                     <option value="11">프립</option>
                                     <option value="12">마이리얼트립</option>
+                                    <option value="14">망고패키지</option>
                                 </select>
                             </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
                             <td><input type="text" id="userphone" name="userphone" style="width:150px;" value="" class="itx2" maxlength="15"></td>
+                            <td>
+                                <input type="text" id="resDate1" name="resDate1" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+                                <select id="resbusseat1">
+                                <?for ($i=0; $i < 20; $i++) { 
+                                    echo '<option value="'.$i.'">'.$i.'명</option>';
+                                }?>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" id="resDate2" name="resDate2" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+                                <select id="resbusseat2">
+                                <?for ($i=0; $i < 20; $i++) { 
+                                    echo '<option value="'.$i.'">'.$i.'명</option>';
+                                }?>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
+                            <td colspan="5" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
                         </tr>
                     </table>
                     </form>
@@ -218,7 +237,7 @@ function fnResKakaoAdmin(){
         return;
     }
 
-    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val();
+    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
     $j.ajax({
         type: "POST",
         url: "/act/admin/bus/res_bus_save.php",
@@ -229,7 +248,8 @@ function fnResKakaoAdmin(){
             }else{
                 $j("#userphone").val("");
                 $j("#username").val("");
-                alert(data + "\n\n발송이 완료되었습니다.");
+                alert("예약 알림톡 발송이 완료되었습니다.");
+                // alert(data + "\n\n발송이 완료되었습니다.");
             }
         }
     });

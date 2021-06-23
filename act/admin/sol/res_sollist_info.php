@@ -132,5 +132,24 @@ if($param == "solview"){ //상세정보
             echo urldecode($output);
         }
     }
+}else if($param == "solroomnum"){ //객실 침대체크
+    $sdate = $res_staysdate[$i];
+    $edate = $res_stayedate[$i];
+    $stayroom = $res_stayroom[$i];
+    $staynum = $res_staynum[$i];
+    $eDate2 = date("Y-m-d", strtotime($edate." -1 day"));
+    $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b
+                        ON a.resseq = b.resseq
+                        WHERE b.res_type = 'stay' 
+                            AND b.prod_name = '솔게스트하우스'
+                            AND b.stayroom = $stayroom
+                            AND b.staynum = $staynum
+                            AND a.res_confirm IN ('대기','확정')
+                            AND (('$sdate' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY) OR '$eDate2' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY))
+                                OR (b.sdate BETWEEN '$sdate' AND '$eDate2' OR DATE_ADD(b.edate, INTERVAL -1 DAY) BETWEEN '$sdate' AND '$eDate2'))";
+    $result_setlist = mysqli_query($conn, $select_query);
+    $count = mysqli_num_rows($result_setlist);
+    // $errmsg = $select_query;
+    // goto errGo;
 }
 ?>
