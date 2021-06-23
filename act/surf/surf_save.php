@@ -799,7 +799,7 @@ if($param == "BusI"){
                 , "smsOnly"=>"N"
                 , "PROD_NAME"=>$shopname
                 , "PROD_URL"=>$shopseq
-                , "PROD_TYPE"=>"surf_shop"
+                , "PROD_TYPE"=>"surf_user"
                 , "RES_CONFIRM"=>$res_confirm
             );
 

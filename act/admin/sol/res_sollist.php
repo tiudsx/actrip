@@ -17,7 +17,7 @@ include __DIR__.'/../../common/logininfo.php';
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/admin_sol.js?v=3"></script>
+<script type="text/javascript" src="/act/js/admin_sol.js?v=5"></script>
 <script type="text/javascript" src="/act/js/common.js"></script>
 
 <div class="container" id="contenttop" style="padding-top:35px;">
@@ -250,8 +250,8 @@ include __DIR__.'/../../common/logininfo.php';
 									</select>
 								</td>
 								<td style="line-height:2.3em">
-									<input type="text" calid="res_staysdate" name="res_staysdate[]" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" > ~ 
-									<input type="text" calid="res_stayedate" name="res_stayedate[]" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+									<input type="text" calid="res_staysdate" name="res_staysdate[]" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" > ~ 
+									<input type="text" calid="res_stayedate" name="res_stayedate[]" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
 								</td>
 								<td>
 									<select id="res_staysex" name="res_staysex[]" class="select">
@@ -333,8 +333,8 @@ include __DIR__.'/../../common/logininfo.php';
 									<input type="hidden" id="surftype" name="surftype[]" value="I">
 									<select id="res_surfshop" name="res_surfshop[]" class="select">
 										<option value='N'>강습미신청</option>
-										<option value='솔게스트하우스'>솔게스트하우스</option>
 										<option value='서프팩토리'>서프팩토리</option>
+										<option value='솔게스트하우스'>솔게스트하우스</option>
 										<option value='라라서프'>라라서프</option>
 										<option value='서퍼랑'>서퍼랑</option>
 									</select>

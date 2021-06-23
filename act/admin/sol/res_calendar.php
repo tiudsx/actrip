@@ -83,7 +83,7 @@ DATEDIFF(b.sdate, b.edate) as sDateDiff, DATEDIFF(b.edate, b.sdate) as eDateDiff
 			OR	(Year(b.resdate) = '$Year' AND Month(b.resdate) = '$Mon')
 		GROUP BY b.res_type, b.sdate, b.edate, b.resdate, a.res_confirm";
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
-
+// echo $select_query_cal;
 $arrResCount = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
 	//숙박
