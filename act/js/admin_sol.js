@@ -35,7 +35,8 @@ function fnSolAdd(obj, id) {
             var date = jQuery(this).next().datepicker('getDate');
 
             if (!(date == null)) {
-
+                date.setDate(date.getDate() - 1); // Add 7 days
+                jQuery(this).datepicker("option", "maxDate", date);
             }
         },
         onClose: function(selectedDate) {
