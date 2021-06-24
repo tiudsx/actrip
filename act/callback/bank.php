@@ -140,8 +140,17 @@ if($count == 1){
 			, "link4"=>"eatlist" //제휴업체 목록
 			, "link5"=>"event" //공지사항
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"서핑버스"
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"bus"
+			, "RES_CONFIRM"=>"3"
 		);
-		sendKakao($arrKakao); //알림톡 발송
+		
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
 
 		// 이메일 발송
 		//$to = "lud1@naver.com,ttenill@naver.com";
@@ -264,8 +273,17 @@ if($count == 1){
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopseq
+			, "PROD_TYPE"=>"surf_user"
+			, "RES_CONFIRM"=>$res_confirm
 		);
-		sendKakao($arrKakao); //알림톡 발송
+		
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
 
 		//카카오톡 업체 발송
 		$select_query = 'SELECT * FROM AT_PROD_MAIN WHERE seq = '.$shopSeq;
@@ -292,8 +310,17 @@ if($count == 1){
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopseq
+			, "PROD_TYPE"=>"surf_shop"
+			, "RES_CONFIRM"=>$res_confirm
 		);
-		sendKakao($arrKakao);
+		
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
 
 		$info1_title = "신청목록";
         $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));

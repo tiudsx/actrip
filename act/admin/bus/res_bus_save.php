@@ -48,7 +48,6 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	}
 
     $intseq3 .= '0';
-    mysqli_query($conn, "COMMIT");
 
     $arrSeatInfo = array();
     $arrStopInfo = array();
@@ -128,8 +127,18 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "link4"=>"eatlist" //제휴업체 목록
 			, "link5"=>"event" //공지사항
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"서핑버스"
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"bus"
+			, "RES_CONFIRM"=>"3"
 		);
-		sendKakao($arrKakao); //알림톡 발송
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+
+		mysqli_query($conn, "COMMIT");
 
         if(strrpos($usermail, "@") > 0){
             // $to .= ','.$usermail;
@@ -284,7 +293,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		, "tempName"=> "at_bus_kakao"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
+		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
 		, "link2"=>""
 		, "link3"=>""
 		, "link4"=>"" //제휴업체 목록

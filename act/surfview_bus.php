@@ -25,11 +25,27 @@ if($param == "surfbus_yy"){ //양양 셔틀버스
     $pointurl = "surf/surfview_bus_tab3_2.html";
 }
 
-$coupon_code = $_REQUEST["param"];
-if($coupon_code != ""){
-    $arrChk = explode("|", decrypt($coupon_code));
+//"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
+$arrChannel = $_REQUEST["param"];
+if($arrChannel != ""){
+    $arrChk = explode("|", decrypt($arrChannel));
     $dateChk = $arrChk[0];
-    $codeChk = $arrChk[1];
+    $coupon_code = $arrChk[1];  //쿠폰코드
+    $codeChk = $arrChk[2];  //예약코드 구분
+    $resDate1 = $arrChk[3];  //서울 > 양양
+    $resbusseat1 = $arrChk[5];  //인원
+    $resDate2 = $arrChk[4];  //양양 < 서울
+    $resbusseat2 = trim($arrChk[6]);  //인원
+    $resusername = trim($arrChk[7]);  //이름
+    $resusertel = str_replace("-", "", trim($arrChk[8]));  //연락처
+    $resusertel1 = substr($resusertel, 0, 3);
+    $resusertel2 = substr($resusertel, 3, 4);
+    $resusertel3 = substr($resusertel, 7, 4);
+
+    $daytype = 0;
+    if($resbusseat1 > 0 && $resbusseat2 > 0){
+        $daytype = 1;
+    }
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
@@ -188,7 +204,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                         <ul class="busDate" id="sbusdate" style="display:none;">
                             <li><img src="images/viewicon/calendar.svg" alt="">출발일</li>
-                            <li class="calendar"><input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>" ></li>
+                            <li class="calendar"><input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
                             <li><img src="images/viewicon/bus.svg" alt="">출발노선</li>
@@ -198,7 +214,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                         <ul class="busDate" id="ebusdate" style="display:none;">
                             <li><img src="images/viewicon/calendar.svg" alt="">복귀일</li>
-                            <li class="calendar"><input type="text" id="SurfBusE" name="SurfBusE" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>" ></li>
+                            <li class="calendar"><input type="text" id="SurfBusE" name="SurfBusE" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
                             <li><img src="images/viewicon/bus.svg" alt="">복귀노선</li>
@@ -208,6 +224,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </div>                
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
+                        <span id="resseatnum"></span>
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext();">
                     </div>
                 </div>
@@ -319,10 +336,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th scope="row"> 쿠폰코드</th>
                                 <td>
-                                    <input type="text" id="coupon" name="coupon" value="<?=$codeChk?>" size="10" class="itx" maxlength="10">
+                                    <input type="text" id="coupon" name="coupon" value="<?=$coupon_code?>" size="10" class="itx" maxlength="10">
                                     <input type="hidden" id="couponcode" name="couponcode" value="">
                                     <input type="hidden" id="couponprice" name="couponprice" value="0">
-                                    <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
+                                    <input type="button" id="couponbtn" class="gg_btn gg_btn_grid gg_btn_color" style="width:50px; height:24px;" value="적용" onclick="fnCouponCheck(this);" />
                                     <span id="coupondis" style="display:none;"><br></span>
                                 </td>
                             </tr>
@@ -411,4 +428,48 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             setTimeout('$j("input[type=button]").eq(0).click();', 500);
         }
     }
+
+    var resbusseat1 = 0;
+    var resbusseat2 = 0;
+    jQuery(function() {
+        <?if($coupon_code != ""){?>
+            
+        busrestype = "channel";
+        var couponcode = "<?=$coupon_code?>";
+        $j("#couponbtn").click();
+
+        if($j("#coupon").val() == ""){
+            
+        }else{
+            // $j("#coupon").prop("readonly", true);
+            // $j("#coupon").css("display", "none");
+            // $j("#couponbtn").css("display", "none");
+        }
+
+        resbusseat1 = <?=$resbusseat1?>;
+        resbusseat2 = <?=$resbusseat2?>;
+
+        <?if($daytype == 0){?>
+            $j('#ulDaytype li').eq(1).click();
+        <?}else{?>
+            $j('#ulDaytype li').eq(2).click();
+            $j("#userName").val("<?=$resusername?>");
+            $j("#userPhone1").val("<?=$resusertel1?>");
+            $j("#userPhone2").val("<?=$resusertel2?>");
+            $j("#userPhone3").val("<?=$resusertel3?>");
+
+            $j("#SurfBusS").val("<?=$resDate1?>");
+            $j("#SurfBusE").val("<?=$resDate2?>");
+
+            $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+            
+            fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
+            fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));
+
+            $j("#SurfBusS").datepicker('option', 'disabled', true);
+            $j("#SurfBusE").datepicker('option', 'disabled', true);
+        <?}?>
+        <?}?>
+    });
 </script>
+
