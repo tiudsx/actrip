@@ -434,44 +434,49 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     jQuery(function() {
         <?if($coupon_code != ""){?>
             
-        busrestype = "channel";
-        var couponcode = "<?=$coupon_code?>";
-        $j("#couponbtn").click();
-
-        if($j("#coupon").val() == ""){
-            
+        var cp = fnCoupon("BUS", "load", $j("#coupon").val());
+        if(cp == 0){
+            location.href = "/";
+            return;
         }else{
-            // $j("#coupon").prop("readonly", true);
-            // $j("#coupon").css("display", "none");
-            // $j("#couponbtn").css("display", "none");
+            busrestype = "channel";
+            $j("#couponbtn").click();
+
+            if($j("#coupon").val() == ""){
+                
+            }else{
+                // $j("#coupon").prop("readonly", true);
+                // $j("#coupon").css("display", "none");
+                // $j("#couponbtn").css("display", "none");
+            }
+
+            resbusseat1 = <?=$resbusseat1?>;
+            resbusseat2 = <?=$resbusseat2?>;
+
+            <?if($daytype == 0){?>
+                $j('#ulDaytype li').eq(1).click();
+            <?}else{?>
+                $j('#ulDaytype li').eq(2).click();
+                $j("#userName").val("<?=$resusername?>");
+                $j("#userPhone1").val("<?=$resusertel1?>");
+                $j("#userPhone2").val("<?=$resusertel2?>");
+                $j("#userPhone3").val("<?=$resusertel3?>");
+
+                $j("#SurfBusS").val("<?=$resDate1?>");
+                $j("#SurfBusE").val("<?=$resDate2?>");
+
+                $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+                
+                fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
+                fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));
+
+                $j("#SurfBusS").datepicker('option', 'disabled', true);
+                $j("#SurfBusE").datepicker('option', 'disabled', true);
+
+                $j('#ulDaytype li').eq(1).removeAttr("onclick");
+                $j('#ulDaytype li').eq(2).removeAttr("onclick");
+            <?}?>
         }
-
-        resbusseat1 = <?=$resbusseat1?>;
-        resbusseat2 = <?=$resbusseat2?>;
-
-        <?if($daytype == 0){?>
-            $j('#ulDaytype li').eq(1).click();
-        <?}else{?>
-            $j('#ulDaytype li').eq(2).click();
-            $j("#userName").val("<?=$resusername?>");
-            $j("#userPhone1").val("<?=$resusertel1?>");
-            $j("#userPhone2").val("<?=$resusertel2?>");
-            $j("#userPhone3").val("<?=$resusertel3?>");
-
-            $j("#SurfBusS").val("<?=$resDate1?>");
-            $j("#SurfBusE").val("<?=$resDate2?>");
-
-            $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
-            
-            fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
-            fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));
-
-            $j("#SurfBusS").datepicker('option', 'disabled', true);
-            $j("#SurfBusE").datepicker('option', 'disabled', true);
-
-            $j('#ulDaytype li').eq(1).removeAttr("onclick");
-            $j('#ulDaytype li').eq(2).removeAttr("onclick");
-        <?}?>
         <?}?>
     });
 </script>
