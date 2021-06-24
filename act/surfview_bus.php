@@ -468,6 +468,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
             $j("#SurfBusS").datepicker('option', 'disabled', true);
             $j("#SurfBusE").datepicker('option', 'disabled', true);
+
+            $j('#ulDaytype li').eq(1).removeAttr("onclick");
+            $j('#ulDaytype li').eq(2).removeAttr("onclick");
         <?}?>
         <?}?>
     });

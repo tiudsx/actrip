@@ -1023,8 +1023,8 @@ function fnBusSave() {
         }
     } else {
         if (busrestype == "channel") {
-            var selCntS = $j("#selBusY tr[trseat]").length + 1;
-            var selCntE = $j("#selBusS tr[trseat]").length + 1;
+            var selCntS = $j("#selBusY tr[trseat]").length;
+            var selCntE = $j("#selBusS tr[trseat]").length;
 
             if (resbusseat1 > 0 && resbusseat1 != selCntS) {
                 alert("양양행은 " + resbusseat1 + "좌석 예약해주세요~");

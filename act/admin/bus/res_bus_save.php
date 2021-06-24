@@ -282,8 +282,17 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
 	}
 
+	$resseatMsg = "";
+	if($resbusseat1 > 0){ //양양행 좌석예약
+		$resseatMsg = "\n    [양양행] ".$resDate1." / ".$resbusseat1."자리";
+	}
+
+	if($resbusseat2 > 0){ //양양행 좌석예약
+		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
+	}
+
 	$msgTitle = '액트립 셔틀버스 예약안내';
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 셔틀버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 셔틀버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 		
 	$arrKakao = array(
 		"gubun"=> "bus"

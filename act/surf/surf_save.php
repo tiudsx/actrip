@@ -160,8 +160,8 @@ if($param == "BusI"){
     {
         $res_confirm = 0;
 
-        //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12
-        if(in_array($couponseq, array(7, 10, 11, 12)))
+        //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12, 망고서프패키지 : 14
+        if(in_array($couponseq, array(7, 10, 11, 12, 14)))
         {
             $res_confirm = 8;
             $InsUserID = $coupon;
@@ -387,7 +387,8 @@ if($param == "BusI"){
                 , "PROD_URL"=>$shopseq
                 , "RES_CONFIRM"=>$res_confirm
             );
-        }else if($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC" || $coupon == "NABUSD"){
+        // }else if($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC" || $coupon == "NABUSD"){
+        }else if(in_array($couponseq, array(7, 10, 11, 12, 14))){
             $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
             $msgTitle = '액트립 서핑버스 예약안내';
 
@@ -439,7 +440,7 @@ if($param == "BusI"){
         }
 
         //네이버예약, 네이버쇼핑 알림톡 제외
-        if(!($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC")){
+        if(!(in_array($couponseq, array(7, 10, 11, 12, 14)))){
             
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
 
@@ -502,7 +503,7 @@ if($param == "BusI"){
         );
 
         //네이버예약, 네이버쇼핑 알림톡 제외
-        if(!($coupon == "NABUSA" || $coupon == "NABUSB" || $coupon == "NABUSC" || $coupon == "NABUSD")){
+        if(!(in_array($couponseq, array(7, 10, 11, 12, 14)))){
             sendMail($arrMail); //메일 발송
         }
         
