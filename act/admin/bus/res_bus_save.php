@@ -267,8 +267,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
  	if(!$result_set) goto errGo;
 
 	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.";
-	$infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
-	$infomsg .= "\n\n      - 예약하신 건수와 동일한 좌석수로 예약해주세요.";
+	// $infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
+	$infomsg .= "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
 
 	if($reschannel == 7){ //네이버쇼핑
 
