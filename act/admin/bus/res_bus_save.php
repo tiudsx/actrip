@@ -138,8 +138,6 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$select_query = kakaoDebug($arrKakao, $arrRtn);            
 		$result_set = mysqli_query($conn, $select_query);
 
-		mysqli_query($conn, "COMMIT");
-
         if(strrpos($usermail, "@") > 0){
             // $to .= ','.$usermail;
 			$to = $usermail;
@@ -171,6 +169,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			sendMail($arrMail); //메일 발송
 		}
     }
+
+	mysqli_query($conn, "COMMIT");
     //==========================카카오 메시지 발송 End ==========================
 }else if($param == "busmodify"){ //셔틀버스 정보 업데이트
 	$res_date = $_REQUEST["res_date"];
@@ -317,9 +317,9 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
 	// 카카오 알림톡 DB 저장 START
-   $select_query = kakaoDebug($arrKakao, $arrRtn);            
-   $result_set = mysqli_query($conn, $select_query);
-   // 카카오 알림톡 DB 저장 END
+	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$result_set = mysqli_query($conn, $select_query);
+	// 카카오 알림톡 DB 저장 END
 
    mysqli_query($conn, "COMMIT");
 	

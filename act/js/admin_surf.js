@@ -177,9 +177,10 @@ function fnConfirmUpdateList(obj, num, resnum) {
     } else if (num == 1) { //서핑버스
         $postUrl = "/act/admin/bus/res_bus_save.php";
     }
-
+    console.dir(formData);
     $j.post($postUrl, formData,
         function(data, textStatus, jqXHR) {
+            console.dir(data);
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
                 if (num == 1) {
