@@ -4,8 +4,9 @@ include __DIR__.'/../../surf/surffunc.php';
 $hidsearch = $_REQUEST["hidsearch"];
 
 if($hidsearch == ""){ //초기화면 조회
-    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
+                        LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
                         WHERE b.seq IN (7, 14)
                             AND b.res_confirm IN (0, 1, 8, 4)
                             ORDER BY b.resnum, b.ressubseq';
@@ -70,9 +71,10 @@ if($hidsearch == ""){ //초기화면 조회
         $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
     }
 
-    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
-                        INNER JOIN `AT_PROD_MAIN` as c ON b.seq = c.seq 
+                        INNER JOIN AT_PROD_MAIN as c ON b.seq = c.seq 
+                        LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
                         WHERE b.res_confirm IN ('.$res_confirm.')
                             AND b.code = "bus"
                             AND b.res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
@@ -188,7 +190,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -287,7 +289,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$datDate = substr($row['res_date'], 0, 10);
 
     $ResConfirm = $row['res_confirm'];
-    $res_coupon = $row['res_coupon'];    
+    $res_coupon = $row['res_coupon'];
+    $couponseq = $row['couponseq'];
     if($ResConfirm == 0){
         $ResConfirmText = "미입금";
 		// $TotalPrice += $row['res_price'];
@@ -516,7 +519,7 @@ if(($i % 2) == 0 && $i > 0){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
                 </td>
             </tr>
             <?=$reslist1?>

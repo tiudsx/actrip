@@ -229,30 +229,21 @@ if($param == "RtnPrice"){
                 , "link4"=>""
                 , "link5"=>""
                 , "smsOnly"=>"N"
+                , "PROD_NAME"=>"취소/환불요청"
+                , "PROD_URL"=>$shopseq
+                , "PROD_TYPE"=>$code
+                , "RES_CONFIRM"=>"4"
             );
-
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-            $PROD_NAME = $shopname." 환불요청";
-            $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
-            $USER_NAME = $arrKakao["userName"];
-            $USER_TEL = $arrKakao["userPhone"];
-            $PROD_TYPE = $arrKakao["gubun"];
-            $KAKAO_DATE = $datetime;
-            $RES_CONFIRM = $res_confirm;
-            $KAKAO_CONTENT = $kakaoMsg;
-            $KAKAO_BTN1 = $arrKakao["link1"];
-            $KAKAO_BTN2 = $arrKakao["link2"];
-            $KAKAO_BTN3 = $arrKakao["link3"];
-            $KAKAO_BTN4 = $arrKakao["link4"];
-            $KAKAO_BTN5 = $arrKakao["link5"];
-
-            // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
-            // $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug($arrKakao, $arrRtn);
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
-                $to .= $user_email;
+                $to .= ','.$usermail;
             }
 
             if($code == "bus"){
@@ -314,26 +305,17 @@ if($param == "RtnPrice"){
                     , "link4"=>""
                     , "link5"=>""
                     , "smsOnly"=>"N"
+                    , "PROD_NAME"=>"환불요청_업체"
+                    , "PROD_URL"=>$shopseq
+                    , "PROD_TYPE"=>"surf_shop"
+                    , "RES_CONFIRM"=>"4"
                 );
-                
                 $arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-                $PROD_NAME = $shopname." 예약취소";
-                $PROD_URL = "https://actrip.co.kr/surfview?seq=".$shopseq;
-                $USER_NAME = $arrKakao["userName"];
-                $USER_TEL = $arrKakao["userPhone"];
-                $PROD_TYPE = "surf_shop";
-                $KAKAO_DATE = $datetime;
-                $RES_CONFIRM = $res_confirm;
-                $KAKAO_CONTENT = $kakaoMsg;
-                $KAKAO_BTN1 = $arrKakao["link1"];
-                $KAKAO_BTN2 = $arrKakao["link2"];
-                $KAKAO_BTN3 = $arrKakao["link3"];
-                $KAKAO_BTN4 = $arrKakao["link4"];
-                $KAKAO_BTN5 = $arrKakao["link5"];
-
-                // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
-                // $result_set = mysqli_query($conn, $select_query);
+    
+                // 카카오 알림톡 DB 저장 START
+                $select_query = kakaoDebug($arrKakao, $arrRtn);
+                $result_set = mysqli_query($conn, $select_query);
+                // 카카오 알림톡 DB 저장 END
             }
         }
         
@@ -502,12 +484,8 @@ if($param == "RtnPrice"){
             $sDate = $rowTime["res_date"];
             $shopname = $rowTime['shopname'];
             $etc = $rowTime["etc"];
-
-            if($res_confirm == 3){
-                
-            }else{
-                $res_confirm = $rowTime["res_confirm"];
-            }            
+            $res_confirm = $rowTime["res_confirm"];
+    
         }
 
         if($res_confirm == 3){
@@ -535,11 +513,23 @@ if($param == "RtnPrice"){
             , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
             , "link5"=>"event" //공지사항
             , "smsOnly"=>"N"
+            , "PROD_NAME"=>"서핑버스 정류장변경"
+            , "PROD_URL"=>$shopseq
+            , "PROD_TYPE"=>"bus"
+            , "RES_CONFIRM"=>$res_confirm
         );
+
+        $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+        // 카카오 알림톡 DB 저장 START
+        $select_query = kakaoDebug($arrKakao, $arrRtn);
+        $result_set = mysqli_query($conn, $select_query);
+        if(!$result_set) goto errGo;
+        // 카카오 알림톡 DB 저장 END
         
         // 이메일 발송
         if(strrpos($user_email, "@") > 0){
-            $to .= $user_email;
+            $to .= ','.$usermail;
         }
 
         $arrMail = array(
@@ -561,27 +551,6 @@ if($param == "RtnPrice"){
             , "info2_title"=> $info2_title
             , "info2"=> $info2
         );
-
-        $arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-        $PROD_NAME = "서핑버스 정류장변경";
-        $PROD_URL = "https://actrip.co.kr/".$resparam;
-        $USER_NAME = $arrKakao["userName"];
-        $USER_TEL = $arrKakao["userPhone"];
-        $PROD_TYPE = $arrKakao["gubun"];
-        $KAKAO_DATE = $datetime;
-        $RES_CONFIRM = $res_confirm;
-        $KAKAO_CONTENT = $kakaoMsg;
-        $KAKAO_BTN1 = $arrKakao["link1"];
-        $KAKAO_BTN2 = $arrKakao["link2"];
-        $KAKAO_BTN3 = $arrKakao["link3"];
-        $KAKAO_BTN4 = $arrKakao["link4"];
-        $KAKAO_BTN5 = $arrKakao["link5"];
-
-        // $select_query = "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
-        // $result_set = mysqli_query($conn, $select_query);
-        // if(!$result_set) goto errGo;
-
         sendMail($arrMail); //메일 발송
         
 		mysqli_query($conn, "COMMIT");

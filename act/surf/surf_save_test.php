@@ -99,12 +99,18 @@ if($coupon == "JOABUS"){
         , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
         , "link5"=>"event" //공지사항
         , "smsOnly"=>"N"
-        , "PROD_NAME"=>"서핑버스"
+        , "PROD_NAME"=>"서핑버스_조아서프"
         , "PROD_URL"=>$shopseq
         , "PROD_TYPE"=>"bus"
         , "RES_CONFIRM"=>$res_confirm
     );
-    sendKakao($arrKakao);
+    $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+    // 카카오 알림톡 DB 저장 START
+    $select_query = kakaoDebug($arrKakao, $arrRtn);
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGo;
+    // 카카오 알림톡 DB 저장 END
 }
 
 // 고객 카카오톡 발송
@@ -130,12 +136,12 @@ $arrKakao = array(
 
 //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12 알림톡 제외
 if($msgType > 0){
-    sendKakao($arrKakao); //알림톡 발송
-}
+    $arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-//  // 카카오 알림톡 DB 저장 START
-//  $select_query = kakaoDebug($arrKakao, $arrRtn);            
-//  $result_set = mysqli_query($conn, $select_query);
-//  if(!$result_set) goto errGoSurf;
-//  // 카카오 알림톡 DB 저장 END
+    // 카카오 알림톡 DB 저장 START
+    $select_query = kakaoDebug($arrKakao, $arrRtn);
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGo;
+    // 카카오 알림톡 DB 저장 END
+}
 ?>

@@ -83,8 +83,17 @@ if($count > 0){
                 , "link4"=>""
                 , "link5"=>""
                 , "smsOnly"=>"N"
+                , "PROD_NAME"=>"자동취소"
+                , "PROD_URL"=>$shopseq
+                , "PROD_TYPE"=>$code
+                , "RES_CONFIRM"=>"7"
             );
-            sendKakao($arrKakao);
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+        
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug($arrKakao, $arrRtn);
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
 
             $surfshopMsg = "";
 			$busSeatInfo = "";
@@ -100,6 +109,7 @@ if($count > 0){
 		$sDate = $rowTime["res_date"];
         $shopname = $rowTime['shopname'];
         $optname = $rowTime["optname"];
+        $shopseq = $rowTime["seq"];
 
         if($code == "bus"){
             if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
@@ -160,8 +170,17 @@ if($count > 0){
         , "link4"=>""
         , "link5"=>""
         , "smsOnly"=>"N"
+        , "PROD_NAME"=>"자동취소"
+        , "PROD_URL"=>$shopseq
+        , "PROD_TYPE"=>$code
+        , "RES_CONFIRM"=>"7"
     );
-    sendKakao($arrKakao);
+    $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+    // 카카오 알림톡 DB 저장 START
+    $select_query = kakaoDebug($arrKakao, $arrRtn);
+    $result_set = mysqli_query($conn, $select_query);
+    // 카카오 알림톡 DB 저장 END
 
 	$k++;
 //============================ 실행 단계 ============================

@@ -208,6 +208,12 @@ $b = 1;
 $c = 0;
 $PreSeq = "";
 $rowlist = '';
+$TotalsurfM = 0;
+$TotalsurfW = 0;
+$TotalstayM = 0;
+$TotalstayW = 0;
+$TotalbbqM = 0;
+$TotalbbqW = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
     $MainSeq = $row['resseq'];
     if($MainSeq == $PreSeq){
@@ -283,6 +289,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     if($res_confirm == "확정" || $res_confirm == "대기"){
                         $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
                     }
+
+                    if($staysex == "남"){
+                        $TotalstayM += $stayM;
+                    }else{
+                        $TotalstayW += $stayM;
+                    }
                 }
             }
         }
@@ -291,6 +303,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             $resText .= (($resText == "") ? "" : "/")."파티";
             // $stayText .= (($stayText == "") ? "$bbq" : " / $bbq");
             $bbqText = $bbq;
+            
+            if($staysex == "남"){
+                $TotalbbqM += $stayM;
+            }else{
+                $TotalbbqW += $stayM;
+            }
         }
 
         // if(($bbq != "N" && $prod_name == "N") || $prod_name != "솔게하"){
@@ -306,6 +324,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             if($prod_name != "N"){
                 $resText = "강습";
                 $stayText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
+
+                $TotalsurfM += $surfM;
+                $TotalsurfW += $surfW;
             }
 
             if($surfrent != "N"){            
@@ -360,6 +381,22 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 }
 $rowlist .= $b."|";
 ?>
+            <tr style="background-color:#ffa87d;">
+                <td colspan="2"><strong>합 계</strong></td>
+                <td colspan="2">
+                <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
+                    <br><strong>총 : <?=$TotalstayM+$TotalstayW."명"?></strong>
+                </td>
+                <td colspan="5">
+                <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
+                    <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
+                </td>
+                <td colspan="5">
+                <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
+                    <br><strong>총 : <?=$TotalbbqM+$TotalbbqW."명"?></strong>
+                </td>
+                <td colspan="4"></td>
+            </tr>
 		</tbody>
     </table>
     <input type="hidden" id="hidrowcnt" value="<?=$rowlist?>" />

@@ -281,8 +281,17 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "link4"=>"" //공지사항
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"surf_user"
+			, "RES_CONFIRM"=>"3"
 		);
-		sendKakao($arrKakao); //알림톡 발송
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+	
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
 	
 		//카카오톡 업체 발송
 		$select_query = 'SELECT * FROM AT_PROD_MAIN WHERE seq = '.$shopseq;
@@ -315,8 +324,17 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"surf_shop"
+			, "RES_CONFIRM"=>"3"
 		);
-		sendKakao($arrKakao);
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+	
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
 	
 		$info1_title = "신청목록";
 		$info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));
@@ -610,10 +628,19 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"surf_user"
+			, "RES_CONFIRM"=>"3"
 		);
 
 		if($res_kakao == "A" || $res_kakao == "U"){
-			sendKakao($arrKakao); //알림톡 발송
+			$arrRtn = sendKakao($arrKakao); //알림톡 발송
+		
+			// 카카오 알림톡 DB 저장 START
+			$select_query = kakaoDebug($arrKakao, $arrRtn);
+			$result_set = mysqli_query($conn, $select_query);
+			// 카카오 알림톡 DB 저장 END
 		}
 	
 		//카카오톡 업체 발송
@@ -647,10 +674,19 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$shopname
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"surf_shop"
+			, "RES_CONFIRM"=>"3"
 		);
 
 		if($res_kakao == "A" || $res_kakao == "Y"){
-			sendKakao($arrKakao);
+			$arrRtn = sendKakao($arrKakao); //알림톡 발송
+		
+			// 카카오 알림톡 DB 저장 START
+			$select_query = kakaoDebug($arrKakao, $arrRtn);
+			$result_set = mysqli_query($conn, $select_query);
+			// 카카오 알림톡 DB 저장 END
 		}
 	
 		$info1_title = "신청목록";

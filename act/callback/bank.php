@@ -149,7 +149,7 @@ if($count == 1){
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
 		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$select_query = kakaoDebug($arrKakao, $arrRtn);
 		$result_set = mysqli_query($conn, $select_query);
 
 		// 이메일 발송

@@ -79,7 +79,7 @@ $now = date("Y-m-d A h:i:s");
 							WHERE res_confirm = 3
                             	AND code = "bus"
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
-								AND res_coupon NOT IN ("JOABUS", "KLOOK", "NAVER")
+								AND res_coupon NOT IN ("JOABUS", "KLOOK", "NAVER", "FRIP", "MYTRIP")
                             GROUP BY res_date
             UNION ALL
             SELECT "네이버" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 20000) AS total_price, res_confirm FROM `AT_RES_SUB`
@@ -117,9 +117,19 @@ $now = date("Y-m-d A h:i:s");
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
-			SELECT "망고" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 15000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
+			SELECT "망고2" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 15000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
 							ON a.resnum = b.resnum
 								AND res_coupon = "MANGO"
+							WHERE res_confirm = 3
+								AND code = "bus"
+								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
+							GROUP BY res_date
+			UNION ALL
+			SELECT "망고" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 20000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
+							ON a.resnum = b.resnum
+                         INNER JOIN AT_COUPON_CODE c
+                         	ON a.res_coupon = c.coupon_code
+                            	AND c.couponseq = 14
 							WHERE res_confirm = 3
 								AND code = "bus"
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
@@ -149,7 +159,7 @@ $now = date("Y-m-d A h:i:s");
             $arrResNaverCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "망고"){
             $arrResMangCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
-            $arrResMangPrice[$row['res_confirm']][$row['sDay']] = $row['price'];
+            // $arrResMangPrice[$row['res_confirm']][$row['sDay']] = $row['price'];
         }else{
             $arrResCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }
@@ -236,7 +246,7 @@ $now = date("Y-m-d A h:i:s");
 				//망고
                 if($arrResMangCount[3][$ru] != ""){
 					$daySum += $arrResMangCount[3][$ru];
-					$daySum -= $arrResMangPrice[3][$ru];
+					// $daySum -= $arrResMangPrice[3][$ru];
 					$adminText .= '<br><font color="black">망고:'.number_format($arrResMangCount[3][$ru])."원</font>";
 				}
 
