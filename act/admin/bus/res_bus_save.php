@@ -261,8 +261,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$coupon_code = RandString(5);
 	$user_ip = $_SERVER['REMOTE_ADDR'];
     $add_date = date("Y-m-d");
-
-	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now());";
+	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2";
+	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo');";
 	$result_set = mysqli_query($conn, $select_query);
  	if(!$result_set) goto errGo;
 

@@ -215,6 +215,51 @@ $shopseq = 0;
                         </tr>
                     </table>
                     </form>
+<?
+    $select_query = "SELECT * FROM `AT_COUPON_CODE` WHERE couponseq = 14 AND use_yn = 'N'";
+    $result_setlist = mysqli_query($conn, $select_query);
+    $count = mysqli_num_rows($result_setlist);
+?>
+
+<div class="gg_first">알림톡 발송 정보</div>
+    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
+        <colgroup>
+            <col width="14%"/>
+            <col width="13%"/>
+            <col width="17%"/>
+            <col width="18%"/>
+            <col width="18%"/>
+            <col width="auto"/>
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>채널</th>
+                <th>이름</th>
+                <th>연락처</th>
+                <th>이용일 (서울>양양)</th>
+                <th>이용일 (양양>서울)</th>
+                <th>예약여부</th>
+            </tr>
+<?while ($row = mysqli_fetch_assoc($result_setlist)){
+	$coupon_code = $row['coupon_code'];
+	$userinfo = $row['userinfo'];
+
+    $arrChk = explode("|", $userinfo);
+    ?>
+            <tr>
+                <td>망고 패키지</td>
+                <td><?=$arrChk[0]?></td>
+                <td><?=$arrChk[1]?></td>
+                <td><?=$arrChk[2]?> (<?=$arrChk[3]?>명)</td>
+                <td><?=$arrChk[4]?> (<?=$arrChk[5]?>명)</td>
+                <td>X</td>
+            </tr>
+<?}?>
+        </tbody>
+    </table>
+</div>
+
+
                 </div>
             </div>
             <!-- .tab_container -->

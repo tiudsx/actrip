@@ -20,8 +20,8 @@ else
     $res_confirm = 0;
 
     $couponseq = 8;
-    //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12
-    if(in_array($couponseq, array(7, 10, 11, 12)))
+    //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12, 망고서프패키지 : 14
+    if(in_array($couponseq, array(7, 10, 11, 12, 14)))
     {
         $res_confirm = 8;
         $InsUserID = $coupon;
@@ -66,8 +66,8 @@ if($coupon == "JOABUS"){
 }else if($coupon == "NAVER"){
 
 }else{
-    //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12
-    if(in_array($couponseq, array(7, 10, 11, 12))){
+    //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12, 망고서프패키지 : 14
+    if(in_array($couponseq, array(7, 10, 11, 12, 14))){
         $msgType = 0;
     }else{
         $msgType = 2;
