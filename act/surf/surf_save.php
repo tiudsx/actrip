@@ -150,7 +150,7 @@ if($param == "BusI"){
     // }
 
     //예약채널 사이트 쿠폰 코드가 있으면 예약확정
-    $coupon_array = array("JOABUS", "KLOOK", "NAVER", "FRIP", "MYTRIP");
+    $coupon_array = array("JOABUS", "KLOOK", "NAVER", "FRIP", "MYTRIP", "SURFX");
     if(in_array($coupon, $coupon_array))
     {
         $res_confirm = 3;
@@ -294,6 +294,32 @@ if($param == "BusI"){
             $msgTitle = '액트립&FRIP 서핑버스 예약안내';
 
             $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 좌석/정류장 변경은 하단 버튼에서 가능합니다.\n      - 예약취소는 프립에서 접수가능합니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+
+            // 고객 카카오톡 발송
+            $arrKakao = array(
+                "gubun"=> "bus"
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_bus_step1"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
+                , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
+                , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
+                , "link5"=>"event" //공지사항
+                , "smsOnly"=>"N"
+                , "PROD_NAME"=>"서핑버스"
+                , "PROD_URL"=>$shopseq
+                , "PROD_TYPE"=>"bus"
+                , "RES_CONFIRM"=>$res_confirm
+            );
+        }else if($coupon == "SURFX"){
+            $pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+            $msgTitle = '액트립&서프존 서핑버스 예약안내';
+
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님 예약이 완료되었습니다. \n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 좌석/정류장 변경은 하단 버튼에서 가능합니다.\n      - 예약취소는 서프존에서 접수가능합니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 
             // 고객 카카오톡 발송
             $arrKakao = array(
@@ -478,7 +504,7 @@ if($param == "BusI"){
             $gubun_title = "KLOOK 서핑버스";
         }else if($coupon == "NAVER"){
             $gubun_title = "액트립 서핑버스";
-        }else if($coupon == "FRIP"){
+        }else if($coupon == "FRIP" || $coupon == "SURFX"){
             $gubun_title = "액트립 서핑버스";
         }else if($coupon == "MYTRIP"){
             $gubun_title = "액트립 서핑버스";

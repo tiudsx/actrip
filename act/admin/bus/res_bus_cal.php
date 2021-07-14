@@ -117,6 +117,13 @@ $now = date("Y-m-d A h:i:s");
 								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 							GROUP BY res_date
 			UNION ALL
+			SELECT "서프존" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 16000) AS total_price, res_confirm FROM `AT_RES_SUB`
+							WHERE res_confirm = 3
+								AND code = "bus"
+								AND res_coupon = "SURFX"
+								AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
+							GROUP BY res_date
+			UNION ALL
 			SELECT "망고2" AS title, COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, SUM(res_price) AS price, SUM(res_coupon) AS coupon, (COUNT(*) * 15000) AS total_price, res_confirm FROM `AT_RES_SUB` a INNER JOIN `AT_RES_MAIN` b
 							ON a.resnum = b.resnum
 								AND res_coupon = "MANGO"
@@ -142,6 +149,7 @@ $now = date("Y-m-d A h:i:s");
 	$arrResJoaCount = array();
 	$arrResKlookCount = array();
 	$arrResFripCount = array();
+	$arrResSurfxCount = array();
 	$arrResMyCount = array();
 	$arrResMangCount = array();
 	$arrResMangPrice = array();
@@ -153,6 +161,8 @@ $now = date("Y-m-d A h:i:s");
             $arrResKlookCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "FRIP"){
             $arrResFripCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
+        }else if($row['title'] == "서프존"){
+            $arrResSurfxCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "MYTRIP"){
             $arrResMyCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "네이버"){
@@ -231,6 +241,13 @@ $now = date("Y-m-d A h:i:s");
 					$adminText .= '<br><font color="black">FRIP:'.number_format($arrResFripCount[3][$ru])."원</font>";
 				}
 
+				//서프존
+                if($arrResSurfxCount[3][$ru] != ""){
+					$daySum += $arrResSurfxCount[3][$ru];
+					$adminText .= '<br><font color="black">서프존:'.number_format($arrResSurfxCount[3][$ru])."원</font>";
+				}
+
+
 				//마이리얼트립
                 if($arrResMyCount[3][$ru] != ""){
 					$daySum += $arrResMyCount[3][$ru];
@@ -262,7 +279,7 @@ $now = date("Y-m-d A h:i:s");
                 if($daySum > 0){
                     $daySumText = "<br>총 : ".number_format($daySum)."원";
                 }
-				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:95px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText $daySumText</span></calBox></td>";
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:105px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText $daySumText</span></calBox></td>";
 			}
 		}
 
