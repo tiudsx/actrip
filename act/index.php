@@ -76,8 +76,8 @@
 					</li>
 					<li><a href="/surfbus"><img src="images/icon/ibus.png" alt="">
 						</a></li>
-					<!-- <li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li> -->
-					<li><a href="javascript:alert('서비스 준비중입니다.');"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
+					<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
+					<!-- <li><a href="javascript:alert('서비스 준비중입니다.');"><img src="/act/images/icon/ibbq.png" alt=""></a></li> -->
 					<li><a href="https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7" target="_blank"><img src="images/icon/ievent.png" alt="">
 						</a></li>
 					<li><a href="/staylist"><img src="images/icon/ibed.png" alt="">

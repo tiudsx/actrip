@@ -25,8 +25,8 @@ $j(document).ready(function(){
         <section id="bbqCat">
             <div class="bbqCatList">
                 <ul>
-                    <li class="solbbq"><a href="/bbq_dh"><img src="images/button/bbqsol.png" alt="동해 바베큐파티"></a></li>
-                    <li class="yybbq"><a href="/bbq_pkg"><img src="images/button/bbqpkg.png" alt="동해 바베큐파티"></a></li>
+                    <li class="solbbq"><a href="http://naver.me/GEALbLAc" target="_blank"><img src="images/button/bbqsol.png" alt="동해 바베큐파티"></a></li>
+                    <li class="yybbq"><a href="http://naver.me/GEALbLAc" target="_blank"><img src="images/button/bbqpkg.png" alt="동해 바베큐파티"></a></li>
                 </ul>
             </div>
         </section>
