@@ -87,7 +87,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
                             <li onclick="fnResViewBus(false, '#view_tab2', 70, this);fnMapClick();"><a>정류장안내</a></li>
                             <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li>
-                            <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
+                            <!-- <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li> -->
                         </ul>
                     </div>
                 </div>
@@ -95,10 +95,17 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             <div id="view_tab1">
                 <div class="noticeline" id="content_tab1">
                     <!-- <p class="noticetxt">예약안내</p> -->
+                    
                     <article>
+                        <p class="noticesub">셔틀버스 운행 중지 안내</p>
+                        <ul>
+                            <li class="litxt">코로나 확산으로 인하여, 액트립 셔틀버스 운행은 조기 중단합니다.</li>
+                            <li class="litxt">다음시즌에 더욱 좋은모습으로 찾아뵙겠습니다.</li>
+                        </ul>
+                    </article>
+                    <!-- <article>
                         <p class="noticesub">셔틀버스 예약안내</p>
                         <ul>
-                            <!-- <li class="litxt">이용상품 예약 > 입금안내 카톡 발송 > 무통장 입금 > 확정안내 카톡 발송</li> -->
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
                             <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li>
                             <li class="litxt">
@@ -122,7 +129,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </span>
                             </li>
                         </ul>
-                    </article>
+                    </article> -->
                 </div>
                 <div class="contentimg">
                 <!-- <img src="https://surfenjoy.cdn3.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
@@ -385,7 +392,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1">
+        <!-- <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> -->
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">
     </div>
