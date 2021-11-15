@@ -3,14 +3,6 @@ include __DIR__.'/../../db.php';
 include __DIR__.'/../../common/logininfo.php';
 ?>
 
-<div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>솔게스트하우스 예약관리</h1>
-</div>
-
-<script>
-    var mobileuse = "";
-</script>
-
 <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
@@ -19,6 +11,14 @@ include __DIR__.'/../../common/logininfo.php';
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
 <script type="text/javascript" src="/act/js/admin_sol.js?v=5"></script>
 <script type="text/javascript" src="/act/js/common.js"></script>
+
+<div class="bd_tl" style="width:100%;">
+	<h1 class="ngeb clear"><i class="bg_color"></i>솔게스트하우스 예약관리</h1>
+</div>
+
+<script>
+    var mobileuse = "";
+</script>
 
 <div class="container" id="contenttop" style="padding-top:35px;">
 

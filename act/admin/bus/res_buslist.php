@@ -8,9 +8,10 @@ $shopseq = 0;
 <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
-<script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/surfview_bus.js"></script>
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act/js/admin_surf.js"></script>
+<script type="text/javascript" src="/act/js/admin_bus.js"></script>
+<script type="text/javascript" src="/act/js/common.js"></script>
 <script type="text/javascript" src="/act/js/surfview_busday.js"></script>
 
 <div class="bd_tl" style="width:100%;">
@@ -303,7 +304,7 @@ function fnResKakaoAdmin(){
 
 
     <div>
-        <div id="mngSearch" style="display:inline-block;width:100%"><?include 'res_buslist_search.php'?></div>
+        <div id="mngSearch" style="display:inline-block;width:100%"></div>
     </div>
 </div>
 <!-- #container -->
@@ -313,7 +314,7 @@ function fnResKakaoAdmin(){
 <iframe id="ifrmResize" name="ifrmResize" style="width:800px;height:400px;display:none;"></iframe>
 
 <div id="res_busmodify" style="display:none;padding:5px;"> 
-    <form name="frmModify" id="frmModify" autocomplete="off">
+    <form name="frmModify2" id="frmModify2" autocomplete="off">
     <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
@@ -324,104 +325,33 @@ function fnResKakaoAdmin(){
         </colgroup>
         <tbody>
             <tr>
-                <th>신청일</th>
-                <td colspan="3">
-                    <input type="text" id="insdate" name="insdate" size="20" value="" class="itx">
-                    <input type="hidden" id="resnum" name="resnum" size="10" value="" class="itx">
-                </td>
-            </tr>
-            <tr>
-                <th>확정일</th>
-                <td colspan="3"><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
+                
             </tr>
             <tr>
                 <th>상태</th>
                 <td>
-                    <select id="res_confirm" name="res_confirm" class="select">
-                        <option value='0'>미입금</option>
-                        <option value='1'>예약대기</option>
-                        <option value='3'>확정</option>
-                        <option value='4'>환불요청</option>
-                        <option value='5'>환불완료</option>
-                        <option value='7'>취소</option>
-                        <option value='8'>입금완료</option>
-                    </select>
                 </td>
                 <th>이용일</th>
-                <td><input type="text" id="res_date" name="res_date" cal="date" size="10" value="<?=$row["busDate"]?>" class="itx"></td>
+                
             </tr>
             <tr>
-                <th>이름</th>
-                <td><input type="text" id="user_name" name="user_name" size="11" value="" class="itx"></td>
-                <th>연락처</th>
-                <td><input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx"></td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
+                
                 <th>수수료여부</th>
-                <td>
-                    <select id="rtn_charge_yn" name="rtn_charge_yn" class="select">
-                        <option value="Y">있음</option>
-                        <option value="N">없음</option>
-                    </select>
-                </td>
             </tr>
             <tr>
                 <th>할인금액</th>
-                <td><input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="18"></td>
-                <th>이용금액</th>
-                <td><input type="text" id="res_price" name="res_price" size="12" value="" class="itx"></td>
+                
             </tr>
             <tr>
                 <th>호차</th>
                 <td>
-                    <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel(this.value, '', '');">
-                        <option value="Y1">양양행 1호차</option>
-                        <option value="Y2">양양행 2호차</option>
-                        <option value="Y3">양양행 3호차</option>
-                        <option value="Y4">양양행 4호차</option>
-                        <option value="Y5">양양행 5호차</option>
-                        <option value="Y6">양양행 6호차</option>
-                        <option value="S21">(양양)서울행 2시 1호차</option>
-                        <option value="S23">(양양)서울행 2시 2호차</option>
-                        <option value="S23">(양양)서울행 2시 3호차</option>
-                        <option value="S51">(양양)서울행 5시 1호차</option>
-                        <option value="S52">(양양)서울행 5시 2호차</option>
-                        <option value="S53">(양양)서울행 5시 3호차</option>
-                        <option value="E1">동해행 1호차</option>
-                        <option value="E2">동해행 2호차</option>
-                        <option value="E3">동해행 3호차</option>
-                        <option value="E4">동해행 4호차</option>
-                        <option value="E5">동해행 5호차</option>
-                        <option value="E6">동해행 6호차</option>
-                        <option value="A21">(동해)서울행 2시 1호차</option>
-                        <option value="A22">(동해)서울행 2시 2호차</option>
-                        <option value="A22">(동해)서울행 2시 3호차</option>
-                        <option value="A51">(동해)서울행 5시 1호차</option>
-                        <option value="A52">(동해)서울행 5시 2호차</option>
-                        <option value="A53">(동해)서울행 5시 3호차</option>
-                    </select>
                 </td>
                 <th>좌석</th>
                 <td>
-                    <select id="res_seat" name="res_seat" class="select">
-                    <?for ($i=1; $i < 46; $i++) { 
-                        echo "<option value='$i'>$i</option>";
-                    }?>
-                    </select>
                 </td>
             </tr>
             <tr>
                 <th>정류장</th>
-                <td>
-                    <select id="res_spointname" name="res_spointname" class="select">
-                        <option value="N">출발</option>
-                    </select> →
-                    <select id="res_epointname" name="res_epointname" class="select">
-                        <option value="N">도착</option>
-                    </select>
-                </td>
                 <th></th>
                 <td>
                 </td>
@@ -440,3 +370,206 @@ function fnResKakaoAdmin(){
     </table>
     </form>
 </div> 
+
+<div id="res_modify" style="display:none;padding:5px;height: 600px;overflow-y: auto;"> 
+    <form name="frmModify" id="frmModify" autocomplete="off">
+    <div class="gg_first" style="margin-top:0px;">액트립 서핑버스 (<span id="resnumer"></span>)</div>
+    <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
+        <colgroup>
+            <col width="6%" />
+            <col width="14%" />
+            <col width="6%" />
+            <col width="14%" />
+            <col width="6%" />
+            <col width="14%" />
+            <col width="6%" />
+            <col width="14%" />
+            <col width="6%" />
+            <col width="14%" />
+        </colgroup>
+        <tbody>
+			<tr>
+				<th>등록관리자</th>
+				<td>
+					<select id="res_adminname" name="res_adminname" class="select">
+                        <option value='이승철'>이승철</option>
+                        <option value='정태원'>정태원</option>
+                        <option value='정태일'>정태일</option>
+                    </select>
+				</td>
+                <th>예약자이름</th>
+                <td><input type="text" id="user_name" name="user_name" size="12" value="" class="itx"></td>
+                <th>연락처</th>
+				<td>
+					<input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
+				</td>
+				<th>할인쿠폰</th>
+				<td>
+                    <input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="12"><br>
+                    <input type="text" id="res_coupon" name="res_coupon" value="" class="itx" size="12">
+                </td>
+                <th>이용금액</th>
+                <td><input type="text" id="res_price" name="res_price" size="12" value="" class="itx"></td>
+				</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
+                <th>신청일</th>
+                <td>
+                    <input type="text" id="insdate" name="insdate" size="20" value="" class="itx">
+                    <input type="hidden" id="resnum" name="resnum" size="10" value="" class="itx">
+                </td>
+                <th>확정일</th>
+                <td><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
+			</tr>
+			<tr>
+                <th>예약정보</th>
+                <td colspan="9">
+					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
+						<colgroup>
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+						</colgroup>
+						<tbody>
+                            <tr>
+                                <th>이용일</th>
+                                <th>호차</th>
+                                <th>좌석</th>
+                                <th>정류장</th>
+                                <th>현재예약</th>
+                                <th>예약상태
+                                    <select class="select" onchange="fnSelChange(this, 0);">
+                                        <option value="">전체</option>
+                                        <option value='0'>미입금</option>
+                                        <option value='1'>예약대기</option>
+                                        <option value='3'>확정</option>
+                                        <option value='4'>환불요청</option>
+                                        <option value='5'>환불완료</option>
+                                        <option value='7'>취소</option>
+                                        <option value='8'>입금완료</option>
+                                    </select>
+                                </th>
+								<th>수수료
+                                    <select class="select" onchange="fnSelChange(this, 1);">
+                                        <option value="">전체</option>
+                                        <option value="Y">있음</option>
+                                        <option value="N">없음</option>
+                                    </select>
+                                </th>
+								<th>알림톡
+                                    <select class="select" onchange="fnSelChange(this, 2);">
+                                        <option value="">전체</option>
+                                        <option value='N'>미발송</option>
+                                        <option value='Y'>발송</option>
+                                    </select>
+                                </th>
+							</tr>
+							<tr id="trbus" style="display:none;">
+                                <td><input type="text" calid="res_date" name="res_date[]" cal="date" size="10" class="itx" readonly="readonly"></td>
+								<td>
+									<input type="hidden" id="ressubseq" name="ressubseq[]" >
+                                    <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel2(this, this.value, '', '', 2);">
+                                        <option value="Y1">양양행 1호차</option>
+                                        <option value="Y2">양양행 2호차</option>
+                                        <option value="Y3">양양행 3호차</option>
+                                        <option value="Y4">양양행 4호차</option>
+                                        <option value="Y5">양양행 5호차</option>
+                                        <option value="Y6">양양행 6호차</option>
+                                        <option value="S21">(양양)서울행 2시 1호차</option>
+                                        <option value="S23">(양양)서울행 2시 2호차</option>
+                                        <option value="S23">(양양)서울행 2시 3호차</option>
+                                        <option value="S51">(양양)서울행 5시 1호차</option>
+                                        <option value="S52">(양양)서울행 5시 2호차</option>
+                                        <option value="S53">(양양)서울행 5시 3호차</option>
+                                        <option value="E1">동해행 1호차</option>
+                                        <option value="E2">동해행 2호차</option>
+                                        <option value="E3">동해행 3호차</option>
+                                        <option value="E4">동해행 4호차</option>
+                                        <option value="E5">동해행 5호차</option>
+                                        <option value="E6">동해행 6호차</option>
+                                        <option value="A21">(동해)서울행 2시 1호차</option>
+                                        <option value="A22">(동해)서울행 2시 2호차</option>
+                                        <option value="A22">(동해)서울행 2시 3호차</option>
+                                        <option value="A51">(동해)서울행 5시 1호차</option>
+                                        <option value="A52">(동해)서울행 5시 2호차</option>
+                                        <option value="A53">(동해)서울행 5시 3호차</option>
+                                    </select>
+								</td>
+								<td style="line-height:2.3em">
+                                    <select id="res_seat" name="res_seat[]" class="select">
+                                    <?for ($i=1; $i < 46; $i++) { 
+                                        echo "<option value='$i'>$i</option>";
+                                    }?>
+                                    </select>
+								</td>
+                                <td>
+                                    <select id="res_spointname" name="res_spointname[]" class="select">
+                                        <option value="N">출발</option>
+                                    </select> →
+                                    <select id="res_epointname" name="res_epointname[]" class="select">
+                                        <option value="N">도착</option>
+                                    </select>
+                                </td>
+                                <td><span id="res_confirmText" style="font-weight:600;"></span></td>
+                                <td>
+                                    <select id="res_confirm" name="res_confirm[]" class="select allselect0">
+                                        <option value='0'>미입금</option>
+                                        <option value='1'>예약대기</option>
+                                        <option value='3'>확정</option>
+                                        <option value='4'>환불요청</option>
+                                        <option value='5'>환불완료</option>
+                                        <option value='7'>취소</option>
+                                        <option value='8'>입금완료</option>
+                                    </select> 
+                                </td>
+                                <td>
+                                    <select id="rtn_charge_yn" name="rtn_charge_yn[]" class="select allselect1">
+                                        <option value="Y">있음</option>
+                                        <option value="N">없음</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="res_kakao" name="res_kakao[]" class="select allselect2">		
+                                        <option value='N'>미발송</option>
+                                        <option value='Y'>발송</option>
+                                    </select>
+                                </td>
+
+							</tr>
+                        </tbody>
+					</table>
+                </td>
+			</tr>
+            <tr>
+                <th>특이사항</th>
+                <td colspan="9"><textarea id="etc" name="etc" rows="5" style="width: 60%; resize:none;"></textarea></td>
+			</tr>
+			<tr>
+                <th>직원메모</th>
+                <td colspan="9"><textarea id="memo" name="memo" rows="5" style="width: 60%; resize:none;"></textarea></td>
+			</tr>
+            <tr>
+				<td class="col-02" style="text-align:center;" colspan="10">
+                    <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
+                    <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd('modify');" id="SolModify" />&nbsp;
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnBuspopupReset();" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
+
+<script>
+$j(document).ready(function(){
+	fnSearchAdmin('bus/res_buslist_search.php');
+});
+</script>
