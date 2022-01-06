@@ -241,7 +241,7 @@ include __DIR__.'/../../common/logininfo.php';
                 </td>
             </tr>
             <tr>
-                <th>특이사항</th>
+                <th>요청사항</th>
                 <td colspan="5"><textarea id="etc" name="etc" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
 			<tr>

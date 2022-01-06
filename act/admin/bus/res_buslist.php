@@ -190,6 +190,7 @@ $shopseq = 0;
                                     <option value="11">프립</option>
                                     <option value="12">마이리얼트립</option>
                                     <option value="14">망고패키지</option>
+                                    <option value="15">서프엑스</option>
                                 </select>
                             </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
@@ -216,92 +217,15 @@ $shopseq = 0;
                         </tr>
                     </table>
                     </form>
-<?
-    $select_query = "SELECT * FROM `AT_COUPON_CODE` WHERE couponseq = 14 AND use_yn = 'N'";
-    $result_setlist = mysqli_query($conn, $select_query);
-    $count = mysqli_num_rows($result_setlist);
-?>
 
-<div class="gg_first">알림톡 발송 정보</div>
-    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-        <colgroup>
-            <col width="14%"/>
-            <col width="13%"/>
-            <col width="17%"/>
-            <col width="18%"/>
-            <col width="18%"/>
-            <col width="auto"/>
-        </colgroup>
-        <tbody>
-            <tr>
-                <th>채널</th>
-                <th>이름</th>
-                <th>연락처</th>
-                <th>이용일 (서울>양양)</th>
-                <th>이용일 (양양>서울)</th>
-                <th>예약여부</th>
-            </tr>
-<?while ($row = mysqli_fetch_assoc($result_setlist)){
-	$coupon_code = $row['coupon_code'];
-	$userinfo = $row['userinfo'];
-
-    $arrChk = explode("|", $userinfo);
-    ?>
-            <tr>
-                <td>망고 패키지</td>
-                <td><?=$arrChk[0]?></td>
-                <td><?=$arrChk[1]?></td>
-                <td><?=$arrChk[2]?> (<?=$arrChk[3]?>명)</td>
-                <td><?=$arrChk[4]?> (<?=$arrChk[5]?>명)</td>
-                <td>X</td>
-            </tr>
-<?}?>
-        </tbody>
-    </table>
-</div>
-
+                    <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnKakaoSearchAdmin('bus/res_kakao_search.php');" /></div>
+                    <div id="mngKakaoSearch"> (https://alimtalk-api.bizmsg.kr/codeList.html)</div>
 
                 </div>
             </div>
             <!-- .tab_container -->
         </article>
     </section>
-
-<script>
-function fnResKakaoAdmin(){
-    if($j("#username").val() == ""){
-        alert("이름을 입력하세요.");
-        return;
-    }
-    
-    if($j("#userphone").val() == ""){
-        alert("연락처를 입력하세요.");
-        return;
-    }
-
-    if(!confirm("알림톡 발송을 하시겠습니까?")){
-        return;
-    }
-
-    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
-    $j.ajax({
-        type: "POST",
-        url: "/act/admin/bus/res_bus_save.php",
-        data: params,
-        success: function (data) {
-            if(data == "err"){
-                alert("오류가 발생하였습니다.");
-            }else{
-                $j("#userphone").val("");
-                $j("#username").val("");
-                alert("예약 알림톡 발송이 완료되었습니다.");
-                // alert(data + "\n\n발송이 완료되었습니다.");
-            }
-        }
-    });
-}
-</script>
-
 
     <div>
         <div id="mngSearch" style="display:inline-block;width:100%"></div>
@@ -313,67 +237,9 @@ function fnResKakaoAdmin(){
 <input type="hidden" id="hidselDate" value="">
 <iframe id="ifrmResize" name="ifrmResize" style="width:800px;height:400px;display:none;"></iframe>
 
-<div id="res_busmodify" style="display:none;padding:5px;"> 
-    <form name="frmModify2" id="frmModify2" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">서핑버스 정보변경</div>
-    <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
-        <colgroup>
-            <col width="15%" />
-            <col width="40%" />
-            <col width="15%" />
-            <col width="30%" />
-        </colgroup>
-        <tbody>
-            <tr>
-                
-            </tr>
-            <tr>
-                <th>상태</th>
-                <td>
-                </td>
-                <th>이용일</th>
-                
-            </tr>
-            <tr>
-                
-                <th>수수료여부</th>
-            </tr>
-            <tr>
-                <th>할인금액</th>
-                
-            </tr>
-            <tr>
-                <th>호차</th>
-                <td>
-                </td>
-                <th>좌석</th>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <th>정류장</th>
-                <th></th>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-02" style="text-align:center;" colspan="4">
-                    <input type="hidden" id="gubun" name="gubun" size="10" value="0" class="itx">
-                    <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
-                    <input type="hidden" id="userid" name="userid" size="10" value="admin" class="itx">
-                    <input type="hidden" id="ressubseq" name="ressubseq" size="10" value="" class="itx">
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;background:green;" value="정보수정" onclick="fnDataModify();" />&nbsp;
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    </form>
-</div> 
-
 <div id="res_modify" style="display:none;padding:5px;height: 600px;overflow-y: auto;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">액트립 서핑버스 (<span id="resnumer"></span>)</div>
+    <div class="gg_first" style="margin-top:0px;">액트립 서핑버스</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
             <col width="6%" />
@@ -389,14 +255,8 @@ function fnResKakaoAdmin(){
         </colgroup>
         <tbody>
 			<tr>
-				<th>등록관리자</th>
-				<td>
-					<select id="res_adminname" name="res_adminname" class="select">
-                        <option value='이승철'>이승철</option>
-                        <option value='정태원'>정태원</option>
-                        <option value='정태일'>정태일</option>
-                    </select>
-				</td>
+				<th>예약번호</th>
+				<td><input type="text" id="resnum" name="resnum" size="12" value="" class="itx" readonly="readonly"></td>
                 <th>예약자이름</th>
                 <td><input type="text" id="user_name" name="user_name" size="12" value="" class="itx"></td>
                 <th>연락처</th>
@@ -405,23 +265,25 @@ function fnResKakaoAdmin(){
 				</td>
 				<th>할인쿠폰</th>
 				<td>
-                    <input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="12"><br>
-                    <input type="text" id="res_coupon" name="res_coupon" value="" class="itx" size="12">
+                    <input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="6"> / 
+                    <input type="text" id="res_coupon" name="res_coupon" value="" class="itx" size="8">
                 </td>
-                <th>이용금액</th>
-                <td><input type="text" id="res_price" name="res_price" size="12" value="" class="itx"></td>
+                <th>결제금액</th>
+                <td>
+                    <input type="text" id="res_price" name="res_price" size="4" value="" class="itx"> 
+                    할인 : <input type="text" id="res_disprice" name="res_disprice" size="4" value="" class="itx">
+                </td>
 				</td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
                 <th>신청일</th>
-                <td>
-                    <input type="text" id="insdate" name="insdate" size="20" value="" class="itx">
-                    <input type="hidden" id="resnum" name="resnum" size="10" value="" class="itx">
-                </td>
+                <td><input type="text" id="insdate" name="insdate" size="20" value="" class="itx"></td>
                 <th>확정일</th>
                 <td><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
+                <th>제휴업체</th>
+                <td><input type="text" id="res_cooperate" name="res_cooperate" size="20" value="" class="itx" readonly="readonly"></td>
 			</tr>
 			<tr>
                 <th>예약정보</th>
@@ -472,10 +334,10 @@ function fnResKakaoAdmin(){
                                 </th>
 							</tr>
 							<tr id="trbus" style="display:none;">
-                                <td><input type="text" calid="res_date" name="res_date[]" cal="date" size="10" class="itx" readonly="readonly"></td>
+                                <td><input type="text" calid="res_date" name="res_date[]" cal="date" size="10" class="itx" readonly="readonly" disabled="disabled"></td>
 								<td>
 									<input type="hidden" id="ressubseq" name="ressubseq[]" >
-                                    <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel2(this, this.value, '', '', 2);">
+                                    <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel2(this, this.value, '', '', 2);" disabled="disabled">
                                         <option value="Y1">양양행 1호차</option>
                                         <option value="Y2">양양행 2호차</option>
                                         <option value="Y3">양양행 3호차</option>
@@ -548,7 +410,7 @@ function fnResKakaoAdmin(){
                 </td>
 			</tr>
             <tr>
-                <th>특이사항</th>
+                <th>요청사항</th>
                 <td colspan="9"><textarea id="etc" name="etc" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
 			<tr>
@@ -559,7 +421,7 @@ function fnResKakaoAdmin(){
 				<td class="col-02" style="text-align:center;" colspan="10">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
-					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd('modify');" id="SolModify" />&nbsp;
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd();" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnBuspopupReset();" />
                 </td>
             </tr>
@@ -571,5 +433,75 @@ function fnResKakaoAdmin(){
 <script>
 $j(document).ready(function(){
 	fnSearchAdmin('bus/res_buslist_search.php');
+
+	fnKakaoSearchAdmin('bus/res_kakao_search.php');
 });
+
+function fnKakaoSearchAdmin(url) {
+    $j.blockUI({ message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false, css: { width: '650px', height: "150px", textAlign: 'center', left: '23%', top: '20%' } });
+
+    var formData = null;//$j("#frmSearch").serializeArray();
+    $j.post("/act/admin/" + url, formData,
+        function(data, textStatus, jqXHR) {
+            $j("#mngKakaoSearch").html(data);
+            setTimeout('fnModifyClose();', 500);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        setTimeout('fnModifyClose();', 500);
+    });
+}
+
+function fnResKakaoAdmin(){
+    if($j("#username").val() == ""){
+        alert("이름을 입력하세요.");
+        return;
+    }
+    
+    if($j("#userphone").val() == ""){
+        alert("연락처를 입력하세요.");
+        return;
+    }
+
+    if(!confirm("알림톡 발송을 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/bus/res_bus_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
+                $j("#userphone").val("");
+                $j("#username").val("");
+                //alert("예약 알림톡 발송이 완료되었습니다.");
+                // alert(data + "\n\n발송이 완료되었습니다.");
+
+                fnKakaoSearchAdmin('bus/res_kakao_search.php');
+            }
+        }
+    });
+}
+
+function fnBusCouponDel(seq){
+    if(!confirm("삭제 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=reskakaodel&codeseq=" + seq;
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/bus/res_bus_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
+                fnKakaoSearchAdmin('bus/res_kakao_search.php');
+            }
+        }
+    });
+}
 </script>

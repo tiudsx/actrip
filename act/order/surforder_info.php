@@ -289,7 +289,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			<?}?>
 			<?if(!($row['etc'] == "")){?>
             <tr>
-                <th scope="row">특이사항</th>
+                <th scope="row">요청사항</th>
                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$row['etc']?></textarea></td>
             </tr>
 			<?}?>

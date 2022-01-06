@@ -6,7 +6,7 @@ $resNumber = $_REQUEST["resNumber"];
 
 <script>
 $j(document).ready(function(){
-    alert("코로나 확산으로 인하여, 액트립 셔틀버스 운행은 조기 중단합니다.\n\n다음시즌에 더욱 좋은모습으로 찾아뵙겠습니다.");
+    //alert("코로나 확산으로 인하여, 액트립 셔틀버스 운행은 조기 중단합니다.\n\n다음시즌에 더욱 좋은모습으로 찾아뵙겠습니다.");
 });
 </script>
 

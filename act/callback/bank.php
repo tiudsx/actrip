@@ -115,7 +115,7 @@ if($count == 1){
 
 		$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
@@ -246,7 +246,7 @@ if($count == 1){
 		$ressubseq .= '0';
         
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 		
 		$msgTitle = '액트립 '.$shopname.' 예약안내';

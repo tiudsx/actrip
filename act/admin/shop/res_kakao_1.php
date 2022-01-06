@@ -247,7 +247,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		<?}?>
 		<?if($etc != ""){?>
             <tr>
-                <th>특이사항</th>
+                <th>요청사항</th>
                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$etc?></textarea></td>
             </tr>
 		<?}?>

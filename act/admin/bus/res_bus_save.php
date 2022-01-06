@@ -95,7 +95,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
         $pointMsg = '  ▶ 탑승시간/위치 안내\n'.$busStopInfo;
 
         if($etc != ''){
-            $etcMsg = '  ▶ 특이사항\n      '.$etc.'\n';
+            $etcMsg = '  ▶ 요청사항\n      '.$etc.'\n';
         }
 
 		$infomsg = "\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~";
@@ -232,6 +232,16 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     if(!$result_set) goto errGo;
 
 	mysqli_query($conn, "COMMIT");
+
+}else if($param == "reskakaodel"){
+    $codeseq = $_REQUEST["codeseq"];
+
+	$select_query = "DELETE FROM AT_COUPON_CODE WHERE codeseq = $codeseq";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+	
+	mysqli_query($conn, "COMMIT");
+	
 }else if($param == "reskakao"){ //버스 예약안내 카톡 : 타채널예약건
     $userName = $_REQUEST["username"];
     $userPhone = $_REQUEST["userphone"];
@@ -242,11 +252,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     $resbusseat1 = $_REQUEST["resbusseat1"];
     $resbusseat2 = $_REQUEST["resbusseat2"];
 
-	/*
-	7 : 네이버쇼핑
-	10 : 네이버예약
-	11 : 프립
-	*/
+	//7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
 	function RandString($len){
 		$return_str = "";
 	
@@ -261,10 +267,6 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$coupon_code = RandString(5);
 	$user_ip = $_SERVER['REMOTE_ADDR'];
     $add_date = date("Y-m-d");
-	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2";
-	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo');";
-	$result_set = mysqli_query($conn, $select_query);
- 	if(!$result_set) goto errGo;
 
 	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.";
 	// $infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
@@ -280,6 +282,10 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
 	}else if($reschannel == 14){ //망고서프 패키지
 
+	}else if($reschannel == 15){ //서프엑스
+
+	}else if($reschannel == 16){ //클룩
+
 	}
 
 	$resseatMsg = "";
@@ -291,8 +297,9 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
 	}
 
-	$msgTitle = '액트립 셔틀버스 예약안내';
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 셔틀버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+	$msgTitle = '액트립 서핑버스 예약안내';
+	//$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 서핑버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 서핑버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 		
 	$arrKakao = array(
 		"gubun"=> "bus"
@@ -305,8 +312,8 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
 		, "link2"=>""
 		, "link3"=>""
-		, "link4"=>"" //제휴업체 목록
-		, "link5"=>"" //공지사항
+		, "link4"=>""
+		, "link5"=>""
 		, "smsOnly"=>"N"
 		, "PROD_NAME"=>"타채널 알림톡발송"
 		, "PROD_URL"=>$reschannel
@@ -315,6 +322,35 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	);
 
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+	//------- 쿠폰코드 입력 -----
+	$data = json_decode($arrRtn[0], true);
+	$kakao_code = $data[0]["code"];
+	$kakao_type = $data[0]["data"]["type"];
+	$kakao_msgid = $data[0]["data"]["msgid"];
+	$kakao_message = $data[0]["message"];
+	$kakao_originMessage = $data[0]["originMessage"];
+
+	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
+	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo');";
+	$result_set = mysqli_query($conn, $select_query);
+ 	if(!$result_set) goto errGo;
+	//------- 쿠폰코드 입력 -----
+
+/*
+	$tmp = '[{"code":"fail","data":{"phn":"82104437000","msgid":"WEB20220105180807623437","type":"L"},"message":"M107:DeniedSenderNumber","originMessage":"K102:InvalidPhoneNumber"}]';
+
+	$tmp = '[{"code":"success","data":{"phn":"821044370009","msgid":"WEB20220105132932579875","type":"L"},"message":"M001","originMessage":"K208:InvalidParameterException"}]';
+
+	$tmp = '[{"code":"success","data":{"phn":"821044370009","msgid":"WEB20220105163752467667","type":"AT"},"message":"K000","originMessage":null}]';
+
+	echo $tmp."<br>";
+	$data = json_decode($tmp, true);
+	echo $data[0]["code"]."<br>";
+	echo $data[0]["message"]."<br>";
+	echo $data[0]["originMessage"]."<br>";
+	echo $data[0]["data"]["type"]."<br>";
+*/
 
 	// 카카오 알림톡 DB 저장 START
 	$select_query = kakaoDebug($arrKakao, $arrRtn);            

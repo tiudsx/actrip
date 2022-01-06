@@ -151,7 +151,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 		
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 	
 		$info1_title = "신청목록";
@@ -245,7 +245,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 		
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 
 		$infomsg = "";
@@ -497,7 +497,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 		
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 	
 		$info1_title = "신청목록";
@@ -592,7 +592,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}
 		
 		if($etc != ''){
-			$etcMsg = ' ▶ 특이사항\n      '.$etc.'\n';
+			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
 		
 		$infomsg = "";

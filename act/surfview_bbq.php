@@ -591,7 +591,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </td>
                             </tr>
                             <tr>
-                                <th>특이사항</th>
+                                <th>요청사항</th>
                                 <td>
                                     <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
                                 </td>

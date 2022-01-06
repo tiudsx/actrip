@@ -92,7 +92,8 @@ if($coupon == "JOABUS"){
         , "userName"=> $userName
         , "tempName"=> "at_bus_step1"
         , "kakaoMsg"=>$kakaoMsg
-        , "userPhone"=> "010-9509-9994"
+        //, "userPhone"=> "010-9509-9994"
+        , "userPhone"=> "010-8368-6099"
         , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
         , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
         , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회

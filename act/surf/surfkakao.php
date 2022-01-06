@@ -55,6 +55,18 @@ function kakaoMsg($arrKakao){
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
 	}
 
+	$btn_ResSearch = '{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearch"].'"}';
+	$btn_ResChange= '{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResChange"].'"}';
+	$btn_ResGPS= '{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResGPS"].'"}';
+	$btn_ResCustomer = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResCustomer"].'"}';
+	$btn_Notice = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_Notice"].'"}';
+
+	if($arrKakao["tempName"] == "at_bus_02"){ //셔틀버스 입금대기
+        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResCustomer.',';
+	}else if($arrKakao["tempName"] == "at_bus_12"){ //셔틀버스 예약확정
+        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResGPS.',"button4":'.$btn_ResCustomer.',';
+	}
+
 	$arryKakao = '';
     $arryKakao .= '['.$arryKakao.'{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$arrKakao["kakaoMsg"].'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
     
@@ -119,30 +131,7 @@ function mailMsg($arrMail){
 	$info5_display = ""; //기본정보
 
 	$gubun_subtitle = " 예약안내";
-
-	if($gubun == "bus"){
-		if($gubun_step == 0){ //미입금 - 입금대기
-			$info3_display = "";
-			$info4_display = "";
-		}else if($gubun_step == 3){ //확정안내
-			$info2_display = "";
-		}else if($gubun_step == 4){ //환불요청
-			$gubun_subtitle = " 환불요청안내";
-			$gubun_title1 = $gubun_title."를(을) 환불요청하셨습니다.";
-			$gubun_title2 = "아래의 환불요청 내역 확인 부탁드립니다.";
-			$gubun_title3 = "환불요청 정보";
-
-			$info3 = "환불계좌";
-			$info3_display = "";
-			$info4_display = "";
-			$totalPrice2_display = "";
-			$totalinfo = "환불금액";
-		}else if($gubun_step == 9){ //정류장 변경
-			if($info2_title != ""){
-				$info2_display = "";
-			}
-		}
-	}else if($gubun == "surf"){
+	if($gubun == "surf" || $gubun == "bus"){
 		if($gubun_step == 0){ //미입금 - 입금대기
 			$info3_display = "";
 			$info4_display = "";
@@ -150,8 +139,6 @@ function mailMsg($arrMail){
 			$info2_display = "";
 		}else if($gubun_step == 3){ //확정
 			$info2_display = "";
-		}else if($gubun_step == 8){ //입금완료
-			$info2_display = "";
 		}else if($gubun_step == 4){ //환불요청
 			$gubun_subtitle = " 환불요청안내";
 			$gubun_title1 = $gubun_title."를(을) 환불요청하셨습니다.";
@@ -163,6 +150,12 @@ function mailMsg($arrMail){
 			$info4_display = "";
 			$totalPrice2_display = "";
 			$totalinfo = "환불금액";
+		}else if($gubun_step == 8){ //입금완료
+			$info2_display = "";
+		}else if($gubun_step == 9){ //정류장 변경
+			if($info2_title != ""){
+				$info2_display = "";
+			}
 		}
 	}else if($gubun == "bank"){
 		if($gubun_step == 0){
@@ -260,7 +253,7 @@ function mailMsg($arrMail){
 																					<td style=\"padding-bottom:5px;;color:#000;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\">$info2</td>
 																				</tr>
 																				<tr>
-																					<td style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> 특이사항 </td>
+																					<td style=\"padding-bottom:5px;color:#696969;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"> 요청사항 </td>
 																					<td style=\"padding-bottom:5px;padding-top:5px;color:#000;line-height:23px;vertical-align:top;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;\"><textarea cols=\"42\" disabled=\"\" rows=\"8\" name=\"etc\" style=\"margin: 0px; width: 97%; height: 80px; resize: none;\">$etc</textarea></td>
 																				</tr>
 																			</tbody>
@@ -370,19 +363,7 @@ function sendMail($arrMail){
 	$header .= "Content-Transfer-Encoding: base64\n";
 	$header .= "Content-Type: text/html;\n \tcharset=UTF-8\n";
 
-	if($gubun == "bus"){
-		if($gubun_step == 0){ //미입금 - 입금대기
-			$state_title = "입금대기";
-		}else if($gubun_step == 3){ //확정안내
-			$state_title = "예약확정";
-		}else if($gubun_step == 4){ //환불요청
-			$state_title = "환불요청";
-		}else if($gubun_step == 8){ //입금완료
-			$state_title = "입금완료";
-		}else if($gubun_step == 9){ //정류장 변경
-			$state_title = "정류장 변경";
-		}
-	}else if($gubun == "surf"){
+	if($gubun == "surf" || $gubun == "bus"){
 		if($gubun_step == 0){ //미입금 - 입금대기
 			$state_title = "입금대기";
 		}else if($gubun_step == 1){ //예약대기
@@ -397,8 +378,10 @@ function sendMail($arrMail){
 			$state_title = "임시취소";
 		}else if($gubun_step == 8){ //입금완료
 			$state_title = "입금완료";
+		}else if($gubun_step == 9){ //정류장 변경
+			$state_title = "정류장 변경";
 		}
-		$state_title .= " (".$arrMail["userName"].")";;
+		$state_title .= " (".$arrMail["userName"].")";
 	}else if($gubun == "bank"){
 		if($gubun_step == 0){
 			$state_title = "동일 금액, 예약건 발생";

@@ -9,8 +9,11 @@ if($param == "busview"){ //상세정보
     header('Content-Type: application/json');
     $resseq = $_REQUEST["resseq"];
 
-    $select_query = "SELECT * FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
-                        ON a.resnum  = b.resnum  
+    $select_query = "SELECT a.*, b.*, d.couponseq FROM AT_RES_MAIN as a 
+                        INNER JOIN AT_RES_SUB as b 
+                            ON a.resnum  = b.resnum  
+                        LEFT JOIN AT_COUPON_CODE d 
+                            ON b.res_coupon = d.coupon_code
                         WHERE a.resseq = $resseq
                             ORDER BY b.ressubseq";
     $result = mysqli_query($conn, $select_query);

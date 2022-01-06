@@ -122,7 +122,7 @@ if($count == 0){
                 <th colspan="3">예약항목</th>
                 <th rowspan="2">승인처리</th>
                 <th rowspan="2">결제금액</th>
-                <th rowspan="2">특이사항</th>
+                <th rowspan="2">요청사항</th>
                 <th rowspan="2">취소사유</th>
             </tr>
             <tr>
@@ -179,7 +179,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;" <?=$rowspan?>><b><?=number_format($TotalPrice).'원'?></b></td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>
@@ -245,7 +245,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th colspan="3">예약항목</th>
                 <th rowspan="2">승인처리</th>
                 <th rowspan="2">결제금액</th>
-                <th rowspan="2">특이사항</th>
+                <th rowspan="2">요청사항</th>
                 <th rowspan="2">취소사유</th>
             </tr>
             <tr>
@@ -447,7 +447,7 @@ if(($i % 2) == 0 && $i > 0){
                 <td style="text-align: center;" <?=$rowspan?>><b><?=number_format($TotalPrice).'원'?></b></td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>

@@ -75,7 +75,7 @@ function sendMailContentBus($arrMail){
                         </tr>";
 		}
            $contents .= "<tr>
-                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 특이사항</td>
+                            <td width='150' height='27' style='padding-left: 8px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>- 요청사항</td>
                             <td width='1' style='border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'>
                                 <img src='http://www.smartix.co.kr/joinmail_img/tap.gif'></td>
                             <td style='padding-left: 15px; padding-top:5px; border-bottom-color: rgb(226, 226, 226); border-bottom-width: 1px; border-bottom-style: solid;'><textarea name='etc' id='etc' style='margin: 0px; width: 97%; height: 80px; resize: none;' rows='8' cols='42' disabled='disabled'>".$arrMail['etc']."</textarea></td>

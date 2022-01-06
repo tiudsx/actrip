@@ -40,26 +40,47 @@ function fnBusModify(resseq) {
 
             fnBusInsert();
 
+            var TotalPrice = 0,
+                TotalDisPrice = 0,
+                RtnTotalPrice = 0;
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
                     $j("#resseq").val(data[i].resseq);
-                    if (data[i].admin_user == "" || data[i].admin_user == null) {
-                        $j("#res_adminname").val("이승철");
-                    } else {
-                        $j("#res_adminname").val(data[i].admin_user);
-                    }
+                    // if (data[i].admin_user == "" || data[i].admin_user == null) {
+                    //     $j("#res_adminname").val("이승철");
+                    // } else {
+                    //     $j("#res_adminname").val(data[i].admin_user);
+                    // }
                     $j("#user_name").val(data[i].user_name);
                     $j("#user_tel").val(data[i].user_tel);
-                    $j("#resnumer").text(data[i].resnum);
                     $j("#resnum").val(data[i].resnum);
                     $j("#insdate").val(data[i].insdate);
                     $j("#confirmdate").val(data[i].confirmdate);
                     $j("#res_coupon").val(data[i].res_coupon);
                     $j("#res_price_coupon").val(data[i].res_price_coupon);
-                    $j("#res_price").val(data[i].res_price);
                     $j("#etc").val(data[i].etc);
                     $j("#memo").val(data[i].memo);
                     $j("#user_email").val(data[i].user_email);
+                    var res_cooperate = "";
+                    if (data[i].res_coupon == "JOABUS") {
+                        res_cooperate = "조아서프";
+                    } else if (data[i].res_coupon == "NAVER") {
+                        res_cooperate = "네이버";
+                    } else if (data[i].res_coupon == "KLOOK") {
+                        res_cooperate = "KLOOK";
+                    } else if (data[i].res_coupon == "NABUSB") {
+                        res_cooperate = "예약";
+                    } else if (data[i].res_coupon == "FRIP") {
+                        res_cooperate = "프립";
+                    } else if (data[i].res_coupon == "MYTRIP") {
+                        res_cooperate = "마이리얼트립";
+                    } else if (data[i].couponseq == 14) {
+                        res_cooperate = "망고서프";
+                    } else if (data[i].res_coupon != "") {
+                        res_cooperate = "일반할인";
+                    }
+
+                    $j("#res_cooperate").val(res_cooperate);
                 }
 
                 fnBusAdd('trbus');
@@ -73,7 +94,40 @@ function fnBusModify(resseq) {
                 objTr.find("#ressubseq").val(data[i].ressubseq);
                 objTr.find("#res_busnum").val(data[i].res_busnum);
                 fnBusPointSel2(objTr, data[i].res_busnum, data[i].res_spointname, data[i].res_epointname, 1);
+
+                var res_price = parseInt(data[i].res_price, 10);
+                var res_totalprice = parseInt(data[i].res_totalprice, 10);
+                var rtn_totalprice = parseInt(data[i].rtn_totalprice, 10);
+                if (data[i].res_confirm == 0) {
+
+                } else if (data[i].res_confirm == 1) {
+
+                } else if (data[i].res_confirm == 2) {
+                    TotalPrice += res_price;
+                    TotalDisPrice += res_totalprice;
+                } else if (data[i].res_confirm == 6) {
+
+                } else if (data[i].res_confirm == 8) {
+                    TotalPrice += res_price;
+                    TotalDisPrice += res_totalprice;
+                } else if (data[i].res_confirm == 3) {
+                    TotalPrice += res_price;
+                    TotalDisPrice += res_totalprice;
+                } else if (data[i].res_confirm == 4) {
+                    TotalPrice += res_price;
+                    TotalDisPrice += res_totalprice;
+                    RtnTotalPrice += rtn_totalprice;
+                } else if (data[i].res_confirm == 5) {
+                    TotalPrice += res_price;
+                    TotalDisPrice += res_totalprice;
+                    RtnTotalPrice += rtn_totalprice;
+                } else if (data[i].res_confirm == 7) {
+
+                }
             }
+
+            $j("#res_price").val(TotalDisPrice);
+            $j("#res_disprice").val(TotalPrice - TotalDisPrice);
         }
     });
 }
@@ -107,112 +161,78 @@ function fnBusPointSel2(obj, objVlu, sname, ename, num) {
     obj.find("#res_epointname").html(ePoint);
 }
 
-function fnBusDataAdd(gubun) {
-    //공백 제거
-    // fnFormTrim("#frmModify");
-
+function fnBusDataAdd() {
     if ($j("#user_name").val() == "") {
         alert("예약자이름을 입력하세요~");
         return;
     }
 
-    // if($j("#user_tel1").val() == "" || $j("#user_tel2").val() == "" || $j("#user_tel3").val() == ""){
-    //     alert("연락처를 입력하세요~");
-    //     return;
-    // }
     if ($j("#user_tel").val() == "") {
         alert("연락처를 입력하세요~");
         return;
     }
 
-    if ($j("select[id=res_stayshop]").length == 1 && $j("select[id=res_surfshop]").length == 1) {
-        alert("숙박 및 서핑강습 신청 정보가 없습니다.");
-        return;
-    } else {
-        for (let i = 1; i < $j("select[id=res_stayshop]").length; i++) {
-            if ($j("select[id=res_stayshop]").eq(i).val() == "N" && $j("select[id=res_bbq]").eq(i).val() == "N") {
-                alert("숙박/파티 중 하나이상 선택해주세요~");
-                return;
-            }
-
-            if ($j("select[id=res_stayshop]").eq(i).val() == "N") {
-                $j("input[calid=res_staysdate]").eq(i).val("");
-                $j("input[calid=res_stayedate]").eq(i).val("");
-            } else {
-                if ($j("input[calid=res_staysdate]").eq(i).val() == "" || $j("input[calid=res_stayedate]").eq(i).val() == "") {
-                    alert("숙박 이용 날짜를 선택해주세요~");
-                    return;
-                }
-            }
-
-            if ($j("select[id=res_bbq]").eq(i).val() == "N") {
-                $j("input[calid=res_bbqdate]").eq(i).val("");
-            } else {
-                if ($j("input[calid=res_bbqdate]").eq(i).val() == "") {
-                    alert("파티 이용 날짜를 선택해주세요~");
-                    return;
-                }
-            }
-        }
-
-        for (let i = 1; i < $j("select[id=res_surfshop]").length; i++) {
-            if ($j("select[id=res_surfshop]").eq(i).val() == "N" && $j("select[id=res_rent]").eq(i).val() == "N") {
-                alert("강습/렌탈 중 하나이상 선택해주세요~");
-                return;
-            }
-
-            if ($j("input[calid=res_surfdate]").eq(i).val() == "") {
-                alert("강습/렌탈 이용 날짜를 선택해주세요~");
-                return;
-            }
-
-            if ($j("select[id=res_surfshop]").eq(i).val() != "N" && ($j("select[id=res_surfM]").eq(i).val() == "0" && $j("select[id=res_surfW]").eq(i).val() == "0")) {
-                alert("강습신청 인원을 선택해주세요~");
-                return;
-            }
-
-            if ($j("select[id=res_rent]").eq(i).val() != "N" && ($j("select[id=res_rentM]").eq(i).val() == "0" && $j("select[id=res_rentW]").eq(i).val() == "0")) {
-                alert("렌탈신청 인원을 선택해주세요~");
-                return;
-            }
-        }
-    }
-
-    //$j("#resparam").val(gubun);
-
-    var text1 = "예약등록을 하시겠습니까?";
-    var text2 = "예약등록이 완료되었습니다.";
-    if (gubun == "modify") {
-        text1 = "수정을 하시겠습니까?";
-        text2 = "수정이 완료되었습니다.";
-    } else {
-        $j("#resseq").val("");
-    }
-
-    if (!confirm(text1)) {
+    if ($j("#insdate").val() == "") {
+        alert("신청일을 입력하세요~");
         return;
     }
 
-    //frmModify
+    if ($j("#confirmdate").val() == "") {
+        alert("확정일을 입력하세요~");
+        return;
+    }
+
+
+    for (let i = 1; i < $j("select[id=resnum]").length; i++) {
+        if ($j("input[calid=res_date]").eq(i).val() == "") {
+            alert(i + "열 이용 날짜를 선택해주세요~");
+            return;
+        }
+
+        if ($j("input[id=res_spointname]").eq(i).val() == "") {
+            alert(i + "열 출발 정류장을 선택해주세요~");
+            return;
+        }
+
+        if ($j("input[id=res_epointname]").eq(i).val() == "") {
+            alert(i + "열 도착 정류장을 선택해주세요~");
+            return;
+        }
+    }
+
+
+    if (!confirm("수정 하시겠습니까?")) {
+        return;
+    }
+
+    var calObj = $j("calBox[sel=yes]");
     var formData = $j("#frmModify").serializeArray();
-    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+    $j.post("/act/admin/bus/res_bus_save.php", formData,
         function(data, textStatus, jqXHR) {
             if (data == 0) {
-                alert(text2);
-                //location.reload();
+                alert("정상적으로 처리되었습니다.");
 
-                var selDate = $j("#listdate").text(); //달력 선택 날짜
-                fnSearchAdminSolList(selDate);
-                fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));
+                if (calObj.attr("value") == null) {
+                    fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), 99);
+                } else {
+                    fnCalMoveAdmin($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2]);
+                }
+
+                if ($j("input[name=buspoint]").length > 0) {
+                    if ($j("input[name=buspoint]").filter(".buson").length > 0) {
+                        $j("input[name=buspoint]").filter(".buson").click();
+                    }
+                }
+
+                fnSearchAdmin('bus/res_buslist_search.php');
                 fnModifyClose();
-                fnSolpopupReset();
+                fnBusPopupReset();
             } else {
                 var arrRtn = data.split('|');
                 if (arrRtn[0] == "err") {
                     alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
-                    $j("#memo2").val(arrRtn[1]);
                 } else {
-                    alert(arrRtn[1] + "호 " + arrRtn[2] + "번 침대는 예약되어있습니다.\n\n다른 침대 및 호실을 선택해주세요~");
+                    alert(arrRtn[1] + "호 " + arrRtn[2] + "번 좌석은 예약되어있습니다.\n\n다른 호차 및 좌석을 선택해주세요~");
                 }
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {});
@@ -225,4 +245,8 @@ function fnSelChange(obj, num) {
         $j(".allselect" + num).val($j(obj).val());
         $j(obj).val("");
     }
+}
+
+function fnBusPointModify(resnum) {
+    window.open("/pointchange?num=&resNumber=" + resnum);
 }

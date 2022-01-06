@@ -40,7 +40,7 @@ if($count == 0){
                 <th>이름</th>
                 <th>상태</th>
                 <th>승인여부</th>
-                <th>특이사항</th>
+                <th>요청사항</th>
             </tr>
             <tr>
                 <td colspan="8" style="text-align:center;height:50px;">
@@ -125,7 +125,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <?}?>
                         <?if($etc != ""){?>
                             <tr>
-                                <th>특이사항</th>
+                                <th>요청사항</th>
                                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$etc?></textarea></td>
                             </tr>
                         <?}?>
@@ -194,7 +194,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <th>이름</th>
                 <th>상태</th>
                 <th>승인여부</th>
-                <th>특이사항</th>
+                <th>요청사항</th>
             </tr>
 <?
     }
@@ -441,7 +441,7 @@ $reslist .= $RtnBank;
                         <?}?>
                         <?if($etc != ""){?>
                             <tr>
-                                <th>특이사항</th>
+                                <th>요청사항</th>
                                 <td><textarea id="etc" name="etc" rows="5" style="width: 90%; resize:none;" disabled="disabled"><?=$etc?></textarea></td>
                             </tr>
                         <?}?>

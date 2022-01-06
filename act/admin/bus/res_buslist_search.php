@@ -118,7 +118,7 @@ if($count == 0){
                 <th rowspan="2">승인처리</th>
                 <th rowspan="2">결제금액</th>
                 <th rowspan="2">환불금액</th>
-                <th rowspan="2">특이사항</th>
+                <th rowspan="2">요청사항</th>
             </tr>
             <tr>
                 <th>이용일</th>
@@ -175,6 +175,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
                 </td>
+                <td style="text-align: center;" <?=$rowspan?>>
+                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
+                </td>
                 <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
                     <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
@@ -187,7 +190,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
                     <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
@@ -229,14 +232,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
                 <colgroup>
                     <col width="8%" />
-                    <col width="9%" />
+                    <col width="8%" />
                     <col width="auto" />
-                    <col width="9%" />
+                    <col width="8%" />
                     <col width="9%" />
                     <col width="5%" />
-                    <col width="14%" />
-                    <col width="6%" />
+                    <col width="12%" />
+                    <col width="5%" />
                     <col width="4%" />
+                    <col width="6%" />
                     <col width="6%" />
                     <col width="8%" />
                     <col width="6%" />
@@ -249,9 +253,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <th rowspan="2">이름/연락처</th>
                         <th colspan="6">예약항목</th>
                         <th rowspan="2">승인처리</th>
+                        <th rowspan="2">정류장변경</th>
                         <th rowspan="2">결제금액</th>
                         <th rowspan="2">환불금액</th>
-                        <th rowspan="2">특이사항</th>
+                        <th rowspan="2">요청사항</th>
                     </tr>
                     <tr>
                         <th>이용일</th>
@@ -352,7 +357,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         // $RtnBankRow = 'rowspan="2"';
 
         $RtnPrice = ''.number_format($row['rtn_totalprice']).'원';
-		$RtnBank = '<span class="btn_view" seq="3'.$ressubseq.'">계좌</span><span style="display:none;"><b>환불계좌</b><br>'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).'<br>환불액 : '.$RtnPrice.'</span></td>';
+
+        if($row['rtn_bankinfo'] == "" || $row['rtn_bankinfo'] == null){
+
+        }else{
+		    $RtnBank = '<span class="btn_view" seq="3'.$ressubseq.'">계좌</span><span style="display:none;"><b>환불계좌</b><br>'.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).'<br>환불액 : '.$RtnPrice.'</span></td>';
+        }
     }
 
     $busNumText = fnBusNum($row['res_busnum']);
@@ -387,7 +397,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     </td>
                     <td style='text-align:center;'>".$busNumText."</td>
                     <td style='text-align:center;'>".$row['res_seat']."번</td>
-                    <td style='text-align:center;'><span style='cursor:pointer;text-decoration: underline;' onclick='fnModifyInfo(\"bus\", $ressubseq, 1);'>".$row["res_spointname"]." -> ".$row["res_epointname"]."</span></td>
+                    <td style='text-align:center;'>".$row["res_spointname"]." > ".$row["res_epointname"]."</td>
                     <td style='text-align:center;'>".$ResConfirmText."</td>
                     <td style='text-align:center;'>$RtnBank</td>";
     }else{
@@ -403,7 +413,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         </td>
                         <td style='text-align:center;'>".$busNumText."</td>
                         <td style='text-align:center;'>".$row['res_seat']."번</td>
-                        <td style='text-align:center;'><span style='cursor:pointer;text-decoration: underline;' onclick='fnModifyInfo(\"bus\", $ressubseq, 1);'>".$row["res_spointname"]." -> ".$row["res_epointname"]."</span></td>
+                        <td style='text-align:center;'>".$row["res_spointname"]." > ".$row["res_epointname"]."</td>
                         <td style='text-align:center;'>".$ResConfirmText."</td>
                         <td style='text-align:center;'>$RtnBank</td>
                     </tr>";
@@ -430,6 +440,9 @@ if(($i % 2) == 0 && $i > 0){
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
                 </td>
+                <td style="text-align: center;" <?=$rowspan?>>
+                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
+                </td>
                 <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
                     <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
@@ -442,7 +455,7 @@ if(($i % 2) == 0 && $i > 0){
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>특이사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
                     <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>

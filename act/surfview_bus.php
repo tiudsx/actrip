@@ -87,7 +87,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
                             <li onclick="fnResViewBus(false, '#view_tab2', 70, this);fnMapClick();"><a>정류장안내</a></li>
                             <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li>
-                            <!-- <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li> -->
+                            <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
                         </ul>
                     </div>
                 </div>
@@ -96,14 +96,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div class="noticeline" id="content_tab1">
                     <!-- <p class="noticetxt">예약안내</p> -->
                     
-                    <article>
+                    <!--article>
                         <p class="noticesub">셔틀버스 운행 중지 안내</p>
                         <ul>
                             <li class="litxt">코로나 확산으로 인하여, 액트립 셔틀버스 운행은 조기 중단합니다.</li>
                             <li class="litxt">다음시즌에 더욱 좋은모습으로 찾아뵙겠습니다.</li>
                         </ul>
-                    </article>
-                    <!-- <article>
+                    </article-->
+                    <article>
                         <p class="noticesub">셔틀버스 예약안내</p>
                         <ul>
                             <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
@@ -129,7 +129,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </span>
                             </li>
                         </ul>
-                    </article> -->
+                    </article>
                 </div>
                 <div class="contentimg">
                 <!-- <img src="https://surfenjoy.cdn3.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
@@ -351,7 +351,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 </td>
                             </tr>
                             <tr>
-                                <th>특이사항</th>
+                                <th>요청사항</th>
                                 <td>
                                     <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
                                 </td>
