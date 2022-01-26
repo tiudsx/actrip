@@ -168,7 +168,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
-                <td <?=$rowspan?> style="text-align: center;"><?=$PreMainNumber?></td>
+                <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>
@@ -433,7 +433,7 @@ if(($i % 2) == 0 && $i > 0){
 }
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
-                <td <?=$rowspan?> style="text-align: center;"><?=$PreMainNumber?></td>
+                <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>

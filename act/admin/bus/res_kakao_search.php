@@ -90,7 +90,7 @@ if($count == 0){
 
         if($mesCode == "M001"){
             $data = json_decode(getKakaoSearch($arrChk[10]), true);
-            $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$data["message"]." : ".fnMessageText($data["message"]);
+            $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".substr($data["message"], 0, 4)." : ".fnMessageText(substr($data["message"], 0, 4));
         }else{
             $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesCode." : ".fnMessageText($mesCode);
         }
@@ -146,9 +146,12 @@ if($count == 0){
                 break;
             case 'K105':
                 $text = "메시지 내용이 템플릿과 일치하지 않음";
-                break;            
+                break;
             case 'E104':
                 $text = "유효하지 않은 사용자 전화번호";
+                break;
+            case 'E110':
+                $text = "MsgId를 찾을 수 없음";
                 break;
             default:
                 $text = $code;
