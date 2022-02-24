@@ -185,6 +185,22 @@ if($count > 0){
 	$k++;
 //============================ 실행 단계 ============================
 
+//==== 솔게하 예약건 알림톡 발송 시작 ====
+if(date("H") >= 9){
+    $select_querySol = "SELECT a.resseq FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+                            ON a.resseq = b.resseq 
+                            WHERE ((b.sdate <= DATE_FORMAT(NOW(), '%Y-%m-%d') AND b.edate >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')) 
+                                OR b.resdate IN (DATE_FORMAT(NOW(), '%Y-%m-%d'), DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d'))) 
+                                AND a.res_confirm = '확정'
+                                AND (res_kakao < 2 AND res_kakao_chk = 'N')
+                            GROUP BY a.resseq";
+    $query_log .= '솔 카톡발송 AT_SOL_RES_MAIN : '.str_replace("'", '"',$select_querySol);
+
+    $result_setlist = mysqli_query($conn, $select_querySol);
+    $count = mysqli_num_rows($result_setlist);
+}
+//==== 솔게하 예약건 알림톡 발송 종료 ====
+
 	$success = true;
 	$select_query = "UPDATE `AT_RES_SUB` 
                         SET res_confirm = 7

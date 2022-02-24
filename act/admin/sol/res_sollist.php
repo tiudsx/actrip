@@ -336,19 +336,18 @@ include __DIR__.'/../../common/logininfo.php';
 									<input type="hidden" id="surfseq" name="surfseq[]" >
 									<input type="hidden" id="surftype" name="surftype[]" value="I">
 									<select id="res_surfshop" name="res_surfshop[]" class="select">
-										<option value='N'>강습미신청</option>
+										<option value='서퍼랑'>서퍼랑</option>
 										<option value='서프팩토리'>서프팩토리</option>
 										<option value='솔게스트하우스'>솔게스트하우스</option>
-										<option value='라라서프'>라라서프</option>
-										<option value='서퍼랑'>서퍼랑</option>
+										<!-- <option value='라라서프'>라라서프</option> -->
 									</select>
 								</td>
 								<td>
 									<input type="text" calid="res_surfdate" name="res_surfdate[]" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
 								</td>
 								<td>
-									<select id="res_surftime" name="res_surftime[]" class="select">
-										<option value=''>-----</option>
+									<select id="res_surftime" name="res_surftime[]" class="select" onchange="fnSolSurfSel(this);">
+										<option value=''>강습미신청</option>
 										<option value='9시'>9시</option>
 										<option value='11시'>11시</option>
 										<option value='13시'>13시</option>
@@ -370,7 +369,7 @@ include __DIR__.'/../../common/logininfo.php';
 									</select>명
 								</td>
 								<td>
-									<select id="res_rent" name="res_rent[]" class="select">
+									<select id="res_rent" name="res_rent[]" class="select" onchange="fnSolSurfRentSel(this);">
 										<option value='N'>렌탈미신청</option>
 										<option value='보드,슈트'>보드,슈트</option>
 										<option value='보드'>보드</option>

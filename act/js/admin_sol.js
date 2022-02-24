@@ -124,6 +124,30 @@ function fnSolBbqSel(obj){
     }
 }
 
+function fnSolSurfSel(obj){
+    var objId = $j(obj).parent().parent();
+    
+    if($j(obj).val() == ""){
+        objId.find("#res_surfM").val("0");
+        objId.find("#res_surfW").val("0");
+    }else{
+        // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
+        // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
+    }
+}
+
+function fnSolSurfRentSel(obj){
+    var objId = $j(obj).parent().parent();
+
+    if($j(obj).val() == "N"){
+        objId.find("#res_rentM").val("0");
+        objId.find("#res_rentW").val("0");
+    }else{
+        // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
+        // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
+    }
+}
+
 function fnSolModify(resseq) {
     var params = "resparam=solview&resseq=" + resseq;
     $j.ajax({
@@ -258,23 +282,23 @@ function fnSolDataAdd(gubun) {
         }
 
         for (let i = 1; i < $j("select[id=res_surfshop]").length; i++) {
-            if ($j("select[id=res_surfshop]").eq(i).val() == "N" && $j("select[id=res_rent]").eq(i).val() == "N") {
-                alert("강습/렌탈 중 하나이상 선택해주세요~");
-                return;
-            }
-
             if ($j("input[calid=res_surfdate]").eq(i).val() == "") {
-                alert("강습/렌탈 이용 날짜를 선택해주세요~");
+                alert(i + "번째 강습/렌탈 이용 날짜를 선택해주세요~");
                 return;
             }
 
-            if ($j("select[id=res_surfshop]").eq(i).val() != "N" && ($j("select[id=res_surfM]").eq(i).val() == "0" && $j("select[id=res_surfW]").eq(i).val() == "0")) {
-                alert("강습신청 인원을 선택해주세요~");
+            if ($j("select[id=res_surftime]").eq(i).val() == "" && $j("select[id=res_rent]").eq(i).val() == "N") {
+                alert(i + "번째 강습/렌탈 중 하나이상 선택해주세요~");
+                return;
+            }
+
+            if ($j("select[id=res_surftime]").eq(i).val() != "" && ($j("select[id=res_surfM]").eq(i).val() == "0" && $j("select[id=res_surfW]").eq(i).val() == "0")) {
+                alert(i + "번째 강습신청 인원을 선택해주세요~");
                 return;
             }
 
             if ($j("select[id=res_rent]").eq(i).val() != "N" && ($j("select[id=res_rentM]").eq(i).val() == "0" && $j("select[id=res_rentW]").eq(i).val() == "0")) {
-                alert("렌탈신청 인원을 선택해주세요~");
+                alert(i + "번째 렌탈신청 인원을 선택해주세요~");
                 return;
             }
         }
@@ -548,24 +572,24 @@ function fnSearchAdminSolList(selDate) {
                     if (rowCnt > 1) {
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(13).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
-
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
+                        
 
                         for (let x = 1; x < rowCnt; x++) {
                             nextrowCnt++;
+                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(13).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
 

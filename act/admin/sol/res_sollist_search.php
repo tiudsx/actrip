@@ -14,15 +14,36 @@ $Year = $arrDate[0];
 $Mon = $arrDate[1];
 $Day = $arrDate[2];
 
-
-$select_query = "SELECT *, DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+// $select_query = "SELECT *, DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+//                     ON a.resseq = b.resseq 
+//                     WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
+//                         OR	b.resdate = '$selDate')
+//                         AND a.res_confirm IN ('대기', '확정')
+//                         ORDER BY a.resseq, b.ressubseq";
+// echo $select_query;                        
+$select_query = "
+    SELECT 
+        a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
+        b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff 
+            FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+                ON a.resseq = b.resseq 
+                WHERE (b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
+                    AND a.res_confirm IN ('대기', '확정')
+        UNION ALL
+        SELECT 
+            a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
+            b.ressubseq, b.res_type, 
+            CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
+            '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
+            DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff 
+                FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
-                    WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
-                        OR	b.resdate = '$selDate')
+                    WHERE b.resdate = '$selDate'
                         AND a.res_confirm IN ('대기', '확정')
-                        ORDER BY a.resseq, b.ressubseq";
+        ORDER BY resseq, ressubseq";
                         //DATE_ADD(b.edate, INTERVAL -1 DAY) >= '2021-01-02'
-//echo $select_query;
+// echo $select_query;
 
 // $chkResConfirm = $_REQUEST["chkResConfirm"];
 // $sDate = $_REQUEST["sDate"];
@@ -166,6 +187,7 @@ if($count == 0){
             <col width="4%" />
             <col width="3%" />
             <col width="3%" />
+            <col width="6%" />
             <col width="3%" />
             <col width="3%" />
             <col width="5%" />
@@ -184,7 +206,7 @@ if($count == 0){
                 <th style="background-color:#336600; color:#efefef;" colspan="2">바베큐</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">서핑샵</th>
                 <th style="background-color:#336600; color:#efefef;" colspan="3">서핑강습</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="2">렌탈</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="3">렌탈</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">요청사항</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">직원메모</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">입실</th>
@@ -201,6 +223,7 @@ if($count == 0){
                 <th style="background-color:#336600; color:#efefef;">시간</th>
                 <th style="background-color:#336600; color:#efefef;">남</th>
                 <th style="background-color:#336600; color:#efefef;">여</th>
+                <th style="background-color:#336600; color:#efefef;">종류</th>
                 <th style="background-color:#336600; color:#efefef;">남</th>
                 <th style="background-color:#336600; color:#efefef;">여</th>
                 <th style="background-color:#336600; color:#efefef;">읽음</th>
@@ -280,7 +303,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $surfText = "";
     $stayInfo = "";
     $bbqText = "";
-    $surfText = "";
+    $surfrentText = "";
     $resText = "";
     $stayMText = "";
     $stayWText = "";
@@ -345,7 +368,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
             if($surfrent != "N"){            
                 $resText .= (($resText == "") ? "" : "/")."렌탈";
-                $surfText .= (($surfText == "") ? "" : " / ").$surfrent;
+                // $surfrentText .= (($surfText == "") ? "" : " / ").$surfrent;
+                $surfrentText = $surfrent;
             }
 
             //$surfText .= (($surfText == "") ? "" : " ($resdate)");
@@ -380,6 +404,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfW == 0) ? "" : $surfW."명"?></td>
+        <td style="<?=$fontcolor?>"><?=$surfrentText?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentM == 0) ? "" : $surfrentM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentW == 0) ? "" : $surfrentW."명"?></td>
         <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>요청사항</b><br><?=$memo?></td>
@@ -409,7 +434,7 @@ $rowlist .= $b."|";
                     <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
                     <br><strong>총 : <?=$TotalbbqM+$TotalbbqW."명"?></strong>
                 </td>
-                <td colspan="5">
+                <td colspan="6">
                     <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
                     <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
                 </td>
