@@ -157,48 +157,54 @@ if($count == 0){
         <colgroup>
             <col width="4%" />
             <col width="9%" />
-            <col width="6%" />
             <col width="*" />
+            <col width="3%" />
+            <col width="3%" />
+            <col width="3%" />
+            <col width="3%" />
+            <col width="7%" />
             <col width="4%" />
             <col width="3%" />
             <col width="3%" />
             <col width="3%" />
             <col width="3%" />
-            <col width="8%" />
-            <col width="3%" />
-            <col width="3%" />
             <col width="5%" />
             <col width="5%" />
-            <col width="3%" />
             <col width="4%" />
-            <col width="10%" />
+            <col width="4%" />
+            <col width="4%" />
+            <col width="7%" />
             <col width="7%" />
         </colgroup>
         <tbody>
             <tr>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2"></th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">예약자</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">구분</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약정보</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">강습</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="3">숙박정보</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="2">바베큐</th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2">서핑샵</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="3">서핑강습</th>
                 <th style="background-color:#336600; color:#efefef;" colspan="2">렌탈</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">숙박&파티</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">요청사항</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">직원메모</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">입실</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">상태</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">알림톡</th>
+                <th style="background-color:#336600; color:#efefef;" colspan="2">알림톡</th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">예약업체</th>
             </tr>
             <tr>
+                <th style="background-color:#336600; color:#efefef;">숙박일</th>
+                <th style="background-color:#336600; color:#efefef;">남</th>
+                <th style="background-color:#336600; color:#efefef;">여</th>
+                <th style="background-color:#336600; color:#efefef;">남</th>
+                <th style="background-color:#336600; color:#efefef;">여</th>
                 <th style="background-color:#336600; color:#efefef;">시간</th>
                 <th style="background-color:#336600; color:#efefef;">남</th>
                 <th style="background-color:#336600; color:#efefef;">여</th>
                 <th style="background-color:#336600; color:#efefef;">남</th>
                 <th style="background-color:#336600; color:#efefef;">여</th>
-                <th style="background-color:#336600; color:#efefef;">파티</th>
-                <th style="background-color:#336600; color:#efefef;">남</th>
-                <th style="background-color:#336600; color:#efefef;">여</th>
+                <th style="background-color:#336600; color:#efefef;">읽음</th>
+                <th style="background-color:#336600; color:#efefef;">발송수</th>
             </tr>
 
 <?
@@ -248,7 +254,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $edate = $row['edate'];
     $resdate = $row['resdate'];
     $staysex = $row['staysex'];
-    $stayM = $row['stayM'];
+    $stayMem = $row['stayM'];
     $stayroom = $row['stayroom'];
     $staynum = $row['staynum'];
     $restime = $row['restime'];
@@ -271,12 +277,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }
 
     $stayText = "";
+    $surfText = "";
     $stayInfo = "";
     $bbqText = "";
     $surfText = "";
     $resText = "";
     $stayMText = "";
     $stayWText = "";
+    $bbqMText = "";
+    $bbqWText = "";
     if($row['res_type'] == "stay"){ //숙박&바베큐
         if($prod_name == "N"){
             $res_room_chk = "";
@@ -284,16 +293,19 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             if($row['sMonth'] == $Mon || $row['eMonth'] == $Mon){
                 if(!((int)$Day == $eDay)){
                     $resText = "숙박";
-                    $stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
+                    //$stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
+                    $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
 
                     if($res_confirm == "확정" || $res_confirm == "대기"){
                         $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
                     }
 
                     if($staysex == "남"){
-                        $TotalstayM += $stayM;
+                        $stayMText = $stayMem.(($stayMem == "")? "" : "명");
+                        $TotalstayM += $stayMem;
                     }else{
-                        $TotalstayW += $stayM;
+                        $stayWText = $stayMem.(($stayMem == "")? "" : "명");
+                        $TotalstayW += $stayMem;
                     }
                 }
             }
@@ -305,25 +317,27 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             $bbqText = $bbq;
             
             if($staysex == "남"){
-                $TotalbbqM += $stayM;
+                $bbqMText = $stayMem.(($stayMem == "")? "" : "명");
+                $TotalbbqM += $stayMem;
             }else{
-                $TotalbbqW += $stayM;
+                $bbqWText = $stayMem.(($stayMem == "")? "" : "명");
+                $TotalbbqW += $stayMem;
             }
         }
 
         // if(($bbq != "N" && $prod_name == "N") || $prod_name != "솔게하"){
-        if($staysex == "남"){
-            $stayMText = $stayM.(($stayM == "")? "" : "명");
-        }else{
-            $stayWText = $stayM.(($stayM == "")? "" : "명");
-        }
+            // if($staysex == "남"){
+            //     $stayMText = $stayMem.(($stayMem == "")? "" : "명");
+            // }else{
+            //     $stayWText = $stayMem.(($stayMem == "")? "" : "명");
+            // }
         // }
     }else{ //강습&렌탈
         $res_room_chk = "";
         if($Day == $row['resDay']){
             if($prod_name != "N"){
                 $resText = "강습";
-                $stayText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
+                $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
 
                 $TotalsurfM += $surfM;
                 $TotalsurfW += $surfW;
@@ -331,7 +345,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
             if($surfrent != "N"){            
                 $resText .= (($resText == "") ? "" : "/")."렌탈";
-                $stayText .= (($stayText == "") ? "" : " / ").$surfrent;
+                $surfText .= (($surfText == "") ? "" : " / ").$surfrent;
             }
 
             //$surfText .= (($surfText == "") ? "" : " ($resdate)");
@@ -355,26 +369,30 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     <tr>
         <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><?=$resseq?></td>
         <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?><br><?=$user_tel?></b></td>
-        <td style="<?=$fontcolor?>"><?=$resText?></td>
+        <!-- <td style="<?=$fontcolor?>"><?=$resText?></td> -->
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
+        <td style="<?=$fontcolor?>"><?=$stayMText?></td>
+        <td style="<?=$fontcolor?>"><?=$stayWText?></td>
+        <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
+        <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
+        <td style="<?=$fontcolor?>"><?=$bbqWText?></td>
+        <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfW == 0) ? "" : $surfW."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentM == 0) ? "" : $surfrentM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentW == 0) ? "" : $surfrentW."명"?></td>
-        <td style="<?=$fontcolor?>"><?=$bbqText?></td>
-        <td style="<?=$fontcolor?>"><?=$stayMText?></td>
-        <td style="<?=$fontcolor?>"><?=$stayWText?></td>
         <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>요청사항</b><br><?=$memo?></td>
         <td style="<?=$fontcolor?>"><span class="btn_view" seq="20<?=$c?>"><?=$memo2YN?></span><span style='display:none;'><b>직원메모</b><br><?=$memo2?></td>
         <td style="<?=$fontcolor?>"><?if($res_room_chk == "Y"){echo "입실";}?></td>
         <td style="<?=$fontcolor?>"><?=$res_confirm?></td>
-        <td style="<?=$fontcolor?>"><?if($res_kakao_chk == "Y"){echo "읽음";}?>/<?=$res_kakao?>회
+        <td style="<?=$fontcolor?>"><?if($res_kakao_chk == "Y"){echo "읽음";}else{echo "X";}?></td>
+        <td style="<?=$fontcolor?>"><?=$res_kakao?>회
             <?if($res_confirm == "확정"){?>
             <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>);" />
             <?}?>
         </td>
-        <td <?=$fontcolor?>><?=$res_company?></td>
+        <td style="<?=$fontcolor?>"><?=$res_company?></td>
     </tr>
 <?
 //while end
@@ -383,19 +401,19 @@ $rowlist .= $b."|";
 ?>
             <tr style="background-color:#ffa87d;">
                 <td colspan="2"><strong>합 계</strong></td>
-                <td colspan="2">
-                <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
+                <td colspan="3">
+                    <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
                     <br><strong>총 : <?=$TotalstayM+$TotalstayW."명"?></strong>
                 </td>
-                <td colspan="5">
-                <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
-                    <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
-                </td>
-                <td colspan="5">
-                <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
+                <td colspan="3">
+                    <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
                     <br><strong>총 : <?=$TotalbbqM+$TotalbbqW."명"?></strong>
                 </td>
-                <td colspan="4"></td>
+                <td colspan="5">
+                    <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
+                    <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
+                </td>
+                <td colspan="7"></td>
             </tr>
 		</tbody>
     </table>

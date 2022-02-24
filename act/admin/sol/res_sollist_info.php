@@ -5,9 +5,9 @@ include __DIR__.'/../../surf/surffunc.php';
 $param = $_REQUEST["resparam"];
 $resseq = $_REQUEST["resseq"];
 
-if($param == "solview"){ //상세정보
-    header('Content-Type: application/json');
+header('Content-Type: application/json');
 
+if($param == "solview"){ //상세정보
     $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                         ON a.resseq = b.resseq 
                         WHERE a.resseq = $resseq
@@ -29,8 +29,6 @@ if($param == "solview"){ //상세정보
         echo urldecode($output);
     }
 }else if($param == "surfview"){ //상세정보
-    header('Content-Type: application/json');
-
     $select_query = "SELECT * FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
                             ON a.resnum = b.resnum
                         INNER JOIN `AT_PROD_OPT` c
@@ -54,10 +52,6 @@ if($param == "solview"){ //상세정보
         echo urldecode($output);
     }
 }else if($param == "solstay"){ //상세정보
-    header('Content-Type: application/json');
-
-    
-
     $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                     WHERE a.resseq = $resseq
@@ -132,24 +126,36 @@ if($param == "solview"){ //상세정보
             echo urldecode($output);
         }
     }
-}else if($param == "solroomnum"){ //객실 침대체크
-    $sdate = $res_staysdate[$i];
-    $edate = $res_stayedate[$i];
-    $stayroom = $res_stayroom[$i];
-    $staynum = $res_staynum[$i];
+}else if($param == "solroom"){ //객실 침대체크
+    $sdate = $_REQUEST["res_staysdate"];
+    $edate = $_REQUEST["res_stayedate"];
+    $stayroom = $_REQUEST["res_stayroom"];
+    
     $eDate2 = date("Y-m-d", strtotime($edate." -1 day"));
-    $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b
+    $select_query = "SELECT b.stayroom, b.staynum, a.resseq, b.ressubseq FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b
                         ON a.resseq = b.resseq
                         WHERE b.res_type = 'stay' 
                             AND b.prod_name = '솔게스트하우스'
                             AND b.stayroom = $stayroom
-                            AND b.staynum = $staynum
                             AND a.res_confirm IN ('대기','확정')
                             AND (('$sdate' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY) OR '$eDate2' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY))
-                                OR (b.sdate BETWEEN '$sdate' AND '$eDate2' OR DATE_ADD(b.edate, INTERVAL -1 DAY) BETWEEN '$sdate' AND '$eDate2'))";
-    $result_setlist = mysqli_query($conn, $select_query);
-    $count = mysqli_num_rows($result_setlist);
-    // $errmsg = $select_query;
-    // goto errGo;
+                                OR (b.sdate BETWEEN '$sdate' AND '$eDate2' OR DATE_ADD(b.edate, INTERVAL -1 DAY) BETWEEN '$sdate' AND '$eDate2'))
+                                ORDER BY a.resseq";
+    $result = mysqli_query($conn, $select_query);
+    $count_sub = mysqli_num_rows($result);
+    
+    if($count_sub == 0){
+        echo "";
+    }else{
+        $dbdata = array();
+        $i = 0;
+        while ( $row = $result->fetch_assoc()){
+            $dbdata[$i] = $row;
+            $i++;
+        }
+
+        $output = json_encode($dbdata, JSON_UNESCAPED_UNICODE);
+        echo urldecode($output);
+    }
 }
 ?>

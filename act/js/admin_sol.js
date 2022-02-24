@@ -51,7 +51,10 @@ function fnSolAdd(obj, id) {
                     jQuery(this).next().val(plusDate(date.yyyymmdd(), 1));
                 }
             }
-        }
+        },
+        onSelect: function(dateText, inst) {
+            fnSolAddInit($j(this));
+       }
 
     });
     $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
@@ -76,13 +79,49 @@ function fnSolAdd(obj, id) {
                     jQuery(this).prev().val(plusDate(date.yyyymmdd(), -1));
                 }
             }
-        }
+        },
+        onSelect: function(dateText, inst) {
+            fnSolAddInit($j(this));
+       }
     });
     $j("tr[id=" + id + "]:last").attr("rowadd", "1");
 }
 
+function fnSolAddInit(obj){
+    var objId = obj.parent().parent();
+    objId.find("#res_stayroom").val("");
+    objId.find("#res_staynum option").remove();
+    objId.find("#res_staynum").append("<option value=''>-------</optoin>");
+}
+
 function fnSolDel(obj) {
     $j(obj).parent().parent().remove();
+}
+
+function fnSolStaySel(obj){
+    var objId = $j(obj).parent().parent();
+
+    if($j(obj).val() == "N"){
+        objId.find("input[calid=res_staysdate]").val("").prop("disabled", true);
+        objId.find("input[calid=res_stayedate]").val("").prop("disabled", true);
+
+        objId.find("#res_stayroom").val("");
+        objId.find("#res_staynum option").remove();
+        objId.find("#res_staynum").append("<option value=''>-------</optoin>");
+    }else{
+        objId.find("input[calid=res_staysdate]").removeAttr("disabled");
+        objId.find("input[calid=res_stayedate]").removeAttr("disabled");
+    }
+}
+
+function fnSolBbqSel(obj){
+    var objId = $j(obj).parent().parent();
+
+    if($j(obj).val() == "N"){
+        objId.find("input[calid=res_bbqdate]").val("").prop("disabled", true);
+    }else{
+        objId.find("input[calid=res_bbqdate]").removeAttr("disabled");
+    }
 }
 
 function fnSolModify(resseq) {
@@ -125,19 +164,19 @@ function fnSolModify(resseq) {
                     objTr.find("#res_stayM").val(data[i].stayM);
 
                     if (data[i].prod_name != "N") {
-                        objTr.find("#res_stayshop").val(data[i].prod_name);
-                        objTr.find("input[calid=res_staysdate]").val(data[i].sdate);
-                        objTr.find("input[calid=res_stayedate]").val(data[i].edate);
+                        objTr.find("#res_stayshop").val(data[i].prod_name);                        
+                        objTr.find("input[calid=res_staysdate]").val(data[i].sdate).removeAttr("disabled");
+                        objTr.find("input[calid=res_stayedate]").val(data[i].edate).removeAttr("disabled");
 
                         if (data[i].stayroom != "") {
                             objTr.find("#res_stayroom").val(data[i].stayroom);
                             objTr.find("#res_stayroom").attr("sel", data[i].stayroom);
 
-                            fnRoomNum2(objTr.find("#res_staynum"), data[i].staynum);
+                            fnRoomNum(objTr.find("#res_stayroom"), data[i].staynum);
                         }
                     }
                     if (data[i].bbq != "N") {
-                        objTr.find("input[calid=res_bbqdate]").val(data[i].resdate);
+                        objTr.find("input[calid=res_bbqdate]").val(data[i].resdate).removeAttr("disabled");
                         objTr.find("#res_bbq").val(data[i].bbq);
                     }
                 } else { //강습&렌탈
@@ -201,6 +240,9 @@ function fnSolDataAdd(gubun) {
                     alert("숙박 이용 날짜를 선택해주세요~");
                     return;
                 }
+
+                $j("input[id=res_staysdate]").eq(i).val($j("input[calid=res_staysdate]").eq(i).val());
+                $j("input[id=res_stayedate]").eq(i).val($j("input[calid=res_stayedate]").eq(i).val());
             }
 
             if ($j("select[id=res_bbq]").eq(i).val() == "N") {
@@ -210,6 +252,8 @@ function fnSolDataAdd(gubun) {
                     alert("파티 이용 날짜를 선택해주세요~");
                     return;
                 }
+                
+                $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
             }
         }
 
@@ -276,9 +320,15 @@ function fnSolDataAdd(gubun) {
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
-function fnRoomNum(obj) {
+function fnRoomNum(obj, val) {
     var sdate = $j(obj).parent().parent().find("input[calid=res_staysdate]").val();
-    var edate = $j(obj).parent().parent().find("input[calid=res_staysdate]").val();
+    var edate = $j(obj).parent().parent().find("input[calid=res_stayedate]").val();
+
+    if(sdate == "" || edate == ""){
+        alert("이용일을 선택해주세요.");
+        $j(obj).val("");
+        return;
+    }
 
     var objNext = $j(obj).next();
     objNext.find("option").remove();
@@ -310,49 +360,8 @@ function fnRoomNum(obj) {
             break;
     }
 
+    objNext.append("<option value=''>-------</optoin>");
     if (roomnum == 0) {
-        objNext.append("<option value=''>-------</optoin>");
-    } else {
-        for (var i = 1; i <= roomnum; i++) {
-            var roombad = "번 (2층)";
-            if ((i % 2) == 1) {
-                roombad = "번 (1층)";
-            }
-            objNext.append("<option value='" + i + "'>" + i + roombad + "</optoin>");
-        }
-    }
-}
-
-function fnRoomNum2(obj, val) {
-    obj.find("option").remove();
-
-    var roomnum = 0;
-    switch (obj.prev().val()) {
-        case "201":
-            roomnum = 8;
-            break;
-        case "202":
-            roomnum = 10;
-            break;
-        case "203":
-            roomnum = 6;
-            break;
-        case "204":
-            roomnum = 8;
-            break;
-        case "301":
-            roomnum = 12;
-            break;
-        case "302":
-            roomnum = 8;
-            break;
-        case "303":
-            roomnum = 10;
-            break;
-    }
-
-    if (roomnum == 0) {
-        objNext.append("<option value=''>-------</optoin>");
     } else {
         for (var i = 1; i <= roomnum; i++) {
             var roombad = "번 (2층)";
@@ -364,85 +373,110 @@ function fnRoomNum2(obj, val) {
             if (i == val) {
                 sel = "selected";
                 obj.attr("sel", val);
+                //roombad += " - 기존"
             }
-            obj.append("<option value='" + i + "' " + sel + ">" + i + roombad + "</optoin>");
+
+            objNext.append("<option value='" + i + "' " + sel + ">" + i + roombad + "</optoin>");
         }
     }
+    
+    if(val == "" || val == null){
+        //fnRoomBed(sdate, edate, $j(obj), objNext);
+    }
+    fnRoomBed(sdate, edate, $j(obj), objNext);
 }
 
-function fnRommBed(sdate, edate, roomnum, selroomnum){
-    var params = "resparam=solroom&resseq=" + resseq;
+var arrRoom = {};
+var arrRoomSeq = {};
+var arrRoomSubSeq = {};
+function fnRoomBed(sdate, edate, obj, objNext){
+    arrRoom = {};
+    arrRoomSeq = {};
+    arrRoomSubSeq = {};
+
+    var roomnum = obj.val();
+    var params = "resparam=solroom&res_staysdate=" + sdate + "&res_stayedate=" + edate + "&res_stayroom=" + roomnum;
+    var stayseq = $j(obj).parent().parent().find("#stayseq").val();
+
+    // var rtn = $j.ajax({
+    //     type: "POST",
+    //     url: "/act/admin/sol/res_sollist_info.php",
+    //     data: params,
+    //     async: false,
+    //     success: function (data) {
+    //         return data;
+    //         alert(JSON.stringify(data));
+    //         if(data != null){
+    //             for (let i = 0; i < data.length; i++) {
+    //                 if(arrRoom[roomnum + "_" + data[i].staynum] == null){
+    //                     arrRoom[roomnum + "_" + data[i].staynum] = 0;
+    //                 }else{
+    //                     arrRoom[roomnum + "_" + data[i].staynum]++;
+    //                 }
+
+    //                 if(arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] == null){
+    //                     arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = 0;
+    //                     arrRoomSubSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = data[i].ressubseq;
+    //                 }else{
+    //                     arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq]++;
+    //                 }                    
+    //             }
+    //         }
+
+    //         var arrRoomTotal = new Array(arrRoom, arrRoomSeq, arrRoomSubSeq);
+    //     }
+    // }).responseText;
+    // alert(rtn);
+    // return;
     $j.ajax({
         type: "POST",
         url: "/act/admin/sol/res_sollist_info.php",
         data: params,
+        async: false,
         success: function(data) {
-            fnSolpopupReset();
+            if(data != null){
+                //alert(JSON.stringify(data));
+                for (let i = 0; i < data.length; i++) {
+                    if(arrRoom[roomnum + "_" + data[i].staynum] == null){
+                        arrRoom[roomnum + "_" + data[i].staynum] = 0;
+                    }else{
+                        arrRoom[roomnum + "_" + data[i].staynum]++;
+                    }
 
-            fnSolInsert();
-
-            $j("#SolAdd").css("display", "none");
-            $j("#SolModify").css("display", "");
-
-            for (let i = 0; i < data.length; i++) {
-                if (i == 0) {
-                    $j("#resseq").val(data[i].resseq);
-                    $j("#res_adminname").val(data[i].admin_user);
-                    $j("#user_name").val(data[i].user_name);
-                    $j("#user_tel").val(data[i].user_tel);
-                    // var arrTel = data[i].user_tel.split("-");
-                    // $j("#user_tel1").val(arrTel[0]);
-                    // $j("#user_tel2").val(arrTel[1]);
-                    // $j("#user_tel3").val(arrTel[2]);
-                    $j("#res_company").val(data[i].res_company);
-                    $j("#res_confirm").val(data[i].res_confirm);
-                    $j("#memo").val(data[i].memo);
-                    $j("#memo2").val(data[i].memo2);
+                    if(arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] == null){
+                        arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = 0;
+                        arrRoomSubSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = data[i].ressubseq;
+                    }else{
+                        arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq]++;
+                    }                    
                 }
-
-                if (data[i].res_type == "stay") { //숙박&바베큐
-                    fnSolAdd(null, 'trstay');
-
-                    var objTr = $j("tr[id=trstay]:last");
-                    objTr.find("#stayseq").val(data[i].ressubseq);
-                    objTr.find("#staytype").val("U");
-                    objTr.find("#res_staysex").val(data[i].staysex);
-                    objTr.find("#res_stayM").val(data[i].stayM);
-
-                    if (data[i].prod_name != "N") {
-                        objTr.find("#res_stayshop").val(data[i].prod_name);
-                        objTr.find("input[calid=res_staysdate]").val(data[i].sdate);
-                        objTr.find("input[calid=res_stayedate]").val(data[i].edate);
-
-                        if (data[i].stayroom != "") {
-                            objTr.find("#res_stayroom").val(data[i].stayroom);
-
-                            fnRoomNum2(objTr.find("#res_staynum"), data[i].staynum);
+                //alert(data.length + "\n\n" + params + "\n\n" + JSON.stringify(data) + "\n\n" + JSON.stringify(arrRoom) + "\n\n" + JSON.stringify(arrRoomSubSeq))
+                $j.each(arrRoom, function(i, item){
+                    
+                    var vlu = i.split("_");
+                    var key = arrRoomSeq[vlu[0] + "_" + vlu[1] + "_" + $j("#resseq").val()];
+                    var keySub = arrRoomSubSeq[vlu[0] + "_" + vlu[1] + "_" + $j("#resseq").val()];
+                    //alert(i + " / " + item);
+                    var resText = "";
+                    if(key == null || (item > 0 && arrRoomSeq[i + "_" + $j("#resseq").val()] != item)){
+                        resText = "불가";
+                    }else if(key == 0){
+                        if(keySub == stayseq){
+                            resText = "기존";                            
+                        }else{
+                            resText = "기존(가능)";
                         }
+                    }else{
+                        resText = "기존(가능)"; //기존_불가
                     }
-                    if (data[i].bbq != "N") {
-                        objTr.find("input[calid=res_bbqdate]").val(data[i].resdate);
-                        objTr.find("#res_bbq").val(data[i].bbq);
-                    }
-                } else { //강습&렌탈
-                    fnSolAdd(null, 'trsurf');
+                    objNext.find("option[value='" + vlu[1] + "']").text(objNext.find("option[value='" + vlu[1] + "']").text() + " - " + resText);
 
-                    var objTr = $j("tr[id=trsurf]:last");
-                    objTr.find("#surfseq").val(data[i].ressubseq);
-                    objTr.find("#surftype").val("U");
-                    objTr.find("input[calid=res_surfdate]").val(data[i].resdate);
-                    if (data[i].prod_name != "N") {
-                        objTr.find("#res_surfshop").val(data[i].prod_name);
-                        objTr.find("#res_surftime").val(data[i].restime);
-                        objTr.find("#res_surfM").val(data[i].surfM);
-                        objTr.find("#res_surfW").val(data[i].surfW);
-                    }
-                    if (data[i].surfrent != "N") {
-                        objTr.find("#res_rent").val(data[i].surfrent);
-                        objTr.find("#res_rentM").val(data[i].surfrentM);
-                        objTr.find("#res_rentW").val(data[i].surfrentW);
-                    }
-                }
+                    // if($j("#resseq").val() == data[i].resseq){
+                    //     objNext.find("option[value='" + data[i].staynum + "']").text(objNext.find("option[value='" + data[i].staynum + "']").text() + " - 기존 ");
+                    // }else{
+                    //     objNext.find("option[value='" + data[i].staynum + "']").text(objNext.find("option[value='" + data[i].staynum + "']").text() + " - 불가 ");
+                    // }
+                });
             }
         }
     });
@@ -514,22 +548,24 @@ function fnSearchAdminSolList(selDate) {
                     if (rowCnt > 1) {
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(12).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(13).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
 
 
                         for (let x = 1; x < rowCnt; x++) {
                             nextrowCnt++;
+                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
+                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(13).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(12).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
 

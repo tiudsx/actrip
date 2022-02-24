@@ -166,7 +166,6 @@ include __DIR__.'/../../common/logininfo.php';
 					<select id="res_adminname" name="res_adminname" class="select">
                         <option value='이승철'>이승철</option>
                         <option value='정태원'>정태원</option>
-                        <!-- <option value='김민진'>김민진</option> -->
                         <option value='정태일'>정태일</option>
                     </select>
 				</td>
@@ -186,10 +185,11 @@ include __DIR__.'/../../common/logininfo.php';
 					<select id="res_company" name="res_company" class="select">
 						<option value='네이버예약'>네이버예약</option>
 						<option value='네이버쇼핑'>네이버쇼핑</option>
-						<option value='액트립'>액트립</option>
 						<option value='전화예약'>전화예약</option>
 						<option value='현장예약'>현장예약</option>
 						<option value='여기어때'>여기어때</option>
+						<option value='액트립'>액트립</option>
+						<option value='프립'>프립</option>
 						<option value='클룩'>클룩</option>
 						<option value='야놀자'>야놀자</option>
 					</select>
@@ -235,23 +235,27 @@ include __DIR__.'/../../common/logininfo.php';
                                 <th>이용일</th>
                                 <th>성별</th>
                                 <th>고객정보</th>
-                                <th>이용일</th>
 								<th>참여여부</th>
+                                <th>이용일</th>
 							</tr>
 							<tr id="trstay" style="display:none;">
 								<td>
 									<input type="hidden" id="stayseq" name="stayseq[]" >
 									<input type="hidden" id="staytype" name="staytype[]" value="I">
-									<select id="res_stayshop" name="res_stayshop[]" class="select">
+									<select id="res_stayshop" name="res_stayshop[]" class="select" onchange="fnSolStaySel(this);">
 										<option value='N'>숙박미신청</option>
 										<option value='솔게스트하우스'>솔게스트하우스</option>
-										<option value='모닝비치'>모닝비치</option>
-										<option value='방파제민박'>방파제민박</option>
+										<!-- <option value='모닝비치'>모닝비치</option>
+										<option value='방파제민박'>방파제민박</option> -->
 									</select>
 								</td>
 								<td style="line-height:2.3em">
-									<input type="text" calid="res_staysdate" name="res_staysdate[]" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" > ~ 
-									<input type="text" calid="res_stayedate" name="res_stayedate[]" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
+									<input type="text" calid="res_stayedate" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled>
+
+									<input type="hidden" id="res_staysdate" name="res_staysdate[]" value="">
+									<input type="hidden" id="res_stayedate" name="res_stayedate[]" value="">
+									<input type="hidden" id="res_bbqdate" name="res_bbqdate[]" value="">
 								</td>
 								<td>
 									<select id="res_staysex" name="res_staysex[]" class="select">
@@ -259,7 +263,7 @@ include __DIR__.'/../../common/logininfo.php';
 										<option value="여">여</option>	
 									</select>
 									<select id="res_stayM" name="res_stayM[]" class="select">
-									<?for($i=1;$i<=20;$i++){?>
+									<?for($i=1;$i<=1;$i++){?>
 										<option value="<?=$i?>"><?=$i?></option>
 									<?}?>
 									</select>명
@@ -280,15 +284,15 @@ include __DIR__.'/../../common/logininfo.php';
 									</select>
 								</td>
 								<td>
-									<input type="text" calid="res_bbqdate" name="res_bbqdate[]" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
-								</td>
-								<td>
-									<select id="res_bbq" name="res_bbq[]" class="select">
+									<select id="res_bbq" name="res_bbq[]" class="select" onchange="fnSolBbqSel(this);">
 										<option value="N">미참여</option>
 										<option value="바베큐">바베큐</option>
-										<option value="펍파티">펍파티</option>
-										<option value="바베큐,펍파티">바베큐,펍파티</option>
+										<!-- <option value="펍파티">펍파티</option>
+										<option value="바베큐,펍파티">바베큐,펍파티</option> -->
 									</select>
+								</td>
+								<td>
+									<input type="text" calid="res_bbqdate" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled>
 								</td>
 								<td style="text-align:center;"><input type="button" class="btnsurfdel" style="width:40px;" value="삭제" onclick="fnSolDel(this);" ></td>
 							</tr>
