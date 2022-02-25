@@ -173,10 +173,12 @@ if($count == 0){
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
+
+        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoCheckSend();" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
         <colgroup>
-            <col width="4%" />
+            <col width="5%" />
             <col width="9%" />
             <col width="*" />
             <col width="3%" />
@@ -200,7 +202,7 @@ if($count == 0){
         </colgroup>
         <tbody>
             <tr>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2"></th>
+                <th style="background-color:#336600; color:#efefef;" rowspan="2"><label><input type="checkbox" onclick="fnAllChk(this);"> 전체</label></th>
                 <th style="background-color:#336600; color:#efefef;" rowspan="2">예약자</th>
                 <th style="background-color:#336600; color:#efefef;" colspan="3">숙박정보</th>
                 <th style="background-color:#336600; color:#efefef;" colspan="2">바베큐</th>
@@ -391,7 +393,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
 ?>
     <tr>
-        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><?=$resseq?></td>
+        <td style="<?=$fontcolor?>"><label><input type="checkbox" id="chkresseq" name="chkresseq[]" value="<?=$resseq?>"> <?=$resseq?></label></td>
         <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?><br><?=$user_tel?></b></td>
         <!-- <td style="<?=$fontcolor?>"><?=$resText?></td> -->
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
@@ -443,6 +445,8 @@ $rowlist .= $b."|";
 		</tbody>
     </table>
     <input type="hidden" id="hidrowcnt" value="<?=$rowlist?>" />
+    <input type="hidden" id="resparam" name="resparam" value="solkakaoAll" />
+    <input type="hidden" id="selDate" name="selDate" value="<?=$selDate?>" />
 </form>
 <form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
 </div>
@@ -477,6 +481,9 @@ $j(document).ready(function(){
 	
 	$j(".btn_view[seq]").mouseout(function(e){
 			$j(this).find(".box_layer").css("display","none");
-	});				 
+	});
+
+    $j("calbox[value=" + $j("#selDate").val() + "]").css("background", "#efefef");
+    $j("calbox[value=" + $j("#selDate").val() + "]").attr("sel", "yes");
 }); 
 </script>

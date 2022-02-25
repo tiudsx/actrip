@@ -2,6 +2,12 @@
 $reqDate = $_REQUEST["selDate"];
 if($reqDate != ""){
 	include __DIR__.'/../../db.php';
+?>
+	<script>
+		$j("calbox[value=" + $j("#selDate").val() + "]").css("background", "#efefef");
+		$j("calbox[value=" + $j("#selDate").val() + "]").attr("sel", "yes");
+	</script>
+<?
 }
 include __DIR__.'/../../common/funcalendar.php';
 

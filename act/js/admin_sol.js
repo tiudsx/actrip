@@ -671,6 +671,28 @@ function fnKakaoSend(resseq) {
     });
 }
 
+function fnKakaoCheckSend() {
+    var chkVluY = $j("input[id=chkresseq]:checked").map(function() { return $j(this).val(); }).get();
+    if (chkVluY == "") {
+        alert("카톡 발송할 예약건을 선택해주세요.");
+        return;
+    }
+
+    if (!confirm("알림톡 발송을 하시겠습니까?")) {
+        return;
+    }
+
+    var formData = { "resparam": "solkakaoAll" };
+    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            alert("알림톡 발송이 완료되었습니다.");
+            $j("calbox[sel='yes']").click();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert(textStatus);
+
+    });
+}
+
 function fnListTab(gubun, obj) {
     var selDate = $j("#listdate").text(); //달력 선택 날짜
 
@@ -755,4 +777,8 @@ function mergeTable(target, index) {
             add_num = 1;
         }
     });
+}
+
+function fnAllChk(obj){
+    $j("input[id=chkresseq]").prop("checked", $j(obj).is(':checked'));
 }
