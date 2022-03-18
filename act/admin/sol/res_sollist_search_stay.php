@@ -209,7 +209,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <td style="vertical-align: top;">
                 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;">
                     <colgroup>
-                        <col width="13%" />
+                        <col width="10%" />
                         <col width="18%" />
                         <col width="*" />
                         <col width="14%" />

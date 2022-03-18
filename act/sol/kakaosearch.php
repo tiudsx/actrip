@@ -164,8 +164,21 @@ $j(document).ready(function(){
                     <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg?v=1" class="placeholder"> -->
 
                     <?if($tablist1 != ""){?>
-                        <center>
-                        <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
+                    <center>
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
+
+                    <?
+                    $layerCss = "none";
+                    if($res_room_chk == "N"){
+                        $layerCss = "";
+                    ?>
+                        
+                    <?}else{?>
+                        <!-- <p class="restitle">✔ 객실조회가 완료되었습니다.</p> -->
+                    <p>배정된 객실은 <strong class="restitle">오후 4시</strong> 이후부터 입실 가능합니다.</p>
+                    <?}?>
+                    
+                    <div style="position: relative; min-height:150px;">
                         <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:90%;">
                             <colgroup>
                                 <col width="13%" />
@@ -192,7 +205,7 @@ $j(document).ready(function(){
                                     $arrVlu[4] = "";
                                     $arrVlu[5] = "";
                                 }else{
-                                    $arrVlu[3] = $arrVlu[3]."호";
+                                    $arrVlu[3] = substr($arrVlu[3], 0, 1)."층 ".substr($arrVlu[3], 2, 1)."호";
                                     $arrVlu[4] = $arrVlu[4]."번 침대";
                                 }
                             ?>
@@ -210,16 +223,20 @@ $j(document).ready(function(){
                             ?>
                             </tbody>
                         </table>
-                        <?if($res_room_chk == "N"){?>
-                        <p class="restitle">✔ 객실조회는 이용일 오후 2시 이후부터 가능합니다.</p>
-                        <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search_time.jpg" class="placeholder"> -->
-                        <br>
-                        <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/btn.jpg" onclick="fnStaySearch(<?=$resseq?>);" class="placeholder">
-                        </center>
-                        <?}else{?>
-                            <p class="restitle">✔ 객실조회가 완료되었습니다.<Br>배정된 객실 입실은 오후 4시 이후부터 가능합니다.</p>
-                        <?}?>
-                        <br>
+
+                        <div class="SolLayer">
+                            <div class="box">
+                                <div class="in">
+                                    <strong>&nbsp;</strong>
+                                    <p class="restitle">✔ 객실조회는 이용일 오후 2시 이후부터 가능합니다.</p>
+                                    <a class="SolLayer_btn" onclick="fnStaySearch(<?=$resseq?>);">객실 조회하기</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    </center>
+
                     <img src="https://actrip.co.kr/act/images/sol_kakao/sol_04.jpg" class="placeholder">
                     <?}?>
 
@@ -227,9 +244,33 @@ $j(document).ready(function(){
                     <img src="https://actrip.co.kr/act/images/sol_kakao/sol_03.jpg" class="placeholder">
                     <?}?>
                 </div>
-               
             </div>
+            <style>
+                .SolLayer_btn {
+                    display: inline-block;
+                    padding: 13px 20px;
+                    margin-top: 10px;
+                    font-size: 16px;
+                    line-height: 1;
+                    font-weight: 400;
+                    color: #fff;
+                    background: #c11414;
+                    cursor: pointer;
+                }
 
+                .SolLayer {
+                    display: <?=$layerCss?>;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    background: rgba(0, 0, 0, 0.7);
+                    z-index: 20;
+                    color:white;
+                }
+            </style>
             <!-- 숙소 안내 -->
             <div tabid="viewtab" id="view_tab2" style="display: none;min-height: 800px;"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/02.jpg" class="placeholder">
@@ -429,7 +470,7 @@ function fnStaySearch(resseq){
             if(data == 1){
                 alert("오후 2시 이후에 객실 조회가 가능합니다.");
             }else if(data == 2){
-                alert("예약하신 이용일 오후 2시 이후에 객실 조회가 가능합니다.");
+                alert("예약하신 이용 당일에 조회가 가능합니다.");
             }else{
                 var rtnVlu = "";
                 for (let i = 0; i < data.length; i++) {
@@ -441,6 +482,7 @@ function fnStaySearch(resseq){
 
                 $j("#tbStay").append(rtnVlu);
                 alert("객실조회가 완료되었습니다.\n\n호실,침대번호,도어락 비밀번호를 확인 후 입실해주세요~");
+                $j(".SolLayer").css("display", "none");
             }
         }
     });

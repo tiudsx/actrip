@@ -1,5 +1,6 @@
 <?php
 include __DIR__.'/../../surf/surffunc.php';
+include __DIR__.'/../../surf/surfkakao.php';
 
 $hidsearch = $_REQUEST["hidsearch"];
 
@@ -124,70 +125,6 @@ if($count == 0){
 </table>
 
 <?
-    function fnMessageText($code){
-        switch ($code) {
-            case 'K000':
-                $text = "카카오 비즈메시지 발송 성공";
-                break;
-            case 'M000':
-                $text = "SMS/LMS 발송 성공";
-                break;
-            case 'M001':
-                $text = "SMS 발송 처리 중";
-                break;
-            case 'M107':
-                $text = "미등록된 SMS 발신번호";
-                break;
-            case 'K208':
-                $text = "링크버튼 형식 오류 (잘못된 파라메터 요청)";
-                break;
-            case 'K102':
-                $text = "전화번호 오류";
-                break;
-            case 'K105':
-                $text = "메시지 내용이 템플릿과 일치하지 않음";
-                break;
-            case 'E104':
-                $text = "유효하지 않은 사용자 전화번호";
-                break;
-            case 'E110':
-                $text = "MsgId를 찾을 수 없음";
-                break;
-            default:
-                $text = $code;
-                break;
-        }
-
-        return $text;
-    }
-
-    function getKakaoSearch($msgid){
-        $params = array('profile'=>'70f9d64c6d3b9d709c05a6681a805c6b27fc8dca', 'msgid'=>$msgid);
-        $query = http_build_query($params);
-        $api_server = "https://alimtalk-api.bizmsg.kr/v2/sender/report";
-    
-        $opts = array(
-            CURLOPT_URL => $api_server . '?' . $query,
-            CURLOPT_HEADER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_HTTPHEADER => array(
-                "userId: surfenjoy"
-            ),
-        );
-    
-        // 응답요청
-        $curl_session = curl_init();
-        curl_setopt_array($curl_session, $opts);
-        $curl_response = curl_exec($curl_session);
-        $resMessage = (curl_error($curl_session))? null : $curl_response;
-
-        if($resMessage == null){
-            return '{"code":"no"}';
-        }else{
-            return substr($resMessage, strpos($resMessage, "code") - 2);
-        }
-    }
 /*
     $url = 'https://alimtalk-api.bizmsg.kr/v1/user/balance?userid=surfenjoy&userkey=RLORgrwUB4UI1Vt2ntl3';
     $ch = curl_init();

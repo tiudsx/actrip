@@ -94,54 +94,133 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		, "smsOnly"=>"N"
 	);
 
-	sendKakao($arrKakao); //알림톡 발송
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-	$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1 WHERE resseq = $resseq";
+	//------- 쿠폰코드 입력 -----
+	$data = json_decode($arrRtn[0], true);
+	$kakao_code = $data[0]["code"];
+	$kakao_type = $data[0]["data"]["type"];
+	$kakao_msgid = $data[0]["data"]["msgid"];
+	$kakao_message = $data[0]["message"];
+	$kakao_originMessage = $data[0]["originMessage"];
+
+	$userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
+
+	// 카카오 알림톡 DB 저장 START
+	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$result_set = mysqli_query($conn, $select_query);
+	// 카카오 알림톡 DB 저장 END
+
+	$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $resseq";
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 	
 	mysqli_query($conn, "COMMIT");
 	//==========================카카오 메시지 발송 End ==========================
 }else if($param == "solkakaoAll"){
-    $selDate = $_REQUEST["selDate"];
-	$select_query = "SELECT a.resseq FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-							ON a.resseq = b.resseq 
-						WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')	OR	b.resdate = '$selDate')
-							AND a.res_kakao = 0
-							GROUP BY a.resseq";
+	$chkresseq = $_REQUEST["chkresseq"];
+	
+	for($i = 0; $i < count($chkresseq); $i++){
+		$resseq = $chkresseq[$i];
+
+		$select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq";
+		$result = mysqli_query($conn, $select_query);
+		$rowMain = mysqli_fetch_array($result);
+	
+		$userName = $rowMain["user_name"];
+		$userPhone = $rowMain["user_tel"];
+	
+		//==========================카카오 메시지 발송 ==========================
+		$select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
+		$resultSite = mysqli_query($conn, $select_query_sub);
+
+		$resList = "";
+		$resInfo = "";
+		while ($rowSub = mysqli_fetch_assoc($resultSite)){
+
+			$res_type = $rowSub['res_type'];
+			if($res_type == "stay"){ //숙박,바베큐,펍파티
+				if($rowSub['prod_name'] != "N"){ //숙박미신청
+					$resList1 = "게스트하우스,";
+					$resInfo1 = "   * 게스트하우스\n     - 입실:16시, 퇴실:익일 11시\n     - 방/침대 배정은 이용일 14시 이후로 하단에 있는 [필독]예약 상세안내 버튼에서 확인가능합니다\n\n";
+				}
+
+				if($rowSub['bbq'] != "N"){ 
+					if(!(strpos($rowSub['bbq'], "바베큐") === false))
+					{
+						$resList2 = "바베큐파티,";
+						$resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 10분전에 1층으로 와주세요~\n\n";
+					}
+
+					if(!(strpos($rowSub['bbq'], "펍파티") === false))
+					{
+						$resList3 = "펍파티,";
+						$resInfo3 = "   * 펍파티\n     - 파티시간 : 22시 ~ 24시\n\n";
+					}
+				}
+			}else{ //강습,렌탈
+				if($rowSub['prod_name'] != "N"){ //숙박미신청
+					$resList4 = "서핑강습,";
+					$resInfo4 = "   * 서핑강습\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
+				}
+
+				if($rowSub['surfrent'] != "N"){ //숙박미신청
+					$resList5 = "장비렌탈,";
+					$resInfo5 = "   * 장비렌탈\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
+				}
+			}
+		}
+
+		$resList = $resList1.$resList2.$resList3.$resList4.$resList5;
+		$resList = substr($resList, 0, strlen($resList) - 1);
 		
-	$result_setlist = mysqli_query($conn, $select_query);
-	$count = mysqli_num_rows($result_setlist);
+		$resInfo = $resInfo1.$resInfo2.$resInfo3.$resInfo4.$resInfo5;
+		$resInfo = substr($resInfo, 0, strlen($resInfo) - 1);
+		$resInfo = "하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요.\n";
+		
+		$msgTitle = '액트립 솔.동해서핑점 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 예약하신 시간보다 늦게 도착하실 경우 꼭 연락주세요.\n      - \n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
 
-	if($count > 0){
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_surf_step3"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
+			, "link2"=>"surflocation?seq=5" //지도로 위치보기
+			, "link3"=>"event" //공지사항
+			, "link4"=>""
+			, "link5"=>""
+			, "smsOnly"=>"N"
+		);
 
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		//------- 쿠폰코드 입력 -----
+		$data = json_decode($arrRtn[0], true);
+		$kakao_code = $data[0]["code"];
+		$kakao_type = $data[0]["data"]["type"];
+		$kakao_msgid = $data[0]["data"]["msgid"];
+		$kakao_message = $data[0]["message"];
+		$kakao_originMessage = $data[0]["originMessage"];
+
+		$userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
+
+		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $resseq";
+		$result_set = mysqli_query($conn, $select_query);
+		if(!$result_set) goto errGo;
 	}
-
-	// $curl = curl_init();
-
-    // $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/'.$arrKakao["link4"].'"},';
-
-	// $arryKakao = '';
-    // $arryKakao .= '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$arrKakao["kakaoMsg"].'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"},{"message_type":"at","phn":"82'.substr(str_replace('-', '',"01033086080"), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$arrKakao["kakaoMsg"].'","smsSender":"'.str_replace('-', '',"01033086080").'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
-    
-    
-	// curl_setopt_array($curl, array(
-	//   CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
-	//   CURLOPT_RETURNTRANSFER => true,
-	//   CURLOPT_ENCODING => "",
-	//   CURLOPT_MAXREDIRS => 10,
-	//   CURLOPT_TIMEOUT => 30,
-	//   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	//   CURLOPT_CUSTOMREQUEST => "POST",
-	//   CURLOPT_POSTFIELDS => $arryKakao,
-	//   CURLOPT_HTTPHEADER => array(
-	// 	"content-type: application/json", "userId: surfenjoy"
-	//   ),
-	// ));
-
-	// $response = curl_exec($curl);
-	// $err = curl_error($curl);
-	// curl_close($curl);
+		
+	mysqli_query($conn, "COMMIT");
+	//==========================카카오 메시지 발송 End ==========================
 }else if($param == "solrentyn"){ //렌탈 상태여부 변경
 	$subseq = $_REQUEST["subseq"];
 	$rentyn = $_REQUEST["rentyn"];
@@ -381,6 +460,11 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		);
 	
 		sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
 	
 		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1 WHERE resseq = $seq";
 		$result_set = mysqli_query($conn, $select_query);

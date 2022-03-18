@@ -54,7 +54,7 @@ function fnSolAdd(obj, id) {
         },
         onSelect: function(dateText, inst) {
             fnSolAddInit($j(this));
-       }
+        }
 
     });
     $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
@@ -82,12 +82,12 @@ function fnSolAdd(obj, id) {
         },
         onSelect: function(dateText, inst) {
             fnSolAddInit($j(this));
-       }
+        }
     });
     $j("tr[id=" + id + "]:last").attr("rowadd", "1");
 }
 
-function fnSolAddInit(obj){
+function fnSolAddInit(obj) {
     var objId = obj.parent().parent();
     objId.find("#res_stayroom").val("");
     objId.find("#res_staynum option").remove();
@@ -98,51 +98,51 @@ function fnSolDel(obj) {
     $j(obj).parent().parent().remove();
 }
 
-function fnSolStaySel(obj){
+function fnSolStaySel(obj) {
     var objId = $j(obj).parent().parent();
 
-    if($j(obj).val() == "N"){
+    if ($j(obj).val() == "N") {
         objId.find("input[calid=res_staysdate]").val("").prop("disabled", true);
         objId.find("input[calid=res_stayedate]").val("").prop("disabled", true);
 
         objId.find("#res_stayroom").val("");
         objId.find("#res_staynum option").remove();
         objId.find("#res_staynum").append("<option value=''>-------</optoin>");
-    }else{
+    } else {
         objId.find("input[calid=res_staysdate]").removeAttr("disabled");
         objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
 }
 
-function fnSolBbqSel(obj){
+function fnSolBbqSel(obj) {
     var objId = $j(obj).parent().parent();
 
-    if($j(obj).val() == "N"){
+    if ($j(obj).val() == "N") {
         objId.find("input[calid=res_bbqdate]").val("").prop("disabled", true);
-    }else{
+    } else {
         objId.find("input[calid=res_bbqdate]").removeAttr("disabled");
     }
 }
 
-function fnSolSurfSel(obj){
+function fnSolSurfSel(obj) {
     var objId = $j(obj).parent().parent();
-    
-    if($j(obj).val() == ""){
+
+    if ($j(obj).val() == "") {
         objId.find("#res_surfM").val("0");
         objId.find("#res_surfW").val("0");
-    }else{
+    } else {
         // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
         // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
 }
 
-function fnSolSurfRentSel(obj){
+function fnSolSurfRentSel(obj) {
     var objId = $j(obj).parent().parent();
 
-    if($j(obj).val() == "N"){
+    if ($j(obj).val() == "N") {
         objId.find("#res_rentM").val("0");
         objId.find("#res_rentW").val("0");
-    }else{
+    } else {
         // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
         // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
@@ -188,7 +188,7 @@ function fnSolModify(resseq) {
                     objTr.find("#res_stayM").val(data[i].stayM);
 
                     if (data[i].prod_name != "N") {
-                        objTr.find("#res_stayshop").val(data[i].prod_name);                        
+                        objTr.find("#res_stayshop").val(data[i].prod_name);
                         objTr.find("input[calid=res_staysdate]").val(data[i].sdate).removeAttr("disabled");
                         objTr.find("input[calid=res_stayedate]").val(data[i].edate).removeAttr("disabled");
 
@@ -276,7 +276,7 @@ function fnSolDataAdd(gubun) {
                     alert("파티 이용 날짜를 선택해주세요~");
                     return;
                 }
-                
+
                 $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
             }
         }
@@ -348,7 +348,7 @@ function fnRoomNum(obj, val) {
     var sdate = $j(obj).parent().parent().find("input[calid=res_staysdate]").val();
     var edate = $j(obj).parent().parent().find("input[calid=res_stayedate]").val();
 
-    if(sdate == "" || edate == ""){
+    if (sdate == "" || edate == "") {
         alert("이용일을 선택해주세요.");
         $j(obj).val("");
         return;
@@ -385,8 +385,7 @@ function fnRoomNum(obj, val) {
     }
 
     objNext.append("<option value=''>-------</optoin>");
-    if (roomnum == 0) {
-    } else {
+    if (roomnum == 0) {} else {
         for (var i = 1; i <= roomnum; i++) {
             var roombad = "번 (2층)";
             if ((i % 2) == 1) {
@@ -403,8 +402,8 @@ function fnRoomNum(obj, val) {
             objNext.append("<option value='" + i + "' " + sel + ">" + i + roombad + "</optoin>");
         }
     }
-    
-    if(val == "" || val == null){
+
+    if (val == "" || val == null) {
         //fnRoomBed(sdate, edate, $j(obj), objNext);
     }
     fnRoomBed(sdate, edate, $j(obj), objNext);
@@ -413,7 +412,8 @@ function fnRoomNum(obj, val) {
 var arrRoom = {};
 var arrRoomSeq = {};
 var arrRoomSubSeq = {};
-function fnRoomBed(sdate, edate, obj, objNext){
+
+function fnRoomBed(sdate, edate, obj, objNext) {
     arrRoom = {};
     arrRoomSeq = {};
     arrRoomSubSeq = {};
@@ -458,39 +458,39 @@ function fnRoomBed(sdate, edate, obj, objNext){
         data: params,
         async: false,
         success: function(data) {
-            if(data != null){
+            if (data != null) {
                 //alert(JSON.stringify(data));
                 for (let i = 0; i < data.length; i++) {
-                    if(arrRoom[roomnum + "_" + data[i].staynum] == null){
+                    if (arrRoom[roomnum + "_" + data[i].staynum] == null) {
                         arrRoom[roomnum + "_" + data[i].staynum] = 0;
-                    }else{
+                    } else {
                         arrRoom[roomnum + "_" + data[i].staynum]++;
                     }
 
-                    if(arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] == null){
+                    if (arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] == null) {
                         arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = 0;
                         arrRoomSubSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = data[i].ressubseq;
-                    }else{
+                    } else {
                         arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq]++;
-                    }                    
+                    }
                 }
                 //alert(data.length + "\n\n" + params + "\n\n" + JSON.stringify(data) + "\n\n" + JSON.stringify(arrRoom) + "\n\n" + JSON.stringify(arrRoomSubSeq))
-                $j.each(arrRoom, function(i, item){
-                    
+                $j.each(arrRoom, function(i, item) {
+
                     var vlu = i.split("_");
                     var key = arrRoomSeq[vlu[0] + "_" + vlu[1] + "_" + $j("#resseq").val()];
                     var keySub = arrRoomSubSeq[vlu[0] + "_" + vlu[1] + "_" + $j("#resseq").val()];
                     //alert(i + " / " + item);
                     var resText = "";
-                    if(key == null || (item > 0 && arrRoomSeq[i + "_" + $j("#resseq").val()] != item)){
+                    if (key == null || (item > 0 && arrRoomSeq[i + "_" + $j("#resseq").val()] != item)) {
                         resText = "불가";
-                    }else if(key == 0){
-                        if(keySub == stayseq){
-                            resText = "기존";                            
-                        }else{
+                    } else if (key == 0) {
+                        if (keySub == stayseq) {
+                            resText = "기존";
+                        } else {
                             resText = "기존(가능)";
                         }
-                    }else{
+                    } else {
                         resText = "기존(가능)"; //기존_불가
                     }
                     objNext.find("option[value='" + vlu[1] + "']").text(objNext.find("option[value='" + vlu[1] + "']").text() + " - " + resText);
@@ -579,7 +579,7 @@ function fnSearchAdminSolList(selDate) {
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
-                        
+
 
                         for (let x = 1; x < rowCnt; x++) {
                             nextrowCnt++;
@@ -682,7 +682,11 @@ function fnKakaoCheckSend() {
         return;
     }
 
-    var formData = { "resparam": "solkakaoAll" };
+    var formData = [{ "name": "resparam", "value": "solkakaoAll" }];
+    $j("input[id=chkresseq]:checked").each(function(idx) {
+        formData.push({ "name": "chkresseq[]", "value": $j(this).val() });
+    });
+
     $j.post("/act/admin/sol/res_sollist_save.php", formData,
         function(data, textStatus, jqXHR) {
             alert("알림톡 발송이 완료되었습니다.");
@@ -779,6 +783,6 @@ function mergeTable(target, index) {
     });
 }
 
-function fnAllChk(obj){
+function fnAllChk(obj) {
     $j("input[id=chkresseq]").prop("checked", $j(obj).is(':checked'));
 }
