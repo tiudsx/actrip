@@ -13,9 +13,6 @@ if($resseq == ""){
     return;
 }
 
-
-
-
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
@@ -141,7 +138,7 @@ $j(document).ready(function(){
                 <a class="reviewlink">
                     <span class="reviewcnt">[<?=$user_name?>] 님 예약상세 안내입니다.</span>
                 </a>
-                <div class="shopsubtitle"><?=$resText?></div>
+                <!-- <div class="shopsubtitle"><?=$resText?></div> -->
             </div>
         </section>
 
@@ -150,10 +147,15 @@ $j(document).ready(function(){
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li tabid="viewli" id="view_li1" class="on" onclick="fnResViewSol(false, '#view_tab1', 70, this);"><a>예약안내</a></li>
-                            <?=$tablist1?>
-                            <?=$tablist2?>
-                            <?=$tablist3?>
+                            <?if($tablist1 == "" && $tablist2 == ""){
+                                echo "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 70, this);\"><a>강습 이용안내</a></li>";
+                                $Displaytab4 = "";
+                            }else{
+                                $Displaytab4 = "none";
+                                ?>
+                                <li tabid="viewli" id="view_li1" class="on" onclick="fnResViewSol(false, '#view_tab1', 70, this);"><a>예약안내</a></li>
+                                <?=$tablist3?>
+                            <?}?>
                             <?=$tablist4?>
                         </ul>
                     </div>
@@ -164,9 +166,19 @@ $j(document).ready(function(){
                     <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg?v=1" class="placeholder"> -->
 
                     <?if($tablist1 != ""){?>
-                    <center>
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/02.jpg" class="placeholder">
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/sol_04.jpg" class="placeholder">
                     <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
 
+                <?if($surfbbq_chk == 1 && $stay_chk == 1){?>
+                    <!-- <center>
+                    <p class="restitle">✔ 조식이용은 일요일 오전에만 제공됩니다.</p>
+                    <p class="restitle">✔ 이용시 네이버 방문자 리뷰 작성 후 이용가능합니다.</p>
+                    <p class="restitle">✔ 일행이 있을 경우 네이버에서 추가 예약, 리뷰 작성해주세요~</p>
+                    </center>
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/04.jpg" class="placeholder"> -->
+                <?}?>
+                    <center>
                     <?
                     $layerCss = "none";
                     if($res_room_chk == "N"){
@@ -228,49 +240,75 @@ $j(document).ready(function(){
                             <div class="box">
                                 <div class="in">
                                     <strong>&nbsp;</strong>
-                                    <p class="restitle">✔ 객실조회는 이용일 오후 2시 이후부터 가능합니다.</p>
+                                    <p class="restitle">✔ 이용당일 오후 2시 부터 조회 가능합니다.</p>
                                     <a class="SolLayer_btn" onclick="fnStaySearch(<?=$resseq?>);">객실 조회하기</a>
                                     
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     </center>
+                    
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/07.jpg" class="placeholder">
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/03.jpg" class="placeholder">
+                    <?}?>
+                    
+                    <?if($tablist2 != ""){?>
+                    <center>
+                    바베큐 예약정보
+                    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:80%;">
+                        <tr>
+                            <th>성별</th>
+                            <th>이용일</th>
+                            <th></th>
+                        </tr>
+                        <?
+                        foreach ($arrBbq as $key => $value) {
+                            $arrVlu = explode("|", $value);
+                        ?>
+                        
+                        <tr>
+                            <td><?=$arrVlu[0]?></td>
+                            <td><?=$arrVlu[1]?></td>
+                            <td><?=$arrVlu[2]?></td>
+                        </tr>
 
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/sol_04.jpg" class="placeholder">
+                        <?
+                        }
+                        ?>
+                    </table>
+                    </center>
+                    <img src="https://actrip.co.kr/act/images/sol_kakao/bbq/03.jpg" class="placeholder">
                     <?}?>
 
-                    <?if($tablist3 != ""){?>
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/sol_03.jpg" class="placeholder">
+                    <?if($tablist3 != ""){ //서핑강습 이용안내?> 
+                    <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_03.jpg" class="placeholder"> -->
                     <?}?>
                 </div>
             </div>
-            <style>
-                .SolLayer_btn {
-                    display: inline-block;
-                    padding: 13px 20px;
-                    margin-top: 10px;
-                    font-size: 16px;
-                    line-height: 1;
-                    font-weight: 400;
-                    color: #fff;
-                    background: #c11414;
-                    cursor: pointer;
-                }
+            <div class="SolNoticeLayer">
+                <div class="box">
+                    <div class="in">
+                        <?if($tablist1 != ""){ //서핑강습 이용안내?> 
+                        <p class="restitle" style="font-size:22px;">숙소 이용안내</p>
+                        <p class="info">✔ 입실은 셀프체크인이며, 안내사항 확인 후 입실하세요.</p>
+                        <p class="info">✔ 배정된 객실은 [객실 조회] 후 확인 가능합니다.</p>
+                        <?}
+                        if($tablist2 != ""){ //서핑강습 이용안내?> 
+                        <p class="restitle" style="font-size:22px;">바베큐 이용안내</p>
+                        <p class="info">✔ 이용시간 : 19:00 ~ 21:30</p>
+                        <p class="info">✔ 18:50까지 1층 데크에서 대기해주세요.</p>
+                        <?}
+                        if($tablist3 != ""){ //서핑강습 이용안내?> 
+                        <p class="restitle" style="font-size:22px;">서핑강습 이용안내</p>
+                        <p class="info">✔ [강습] 탭에 있는 안내사항을 확인하세요.</p>
+                        <?}?>
 
-                .SolLayer {
-                    display: <?=$layerCss?>;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    text-align: center;
-                    background: rgba(0, 0, 0, 0.7);
-                    z-index: 20;
-                    color:white;
-                }
-            </style>
+                        <a class="SolLayer_btn" onclick="$j('.SolNoticeLayer').css('display', 'none');">확인</a>
+                        
+                    </div>
+                </div>
+            </div>
             <!-- 숙소 안내 -->
             <div tabid="viewtab" id="view_tab2" style="display: none;min-height: 800px;"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/02.jpg" class="placeholder">
@@ -323,7 +361,7 @@ $j(document).ready(function(){
             </div>
 
             <!-- 서핑강습 안내 -->
-            <div tabid="viewtab" id="view_tab4" style="min-height: 800px;display:none;">    
+            <div tabid="viewtab" id="view_tab4" style="min-height: 800px;display:<?=$Displaytab4?>;">    
                 <?
                 foreach ($arrSurf as $key => $value) {
                     $arrVlu = explode("|", $value);
@@ -338,6 +376,7 @@ $j(document).ready(function(){
                     }
                 }
                 ?>
+                # 서핑샵은 편의를 위해 대진해변 앞에 위치한 제휴된 서핑샵으로 안내해드립니다.
                 <?
                 if($arrVlu[0] == "서프팩토리"){
                 ?>
@@ -351,6 +390,7 @@ $j(document).ready(function(){
                 ?>
                 <br>
                 <center>
+                서핑 예약안내
                 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:80%;">
                     <tr>
                         <th>서핑샵</th>
@@ -387,8 +427,6 @@ $j(document).ready(function(){
                 </table>
                 </center>
                 <br>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/03.jpg" class="placeholder">
-
                 <?
                 if($arrVlu[0] == "서프팩토리"){
                 ?>
@@ -401,6 +439,7 @@ $j(document).ready(function(){
                 }
                 ?>
                 
+                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/03.jpg" class="placeholder">                
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder">
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
             </div>
@@ -459,32 +498,9 @@ $j(document).ready(function(){
 <? include __DIR__.'/../_layout_bottom.php'; ?>
 
 <script src="../js/surfview.js"></script>
-<script>
-function fnStaySearch(resseq){
-    var params = "resparam=solstay&resseq=" + resseq;
-    $j.ajax({
-        type: "POST",
-        url: "/act/admin/sol/res_sollist_info.php",
-        data: params,
-        success: function (data) {
-            if(data == 1){
-                alert("오후 2시 이후에 객실 조회가 가능합니다.");
-            }else if(data == 2){
-                alert("예약하신 이용 당일에 조회가 가능합니다.");
-            }else{
-                var rtnVlu = "";
-                for (let i = 0; i < data.length; i++) {
-                    $j("tr[trid='stay']").remove();
-                    var arrData = data[i].split("|");
-                    
-                    rtnVlu += "<tr trid='stay'><td>" + arrData[0] + "</td><td>" + arrData[1] + " ~ <br>" + arrData[2] + "</td><td>" + arrData[3] + "호</td><td>" + arrData[4] + "번 침대</td><td>" + arrData[5] + "</td></tr>";
-                }
 
-                $j("#tbStay").append(rtnVlu);
-                alert("객실조회가 완료되었습니다.\n\n호실,침대번호,도어락 비밀번호를 확인 후 입실해주세요~");
-                $j(".SolLayer").css("display", "none");
-            }
-        }
-    });
-}
-</script>
+<style>
+    .SolLayer {
+        display: <?=$layerCss?>;
+    }
+</style>
